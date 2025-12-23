@@ -1,0 +1,330 @@
+{
+  "header": {
+    "title": "The Gauhati High Court",
+    "welcome": "Welcome"
+  },
+  "drawer": {
+    "title": "The Gauhati High Court",
+    "judges": "Judges",
+    "benches": "Benches",
+    "registry": "Registry",
+    "recruitments": "Recruitments",
+    "ebooks": "eBooks",
+    "district_courts": "District Courts",
+    "links": "Important Links",
+    "settings": "Settings",
+    "language": "Language",
+    "items": {
+      "judges_sc_sitting": "Hon’ble Sitting Judges of the Supreme Court of India, who served as Chief Justice/ Hon’ble Judge of this High Court",
+      "judges_sc_former": "Former Hon’ble Judges of the Supreme Court of India/ Chief Justice of India, who served as Chief Justice/ Hon’ble Judge of this High Court",
+      "judges_ghc_former_cj": "Former Hon’ble Chief Justices of Gauhati High Court",
+      "judges_ghc_former": "Former Hon’ble Judges of the Gauhati High Court",
+      "judges_transferred": "Hon’ble Chief Justices and Judges of the Gauhati High Court Appointed/ Transferred as Chief Justices of Other High Courts",
+      "bench_kohima": "Kohima Bench (State of Nagaland)",
+      "bench_aizawl": "Aizawl Bench (State of Mizoram)",
+      "bench_itanagar": "Itanagar Bench (State of Arunachal)",
+      "reg_present": "Present Registry",
+      "reg_former_gen": "Former Registrar Generals",
+      "reg_former_vig": "Former Registrars (I & E/ Vigilance)",
+      "reg_former_sec": "Former Registrar-Cum-Principal Secretary To Hon’ble The Chief Justice",
+      "reg_former_jud": "Former Registrars (Judicial)",
+      "reg_former_admin": "Former Registrars (Administration)",
+      "reg_former_est": "Former Registrars (Establishment)",
+      "link_sci": "Supreme Court of India",
+      "link_sclsc": "Supreme Court Legal Services Committee",
+      "link_ghclsc": "Gauhati High Court Legal Service Committee",
+      "link_lri": "Law Research Institute",
+      "link_jjc": "Juvenile Justice Committee",
+      "link_bar": "Bar Association",
+      "link_med": "Gauhati High Court Mediation Centre",
+      "link_ja": "Judicial Academy, Assam",
+      "link_lawmin": "Ministry of Law & Justice",
+      "recruitment_judicial": "Judicial Officers",
+      "recruitment_principal": "Principal Seat & Benches",
+      "recruitment_district": "District Courts",
+      "recruitment_other": "Other Organisation's",
+      "recruitment_papers": "Previous Years' Question Papers",
+      "ebook_history": "History & Heritage (Assamese)",
+      "ebook_platinum": "Platinum Jubilee Souvenir"
+    }
+  },
+  "home": {
+    "hero_title": "Access court services and updates in one place.",
+    "hero_subtitle": "Official mobile app of Gauhati High Court",
+    "services_title": "Our Services",
+    "holidays_title": "High Court Holidays",
+    "holidays_subtitle": "Official holidays and restricted working days",
+    "view_calendar": "View Calendar",
+    "download_holiday_list": "Download Holiday List (PDF)",
+    "judges_title": "Judges",
+    "judges_subtitle": "Chief Justice & Sitting Judges",
+    "portfolio": "Portfolio",
+    "read_more": "Read More"
+  },
+  "footer": {
+    "about": "About Us",
+    "contact": "Contact Us",
+    "privacy": "Privacy Policy"
+  },
+  "months": [
+    "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+  ],
+  "days_short": [
+    "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
+  ],
+  "services": {
+    "live_streaming": { "title": "Live Streaming", "subtitle": "Watch court proceedings live" },
+    "cause_list": { "title": "Cause List", "subtitle": "View daily case listings" },
+    "display_board": { "title": "Display Board", "subtitle": "Current court proceedings" },
+    "judgment_search": { "title": "Judgement Search Portal", "subtitle": "Search judgments quickly" },
+    "justice_clock": { "title": "Virtual Justice Clock", "subtitle": "Real-time justice updates" },
+    "registry": { "title": "Present Registry", "subtitle": "Registry submissions" },
+    "district_courts": { "title": "District Courts", "subtitle": "Find district court info" },
+    "recruitments": { "title": "Recruitments", "subtitle": "Open positions & notices" },
+    "ebooks": { "title": "eBooks", "subtitle": "Access digital resources" }
+  },
+  "holiday_tags": {
+    "All": "All",
+    "Public": "Public",
+    "Restricted": "Restricted",
+    "Working Saturday": "Working Saturday"
+  },
+  "nav": {
+    "home": "Home",
+    "back": "Back",
+    "forward": "Forward"
+  },
+  "portfolio": {
+    "title": "Judge Portfolio",
+    "biography": "Biography"
+  },
+  "judge_details": {
+    "parent_high_court": "Parent High Court",
+    "stream": "Stream",
+    "date_of_birth": "Date of Birth",
+    "date_of_elevation": "Date of Elevation",
+    "date_of_transfer": "Date of Transfer",
+    "date_of_retirement": "Date of Retirement",
+    "postal_address": "Postal Address",
+    "place_of_stationing": "Place of Stationing",
+    "telephone": "Telephone"
+  },
+  "recruitment": {
+    "title": "Recruitment",
+    "judicial_officers": "Judicial Officers",
+    "principal_seat": "Principal Seat & Benches",
+    "district_courts": "District Courts",
+    "other_orgs": "Other Organisation's",
+    "prev_papers": "Previous Years' Question Papers"
+  },
+  "ebooks": {
+    "title": "eBooks",
+    "history_heritage": "Gauhati High Court (History & Heritage) – Assamese Version",
+    "platinum_jubilee": "Platinum Jubilee Souvenir of the Gauhati High Court"
+  },
+  "cause_list": {
+    "title": "Cause List",
+    "daily": "Daily",
+    "supplementary": "Supplementary",
+    "lawazima": "Lawazima",
+    "notices": "Notices",
+    "notice": "Notice",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "available": "available",
+    "not_available": "Not available"
+  },
+  "common": {
+    "chief_justice": "Chief Justice",
+    "gauhati": "Gauhati",
+    "bar": "Bar",
+    "judicial_service": "Judicial Service",
+    "principal_seat": "Principal Seat",
+    "itanagar_bench": "Itanagar Bench",
+    "aizawl_bench": "Aizawl Bench",
+    "kohima_bench": "Kohima Bench"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Reach out to the Gauhati High Court",
+    "epabx": "EPABX",
+    "std_code": "(STD Code 0361)",
+    "fax": "FAX",
+    "email": "E-mail"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Overview of the Gauhati High Court",
+    "constitution_title": "Constitution",
+    "article_214_intro": "Article 214 of the Constitution of India reads as follows:",
+    "article_214_text": "214. High Courts for States:- There shall be a High Court for each State.",
+    "article_215_text": "The High Court is a Constitutional Court in terms of Article 215. It is a Court of record and has all the powers of such Court including the power to punish for Contempt of itself and for Contempt of Courts Subordinate to it. Every High Court consist of a Chief Justice and such other Judges as the President of India from time to time deem it necessary.",
+    "judges_title": "Judges",
+    "judges_strength": "At present, the sanctioned Judge strength of the Gauhati High Court is 24 including the Hon’ble Chief Justice and 6 Additional Judges.",
+    "chief_justice": "Chief Justice",
+    "puisne_judges": "Puisne Judges",
+    "jurisdiction_title": "Jurisdiction",
+    "article_226_text": "Under Article 226 of the Constitution of India, the High Court has power in relation to its territorial jurisdiction to issue directions, orders and writs including writs in the nature of Habeas Corpus, Mandamus, Prohibition, Quowarranto and Certiorari for enforcement of the fundamental rights conferred by Part- III of the Constitution of India or for any other purpose.",
+    "article_227_text": "The High Court also has the power of superintendence over all Courts and Tribunals throughout the territory in relation to which it exercises jurisdiction under Article 227 of the Constitution of India. The Gauhati High Court Rules regulate the business and exercise of the powers of the Gauhati High Court.",
+    "jurisdiction_details": "The High Court has original, appellate as well as revisional jurisdiction in both Civil as well as Criminal matters apart from the power to answer references under certain statures. The Gauhati High Court transacts its business during its working days from 10.15 AM to 1.00 PM during the 1st Session and from 2.00 PM to 4.30 PM in the 2nd Session."
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "subtitle": "How we handle information and security",
+    "overview": "Overview",
+    "overview_text": "This privacy policy governs your use of the eCourts Services mobile application that is hosted at NIC’s e-Gov Mobile App Account in Google Play Store. The contents published on these Applications were provided by the concerned Ministries/Departments of Government of India or the allied Judicial Establishment under respective High Courts in various States. This information provided through these applications may not have any legal sanctity and is for general reference only, unless otherwise specified. However, every effort has been made to provide accurate and reliable information through these applications. Users are advised to verify the correctness of the facts published here from the concerned authorities. National Informatics Centre or eCommittee will not be responsible for the accuracy and correctness of the contents available in the application.",
+    "user_info": "User Provided Information",
+    "user_info_text1": "The Applications may obtain the information you provide when you download the Application. The Application does not require any user realted personal information.",
+    "user_info_text2": "However, the Application may obtain device and use related information which you generally provide when you download the Application. When you use the Application, you generally provide (a) download or use applications from us; (c) information you provide when you contact us for help; and; (c) information you enter into our system when using the Application, such as search text and other details. The information you provided may be used for developmental and analytical purposes.",
+    "user_info_text3": "The information you provided may be used to contact you from time to time to provide you with important information and required notices.",
+    "auto_info": "Automatically Collected Information",
+    "auto_info_text": "In addition, the Application may collect certain information automatically, including, but not limited to, the type of mobile device you use, your mobile devices unique device ID, the IP address of your mobile device, your mobile operating system, the type of mobile Internet browsers you use, and information about the way you use the Application.",
+    "disclosure": "Disclosure",
+    "disclosure_text1": "as required by law, such as to comply with a subpoena, or similar legal process;",
+    "disclosure_text2": "when we believe in good faith that disclosure is necessary to protect our rights, protect your safety or the safety of others, investigate fraud, or respond to a government request;",
+    "disclosure_text3": "with our trusted service providers who work on our behalf, do not have an independent use of the information we disclose to them, and have agreed to adhere to the rules set forth in this privacy statement.",
+    "disclosure_text4": "You can stop all collection of information by the Application easily by uninstalling the Application. You may use the standard uninstall processes as may be available as part of your mobile device or via the mobile application marketplace or network.",
+    "retention": "Data Retention",
+    "retention_text": "We will retain User provided data for as long as you use the Application and for a reasonable time thereafter. We will retain Automatically Collected information also for a reasonable period of time depending on the nature of application and thereafter may store it in aggregate. Please note that some or all of the User Provided Data may be required in order for the Application to function properly.",
+    "non_targeted": "Non Targeted Users",
+    "non_targeted_text": "All mobile apps are meant for use by the targeted audience only. Misuse by non-targeted users should be prevented by owner of the mobile.",
+    "security": "Security",
+    "security_text": "We are concerned about safeguarding the confidentiality of your information. We provide physical, electronic, and procedural safeguards to protect information we process and maintain. For example, we limit access to this information to authorized employees and contractors who need to know that information in order to operate, develop or improve our Application. Please be aware that, although we endeavour to provide reasonable security for information we process and maintain, no security system can prevent all potential security breaches.",
+    "changes": "Changes",
+    "changes_text": "This Privacy Policy may be updated from time to time for any reason. We will notify you of any changes to our Privacy Policy by posting the new Privacy Policy here. You are advised to consult this Privacy Policy regularly for any changes, as continued use is deemed approval of all changes.",
+    "consent": "Your Consent",
+    "consent_text": "By using the Application, you are consenting to our processing of your information as set forth in this Privacy Policy now and as amended by us.",
+    "contact": "Contact Us",
+    "contact_text": "If you have any questions regarding privacy while using the Application, or have questions about our practices, please contact us via email at ecommittee[at]aij[dot]gov[dot]in."
+  },
+  "court_links": {
+    "loading": "Loading court links…",
+    "error": "Failed to load court links",
+    "court_prefix": "Court",
+    "tap_to_open": "Tap to open live stream",
+    "no_streams": "No live streams available",
+    "check_back": "Check back later or pull to refresh"
+  },
+  "judges": {
+    "ashutosh_kumar": {
+      "name": "Hon'ble Mr. Justice Ashutosh Kumar",
+      "title": "Chief Justice",
+      "biography": "Hon'ble Mr. Justice Ashutosh Kumar was born on 1st October 1966. After his schooling from St Michaels’ High School, Patna, he graduated from St. Stephens’ College, Delhi University. Justice Kumar did his LLB. from Campus Law Centre, Delhi University. Enrolled as an advocate on 9th July 1991, at Patna High Court. As an advocate Justice Kumar has appeared in important criminal matters including matter related to convicts on Death Row. He was a Government Pleader for the State of Bihar for a short period. He has been elevated as a judge of Patna High Court on 15th of May 2014. He was transferred to Delhi High Court on 07th January 2015 and was repatriated again to Patna High Court on 24th November 2017. Took oath as Chief Justice of the Gauhati High Court on 21st July, 2025."
+    },
+    "michael_zothankhuma": {
+      "name": "Hon’ble Mr. Justice Michael Zothankhuma",
+      "title": "",
+      "biography": "Born on 23.10.1965. Did schooling from St. Edmund's School, Shillong. Obtained B.A. (Hons.) in English from Hindu College under Delhi University. Completed LL.B from Campus Law Centre under Delhi University. Designated as Senior Advocate on 06.09.2010. Elevated as Additional Judge, Gauhati High Court on 07.01.2015. Appointed as Judge of the Gauhati High Court on 3rd January, 2017."
+    },
+    "kalyan_rai_surana": {
+      "name": "Hon’ble Mr. Justice Kalyan Rai Surana",
+      "title": "",
+      "biography": "Born on December 13, 1965. Graduated in Commerce (Major in Management Accountancy & Taxation) in 1988. Obtained LL.B degree in 1991. Enrolled as an Advocate on August 14, 1992. Practiced in various fields of law in the Gauhati High Court and subordinate Courts and also appeared before various Courts and Tribunals in Kolkata and New Delhi. Appointed as Additional Judge of the Gauhati High Court on November 15, 2016. Became permanent Judge w.e.f. 12.11.2018."
+    },
+    "nelson_sailo": {
+      "name": "Hon’ble Mr. Justice Nelson Sailo",
+      "title": "",
+      "biography": "Justice Nelson Sailo obtained Bachelor’s Degree in Arts and in Law from the North Eastern Hill University, Shillong. He enrolled himself in the Bar Council of Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram and Arunachal Pradesh on 21.03.1996 and began his practice in Guwahati. He later shifted his practice to Aizawl and was appointed as Government Advocate, Public Prosecutor and then as Additional Advocate General, Mizoram. He was designated as a Senior Advocate by the High Court on 06.09.2010 and elevated as an Additional Judge of the High Court on 15.11.2016. He became a permanent Judge on 12.11.2018."
+    },
+    "sanjay_kumar_medhi": {
+      "name": "Hon’ble Mr. Justice Sanjay Kumar Medhi",
+      "title": "",
+      "biography": "Justice Sanjay Kumar Medhi was born to Late Surendra Nath Medhi and Smt. Parul Medhi at Guwahati on 07.03.1971. He completed his schooling from the Don Bosco School, Guwahati and thereafter the Higher Secondary (Science) from Cotton College, Guwahati in flying colours. In the year 1988, he took admission in the prestigious Ramjas College, Delhi University where he pursued and obtained the B.A. degree with Honours in Economics in 1991. Thereafter from 1991 to 1994 he was enrolled as a LLB student in Campus Law Centre in the University of Delhi. On obtaining the LLB Degree, in 1994 he enrolled himself as an Advocate for the North East Bar Council on 30.11.1994. In the meantime he had started his practice with Jain Hansaria & Company, a law firm of national repute. In July 1995, he came back to Guwahati and started his practice mainly at the Gauhati High Court under the guidance of his illustrious father Late Surendra Nath Medhi who was a Senior Advocate at that time. Justice Sanjay Kumar Medhi was appointed as the Standing Counsel of the Gauhati High Court in the year 2012, which he continued till his elevation. On 06.04.2017 he was designated as a Senior Advocate and in November, 2017 he was appointed as the Additional Advocate General, Assam. Sri Medhi has been elevated as an Additional Judge of the Gauhati High Court on 19.11.2018. Became permanent Judge w.e.f. 10.11.2020."
+    },
+    "manish_choudhury": {
+      "name": "Hon’ble Mr. Justice Manish Choudhury",
+      "title": "",
+      "biography": "Born on 01.03.1972 to Late Kshitish Chandra Choudhury and Smt. Mira Choudhury, Justice Manish Choudhury passed the High School Leaving Certificate Examination, 1987 as a rank holder from Cotton Collegiate School, Guwahati. After passing the Higher Secondary (Science) Examination, 1989 from Cotton College, Guwahati with distinction, he joined Ramjas College, University of Delhi to pursue B.A. (Honours) in Economics. After completing graduation in the year 1992, he completed Masters in Economics in 1994 in 1st Class and obtained LL.B. Degree from J.B. Law College under the Gauhati University. He served as a Lecturer in Economics at Damdama College and North Gauhati College from October, 1995 to November, 1997. In November, 1997, he joined Unit Trust of India ISL at Kolkata where he served till August, 1999. After tendering resignation therefrom, he enrolled himself in the Bar Council of Assam, etc. on 27.08.1999. Practiced mainly in the Principal Seat as well as in the Aizawl Bench, Itanagar Bench and Kohima Bench of the Gauhati High Court. Also attended the Central Administrative Tribunal, the Courts of the District & Sessions Judge in the districts of Assam, the Court of Special Judge, Assam, the Court of Special Judge, CBI, Assam, the Assam Administrative Tribunal, the Assam Board of Revenue, etc. Was Standing Counsel of the Directorate of Land Records, Assam from 2009 to 2016 and Senior Standing Counsel, Higher Education Department, Assam during 2014 to 2016. Was retainer counsel of a number of organizations, companies and PSUs. Appointed Member, State Law Commission, Assam on 24.06.2015. As a Resource Person, he attended Training Programmes organized by Assam State Legal Services Authority all over Assam. On 06.04.2017, he was designated as Senior Advocate by the Gauhati High Court. Elevated as Additional Judge of the Gauhati High Court on 18.01.2019. Became permanent Judge w.e.f. 10.11.2020."
+    },
+    "soumitra_saikia": {
+      "name": "Hon’ble Mr. Justice Soumitra Saikia",
+      "title": "",
+      "biography": "Justice Soumitra Saikia obtained his LLB degree from J.B. Law College under the Gauhati University in the year 1995. He started his practice after being admitted to be an Advocate of the Bar Council of the Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram, Arunachal Pradesh & Sikkim on 20th September 1995. He practiced in revenue & taxation matters, labour and service matters, corporate matters, arbitration and contract matters. He also appeared in a few civil and criminal appeals before the High Court. He appeared in several important matters and represented various Public Sector Enterprises in several matters. He also represented various departments under the Government of Assam like PWD, Secondary Education, Finance & Taxation, Agriculture Marketing Board to name a few, as well as the AICTE as its standing counsel for a few years. He was the Senior Standing Counsel for the Income Tax Department for several years for the Gauhati High Court. He was appointed as an Additional Advocate General for the State of Arunachal Pradesh in August 2016 and which he continued to be till his elevation. He was also appointed as Secretary of the Indian Law Institute (ILI) Assam Chapter. He was elevated to the Bench as an Additional Judge on 26.11.2019. Became permanent Judge w.e.f. 13.10.2021."
+    },
+    "parthivjyoti_saikia": {
+      "name": "Hon’ble Mr. Justice Parthivjyoti Saikia",
+      "title": "",
+      "biography": "Son of Sri Purna Chandra Saikia, retired District and Sessions Judge. He was born on 18.04.1965. He had completed his school at Guwahati and thereafter completed his education at Nagaon. He has joined Assam Judicial Service in the year 1992. Worked as District and Sessions Judge since September, 2011, in between, he had also held the position of Member Secretary, Assam State Legal Service Authority. Elevated as Additional Judge of the Gauhati High Court on 26.11.2019. At the time of elevation, he was working as District and Sessions Judge, Tinsukia. Became permanent Judge w.e.f. 13.10.2021."
+    },
+    "robin_phukan": {
+      "name": "Hon’ble Mr. Justice Robin Phukan",
+      "title": "",
+      "biography": "Born in Shillong in the year 1966. Did early schooling in Shillong and, thereafter, at Sivasagar, Assam. Obtained B.Sc. degree from Sivasagar College, Joysagar in the year 1986. Pursued LL.B. from Govt. Law College (erstwhile Earl Law College), Guwahati and LL.M. from Gauhati University. Joined Assam Judicial Service in the year 1993 and served at different places in Assam in different capacities till elevation to Gauhati High Court on 21.06.2021, as Additional Judge. Also served in Gauhati High Court as Registrar (Administration), Registrar (Vigilance) and Registrar General. Became permanent Judge w.e.f. 18.05.2023."
+    },
+    "devashis_baruah": {
+      "name": "Hon’ble Mr. Justice Devashis Baruah",
+      "title": "",
+      "biography": "Born in a family, where his grandfather Late B.D.S. Barooah, retired as a District Judge and his father Late Justice D.N. Baruah, retired as Judge of the Gauhati High Court; Justice Devashis Baruah completed his schooling from Don Bosco School, Guwahati in the year 1989, his graduation in B.A. (History) from the Cotton College, Guwahati in the year 1994 and obtained his LL.B from Campus Law Centre, Delhi University in the year, 1997. After obtaining his Law degree, he started practicing before the Gauhati High Court at its Principal Seat as well as before its outlying benches. He also appeared regularly before the Civil Courts and Tribunals. He practiced in diverse fields such as civil, constitutional, taxation, arbitration and company matters. He was the Standing Counsel of the Election Commission of India since 2009 till his elevation. He was also the Additional Advocate General of Assam at the time of his elevation. He was elevated as an Additional Judge, Gauhati High Court on 13.10.2021. Became permanent Judge w.e.f. 01.08.2023."
+    },
+    "marli_vankung": {
+      "name": "Hon’ble Mrs. Justice Marli Vankung",
+      "title": "",
+      "biography": "Justice Marli Vankung was born on 04-03-1964 at Aizawl to Brig. (late) C. Vankunga. She joined NEHU to pursue B.A. (English Hons.) and after having obtained LL.B. and M. Phil (International Legal Studies) degrees from the University of Delhi and Jawaharlal Nehru University, New Delhi, joined the Mizoram Judicial Service on 10-09-1989. After separation of the judiciary from the executive in the State of Mizoram, she held various posts such as Member Secretary, Mizoram State Legal Services Authority; Addl. District & Sessions Judge, Aizawl; District and Sessions Judge, Lunglei Judicial District; Presiding Officer, MACT, Aizawl; and Secretary, Law and Judicial Department, Govt. of Mizoram. Justice Vankung attended various seminars/ programmes including the International Visitor’s Program on ‘Administration of Justice in the U.S’ in Washington D.C from 9th August to 30th August 2001, and the Advocates International Meet at Seoul, South Korea from 20th – 23rd October 2001. She also assisted an NGO called ‘International Justice Mission’ whose mission was to rescue minor girls forced into prostitution from the red light areas of Mumbai and took steps towards the prosecution of the brothel keepers and pimps involved. Elevated as Additional Judge of the Gauhati High Court on 13-10-2021. Became permanent Judge w.e.f. 01.08.2023."
+    },
+    "arun_dev_choudhury": {
+      "name": "Hon’ble Mr. Justice Arun Dev Choudhury",
+      "title": "",
+      "biography": "Having completed B.A. from Cotton College, Guwahati in the year 1992, he completed his Master Degree in Economics from Gauhati University in the year 1995. Thereafter, he obtained LL.B. degree from Government Law College, Guwahati in the year 2000 and enrolled as an Advocate in the Bar Council of Assam etc. on 22.11.2000. He practiced before the Gauhati High Court at the Principal Seat as well as before the outlying Benches, mainly dealing with constitutional matters, civil matters, arbitration matters, service matters etc. He also practiced before various Civil Courts and Tribunals within the jurisdiction of Gauhati High Court. He was the Standing Counsels for different authorities/ institutions like Education Department, Government of Assam, Krishna Kanta Handique State Open University, the Assam Co-Operative Apex Bank etc. He was appointed as Additional Advocate General, State of Mizoram for the Principal Seat of the Gauhati High Court on 03.04.2019 and he continued in that capacity till his elevation. He has been elevated as Additional Judge of the Guahati High Court on 05.11.2021. Became permanent Judge w.e.f. 01.08.2023."
+    },
+    "susmita_phukan_khaund": {
+      "name": "Hon’ble Mrs. Justice Susmita Phukan Khaund",
+      "title": "",
+      "biography": "Born and brought up in Namrup, she did her schooling from H.F.C. Model School, Namrup. Passed B.A. (Honours) in Economics from Handique Girls College, Guwahati. Completed Masters in Economics from Gauhati University in the year 1989. Obtained LL.B degree from Gauhati University (Government Law College) in the year 1989. Enrolled as an Advocate on 12.03.1991. Joined as a Judicial Officer, Grade-III of Assam Judicial Service on 27.07.1995. Appointed to Grade-II of Assam Judicial Service on 29.11.2006 and Grade-I on 29.08.2012. Elevated as an Additional Judge of the Gauhati High Court on 16th of August, 2022. Became permanent Judge w.e.f. 18.06.2024."
+    },
+    "mitali_thakuria": {
+      "name": "Hon’ble Mrs. Justice Mitali Thakuria",
+      "title": "",
+      "biography": "Born in Guwahati and passed HSLC examination in the year 1982 from T.C. Girls School, Guwahati. Completed graduation in 1987 in Science Stream from Handique Girls College, Guwahati. Completed Masters in Zoology and LLB in the same year i.e., 1992. After enrolment in the Bar, started practicing mainly in Civil Court in District Judges Court campus. Joined in the Judicial Service in March 1998. Promoted to Grade I in December 2012. Serving as District & Sessions Judge, Kamrup (M) till elevation. Elevated to Additional Judge, Gauhati High Court on 16.08.2022. Became permanent Judge w.e.f. 18.06.2024."
+    },
+    "kardak_ete": {
+      "name": "Hon’ble Mr. Justice Kardak Ete",
+      "title": "",
+      "biography": "Born on 09.04.1975 at Paya Village, West Siang District, Arunachal Pradesh. Did schooling from Government Higher Secondary School, Aalo, Arunachal Pradesh. Graduated in 1995 from Zakir Husain College, Delhi University. LLB from Campus Law Centre, Faculty of Law, Delhi University. Enrolled as an Advocate in the Bar council of Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram, Arunachal Pradesh & Sikkim in 1999. Designated as Senior Advocate in 2014. Appointed as Additional Advocate General for the State of Arunachal Pradesh in 2011. Appointed as Senior Additional Advocate General in 2016 and as Acting Advocate General in 2021. Served as President of Gauhati High Court Itanagar Permanent Bench Bar Association from 2010-2011. Elevated as Additional Judge of Gauhati High Court on 13.03.2023. Became permanent Judge w.e.f. 21.01.2025."
+    },
+    "mridul_kumar_kalita": {
+      "name": "Hon’ble Mr. Justice Mridul Kumar Kalita",
+      "title": "",
+      "biography": "He was born, on 2nd July 1968, in Guwahati, to late Mukunda Chandra Kalita and Smt. Satyabati Kalita of village- Dharapur in Kamrup (Metro) district of Assam. He had his schooling in Kendriya Vidyalaya at three different places namely Delhi Cantt., Bengdubi and Borjhar (Guwahati). He obtained B.Sc. degree from the Arya Vidyapeeth College, Guwahati, and thereafter LL.B degree from the University Law College, Gauhati University in the year 1994. Thereafter, he obtained LL.M degree, from Gauhati University, in the year 1997. After obtaining law degree, he enrolled as an Advocate under the Bar council of Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram, Arunachal Pradesh & Sikkim on 23/09/1994, and practiced, mainly in district courts, for a period of about four years. He also served as a lecturer in the J.B. Law College at Guwahati from 1998 for about two years. In the year 2000, he topped the list of selected candidates and joined the Assam Judicial Service on 10/05/2000. He served in various capacities in the Assam Judicial Service at different places of Assam. He also worked in various capacities, in the Registry of the Gauhati High Court, including Registrar-cum-Principal Secretary to Hon’ble the Chief Justice, Registrar (Administration) and Registrar (Vigilance). He also served as Legal Remembrance-cum-Secretary to the Government of Assam, Judicial Department. He also served as District & Sessions Judge at Sonitpur, Nagaon and Jorhat districts. At the time of his elevation, as an Additional Judge of the Gauhati High Court, he was a Super Time Scale District & Sessions Judge and was posted as District & Sessions Judge, Jorhat. Became permanent Judge w.e.f. 21.01.2025."
+    },
+    "budi_habung": {
+      "name": "Hon’ble Mr. Justice Budi Habung",
+      "title": "",
+      "biography": "Born on 6th April, 1969 at Hong village of Lower Subansiri District, Arunachal Pradesh. He studied at Government Higher Secondary School, Ziro (Now DKGHSS). Completed BA (Hons) and MA at Arunachal University (Now RGU), and LL.B degree from North-Eastern Hill University (NEHU), Shillong. He enrolled as an Advocate on 23rd May 2000 and practiced in Trial Courts in Assam, Arunachal Pradesh and in the Gauhati High Court. He served as General Secretary of Gauhati High Court Itanagar Permanent Bench Bar Association during 2008-2010. The first recruitment of Judicial Officers for the State of Arunachal Pradesh was held in 2009 and he topped the Arunachal Pradesh Judicial Service Examination becoming the first Judicial Officer to be appointed as the District and Sessions Judge on 31st March 2010. He served in Tezu, Yupia and Pasighat districts of Arunachal Pradesh. He also served as Member Secretary, Arunachal Pradesh State Legal Services Authority (APSLSA) and Registrar at the Gauhati High Court, Itanagar Permanent Bench, Naharlagun/Yupia before being appointed as Additional Judge of the Gauhati High Court on 12th September 2023. Became permanent Judge w.e.f. 01.09.2025."
+    },
+    "unni_krishnan_nair": {
+      "name": "Hon’ble Mr. Justice N. Unni Krishnan Nair",
+      "title": "",
+      "biography": "Born on 28th July, 1971 to Mr. K.P. Narayanan and Late Ponnamma Nair, he completed his secondary education in the year 1987 from Don Bosco School, Guwahati. Thereafter, he obtained his LL.B. degree from J.B. Law College in 1996 and thereafter, enrolled as an Advocate in the Bar Council of Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram and Arunachal Pradesh. Justice N. Unni Krishnan Nair initially started his practice under the aegis of Late D.R. Gogoi and thereafter, joined the Chambers of Mr. B.K. Sarma, Senior Advocate (as he then was). His domain of expertise comprised mainly of Constitutional, Civil, Service, Contracts, Arbitration matters, etc., and he appeared extensively before the Hon’ble Gauhati High Court and its subordinate Courts, as well as, before the Central Administrative Tribunal (CAT). He was appointed as a Standing Counsel in the Department of Home & Border Affairs, Railways, Pension & Public Grievances, Director of Land Records, Assam. Also appeared for Numaligarh Refinery, Oil India Limited, etc., before the Hon’ble Gauhati High Court, Principal Bench. He was also appointed as the Standing Counsel of the Hon’ble Gauhati High Court in the year 2012 and continued as such till his elevation. Justice N. Unni Krishnan Nair was designated as a Senior Advocate by the Gauhati High Court in the year 2017 and continued as such, till his elevation as an Additional Judge of the Hon’ble Gauhati Court on 10.11.2023. Became permanent Judge w.e.f. 01.09.2025."
+    },
+    "kaushik_goswami": {
+      "name": "Hon’ble Mr. Justice Kaushik Goswami",
+      "title": "",
+      "biography": "Born on 4th day of September, 1975. Completed secondary education from Don Bosco School, Guwahati. Passed Higher Secondary from Delhi Public School, R.K.Puram, New Delhi. Graduate in Bachelor of Social, Legal Sciences (B.S.L) from University of Pune and obtained Bachelor of Law (L.L.B) from ILS, University of Pune. Enrolled as an Advocate with the Bar Council of Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram and Arunachal Pradesh on 27.07.2000. Had been practicing mainly on Writs, Government Matters, Matters related to 6th Schedule, POCSO Act, JJ Act, Service Law, Labour Law and Dispute, Industrial Law, Contract and Tax Law, Company Law including Winding up & Merger/de-Merger, Civil, Criminal Appeals, Arbitration Matters and Specific Relief Act. Worked as Standing Counsel for Dima Hasao Autonomous Council, Haflong and the Gauhati High Court from 28.1.2013 till 2022. Appointed as Additional Senior Government Advocate of the Gauhati High Court from 31.05.2021 to 28.07.2022. Empaneled as Amicus Curiae of the Gauhati High Court. Was Panel Advocate for The Official Liquidator, (Attached to the Gauhati High Court). Designated as Senior Advocate vide notification dated 19.05.2022 by the Gauhati High Court and continued as such till elevation as an Additional Judge of the Gauhati High Court on 2.11.2023. Took oath as Additional Judge of the Gauhati High Court on 10.11.2023."
+    },
+    "yarenjungla_longkumer": {
+      "name": "Hon’ble Mrs. Justice Yarenjungla Longkumer",
+      "title": "",
+      "biography": "Born on 15th January, 1968 at Kohima, Nagaland. Did her matriculation in the year 1983 from Little Flower School, Kohima, obtained BA (Hons) from Lady Shri Ram College, New Delhi in the year 1988. After completing LLB from Campus Law Center Delhi in the year 1992, she enrolled in the Bar Council of North East on 03.11.1992 under Gauhati High Court. Joined Government panel as Junior Govt. Advocate in the year 1996, worked as Jr. Govt. Advocate, Additional Sr. Govt. Advocate and Sr. Govt. Advocate. She was recruited as District and Session Judge Kohima on 10.04.2013, and thereafter, served as Special Judge Lokayukta, Sessions Judge Dimapur (twice), Registrar Kohima Bench and Secretary Judicial Law Department Govt. of Nagaland. Appointed as Additional Judge of the Gauhati High Court on 17th February, 2025. She is the first Lady amongst the Nagas to be appointed as the Judge of the High Court."
+    },
+    "shamima_jahan": {
+      "name": "Hon’ble Mrs. Justice Shamima Jahan",
+      "title": "",
+      "biography": "Daughter of Late Shamsul Karim Khan and Late Babi Khan, did her schooling from Kendriya Vidyalaya Khanapara, Guwahati, Assam. She stood first in her Higher Secondary Examination from the same school in her stream. She then did her graduation from Cotton College, Guwahati in 1995 with major in Economics. Thereafter she obtained her LL.B degree from BRM Law College, Guwahati in the year 2000. She then immediately enrolled herself as an advocate of the Bar Council of Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram, Arunachal Pradesh and Sikkim in the same year. She started her practice under the guidance of Mr. D. K. Mishra, Senior Advocate, Gauhati High Court. While practicing, she completed her masters in law and obtained her LL.M degree from the Gauhati University in the year 2002. She mainly practiced in Writ matters, constitutional matters, service matters, labour matters, contempt matters, matters related to 6th Schedule of the Constitution of India, Land acquisition matters etc. She was thereafter appointed as an Additional Public Prosecutor, Gauhati High Court for the State of Assam in the year 2013 and worked in the said capacity till 2025 i.e. until her elevation to the Hon’ble Bench of the Gauhati High Court. She was also appointed as a Mediator, Gauhati High Court and had mediated in many matrimonial matters as well as money suits. She was then appointed as Additional Judge of Gauhati High Court at Guwahati on 28th of May, 2025, the day on which she took her oath."
+    },
+    "anjan_moni_kalita": {
+      "name": "Hon’ble Mr. Justice Anjan Moni Kalita",
+      "title": "",
+      "biography": "Biography placeholder."
+    },
+    "rajesh_mazumdar": {
+      "name": "Hon’ble Mr. Justice Rajesh Mazumdar",
+      "title": "",
+      "biography": "Biography placeholder."
+    },
+    "pranjal_das": {
+      "name": "Hon’ble Mr. Justice Pranjal Das",
+      "title": "",
+      "biography": "Biography placeholder."
+    }
+  }
+}

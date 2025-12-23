@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "ghc_app",
+    "slug": "ghc_app",
+    "version": "1.0.0",
+    "sdkVersion": "51.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "splash": {
+      "backgroundColor": "#ffffff"
+    },
+    "android": {
+      "package": "com.ghc.app"
+    },
+    "plugins": [
+      "expo-localization"
+    ]
+  }
+}

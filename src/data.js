@@ -1,0 +1,547 @@
+export const judge = {
+  id: "ashutosh_kumar",
+  name: "Hon'ble Mr. Justice Ashutosh Kumar",
+  title: "Chief Justice",
+  avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/HCJ-Ashutosh-Kumar.jpg",
+  biography:
+    "Hon'ble Mr. Justice Ashutosh Kumar was enrolled as an advocate in 1990 and practiced extensively in constitutional, civil and criminal matters before various High Courts and the Supreme Court of India. He was elevated as a Judge of the Gauhati High Court on 07.01.2015 and has since served on several important administrative and judicial committees of the Court.",
+  details: [
+    { label: "Parent High Court", value: "Gauhati" },
+    { label: "Stream", value: "Bar" },
+    { label: "Date of Birth", value: "23.10.1965" },
+    { label: "Date of Elevation", value: "07.01.2015" },
+    { label: "Date of Transfer", value: "-" },
+    { label: "Date of Retirement", value: "22.10.2027" },
+    {
+      label: "Postal Address",
+      value:
+        "A-1C/57, Chaltlang-Salem Veng, Aizawl.\nCamp: Gauhati High Court Judges Guest House, Kharghuli.",
+    },
+    { label: "Place of Stationing", value: "Principal Seat" },
+  ],
+};
+
+const placeholderAvatar = "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=400&h=500&fit=crop";
+export const placeholderBio = "Biography placeholder.";
+
+export const judges = [
+  {
+    id: "ashutosh_kumar",
+    name: "Hon'ble Mr. Justice Ashutosh Kumar",
+    title: "Chief Justice",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/HCJ-Ashutosh-Kumar.jpg",
+    biography:
+      "Hon’ble Mr. Justice Ashutosh Kumar was born on 1st October 1966. After his schooling from St Michaels’ High School, Patna, he graduated from St. Stephens’ College, Delhi University. Justice Kumar did his LLB. from Campus Law Centre, Delhi University. Enrolled as an advocate on 9th July 1991, at Patna High Court. As an advocate Justice Kumar has appeared in important criminal matters including matter related to convicts on Death Row. He was a Government Pleader for the State of Bihar for a short period. He has been elevated as a judge of Patna High Court on 15th of May 2014. He was transferred to Delhi High Court on 07th January 2015 and was repatriated again to Patna High Court on 24th November 2017. Took oath as Chief Justice of the Gauhati High Court on 21st July, 2025.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "01.10.1966" },
+      { label: "Date of Elevation", value: "" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "30.09.2028" },
+      { label: "Postal Address", value: "" },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "michael_zothankhuma",
+    name: "Hon’ble Mr. Justice Michael Zothankhuma",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/HMJ-M-Zothankhuma.jpg",
+    biography:
+      "Born on 23.10.1965. Did schooling from St. Edmund's School, Shillong. Obtained B.A. (Hons.) in English from Hindu College under Delhi University. Completed LL.B from Campus Law Centre under Delhi University. Designated as Senior Advocate on 06.09.2010. Elevated as Additional Judge, Gauhati High Court on 07.01.2015. Appointed as Judge of the Gauhati High Court on 3rd January, 2017.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "23.10.1965" },
+      { label: "Date of Elevation", value: "07.01.2015" },
+      { label: "Date of Transfer", value: "-" },
+      { label: "Date of Retirement", value: "22.10.2027" },
+      {
+        label: "Postal Address",
+        value:
+          "A-1C/57, Chaltlang-Salem Veng, Aizawl.\nCamp: Gauhati High Court Judges Guest House, Kharghuli.",
+      },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "094361-41332 (M)" },
+    ],
+  },
+  {
+    id: "kalyan_rai_surana",
+    name: "Hon’ble Mr. Justice Kalyan Rai Surana",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2021/09/KRSurana111.jpg",
+    biography:
+      "Born on December 13, 1965. Graduated in Commerce (Major in Management Accountancy & Taxation) in 1988. Obtained LL.B degree in 1991. Enrolled as an Advocate on August 14, 1992. Practiced in various fields of law in the Gauhati High Court and subordinate Courts and also appeared before various Courts and Tribunals in Kolkata and New Delhi. Appointed as Additional Judge of the Gauhati High Court on November 15, 2016. Became permanent Judge w.e.f. 12.11.2018.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "13.12.1965" },
+      { label: "Date of Elevation", value: "15.11.2016" },
+      { label: "Date of Transfer", value: "-" },
+      { label: "Date of Retirement", value: "12.12.2027" },
+      {
+        label: "Postal Address",
+        value:
+          "Bunglow No. 8, Near High Court Guest House, Kharghuli Main Road, Guwahati, Kamrup (M), Assam",
+      },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "-" },
+    ],
+  },
+  {
+    id: "nelson_sailo",
+    name: "Hon’ble Mr. Justice Nelson Sailo",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/Nelson-Sailo-4.jpg",
+    biography:
+      "Justice Nelson Sailo obtained Bachelor’s Degree in Arts and in Law from the North Eastern Hill University, Shillong. He enrolled himself in the Bar Council of Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram and Arunachal Pradesh on 21.03.1996 and began his practice in Guwahati. He later shifted his practice to Aizawl and was appointed as Government Advocate, Public Prosecutor and then as Additional Advocate General, Mizoram. He was designated as a Senior Advocate by the High Court on 06.09.2010 and elevated as an Additional Judge of the High Court on 15.11.2016. He became a permanent Judge on 12.11.2018.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "09.10.1968" },
+      { label: "Date of Elevation", value: "15.11.2016" },
+      { label: "Date of Transfer", value: "-" },
+      { label: "Date of Retirement", value: "08.10.2030" },
+      {
+        label: "Postal Address",
+        value: "T-63, Tlangnuam, Aizawl - 796005, Mizoram\nCamp: Bungalow No.-4, Kharghuli, Guwahati.",
+      },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "-" },
+    ],
+  },
+  {
+    id: "sanjay_kumar_medhi",
+    name: "Hon’ble Mr. Justice Sanjay Kumar Medhi",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/SKM.jpeg",
+    biography:
+      "Justice Sanjay Kumar Medhi was born to Late Surendra Nath Medhi and Smt. Parul Medhi at Guwahati on 07.03.1971. He completed his schooling from the Don Bosco School, Guwahati and thereafter the Higher Secondary (Science) from Cotton College, Guwahati in flying colours. In the year 1988, he took admission in the prestigious Ramjas College, Delhi University where he pursued and obtained the B.A. degree with Honours in Economics in 1991. Thereafter from 1991 to 1994 he was enrolled as a LLB student in Campus Law Centre in the University of Delhi. On obtaining the LLB Degree, in 1994 he enrolled himself as an Advocate for the North East Bar Council on 30.11.1994. In the meantime he had started his practice with Jain Hansaria & Company, a law firm of national repute. In July 1995, he came back to Guwahati and started his practice mainly at the Gauhati High Court under the guidance of his illustrious father Late Surendra Nath Medhi who was a Senior Advocate at that time. Justice Sanjay Kumar Medhi was appointed as the Standing Counsel of the Gauhati High Court in the year 2012, which he continued till his elevation. On 06.04.2017 he was designated as a Senior Advocate and in November, 2017 he was appointed as the Additional Advocate General, Assam. Sri Medhi has been elevated as an Additional Judge of the Gauhati High Court on 19.11.2018. Became permanent Judge w.e.f. 10.11.2020.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "07.03.1971" },
+      { label: "Date of Elevation", value: "19.11.2018" },
+      { label: "Date of Transfer", value: "-" },
+      { label: "Date of Retirement", value: "06.03.2033" },
+      {
+        label: "Postal Address",
+        value:
+          "House No. 2, Guwahati Law Chambers, Green Path, Ulubari, Guwahati, Kamrup (M), Assam.",
+      },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "manish_choudhury",
+    name: "Hon’ble Mr. Justice Manish Choudhury",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2023/03/ManishChaudhury1.jpg",
+    biography:
+      "Born on 01.03.1972 to Late Kshitish Chandra Choudhury and Smt. Mira Choudhury, Justice Manish Choudhury passed the High School Leaving Certificate Examination, 1987 as a rank holder from Cotton Collegiate School, Guwahati. After passing the Higher Secondary (Science) Examination, 1989 from Cotton College, Guwahati with distinction, he joined Ramjas College, University of Delhi to pursue B.A. (Honours) in Economics. After completing graduation in the year 1992, he completed Masters in Economics in 1994 in 1st Class and obtained LL.B. Degree from J.B. Law College under the Gauhati University. He served as a Lecturer in Economics at Damdama College and North Gauhati College from October, 1995 to November, 1997. In November, 1997, he joined Unit Trust of India ISL at Kolkata where he served till August, 1999. After tendering resignation therefrom, he enrolled himself in the Bar Council of Assam, etc. on 27.08.1999. Practiced mainly in the Principal Seat as well as in the Aizawl Bench, Itanagar Bench and Kohima Bench of the Gauhati High Court. Also attended the Central Administrative Tribunal, the Courts of the District & Sessions Judge in the districts of Assam, the Court of Special Judge, Assam, the Court of Special Judge, CBI, Assam, the Assam Administrative Tribunal, the Assam Board of Revenue, etc. Was Standing Counsel of the Directorate of Land Records, Assam from 2009 to 2016 and Senior Standing Counsel, Higher Education Department, Assam during 2014 to 2016. Was retainer counsel of a number of organizations, companies and PSUs. Appointed Member, State Law Commission, Assam on 24.06.2015. As a Resource Person, he attended Training Programmes organized by Assam State Legal Services Authority all over Assam. On 06.04.2017, he was designated as Senior Advocate by the Gauhati High Court. Elevated as Additional Judge of the Gauhati High Court on 18.01.2019. Became permanent Judge w.e.f. 10.11.2020.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "01.03.1972" },
+      { label: "Date of Elevation", value: "18.01.2019" },
+      { label: "Date of Transfer", value: "-" },
+      { label: "Date of Retirement", value: "28.02.2034" },
+      {
+        label: "Postal Address",
+        value: "72, Piyoli Phukan Road, Rehabari, Guwahati-781008, Kamrup (M), Assam.",
+      },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "-" },
+    ],
+  },
+  {
+    id: "soumitra_saikia",
+    name: "Hon’ble Mr. Justice Soumitra Saikia",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/SoumitraSaikia-1.jpg",
+    biography:
+      "Justice Soumitra Saikia obtained his LLB degree from J.B. Law College under the Gauhati University in the year 1995. He started his practice after being admitted to be an Advocate of the Bar Council of the Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram, Arunachal Pradesh & Sikkim on 20th September 1995. He practiced in revenue & taxation matters, labour and service matters, corporate matters, arbitration and contract matters. He also appeared in a few civil and criminal appeals before the High Court. He appeared in several important matters and represented various Public Sector Enterprises in several matters. He also represented various departments under the Government of Assam like PWD, Secondary Education, Finance & Taxation, Agriculture Marketing Board to name a few, as well as the AICTE as its standing counsel for a few years. He was the Senior Standing Counsel for the Income Tax Department for several years for the Gauhati High Court. He was appointed as an Additional Advocate General for the State of Arunachal Pradesh in August 2016 and which he continued to be till his elevation. He was also appointed as Secretary of the Indian Law Institute (ILI) Assam Chapter. He was elevated to the Bench as an Additional Judge on 26.11.2019. Became permanent Judge w.e.f. 13.10.2021.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "25.07.1969" },
+      { label: "Date of Elevation", value: "26.11.2019" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "24.07.2031" },
+      {
+        label: "Postal Address",
+        value: "12, Ratnagiri Lane, Bamunimaidam, Guwahati-781021, Kamrup (M), Assam",
+      },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "parthivjyoti_saikia",
+    name: "Hon’ble Mr. Justice Parthivjyoti Saikia",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/HMJ_PJ_Saikia1.jpg",
+    biography:
+      "Son of Sri Purna Chandra Saikia, retired District and Sessions Judge. He was born on 18.04.1965. He had completed his school at Guwahati and thereafter completed his education at Nagaon. He has joined Assam Judicial Service in the year 1992. Worked as District and Sessions Judge since September, 2011, in between, he had also held the position of Member Secretary, Assam State Legal Service Authority. Elevated as Additional Judge of the Gauhati High Court on 26.11.2019. At the time of elevation, he was working as District and Sessions Judge, Tinsukia. Became permanent Judge w.e.f. 13.10.2021.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Judicial Service" },
+      { label: "Date of Birth", value: "18.04.1965" },
+      { label: "Date of Elevation", value: "26.11.2019" },
+      { label: "Date of Transfer", value: "-" },
+      { label: "Date of Retirement", value: "17.04.2027" },
+      {
+        label: "Postal Address",
+        value:
+          "House No. 8, 1st Bye lane, Shanti Path, R.G. Baruah Road, Guwahati- 781024, Kamrup (M), Assam.",
+      },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "-" },
+    ],
+  },
+  {
+    id: "robin_phukan",
+    name: "Hon’ble Mr. Justice Robin Phukan",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/HMJ_R_Phukan2.jpg",
+    biography:
+      "Born in Shillong in the year 1966. Did early schooling in Shillong and, thereafter, at Sivasagar, Assam. Obtained B.Sc. degree from Sivasagar College, Joysagar in the year 1986. Pursued LL.B. from Govt. Law College (erstwhile Earl Law College), Guwahati and LL.M. from Gauhati University.\n\nJoined Assam Judicial Service in the year 1993 and served at different places in Assam in different capacities till elevation to Gauhati High Court on 21.06.2021, as Additional Judge.\n\nAlso served in Gauhati High Court as Registrar (Administration), Registrar (Vigilance) and Registrar General. Became permanent Judge w.e.f. 18.05.2023.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Judicial Service" },
+      { label: "Date of Birth", value: "01.03.1966" },
+      { label: "Date of Elevation", value: "21.06.2021" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "28.02.2028" },
+      {
+        label: "Postal Address",
+        value: "Nawagaon, Near HP Gas Agency, Ahomgaon, Gorchuk, Kamrup(M).",
+      },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "devashis_baruah",
+    name: "Hon’ble Mr. Justice Devashis Baruah",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2021/10/DevashisBaruah-1.jpg",
+    biography:
+      "Born in a family, where his grandfather Late B.D.S. Barooah, retired as a District Judge and his father Late Justice D.N. Baruah, retired as Judge of the Gauhati High Court; Justice Devashis Baruah completed his schooling from Don Bosco School, Guwahati in the year 1989, his graduation in B.A. (History) from the Cotton College, Guwahati in the year 1994 and obtained his LL.B from Campus Law Centre, Delhi University in the year, 1997.\n\nAfter obtaining his Law degree, he started practicing before the Gauhati High Court at its Principal Seat as well as before its outlying benches. He also appeared regularly before the Civil Courts and Tribunals. He practiced in diverse fields such as civil, constitutional, taxation, arbitration and company matters.\n\nHe was the Standing Counsel of the Election Commission of India since 2009 till his elevation. He was also the Additional Advocate General of Assam at the time of his elevation.\n\nHe was elevated as an Additional Judge, Gauhati High Court on 13.10.2021. Became permanent Judge w.e.f. 01.08.2023.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "22.02.1973" },
+      { label: "Date of Elevation", value: "13.10.2021" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "21.02.2035" },
+      {
+        label: "Postal Address",
+        value:
+          "Sri Devashis Baruah, ‘DHIRENDRALOY’ House No.: 13, Rajgarh 2nd Byelane, Guwahati- 781 003",
+      },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "marli_vankung",
+    name: "Hon’ble Mrs. Justice Marli Vankung",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2021/10/MarliVankung-1.jpg",
+    biography:
+      "Justice Marli Vankung was born on 04-03-1964 at Aizawl to Brig. (late) C. Vankunga. She joined NEHU to pursue B.A. (English Hons.) and after having obtained LL.B. and M. Phil (International Legal Studies) degrees from the University of Delhi and Jawaharlal Nehru University, New Delhi, joined the Mizoram Judicial Service on 10-09-1989. After separation of the judiciary from the executive in the State of Mizoram, she held various posts such as Member Secretary, Mizoram State Legal Services Authority; Addl. District & Sessions Judge, Aizawl; District and Sessions Judge, Lunglei Judicial District; Presiding Officer, MACT, Aizawl; and Secretary, Law and Judicial Department, Govt. of Mizoram.\n\nJustice Vankung attended various seminars/ programmes including the International Visitor’s Program on ‘Administration of Justice in the U.S’ in Washington D.C from 9th August to 30th August 2001, and the Advocates International Meet at Seoul, South Korea from 20th – 23rd October 2001. She also assisted an NGO called ‘International Justice Mission’ whose mission was to rescue minor girls forced into prostitution from the red light areas of Mumbai and took steps towards the prosecution of the brothel keepers and pimps involved.\n\nElevated as Additional Judge of the Gauhati High Court on 13-10-2021. Became permanent Judge w.e.f. 01.08.2023.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Judicial Service" },
+      { label: "Date of Birth", value: "04.03.1964" },
+      { label: "Date of Elevation", value: "13.10.2021" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "03.03.2026" },
+      {
+        label: "Postal Address",
+        value: "House No.22(C), Mualvengchung, Republic Veng, Aizawl, Mizoram.",
+      },
+      { label: "Place of Stationing", value: "Aizawl Bench" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "arun_dev_choudhury",
+    name: "Hon’ble Mr. Justice Arun Dev Choudhury",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2021/11/ArunDevChoudhury1-e1637234772155.jpg",
+    biography:
+      "Having completed B.A. from Cotton College, Guwahati in the year 1992, he completed his Master Degree in Economics from Gauhati University in the year 1995. Thereafter, he obtained LL.B. degree from Government Law College, Guwahati in the year 2000 and enrolled as an Advocate in the Bar Council of Assam etc. on 22.11.2000.\n\nHe practiced before the Gauhati High Court at the Principal Seat as well as before the outlying Benches, mainly dealing with constitutional matters, civil matters, arbitration matters, service matters etc. He also practiced before various Civil Courts and Tribunals within the jurisdiction of Gauhati High Court.\n\nHe was the Standing Counsels for different authorities/ institutions like Education Department, Government of Assam, Krishna Kanta Handique State Open University, the Assam Co-Operative Apex Bank etc. He was appointed as Additional Advocate General, State of Mizoram for the Principal Seat of the Gauhati High Court on 03.04.2019 and he continued in that capacity till his elevation.\n\nHe has been elevated as Additional Judge of the Guahati High Court on 05.11.2021. Became permanent Judge w.e.f. 01.08.2023.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "29.10.1971" },
+      { label: "Date of Elevation", value: "05.11.2021" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "28.10.2033" },
+      {
+        label: "Postal Address",
+        value: "‘Niharika’ 3rd Floor, Barowari, Happy Villa, Guwahati-781003",
+      },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "susmita_phukan_khaund",
+    name: "Hon’ble Mrs. Justice Susmita Phukan Khaund",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2024/06/HJSPK.jpeg",
+    biography:
+      "Born and brought up in Namrup, she did her schooling from H.F.C. Model School, Namrup. Passed B.A. (Honours) in Economics from Handique Girls College, Guwahati. Completed Masters in Economics from Gauhati University in the year 1989. Obtained LL.B degree from Gauhati University (Government Law College) in the year 1989. Enrolled as an Advocate on 12.03.1991. Joined as a Judicial Officer, Grade-III of Assam Judicial Service on 27.07.1995. Appointed to Grade-II of Assam Judicial Service on 29.11.2006 and Grade-I on 29.08.2012. Elevated as an Additional Judge of the Gauhati High Court on 16th of August, 2022. Became permanent Judge w.e.f. 18.06.2024.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Judicial Service" },
+      { label: "Date of Birth", value: "22.11.1964" },
+      { label: "Date of Elevation", value: "16.08.2022" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "21.11.2026" },
+      { label: "Postal Address", value: "Hon’ble Judges’ Guest House, Kharghuli" },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "mitali_thakuria",
+    name: "Hon’ble Mrs. Justice Mitali Thakuria",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/HMJ-Mitali-Thakuria.jpeg",
+    biography:
+      "Born in Guwahati and passed HSLC examination in the year 1982 from T.C. Girls School, Guwahati. Completed graduation in 1987 in Science Stream from Handique Girls College, Guwahati. Completed Masters in Zoology and LLB in the same year i.e., 1992.\n\nAfter enrolment in the Bar, started practicing mainly in Civil Court in District Judges Court campus. Joined in the Judicial Service in March 1998.\n\nPromoted to Grade I in December 2012.\n\nServing as District & Sessions Judge, Kamrup (M) till elevation. Elevated to Additional Judge, Gauhati High Court on 16.08.2022. Became permanent Judge w.e.f. 18.06.2024.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Judicial Service" },
+      { label: "Date of Birth", value: "01.01.1965" },
+      { label: "Date of Elevation", value: "16.08.2022" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "31.12.2026" },
+      {
+        label: "Postal Address",
+        value:
+          "House No. 60, Near Maharshi Vidya Mandir School, Silpukhuri, Chandmari, Guwahati-781 003",
+      },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "kardak_ete",
+    name: "Hon’ble Mr. Justice Kardak Ete",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2023/03/Kardak-Ete2.jpg",
+    biography:
+      "Born on 09.04.1975 at Paya Village, West Siang District, Arunachal Pradesh. Did schooling from Government Higher Secondary School, Aalo, Arunachal Pradesh. Graduated in 1995 from Zakir Husain College, Delhi University. LLB from Campus Law Centre, Faculty of Law, Delhi University. Enrolled as an Advocate in the Bar council of Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram, Arunachal Pradesh & Sikkim in 1999. Designated as Senior Advocate in 2014. Appointed as Additional Advocate General for the State of Arunachal Pradesh in 2011. Appointed as Senior Additional Advocate General in 2016 and as Acting Advocate General in 2021. Served as President of Gauhati High Court Itanagar Permanent Bench Bar Association from 2010-2011. Elevated as Additional Judge of Gauhati High Court on 13.03.2023. Became permanent Judge w.e.f. 21.01.2025.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "09.04.1975" },
+      { label: "Date of Elevation", value: "13.03.2023" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "" },
+      { label: "Postal Address", value: "" },
+      { label: "Place of Stationing", value: "Itanagar Bench" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "mridul_kumar_kalita",
+    name: "Hon’ble Mr. Justice Mridul Kumar Kalita",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2023/04/MridulKalita.jpg",
+    biography:
+      "He was born, on 2nd July 1968, in Guwahati, to late Mukunda Chandra Kalita and Smt. Satyabati Kalita of village- Dharapur in Kamrup (Metro) district of Assam. He had his schooling in Kendriya Vidyalaya at three different places namely Delhi Cantt., Bengdubi and Borjhar (Guwahati). He obtained B.Sc. degree from the Arya Vidyapeeth College, Guwahati, and thereafter LL.B degree from the University Law College, Gauhati University in the year 1994. Thereafter, he obtained LL.M degree, from Gauhati University, in the year 1997.\n\nAfter obtaining law degree, he enrolled as an Advocate under the Bar council of Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram, Arunachal Pradesh & Sikkim on 23/09/1994, and practiced, mainly in district courts, for a period of about four years. He also served as a lecturer in the J.B. Law College at Guwahati from 1998 for about two years. In the year 2000, he topped the list of selected candidates and joined the Assam Judicial Service on 10/05/2000.\n\nHe served in various capacities in the Assam Judicial Service at different places of Assam. He also worked in various capacities, in the Registry of the Gauhati High Court, including Registrar-cum-Principal Secretary to Hon’ble the Chief Justice, Registrar (Administration) and Registrar (Vigilance). He also served as Legal Remembrance-cum-Secretary to the Government of Assam, Judicial Department. He also served as District & Sessions Judge at Sonitpur, Nagaon and Jorhat districts.\n\nAt the time of his elevation, as an Additional Judge of the Gauhati High Court, he was a Super Time Scale District & Sessions Judge and was posted as District & Sessions Judge, Jorhat. Became permanent Judge w.e.f. 21.01.2025.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Judicial Service" },
+      { label: "Date of Birth", value: "02.07.1968" },
+      { label: "Date of Elevation", value: "20.04.2023" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "" },
+      { label: "Postal Address", value: "" },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "budi_habung",
+    name: "Hon’ble Mr. Justice Budi Habung",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2023/09/Budi_Habung-1.jpeg",
+    biography:
+      "Born on 6th April, 1969 at Hong village of Lower Subansiri District, Arunachal Pradesh. He studied at Government Higher Secondary School, Ziro (Now DKGHSS). Completed BA (Hons) and MA at Arunachal University (Now RGU), and LL.B degree from North-Eastern Hill University (NEHU), Shillong.\n\nHe enrolled as an Advocate on 23rd May 2000 and practiced in Trial Courts in Assam, Arunachal Pradesh and in the Gauhati High Court. He served as General Secretary of Gauhati High Court Itanagar Permanent Bench Bar Association during 2008-2010. The first recruitment of Judicial Officers for the State of Arunachal Pradesh was held in 2009 and he topped the Arunachal Pradesh Judicial Service Examination becoming the first Judicial Officer to be appointed as the District and Sessions Judge on 31st March 2010. He served in Tezu, Yupia and Pasighat districts of Arunachal Pradesh. He also served as Member Secretary, Arunachal Pradesh State Legal Services Authority (APSLSA) and Registrar at the Gauhati High Court, Itanagar Permanent Bench, Naharlagun/Yupia before being appointed as Additional Judge of the Gauhati High Court on 12th September 2023. Became permanent Judge w.e.f. 01.09.2025.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Judicial Service" },
+      { label: "Date of Birth", value: "06/04/1969" },
+      { label: "Date of Elevation", value: "12/09/2023" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "" },
+      { label: "Postal Address", value: "" },
+      { label: "Place of Stationing", value: "Itanagar Bench" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "unni_krishnan_nair",
+    name: "Hon’ble Mr. Justice N. Unni Krishnan Nair",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2024/06/hmjUKNn.jpg",
+    biography:
+      "Born on 28th July, 1971 to Mr. K.P. Narayanan and Late Ponnamma Nair, he completed his secondary education in the year 1987 from Don Bosco School, Guwahati. Thereafter, he obtained his LL.B. degree from J.B. Law College in 1996 and thereafter, enrolled as an Advocate in the Bar Council of Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram and Arunachal Pradesh.\n\nJustice N. Unni Krishnan Nair initially started his practice under the aegis of Late D.R. Gogoi and thereafter, joined the Chambers of Mr. B.K. Sarma, Senior Advocate (as he then was). His domain of expertise comprised mainly of Constitutional, Civil, Service, Contracts, Arbitration matters, etc., and he appeared extensively before the Hon’ble Gauhati High Court and its subordinate Courts, as well as, before the Central Administrative Tribunal (CAT).\n\nHe was appointed as a Standing Counsel in the Department of Home & Border Affairs, Railways, Pension & Public Grievances, Director of Land Records, Assam. Also appeared for Numaligarh Refinery, Oil India Limited, etc., before the Hon’ble Gauhati High Court, Principal Bench.\n\nHe was also appointed as the Standing Counsel of the Hon’ble Gauhati High Court in the year 2012 and continued as such till his elevation.\n\nJustice N. Unni Krishnan Nair was designated as a Senior Advocate by the Gauhati High Court in the year 2017 and continued as such, till his elevation as an Additional Judge of the Hon’ble Gauhati Court on 10.11.2023. Became permanent Judge w.e.f. 01.09.2025.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "28.07.1971" },
+      { label: "Date of Elevation", value: "10.11.2023" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "" },
+      { label: "Postal Address", value: "" },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "kaushik_goswami",
+    name: "Hon’ble Mr. Justice Kaushik Goswami",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2023/11/Kaushik-Goswami-1.jpg",
+    biography:
+      "Born on 4th day of September, 1975. Completed secondary education from Don Bosco School, Guwahati. Passed Higher Secondary from Delhi Public School, R.K.Puram, New Delhi. Graduate in Bachelor of Social, Legal Sciences (B.S.L) from University of Pune and obtained Bachelor of Law (L.L.B) from ILS, University of Pune. Enrolled as an Advocate with the Bar Council of Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram and Arunachal Pradesh on 27.07.2000.\n\nHad been practicing mainly on Writs, Government Matters, Matters related to 6th Schedule, POCSO Act, JJ Act, Service Law, Labour Law and Dispute, Industrial Law, Contract and Tax Law, Company Law including Winding up & Merger/de-Merger, Civil, Criminal Appeals, Arbitration Matters and Specific Relief Act.\n\nWorked as Standing Counsel for Dima Hasao Autonomous Council, Haflong and the Gauhati High Court from 28.1.2013 till 2022. Appointed as Additional Senior Government Advocate of the Gauhati High Court from 31.05.2021 to 28.07.2022. Empaneled as Amicus Curiae of the Gauhati High Court. Was Panel Advocate for The Official Liquidator, (Attached to the Gauhati High Court). Designated as Senior Advocate vide notification dated 19.05.2022 by the Gauhati High Court and continued as such till elevation as an Additional Judge of the Gauhati High Court on 2.11.2023. Took oath as Additional Judge of the Gauhati High Court on 10.11.2023.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "04.09.1975" },
+      { label: "Date of Elevation", value: "10.11.2023" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "" },
+      { label: "Postal Address", value: "" },
+      { label: "Place of Stationing", value: "Principal Seat" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "yarenjungla_longkumer",
+    name: "Hon’ble Mrs. Justice Yarenjungla Longkumer",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/Yarenjungla-Longkumer.jpg",
+    biography:
+      "Born on 15th January, 1968 at Kohima, Nagaland. Did her matriculation in the year 1983 from Little Flower School, Kohima, obtained BA (Hons) from Lady Shri Ram College, New Delhi in the year 1988. After completing LLB from Campus Law Center Delhi in the year 1992, she enrolled in the Bar Council of North East on 03.11.1992 under Gauhati High Court. Joined Government panel as Junior Govt. Advocate in the year 1996, worked as Jr. Govt. Advocate, Additional Sr. Govt. Advocate and Sr. Govt. Advocate. She was recruited as District and Session Judge Kohima on 10.04.2013, and thereafter, served as Special Judge Lokayukta, Sessions Judge Dimapur (twice), Registrar Kohima Bench and Secretary Judicial Law Department Govt. of Nagaland.\n\nAppointed as Additional Judge of the Gauhati High Court on 17th February, 2025.\n\nShe is the first Lady amongst the Nagas to be appointed as the Judge of the High Court.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Judicial Service" },
+      { label: "Date of Birth", value: "15/01/1968" },
+      { label: "Date of Elevation", value: "17/02/2025" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "" },
+      { label: "Postal Address", value: "" },
+      { label: "Place of Stationing", value: "" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "shamima_jahan",
+    name: "Hon’ble Mrs. Justice Shamima Jahan",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/Shamima-Jahan.jpg",
+    biography:
+      "Daughter of Late Shamsul Karim Khan and Late Babi Khan, did her schooling from Kendriya Vidyalaya Khanapara, Guwahati, Assam. She stood first in her Higher Secondary Examination from the same school in her stream. She then did her graduation from Cotton College, Guwahati in 1995 with major in Economics. Thereafter she obtained her LL.B degree from BRM Law College, Guwahati in the year 2000.\n\nShe then immediately enrolled herself as an advocate of the Bar Council of Assam, Nagaland, Meghalaya, Manipur, Tripura, Mizoram, Arunachal Pradesh and Sikkim in the same year. She started her practice under the guidance of Mr. D. K. Mishra, Senior Advocate, Gauhati High Court. While practicing, she completed her masters in law and obtained her LL.M degree from the Gauhati University in the year 2002. She mainly practiced in Writ matters, constitutional matters, service matters, labour matters, contempt matters, matters related to 6th Schedule of the Constitution of India, Land acquisition matters etc.\n\nShe was thereafter appointed as an Additional Public Prosecutor, Gauhati High Court for the State of Assam in the year 2013 and worked in the said capacity till 2025 i.e. until her elevation to the Hon’ble Bench of the Gauhati High Court. She was also appointed as a Mediator, Gauhati High Court and had mediated in many matrimonial matters as well as money suits. She was then appointed as Additional Judge of Gauhati High Court at Guwahati on 28th of May, 2025, the day on which she took her oath.",
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "Bar" },
+      { label: "Date of Birth", value: "" },
+      { label: "Date of Elevation", value: "28/05/2025" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "" },
+      { label: "Postal Address", value: "" },
+      { label: "Place of Stationing", value: "Aizawl Bench, Aizawl" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "anjan_moni_kalita",
+    name: "Hon’ble Mr. Justice Anjan Moni Kalita",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/Anjan_Moni_Kalita.jpg",
+    biography: placeholderBio,
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "" },
+      { label: "Date of Birth", value: "" },
+      { label: "Date of Elevation", value: "30/07/2025" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "" },
+      { label: "Postal Address", value: "" },
+      { label: "Place of Stationing", value: "Itanagar Permanent Bench" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "rajesh_mazumdar",
+    name: "Hon’ble Mr. Justice Rajesh Mazumdar",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/Rajesh_Mazumdar1.jpg",
+    biography: placeholderBio,
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "" },
+      { label: "Date of Birth", value: "" },
+      { label: "Date of Elevation", value: "30/07/2025" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "" },
+      { label: "Postal Address", value: "" },
+      { label: "Place of Stationing", value: "Kohima Bench" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+  {
+    id: "pranjal_das",
+    name: "Hon’ble Mr. Justice Pranjal Das",
+    title: "",
+    avatar: "https://ghconline.gov.in/wp-content/uploads/2018/06/HMJ-Pranjal-Das1.jpg",
+    biography: placeholderBio,
+    details: [
+      { label: "Parent High Court", value: "Gauhati" },
+      { label: "Stream", value: "" },
+      { label: "Date of Birth", value: "" },
+      { label: "Date of Elevation", value: "30/07/2025" },
+      { label: "Date of Transfer", value: "" },
+      { label: "Date of Retirement", value: "" },
+      { label: "Postal Address", value: "" },
+      { label: "Place of Stationing", value: "" },
+      { label: "Telephone", value: "" },
+    ],
+  },
+];
+
+export const serviceCards = [
+  { id: "live_streaming", icon: "video", color: "#1E63D6" },
+  { id: "cause_list", icon: "calendar", color: "#10B981" },
+  { id: "display_board", icon: "clipboard-list", color: "#F59E0B" },
+  { id: "judgment_search", icon: "search1", color: "#6C40FF" },
+  { id: "justice_clock", icon: "clock", color: "#F97316", fullWidth: true },
+];
+
+export const holidayTags = [
+  { label: "All", color: "#0D4199" },
+  { label: "Public", color: "#10B981" },
+  { label: "Restricted", color: "#F97316" },
+  { label: "Working Saturday", color: "#6C40FF" },
+];
+
+export const holidays = [
+  { label: "2nd Assam Divas", badge: "Restricted", badgeColor: "#2563EB", month: 11, year: 2025 },
+  { label: "5th Sikpuoi Roi", badge: "Restricted", badgeColor: "#2563EB", month: 11, year: 2025 },
+  { label: "10th Martyr's Day", badge: "Restricted", badgeColor: "#2563EB", month: 11, year: 2025 },
+  { label: "6th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 11, year: 2025 },
+  { label: "20th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 11, year: 2025 },
+  { label: "22nd – 31st Winter Vaction, Christmas Holidays", badge: "Public", badgeColor: "#cf2b0eff", month: 11, year: 2025 },
+];
