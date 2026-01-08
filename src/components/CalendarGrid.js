@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
 import { useTranslation } from "react-i18next";
 
-export const CalendarGrid = ({ month, year, onPrev, onNext }) => {
+export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = [] }) => {
   const { t } = useTranslation();
   const daysInMonth = useMemo(() => new Date(year, month + 1, 0).getDate(), [month, year]);
   const firstWeekday = useMemo(() => new Date(year, month, 1).getDay(), [month, year]);
@@ -108,11 +108,15 @@ export const CalendarGrid = ({ month, year, onPrev, onNext }) => {
           <View style={styles.calendarRow} key={`row-${row}`}>
             {cells.slice(row * 7, row * 7 + 7).map((day, colIdx) => {
               const isToday = day && todayDate === day;
+              const isHighlighted = day && highlightedDays.includes(day);
               let bubbleStyle = styles.dayBubble;
               let textStyle = styles.dayText;
               if (day) {
                 const single = monthConfig.singles.find((s) => s.day === day);
-                if (single) {
+                if (isHighlighted) {
+                   bubbleStyle = [styles.dayBubble, { backgroundColor: "#8B5CF6", borderWidth: 2, borderColor: "#7C3AED" }];
+                   textStyle = [styles.dayText, { color: "#fff", fontWeight: "bold" }];
+                } else if (single) {
                   const color = colorsMap[single.type];
                   bubbleStyle = [styles.dayBubble, { backgroundColor: color}];
                   textStyle = [styles.dayText, { color: "#fff" }];
@@ -135,9 +139,16 @@ export const CalendarGrid = ({ month, year, onPrev, onNext }) => {
                 <View style={styles.calendarCell} key={`${row}-${colIdx}`}>
                   {day ? (
                     <>
-                      <View style={bubbleStyle}>
-                        <Text style={textStyle}>{day}</Text>
-                      </View>
+                      {isHighlighted ? (
+                        <View style={[bubbleStyle, { transform: [{ scale: 1.1 }] }]}>
+                            <Text style={textStyle}>{day}</Text>
+                        </View>
+                      ) : (
+                        <View style={bubbleStyle}>
+                           <Text style={textStyle}>{day}</Text>
+                        </View>
+                      )}
+                      
                       {isToday && (
                         <View 
                           pointerEvents="none" 
@@ -199,6 +210,7 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 8,
+    overflow: 'hidden',
     alignItems: "center",
     justifyContent: "center",
   },

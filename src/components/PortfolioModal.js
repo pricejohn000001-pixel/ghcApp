@@ -47,12 +47,12 @@ export const PortfolioModal = ({ visible, onClose, judge }) => {
           </TouchableOpacity>
         </View>
         <ScrollView style={styles.scrollArea} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          <Text style={styles.portfolioName}>{t(`judges.${judge.id}.name`)}</Text>
-          <Text style={styles.portfolioRole}>{t(`judges.${judge.id}.title`)}</Text>
-          {t(`judges.${judge.id}.biography`) && t(`judges.${judge.id}.biography`) !== "Biography placeholder." ? (
+          <Text style={styles.portfolioName}>{judge?.name}</Text>
+          <Text style={styles.portfolioRole}>{judge?.title}</Text>
+          {judge?.biography && judge.biography !== placeholderBio ? (
             <>
               <Text style={styles.bioTitle}>{t("portfolio.biography")}</Text>
-              <Text style={styles.bioText}>{t(`judges.${judge.id}.biography`)}</Text>
+              <Text style={styles.bioText}>{judge.biography}</Text>
             </>
           ) : null}
           <View style={styles.table}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { Animated, StyleSheet, View } from "react-native";
 import { colors } from "../theme";
 import { HeroBanner } from "./HeroBanner";
 import { JudgesSection } from "./JudgesSection";
@@ -21,9 +21,14 @@ export const HomeContent = ({
   onAbout,
   onContact,
   onPrivacy,
+  scrollY,
 }) => {
+  const scrollRef = React.useRef(null);
+  const [holidaysY, setHolidaysY] = React.useState(0);
+
   return (
-    <FlatList
+    <Animated.FlatList
+      ref={scrollRef}
       data={[]}
       keyExtractor={(_, idx) => String(idx)}
       ListHeaderComponent={
@@ -36,7 +41,14 @@ export const HomeContent = ({
             onPortfolio={onOpenPortfolio}
           />
           <ServicesGrid services={services} onServicePress={onServicePress} />
-          <HolidaysSection tags={holidayTags} holidays={holidays} />
+          <View onLayout={(e) => setHolidaysY(e.nativeEvent.layout.y)}>
+             <HolidaysSection 
+                tags={holidayTags} 
+                holidays={holidays} 
+                parentScrollRef={scrollRef} 
+                sectionY={holidaysY}
+             />
+          </View>
           <Footer onAbout={onAbout} onContact={onContact} onPrivacy={onPrivacy} />
         </>
       }
@@ -45,6 +57,15 @@ export const HomeContent = ({
       contentContainerStyle={styles.scrollContent}
       refreshing={refreshing}
       onRefresh={onRefresh}
+      onScroll={
+        scrollY
+          ? Animated.event(
+              [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+              { useNativeDriver: false }
+            )
+          : undefined
+      }
+      scrollEventThrottle={16}
     />
   );
 };

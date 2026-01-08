@@ -1,10 +1,10 @@
 {
   "header": {
-    "title": "The Gauhati High Court",
+    "title": "Gauhati High Court",
     "welcome": "Welcome"
   },
   "drawer": {
-    "title": "The Gauhati High Court",
+    "title": "Gauhati High Court",
     "judges": "Judges",
     "benches": "Benches",
     "registry": "Registry",
@@ -47,6 +47,10 @@
       "ebook_history": "History & Heritage (Assamese)",
       "ebook_platinum": "Platinum Jubilee Souvenir"
     }
+  },
+  "search": {
+    "placeholder": "Search...",
+    "trigger": "Search"
   },
   "home": {
     "hero_title": "Access court services and updates in one place.",
@@ -92,7 +96,8 @@
   "nav": {
     "home": "Home",
     "back": "Back",
-    "forward": "Forward"
+    "forward": "Forward",
+    "search": "Search"
   },
   "portfolio": {
     "title": "Judge Portfolio",

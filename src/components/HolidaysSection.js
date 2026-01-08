@@ -1,16 +1,20 @@
 import React, { useMemo, useRef, useState } from "react";
 import { Linking, Animated, Dimensions, PanResponder, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { useTranslation } from "react-i18next";
 import { CalendarGrid } from "./CalendarGrid";
 import { colors, radius, spacing } from "../theme";
 
-export const HolidaysSection = ({ tags, holidays }) => {
+export const HolidaysSection = ({ tags, holidays, parentScrollRef, sectionY = 0 }) => {
   const { t } = useTranslation();
-  const [month, setMonth] = useState(11); // December as starting month
-  const [year, setYear] = useState(2025);
+  const [month, setMonth] = useState(new Date().getMonth());
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [highlightedDays, setHighlightedDays] = useState([]);
   const [activeTag, setActiveTag] = useState("All");
   const { width } = Dimensions.get("window");
   const translateX = useRef(new Animated.Value(0)).current;
+  const calendarRef = useRef(null);
+  const [calendarY, setCalendarY] = useState(0);
 
   const animateTransition = (dir) => {
     translateX.setValue(dir > 0 ? width : -width);
@@ -90,6 +94,11 @@ export const HolidaysSection = ({ tags, holidays }) => {
         </View>
       </View>
       <Animated.View
+        ref={calendarRef}
+        onLayout={(event) => {
+          const layout = event.nativeEvent.layout;
+          setCalendarY(layout.y);
+        }}
         style={{ transform: [{ translateX }] }}
         {...useRef(
           PanResponder.create({
@@ -104,7 +113,7 @@ export const HolidaysSection = ({ tags, holidays }) => {
           })
         ).current.panHandlers}
       >
-        <CalendarGrid month={month} year={year} onPrev={goPrev} onNext={goNext} />
+        <CalendarGrid month={month} year={year} onPrev={goPrev} onNext={goNext} highlightedDays={highlightedDays} />
       </Animated.View>
       <View style={styles.tagsRow}>
         {tags.map((tag) => {
@@ -129,7 +138,6 @@ export const HolidaysSection = ({ tags, holidays }) => {
       >
         {filteredHolidays.map((h, index) => {
           // Robust date parsing
-          // Matches: "25", "25th", "25-27", "25 - 27", "25th-27th" followed by space
           const dateMatch = h.label.match(/^(\d+(?:st|nd|rd|th)?(?:\s*[-–—]\s*\d+(?:st|nd|rd|th)?)?)\s+(.*)$/i);
 
           let dateStr = "";
@@ -139,59 +147,81 @@ export const HolidaysSection = ({ tags, holidays }) => {
             dateStr = dateMatch[1];
             name = dateMatch[2];
           } else {
-            // Fallback: split by first space
             const parts = h.label.trim().split(/\s+/);
             dateStr = parts[0];
             name = parts.slice(1).join(" ");
           }
 
           // Calculate Day(s)
-          let dayDisplay = "";
           const rangeParts = dateStr.split(/[-–—]/);
           const startDayNum = parseInt(rangeParts[0], 10);
-
-          if (!isNaN(startDayNum)) {
-            const getDayName = (d) => {
-              const dateObj = new Date(year, month, d);
-              const dayIndex = dateObj.getDay();
-              const days = t("days_short", { returnObjects: true });
-              return days && days.length === 7 ? days[dayIndex] : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dayIndex];
-            };
-
-            const startDayName = getDayName(startDayNum);
-            dayDisplay = startDayName;
-
-            if (rangeParts.length > 1) {
-              // Try to parse end day
-              const endDayNum = parseInt(rangeParts[1].trim(), 10);
-              if (!isNaN(endDayNum)) {
-                const endDayName = getDayName(endDayNum);
-                if (startDayName !== endDayName) {
-                  dayDisplay = `${startDayName}-${endDayName}`;
-                }
-              }
-            }
+          
+          let endDayNum = startDayNum;
+          if (rangeParts.length > 1) {
+              const parsedEnd = parseInt(rangeParts[1].trim(), 10);
+              if (!isNaN(parsedEnd)) endDayNum = parsedEnd;
           }
 
           const today = new Date();
           const isCurrentMonthYear = today.getFullYear() === year && today.getMonth() === month;
           const todayDay = today.getDate();
-          let isCurrentHoliday = false;
-          if (isCurrentMonthYear && !isNaN(startDayNum)) {
-            const endDayParsed = rangeParts.length > 1 ? parseInt(rangeParts[1].trim(), 10) : NaN;
-            const endDayNum = !isNaN(endDayParsed) ? endDayParsed : startDayNum;
-            isCurrentHoliday = todayDay >= startDayNum && todayDay <= endDayNum;
-          }
+          const isCurrentHoliday = isCurrentMonthYear && !isNaN(startDayNum) && todayDay >= startDayNum && todayDay <= endDayNum;
+
+          const handlePress = () => {
+             // Scroll to calendar
+             if (parentScrollRef && parentScrollRef.current) {
+                // If FlatList, we might need scrollToOffset.
+                // But we don't know the exact offset of HolidaysSection in HomeContent FlatList.
+                // Assuming HolidaysSection is part of ListHeaderComponent which is rendered at top?
+                // Actually HomeContent uses FlatList with ListHeaderComponent containing everything.
+                // So scrollToOffset({ offset: sectionY + calendarY }) should work if we know sectionY.
+                // However, getting sectionY from HomeContent is tricky.
+                // A simpler approach: Just scroll to top if HolidaysSection is near top?
+                // Or use measure.
+                // For now, let's try scrolling to offset 0 + calendarY relative to section?
+                // Wait, parentScrollRef is passed from HomeContent.
+                // We'll update HomeContent to pass the ref.
+                
+                // Assuming HolidaysSection starts at some Y.
+                // Ideally we want to scroll so Calendar is at top.
+                // Let's assume we can just scroll to a rough estimate or use a callback.
+                parentScrollRef.current.scrollToOffset({ offset: sectionY + calendarY, animated: true });
+             }
+
+             const days = [];
+             if (!isNaN(startDayNum)) {
+                 for (let i = startDayNum; i <= endDayNum; i++) days.push(i);
+             }
+             setHighlightedDays(days);
+             setTimeout(() => setHighlightedDays([]), 3000);
+          };
+
+          const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+          const currentMonthName = monthNames[month];
+          const cleanDateStr = dateStr.replace(/(st|nd|rd|th)/g, "");
 
           return (
-            <View key={index} style={[styles.holidayCard, { backgroundColor: h.badgeColor }, isCurrentHoliday && styles.holidayCardActive]}>
-              <View style={styles.cardHeader}>
-                <Text style={styles.dateText}>
-                  {dateStr} <Text style={styles.dayText}>{dayDisplay}</Text>
-                </Text>
-              </View>
-              <Text style={styles.holidayLabel}>{name}</Text>
-            </View>
+            <TouchableOpacity key={index} activeOpacity={0.9} onPress={handlePress}>
+                <View style={[styles.holidayCard, isCurrentHoliday && styles.holidayCardActive]}>
+                  <LinearGradient
+                    colors={["#3B82F6", "#8B5CF6"]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.dateBadge}
+                  >
+                    <Text style={styles.dateNum}>{cleanDateStr}</Text>
+                    <Text style={styles.dateMonth}>{currentMonthName}</Text>
+                  </LinearGradient>
+                  
+                  <View style={styles.cardContent}>
+                     <Text style={styles.holidayLabel}>{name}</Text>
+                  </View>
+
+                  <View style={[styles.badge, { backgroundColor: h.badgeColor }]}>
+                    <Text style={styles.badgeText}>{h.badge === "Working Saturday" ? "Sat" : h.badge}</Text>
+                  </View>
+                </View>
+            </TouchableOpacity>
           );
         })}
       </ScrollView>
@@ -253,37 +283,59 @@ const styles = StyleSheet.create({
   holidayListContent: { gap: 10, paddingBottom: spacing.sm },
   holidayListFlat: { maxHeight: 300, marginTop: spacing.sm },
   holidayCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: "#0F2B57",
     borderRadius: radius.lg,
-    padding: spacing.md,
-    gap: 4,
+    padding: spacing.sm,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: spacing.sm,
   },
   holidayCardActive: {
     borderWidth: 2,
     borderColor: "#f99e16ff",
   },
-  cardHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  dateBadge: {
+    width: 80,
+    height: 60,
+    borderRadius: 12,
     alignItems: "center",
+    justifyContent: "space-evenly",
+    marginRight: spacing.md,
+    paddingVertical: 4,
   },
-  dateText: {
-    fontSize: 20,
-    fontWeight: "800",
+  dateNum: {
     color: "#fff",
+    fontSize: 18,
+    fontWeight: "800",
   },
-  dayText: {
-    fontSize: 16,
-    fontWeight: "600",
+  dateMonth: {
     color: "rgba(255,255,255,0.8)",
+    fontSize: 10,
+    fontWeight: "700",
+    marginTop: -2,
   },
-  holidayLabel: { color: "#fff", fontWeight: "600", fontSize: 14 },
+  cardContent: {
+    flex: 1,
+    marginRight: spacing.sm,
+  },
+  holidayLabel: {
+    color: "#fff",
+    fontWeight: "600",
+    fontSize: 14,
+    lineHeight: 20,
+  },
   badge: {
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 20,
+    minWidth: 60,
+    alignItems: 'center',
   },
-  badgeText: { color: "#fff", fontWeight: "700", fontSize: 12 },
+  badgeText: {
+    color: "#fff",
+    fontWeight: "700",
+    fontSize: 10,
+  },
   pdfButton: {
     backgroundColor: "#0D4199",
     borderRadius: radius.lg,

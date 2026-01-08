@@ -1,17 +1,29 @@
-import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View, AppState, useWindowDimensions, Animated } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, Feather } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
 import { useTranslation } from "react-i18next";
 
 const logo = require("../assets/logo.png");
 
-export const Header = ({ onMenu }) => {
+export const Header = ({ onMenu, onSearch, scrollY }) => {
   const { t } = useTranslation();
   const monthNames = t("months", { returnObjects: true });
+  const { width } = useWindowDimensions();
 
-  const now = new Date();
+  const [now, setNow] = useState(new Date());
+  const [welcomeHeight, setWelcomeHeight] = useState(0);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (nextAppState === "active") {
+        setNow(new Date());
+      }
+    });
+    return () => subscription.remove();
+  }, []);
+
   const dateText = `${String(now.getDate()).padStart(2, "0")} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
   return (
     <LinearGradient colors={["#0F2349", colors.primary]} style={styles.header}>
@@ -22,17 +34,60 @@ export const Header = ({ onMenu }) => {
             <Text style={styles.brand}>{t("header.title")}</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={onMenu} activeOpacity={0.8} style={styles.menuButton}>
-          <Entypo name="menu" size={22} color="#fff" />
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', gap: 8 }}>
+            <TouchableOpacity onPress={onMenu} activeOpacity={0.8} style={styles.menuButton}>
+                <Entypo name="menu" size={22} color="#fff" />
+            </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.welcomeCard}>
+      <Animated.View
+        style={[
+          styles.welcomeCard,
+          {
+            overflow: 'hidden',
+            marginTop: scrollY
+              ? scrollY.interpolate({ inputRange: [0, 100], outputRange: [spacing.md, 0], extrapolate: 'clamp' })
+              : spacing.md,
+            height:
+              scrollY && welcomeHeight
+                ? scrollY.interpolate({ inputRange: [0, 200], outputRange: [welcomeHeight, 0], extrapolate: 'clamp' })
+                : undefined,
+            opacity: scrollY
+              ? scrollY.interpolate({ inputRange: [0, 60], outputRange: [1, 0], extrapolate: 'clamp' })
+              : 1,
+          },
+        ]}
+        onLayout={(e) => {
+          if (!welcomeHeight) {
+            setWelcomeHeight(e.nativeEvent.layout.height);
+          }
+        }}
+      >
         <View>
           <Text style={styles.welcomeLabel}>{t("header.welcome")}</Text>
           <Text style={styles.dateText}>{dateText}</Text>
         </View>
-      </View>
-      
+      </Animated.View>
+      <Animated.View
+        style={{
+          marginTop: scrollY
+            ? scrollY.interpolate({
+                inputRange: [0, 100],
+                outputRange: [spacing.md, -12],
+                extrapolate: 'clamp',
+              })
+            : spacing.md,
+        }}
+      >
+        <TouchableOpacity 
+          style={styles.searchTrigger}
+          activeOpacity={0.85} 
+          onPress={onSearch}>
+          <Feather name="search" size={18} color={colors.textSecondary} />
+          <Text style={styles.searchText}>{t("search.trigger", "Search cases, orders, cause list...")}</Text>
+        </TouchableOpacity>
+      </Animated.View>
+
     </LinearGradient>
   );
 };
@@ -77,6 +132,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  searchTrigger: {
+    backgroundColor: "#0F2B57",
+    borderRadius: radius.lg,
+    paddingVertical: 10,
+    paddingHorizontal: spacing.md,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+  },
+  searchText: { color: colors.textSecondary, fontSize: 14, fontWeight: "600" },
   welcomeLabel: { color: colors.textSecondary, fontSize: 14 },
   dateText: { color: "#fff", fontSize: 16, fontWeight: "700", marginTop: 2 },
   

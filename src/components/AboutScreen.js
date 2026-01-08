@@ -38,13 +38,13 @@ export const AboutScreen = () => {
           {(() => {
             const cj = judges.find((j) => j.title === "Chief Justice");
             if (!cj) return null;
-            return <Text style={styles.paragraph}>{t(`judges.${cj.id}.name`)}</Text>;
+            return <Text style={styles.paragraph}>{cj.name}</Text>;
           })()}
           <Text style={styles.subheading}>{t("about.puisne_judges")}</Text>
           {judges
             .filter((j) => j.title !== "Chief Justice")
             .map((j) => (
-              <Text key={j.id} style={styles.paragraph}>{t(`judges.${j.id}.name`)}</Text>
+              <Text key={j.id} style={styles.paragraph}>{j.name}</Text>
             ))}
         </View>
         <View style={styles.card}>

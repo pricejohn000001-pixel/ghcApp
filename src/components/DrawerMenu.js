@@ -80,6 +80,8 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
 
   const [expanded, setExpanded] = useState({ judges: false, benches: false, registry: false, links: false, recruitments: false, ebooks: false });
   const [shown, setShown] = useState({ judges: false, benches: false, registry: false, links: false, recruitments: false, ebooks: false });
+  const scrollRef = useRef(null);
+  const sectionTopsRef = useRef({});
   const animsRef = useRef(
     sections.reduce((acc, s) => {
       if (s.type === "single") return acc;
@@ -101,6 +103,8 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
       v.setValue(0);
       Animated.timing(v, { toValue: 1, duration: 200, useNativeDriver: true }).start();
       setExpanded((e) => ({ ...e, [key]: true }));
+      const top = sectionTopsRef.current[key] ?? 0;
+      if (scrollRef.current) scrollRef.current.scrollTo({ y: Math.max(top - 8, 0), animated: true });
     }
   };
 
@@ -116,6 +120,8 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
          v.setValue(0);
          Animated.timing(v, { toValue: 1, duration: 200, useNativeDriver: true }).start();
          setExpanded((e) => ({ ...e, [expandSection]: true }));
+         const top = sectionTopsRef.current[expandSection] ?? 0;
+         if (scrollRef.current) scrollRef.current.scrollTo({ y: Math.max(top - 8, 0), animated: true });
       }
     }
   }, [visible, expandSection]);
@@ -139,7 +145,7 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
           </TouchableOpacity>
         </View>
 
-        <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        <ScrollView ref={scrollRef} style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {/* Language Switcher */}
           <View style={styles.langContainer}>
             <Text style={styles.langLabel}>{t("drawer.language")}</Text>
@@ -190,7 +196,7 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
             };
 
             return (
-              <View key={section.key}>
+              <View key={section.key} onLayout={(e) => { sectionTopsRef.current[section.key] = e.nativeEvent.layout.y; }}>
                 <TouchableOpacity style={styles.drawerItem} activeOpacity={0.85} onPress={() => toggle(section.key)}>
                   <View style={styles.drawerIcon}>{section.icon}</View>
                   <View style={{ flex: 1 }}>
@@ -264,7 +270,7 @@ const styles = StyleSheet.create({
   drawerItemLabel: { color: "#fff", fontWeight: "700" },
   drawerHint: { color: colors.textSecondary, fontSize: 12 },
   submenuWrap: { overflow: "hidden" },
-  submenuList: { paddingLeft: 44, paddingRight: 4, gap: 8 },
+  submenuList: { paddingLeft: 44, paddingRight: 4, gap: 8, marginBottom: 8 },
   submenuCard: {
     flexDirection: "row",
     alignItems: "center",

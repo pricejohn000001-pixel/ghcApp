@@ -88,12 +88,19 @@ async function findDailyFromPage(dateStr) {
 
 export const CauseListModal = ({ visible, onClose }) => {
   const { t } = useTranslation();
-  const today = useMemo(() => new Date(), []);
+  const [today, setToday] = useState(new Date());
+
+  useEffect(() => {
+    if (visible) {
+      setToday(new Date());
+    }
+  }, [visible]);
+
   const tomorrow = useMemo(() => {
-    const d = new Date();
+    const d = new Date(today);
     d.setDate(d.getDate() + 1);
     return d;
-  }, []);
+  }, [today]);
 
   const [activeDateKey, setActiveDateKey] = useState("today");
   const [loading, setLoading] = useState(true);

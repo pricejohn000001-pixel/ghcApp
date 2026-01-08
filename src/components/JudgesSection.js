@@ -16,8 +16,8 @@ const JudgeCard = React.memo(({ item, onPortfolio, t }) => (
       loadingIndicatorSource={{ uri: item.avatar }}
     />
     <View style={styles.judgeInfo}>
-      <Text style={styles.judgeName}>{t(`judges.${item.id}.name`)}</Text>
-      <Text style={styles.judgeRole}>{t(`judges.${item.id}.title`)}</Text>
+      <Text style={styles.judgeName}>{item.name}</Text>
+      <Text style={styles.judgeRole}>{item.title}</Text>
       <TouchableOpacity style={styles.portfolioButton} onPress={onPortfolio} activeOpacity={0.9}>
         <FontAwesome name="briefcase" size={16} color="#7F56D9" />
         <Text style={styles.portfolioLabel}>{t("home.portfolio")}</Text>
