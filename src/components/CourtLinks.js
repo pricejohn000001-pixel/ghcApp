@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Animated, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
@@ -34,7 +34,7 @@ const normalizeYouTubeLink = (raw) => {
   return s;
 };
 
-export const CourtLinks = ({ onSelect }) => {
+export const CourtLinks = ({ onSelect, scrollY }) => {
   const { t } = useTranslation();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -106,7 +106,7 @@ export const CourtLinks = ({ onSelect }) => {
   return (
     <View style={styles.container}>
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
-      <FlatList
+      <Animated.FlatList
         data={items}
         keyExtractor={(item, idx) => String(item?.c_no ?? idx)}
         renderItem={({ item }) => (
@@ -143,13 +143,22 @@ export const CourtLinks = ({ onSelect }) => {
             tintColor="#fff"
           />
         }
+        onScroll={
+          scrollY
+            ? Animated.event(
+                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                { useNativeDriver: false }
+              )
+            : undefined
+        }
+        scrollEventThrottle={16}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.primary, paddingHorizontal: spacing.lg, paddingTop: spacing.lg },
+  container: { flex: 1, backgroundColor: colors.primary, paddingHorizontal: spacing.lg},
   listContent: { paddingBottom: spacing.xl, flexGrow: 1 },
   loadingWrap: { flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.primary, gap: spacing.sm },
   loadingText: { color: "#fff", fontSize: 14 },

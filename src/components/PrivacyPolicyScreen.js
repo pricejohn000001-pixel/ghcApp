@@ -1,11 +1,11 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Animated, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
 
-export const PrivacyPolicyScreen = () => {
+export const PrivacyPolicyScreen = ({ scrollY }) => {
   const { t } = useTranslation();
 
   return (
@@ -17,7 +17,20 @@ export const PrivacyPolicyScreen = () => {
         </View>
         <Text style={styles.heroSub}>{t("privacy.subtitle")}</Text>
       </LinearGradient>
-      <ScrollView style={styles.scroll} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <Animated.ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+        onScroll={
+          scrollY
+            ? Animated.event(
+                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                { useNativeDriver: false }
+              )
+            : undefined
+        }
+        scrollEventThrottle={16}
+      >
         <View style={styles.card}>
           <View style={styles.cardHeader}><Feather name="file-text" size={18} color={colors.primary} /><Text style={styles.cardTitle}>{t("privacy.overview")}</Text></View>
           <Text style={styles.paragraph}>{t("privacy.overview_text")}</Text>
@@ -63,7 +76,7 @@ export const PrivacyPolicyScreen = () => {
           <View style={styles.cardHeader}><Feather name="mail" size={18} color={colors.primary} /><Text style={styles.cardTitle}>{t("privacy.contact")}</Text></View>
           <Text style={styles.paragraph}>{t("privacy.contact_text")}</Text>
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 };

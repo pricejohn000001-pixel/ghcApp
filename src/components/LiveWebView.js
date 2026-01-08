@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet, View, Platform, ScrollView, RefreshContr
 import { colors } from "../theme";
 import { WebView } from "react-native-webview";
 
-export const LiveWebView = ({ url, webViewRef, onNavStateChange }) => {
+export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
   const isYouTube = useMemo(
     () => /youtube\.com|youtu\.be/.test(url || ""),
     [url]
@@ -53,7 +53,8 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange }) => {
             } catch(e) {}
             var atTop = top <= 0;
             if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
-              window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'SCROLL_TOP', atTop: atTop }));
+              try { window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'SCROLL_TOP', atTop: atTop })); } catch(e) {}
+              try { window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'SCROLL_Y', y: top })); } catch(e) {}
             }
           } catch(e) {}
         }
@@ -599,6 +600,13 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange }) => {
                 const data = JSON.parse(e?.nativeEvent?.data || '{}');
                 if (data && data.type === 'SCROLL_TOP') {
                   setCanRefresh(!!data.atTop);
+                } else if (data && data.type === 'SCROLL_Y') {
+                  try {
+                    const y = Number(data.y) || 0;
+                    if (scrollY && typeof scrollY.setValue === 'function') {
+                      scrollY.setValue(y);
+                    }
+                  } catch (_) {}
                 }
               } catch (err) {}
             }}
@@ -650,6 +658,21 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange }) => {
               } finally {
                 setTimeout(() => setRefreshing(false), 500);
               }
+            }}
+            onMessage={(e) => {
+              try {
+                const data = JSON.parse(e?.nativeEvent?.data || '{}');
+                if (data && data.type === 'SCROLL_Y') {
+                  try {
+                    const y = Number(data.y) || 0;
+                    if (scrollY && typeof scrollY.setValue === 'function') {
+                      scrollY.setValue(y);
+                    }
+                  } catch (_) {}
+                } else if (data && data.type === 'SCROLL_TOP') {
+                  setCanRefresh(!!data.atTop);
+                }
+              } catch (err) {}
             }}
           />
           {overlayVisible && (

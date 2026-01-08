@@ -1,11 +1,11 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Animated, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
 
-export const ContactScreen = () => {
+export const ContactScreen = ({ scrollY }) => {
   const { t } = useTranslation();
 
   return (
@@ -17,7 +17,20 @@ export const ContactScreen = () => {
         </View>
         <Text style={styles.heroSub}>{t("contact.subtitle")}</Text>
       </LinearGradient>
-      <ScrollView style={styles.scroll} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <Animated.ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+        onScroll={
+          scrollY
+            ? Animated.event(
+                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                { useNativeDriver: false }
+              )
+            : undefined
+        }
+        scrollEventThrottle={16}
+      >
         <View style={styles.card}>
           <View style={styles.cardHeader}><Feather name="phone" size={18} color={colors.primary} /><Text style={styles.cardTitle}>{t("contact.epabx")}</Text></View>
           <Text style={styles.paragraph}>2600008, 2731245, 2735869, 2731264, 2637179, 2734439, 2734441</Text>
@@ -32,7 +45,7 @@ export const ContactScreen = () => {
           <Text style={styles.paragraph}>hc-asm[at]nic[dot]in</Text>
           <Text style={styles.paragraph}>highcourt[dot]ghc[at]gmail[dot]com</Text>
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 };

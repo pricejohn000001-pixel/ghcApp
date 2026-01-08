@@ -1,12 +1,12 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Animated, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
 import { judges } from "../data";
 
-export const AboutScreen = () => {
+export const AboutScreen = ({ scrollY }) => {
   const { t } = useTranslation();
 
   return (
@@ -18,7 +18,20 @@ export const AboutScreen = () => {
         </View>
         <Text style={styles.heroSub}>{t("about.subtitle")}</Text>
       </LinearGradient>
-      <ScrollView style={styles.scroll} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <Animated.ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+        onScroll={
+          scrollY
+            ? Animated.event(
+                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                { useNativeDriver: false }
+              )
+            : undefined
+        }
+        scrollEventThrottle={16}
+      >
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Feather name="book" size={18} color={colors.primary} />
@@ -56,7 +69,7 @@ export const AboutScreen = () => {
           <Text style={styles.paragraph}>{t("about.article_227_text")}</Text>
           <Text style={styles.paragraph}>{t("about.jurisdiction_details")}</Text>
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 };

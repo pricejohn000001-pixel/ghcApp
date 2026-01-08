@@ -179,6 +179,7 @@ export default function App() {
         <LiveWebView
           url={currentUrl}
           webViewRef={webViewRef}
+          scrollY={scrollYRef.current}
           onNavStateChange={(navState) => {
             setCanGoBack(navState.canGoBack);
             setCanGoForward(navState.canGoForward);
@@ -186,16 +187,17 @@ export default function App() {
         />
       ) : showCourtLinks ? (
         <CourtLinks
+          scrollY={scrollYRef.current}
           onSelect={(link) => {
             addToHistory({ type: 'webview', url: link });
           }}
         />
       ) : showAbout ? (
-        <AboutScreen />
+        <AboutScreen scrollY={scrollYRef.current} />
       ) : showContact ? (
-        <ContactScreen />
+        <ContactScreen scrollY={scrollYRef.current} />
       ) : showPrivacy ? (
-        <PrivacyPolicyScreen />
+        <PrivacyPolicyScreen scrollY={scrollYRef.current} />
       ) : (
         <HomeContent
           judges={judges}
