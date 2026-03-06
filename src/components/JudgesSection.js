@@ -39,9 +39,17 @@ export const JudgesSection = ({ judges, selectedIndex, onSelect, onPortfolio }) 
   const trackW = Math.min(Math.round(width * 0.45), 160);
   const fillW = Math.max(22, Math.round(trackW / Math.max(total, 1)));
   const leftMax = trackW - fillW;
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const maxOffset = Math.max((cardWidth + spacing.lg) * Math.max(total - 1, 1), 1);
-  const sliderTranslate = scrollX.interpolate({ inputRange: [0, maxOffset], outputRange: [0, leftMax], extrapolate: "clamp" });
+  const sliderTranslate = useRef(new Animated.Value(0)).current;
+
+  const animateSliderToIndex = useCallback((idx) => {
+    const clamped = Math.max(0, Math.min(idx, Math.max(total - 1, 0)));
+    const to = leftMax * (Math.max(total - 1, 1) === 0 ? 0 : clamped / Math.max(total - 1, 1));
+    Animated.timing(sliderTranslate, { toValue: to, duration: 160, useNativeDriver: true }).start();
+  }, [leftMax, sliderTranslate, total]);
+
+  React.useEffect(() => {
+    animateSliderToIndex(si);
+  }, [si, animateSliderToIndex]);
 
   return (
     <View style={styles.section}>
@@ -54,7 +62,7 @@ export const JudgesSection = ({ judges, selectedIndex, onSelect, onPortfolio }) 
         data={judges}
         horizontal
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.id || item.name}
         renderItem={renderItem}
         pagingEnabled
         snapToAlignment="start"
@@ -65,14 +73,10 @@ export const JudgesSection = ({ judges, selectedIndex, onSelect, onPortfolio }) 
         windowSize={5}
         removeClippedSubviews
         ItemSeparatorComponent={() => <View style={{ width: spacing.lg }} />}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          { useNativeDriver: false }
-        )}
-        scrollEventThrottle={16}
         onMomentumScrollEnd={(e) => {
           const idx = Math.round(e.nativeEvent.contentOffset.x / (cardWidth + spacing.lg));
           onSelect(idx);
+          animateSliderToIndex(idx);
         }}
         contentContainerStyle={[
           styles.listContent,

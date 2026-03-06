@@ -5,6 +5,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
 import { placeholderBio } from "../data";
+import { decodeHtmlEntities } from "../utils/decodeHtmlEntities";
 
 const getLabelKey = (label) => {
   const map = {
@@ -52,7 +53,18 @@ export const PortfolioModal = ({ visible, onClose, judge }) => {
           {judge?.biography && judge.biography !== placeholderBio ? (
             <>
               <Text style={styles.bioTitle}>{t("portfolio.biography")}</Text>
-              <Text style={styles.bioText}>{judge.biography}</Text>
+              {(() => {
+                const decoded = decodeHtmlEntities(judge.biography || "");
+                const parts = decoded.split(/(?<=\.)\s+/).reduce((acc, cur) => {
+                  const last = acc[acc.length - 1];
+                  if (!last || last.split(" ").length > 40) acc.push(cur);
+                  else acc[acc.length - 1] = `${last} ${cur}`;
+                  return acc;
+                }, []);
+                return parts.map((p, idx) => (
+                  <Text key={`bio-${idx}`} style={styles.bioParagraph}>{p}</Text>
+                ));
+              })()}
             </>
           ) : null}
           <View style={styles.table}>
@@ -100,6 +112,7 @@ const styles = StyleSheet.create({
   portfolioRole: { color: "#6B7280", marginTop: 2, marginBottom: spacing.md },
   bioTitle: { fontWeight: "700", fontSize: 14, marginBottom: spacing.xs, color: colors.primary },
   bioText: { color: "#111827", lineHeight: 20 },
+  bioParagraph: { color: "#111827", lineHeight: 20, marginBottom: spacing.sm },
   table: { marginTop: spacing.md, borderRadius: radius.lg, overflow: "hidden" },
   tableRow: {
     flexDirection: "row",
