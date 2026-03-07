@@ -1,0 +1,246 @@
+== HOLIDAYS ARRAY ==
+export const holidays = [
+  { label: "1st-2nd New Year Holiday", badge: "Public", badgeColor: "#cf2b0eff", month: 0, year: 2026 },
+  { label: "12th-16th Magh Bihu & Tusu Puja", badge: "Public", badgeColor: "#cf2b0eff", month: 0, year: 2026 },
+  { label: "23rd Sri Panchami", badge: "Public", badgeColor: "#cf2b0eff", month: 0, year: 2026 },
+  { label: "26th Republic Day", badge: "Public", badgeColor: "#cf2b0eff", month: 0, year: 2026 },
+  { label: "31st Medam-Me-Phi", badge: "Public", badgeColor: "#cf2b0eff", month: 0, year: 2026 },
+  { label: "17th Silpi Divas", badge: "Restricted", badgeColor: "#2563EB", month: 0, year: 2026 },
+  { label: "23rd Netaji's Birth Day", badge: "Restricted", badgeColor: "#2563EB", month: 0, year: 2026 },
+  { label: "27th Busu Dima Festival & Gwther Bathaw Saan (Baithow Puja)", badge: "Restricted", badgeColor: "#2563EB", month: 0, year: 2026 },
+  { label: "3rd Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 0, year: 2026 },
+  { label: "15th Siva Ratri", badge: "Public", badgeColor: "#cf2b0eff", month: 1, year: 2026 },
+  { label: "1st Bir Chilarai Divas", badge: "Restricted", badgeColor: "#2563EB", month: 1, year: 2026 },
+  { label: "4th Shab-e-Barat", badge: "Restricted", badgeColor: "#2563EB", month: 1, year: 2026 },
+  { label: "17th Karbi Dehal Kachir Dom", badge: "Restricted", badgeColor: "#2563EB", month: 1, year: 2026 },
+  { label: "18th Ali-Aye-Ligang", badge: "Restricted", badgeColor: "#2563EB", month: 1, year: 2026 },
+  { label: "23rd Bathow Puja/Khiring Khiring Baithow Puja", badge: "Restricted", badgeColor: "#2563EB", month: 1, year: 2026 },
+  { label: "7th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 1, year: 2026 },
+  { label: "21st Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 1, year: 2026 },
+  { label: "3rd-4th Dol Jatra/Holi", badge: "Public", badgeColor: "#cf2b0eff", month: 2, year: 2026 },
+  { label: "21st Id-ul-Fitre", badge: "Public", badgeColor: "#cf2b0eff", month: 2, year: 2026 },
+  { label: "17th Shab-e-Qadr", badge: "Restricted", badgeColor: "#2563EB", month: 2, year: 2026 },
+  { label: "31st Mahavir Jayanti", badge: "Restricted", badgeColor: "#2563EB", month: 2, year: 2026 },
+  { label: "7th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 2, year: 2026 },
+  { label: "3rd Good Friday", badge: "Public", badgeColor: "#cf2b0eff", month: 3, year: 2026 },
+  { label: "13th-18th Bihu Vacation", badge: "Public", badgeColor: "#cf2b0eff", month: 3, year: 2026 },
+  { label: "4th Easter Saturday", badge: "Restricted", badgeColor: "#2563EB", month: 3, year: 2026 },
+  { label: "15th Deuri Bihu", badge: "Restricted", badgeColor: "#2563EB", month: 3, year: 2026 },
+  { label: "18th Tithi of Sri Sri Damodar Dev", badge: "Restricted", badgeColor: "#2563EB", month: 3, year: 2026 },
+  { label: "21st Sati Sadhani Divas", badge: "Restricted", badgeColor: "#2563EB", month: 3, year: 2026 },
+  { label: "22nd Tithi of Gopal Dev", badge: "Restricted", badgeColor: "#2563EB", month: 3, year: 2026 },
+  { label: "1st Buddha Purnima & May Day", badge: "Public", badgeColor: "#cf2b0eff", month: 4, year: 2026 },
+  { label: "27th Id-Uz-Zuha", badge: "Public", badgeColor: "#cf2b0eff", month: 4, year: 2026 },
+  { label: "16th Tithi of Hari Dev", badge: "Restricted", badgeColor: "#2563EB", month: 4, year: 2026 },
+  { label: "31st Baikhow Festival", badge: "Restricted", badgeColor: "#2563EB", month: 4, year: 2026 },
+  { label: "2nd Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 4, year: 2026 },
+  { label: "30th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 4, year: 2026 },
+  { label: "29th-30th Summer Vacation", badge: "Public", badgeColor: "#cf2b0eff", month: 5, year: 2026 },
+  { label: "1st Janmotsav of Sri Sri Madhab Dev", badge: "Restricted", badgeColor: "#2563EB", month: 5, year: 2026 },
+  { label: "20th Death Anniversary of Bishnu Prasad Rabha", badge: "Restricted", badgeColor: "#2563EB", month: 5, year: 2026 },
+  { label: "26th Muharram", badge: "Restricted", badgeColor: "#2563EB", month: 5, year: 2026 },
+  { label: "6th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 5, year: 2026 },
+  { label: "1st-10th Summer Vacation", badge: "Public", badgeColor: "#cf2b0eff", month: 6, year: 2026 },
+  { label: "13th Birth Day of Nepali Poet Bhanu Bhakta Acharya", badge: "Restricted", badgeColor: "#2563EB", month: 6, year: 2026 },
+  { label: "18th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 6, year: 2026 },
+  { label: "15th Independence Day", badge: "Public", badgeColor: "#cf2b0eff", month: 7, year: 2026 },
+  { label: "13th Death Anniversary of Bir Tikendrajit", badge: "Restricted", badgeColor: "#2563EB", month: 7, year: 2026 },
+  { label: "26th Fateha-Dwaz-Daham", badge: "Restricted", badgeColor: "#2563EB", month: 7, year: 2026 },
+  { label: "1st Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 7, year: 2026 },
+  { label: "29th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 7, year: 2026 },
+  { label: "1st Tithi of Sri Sri Madhab Dev", badge: "Public", badgeColor: "#cf2b0eff", month: 8, year: 2026 },
+  { label: "4th Janmastami", badge: "Public", badgeColor: "#cf2b0eff", month: 8, year: 2026 },
+  { label: "12th Tithi of Srimanta Sankar Dev", badge: "Public", badgeColor: "#cf2b0eff", month: 8, year: 2026 },
+  { label: "21st Janmotsava of Srimanta Sankar Dev", badge: "Public", badgeColor: "#cf2b0eff", month: 8, year: 2026 },
+  { label: "16th Abirbhab Tithi of Sri Sri Thakur Anukul Chandra", badge: "Restricted", badgeColor: "#2563EB", month: 8, year: 2026 },
+  { label: "22nd Karam Puja", badge: "Restricted", badgeColor: "#2563EB", month: 8, year: 2026 },
+  { label: "5th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 8, year: 2026 },
+  { label: "19th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 8, year: 2026 },
+  { label: "2nd Birth day of Mahatma Gandhi", badge: "Public", badgeColor: "#cf2b0eff", month: 9, year: 2026 },
+  { label: "17th-31st Long Vacation", badge: "Public", badgeColor: "#cf2b0eff", month: 9, year: 2026 },
+  { label: "3rd Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 9, year: 2026 },
+  { label: "8th-9th Kali Puja/Diwali", badge: "Public", badgeColor: "#cf2b0eff", month: 10, year: 2026 },
+  { label: "24th Guru Nanak's Birthday", badge: "Public", badgeColor: "#cf2b0eff", month: 10, year: 2026 },
+  { label: "1st Kuki Chavang Kut", badge: "Restricted", badgeColor: "#2563EB", month: 10, year: 2026 },
+  { label: "11th Bhatri Dwitia & Abirbhab Tithi of Sri Bhubaneswar Sadhu Thakur", badge: "Restricted", badgeColor: "#2563EB", month: 10, year: 2026 },
+  { label: "15th Chhat Puja", badge: "Restricted", badgeColor: "#2563EB", month: 10, year: 2026 },
+  { label: "24th Lachit Divas & Death Anniversary of Guru Teg Bahadurji", badge: "Restricted", badgeColor: "#2563EB", month: 10, year: 2026 },
+  { label: "7th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 10, year: 2026 },
+  { label: "21st Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 10, year: 2026 },
+  { label: "24th-31st Winter Vacation, Christmas Holidays", badge: "Public", badgeColor: "#cf2b0eff", month: 11, year: 2026 },
+  { label: "2nd Assam Divas", badge: "Restricted", badgeColor: "#2563EB", month: 11, year: 2026 },
+  { label: "5th Sikpui Ruoi", badge: "Restricted", badgeColor: "#2563EB", month: 11, year: 2026 },
+  { label: "10th Martyr's Day", badge: "Restricted", badgeColor: "#2563EB", month: 11, year: 2026 },
+  { label: "19th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 11, year: 2026 }
+];
+
+== MONTH CONFIGS ==
+  const monthConfig = useMemo(() => {
+    if (month === 0 && year === 2026) {
+      return {
+        singles: [
+          { day: 1, type: "public" },
+          { day: 2, type: "public" },
+          { day: 12, type: "public" },
+          { day: 13, type: "public" },
+          { day: 14, type: "public" },
+          { day: 15, type: "public" },
+          { day: 16, type: "public" },
+          { day: 23, type: "public" },
+          { day: 26, type: "public" },
+          { day: 31, type: "public" },
+          { day: 17, type: "restricted" },
+          { day: 27, type: "restricted" }
+        ],
+        satPolicy: "2nd_4th_holiday"
+      };
+    }
+    if (month === 1 && year === 2026) {
+      return {
+        singles: [
+          { day: 4, type: "restricted" },
+          { day: 17, type: "restricted" },
+          { day: 18, type: "restricted" },
+          { day: 23, type: "restricted" }
+        ],
+        satPolicy: "2nd_4th_holiday"
+      };
+    }
+    if (month === 2 && year === 2026) {
+      return {
+        singles: [
+          { day: 3, type: "public" },
+          { day: 4, type: "public" },
+          { day: 21, type: "public" },
+          { day: 17, type: "restricted" },
+          { day: 31, type: "restricted" }
+        ],
+        satPolicy: "2nd_4th_holiday"
+      };
+    }
+    if (month === 3 && year === 2026) {
+      return {
+        singles: [
+          { day: 3, type: "public" },
+          { day: 13, type: "public" },
+          { day: 14, type: "public" },
+          { day: 15, type: "public" },
+          { day: 16, type: "public" },
+          { day: 17, type: "public" },
+          { day: 18, type: "public" },
+          { day: 4, type: "restricted" },
+          { day: 21, type: "restricted" },
+          { day: 22, type: "restricted" }
+        ],
+        satPolicy: "2nd_4th_holiday"
+      };
+    }
+    if (month === 4 && year === 2026) {
+      return {
+        singles: [
+          { day: 1, type: "public" },
+          { day: 27, type: "public" },
+          { day: 16, type: "restricted" }
+        ],
+        satPolicy: "2nd_4th_holiday"
+      };
+    }
+    if (month === 5 && year === 2026) {
+      return {
+        singles: [
+          { day: 29, type: "public" },
+          { day: 30, type: "public" },
+          { day: 1, type: "restricted" },
+          { day: 20, type: "restricted" },
+          { day: 26, type: "restricted" }
+        ],
+        satPolicy: "2nd_4th_holiday"
+      };
+    }
+    if (month === 6 && year === 2026) {
+      return {
+        singles: [
+          { day: 1, type: "public" },
+          { day: 2, type: "public" },
+          { day: 3, type: "public" },
+          { day: 4, type: "public" },
+          { day: 6, type: "public" },
+          { day: 7, type: "public" },
+          { day: 8, type: "public" },
+          { day: 9, type: "public" },
+          { day: 10, type: "public" },
+          { day: 13, type: "restricted" }
+        ],
+        satPolicy: "2nd_4th_holiday"
+      };
+    }
+    if (month === 7 && year === 2026) {
+      return {
+        singles: [
+          { day: 15, type: "public" },
+          { day: 13, type: "restricted" },
+          { day: 26, type: "restricted" }
+        ],
+        satPolicy: "2nd_4th_holiday"
+      };
+    }
+    if (month === 8 && year === 2026) {
+      return {
+        singles: [
+          { day: 1, type: "public" },
+          { day: 4, type: "public" },
+          { day: 21, type: "public" },
+          { day: 16, type: "restricted" },
+          { day: 22, type: "restricted" }
+        ],
+        satPolicy: "2nd_4th_holiday"
+      };
+    }
+    if (month === 9 && year === 2026) {
+      return {
+        singles: [
+          { day: 2, type: "public" },
+          { day: 17, type: "public" },
+          { day: 19, type: "public" },
+          { day: 20, type: "public" },
+          { day: 21, type: "public" },
+          { day: 22, type: "public" },
+          { day: 23, type: "public" },
+          { day: 26, type: "public" },
+          { day: 27, type: "public" },
+          { day: 28, type: "public" },
+          { day: 29, type: "public" },
+          { day: 30, type: "public" },
+          { day: 31, type: "public" }
+        ],
+        satPolicy: "2nd_4th_holiday"
+      };
+    }
+    if (month === 10 && year === 2026) {
+      return {
+        singles: [
+          { day: 9, type: "public" },
+          { day: 24, type: "public" },
+          { day: 11, type: "restricted" }
+        ],
+        satPolicy: "2nd_4th_holiday"
+      };
+    }
+    if (month === 11 && year === 2026) {
+      return {
+        singles: [
+          { day: 24, type: "public" },
+          { day: 25, type: "public" },
+          { day: 28, type: "public" },
+          { day: 29, type: "public" },
+          { day: 30, type: "public" },
+          { day: 31, type: "public" },
+          { day: 2, type: "restricted" },
+          { day: 5, type: "restricted" },
+          { day: 10, type: "restricted" }
+        ],
+        satPolicy: "2nd_4th_holiday"
+      };
+    }
+    return { singles: [] };
+  }, [month, year]);

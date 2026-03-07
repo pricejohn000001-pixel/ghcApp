@@ -32,6 +32,99 @@ export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = []
   }, [month, year, t]);
 
   const monthConfig = useMemo(() => {
+    if (year === 2026) {
+      const config2026 = {
+        0: { // Jan
+          singles: [
+            { day: 1, type: "public" }, { day: 2, type: "public" },
+            { day: 12, type: "public" }, { day: 13, type: "public" }, { day: 14, type: "public" }, { day: 15, type: "public" }, { day: 16, type: "public" },
+            { day: 23, type: "public" }, { day: 26, type: "public" }, { day: 31, type: "public" },
+            { day: 17, type: "restricted" }, { day: 27, type: "restricted" },
+          ],
+          satPolicy: "2nd_4th_holiday",
+        },
+        1: { // Feb
+          singles: [
+            { day: 15, type: "public" },
+            { day: 4, type: "restricted" }, { day: 17, type: "restricted" }, { day: 18, type: "restricted" }, { day: 23, type: "restricted" },
+          ],
+          satPolicy: "2nd_4th_holiday",
+        },
+        2: { // Mar
+          singles: [
+            { day: 3, type: "public" }, { day: 4, type: "public" }, { day: 21, type: "public" },
+            { day: 17, type: "restricted" }, { day: 31, type: "restricted" },
+          ],
+          satPolicy: "2nd_4th_holiday",
+        },
+        3: { // Apr
+          singles: [
+            { day: 3, type: "public" },
+            { day: 13, type: "public" }, { day: 14, type: "public" }, { day: 15, type: "public" }, { day: 16, type: "public" }, { day: 17, type: "public" }, { day: 18, type: "public" },
+            { day: 4, type: "restricted" }, { day: 21, type: "restricted" }, { day: 22, type: "restricted" },
+          ],
+          satPolicy: "2nd_4th_holiday",
+        },
+        4: { // May
+          singles: [
+            { day: 1, type: "public" }, { day: 27, type: "public" },
+            { day: 16, type: "restricted" }, { day: 31, type: "restricted" },
+          ],
+          satPolicy: "2nd_4th_holiday",
+        },
+        5: { // Jun
+          singles: [
+            { day: 29, type: "public" }, { day: 30, type: "public" },
+            { day: 1, type: "restricted" }, { day: 20, type: "restricted" }, { day: 26, type: "restricted" }
+          ],
+          satPolicy: "2nd_4th_holiday",
+        },
+        6: { // Jul
+          singles: [
+            { day: 1, type: "public" }, { day: 2, type: "public" }, { day: 3, type: "public" }, { day: 4, type: "public" }, { day: 5, type: "public" }, { day: 6, type: "public" }, { day: 7, type: "public" }, { day: 8, type: "public" }, { day: 9, type: "public" }, { day: 10, type: "public" },
+            { day: 13, type: "restricted" },
+          ],
+          satPolicy: "2nd_4th_holiday",
+        },
+        7: { // Aug
+          singles: [
+            { day: 15, type: "public" },
+            { day: 13, type: "restricted" }, { day: 26, type: "restricted" },
+          ],
+          satPolicy: "2nd_4th_holiday",
+        },
+        8: { // Sep
+          singles: [
+            { day: 1, type: "public" }, { day: 4, type: "public" }, { day: 12, type: "public" }, { day: 21, type: "public" },
+            { day: 16, type: "restricted" }, { day: 22, type: "restricted" },
+          ],
+          satPolicy: "2nd_4th_holiday",
+        },
+        9: { // Oct
+          singles: [
+            { day: 2, type: "public" },
+            { day: 17, type: "public" }, { day: 18, type: "public" }, { day: 19, type: "public" }, { day: 20, type: "public" }, { day: 21, type: "public" }, { day: 22, type: "public" }, { day: 23, type: "public" }, { day: 24, type: "public" }, { day: 25, type: "public" }, { day: 26, type: "public" }, { day: 27, type: "public" }, { day: 28, type: "public" }, { day: 29, type: "public" }, { day: 30, type: "public" }, { day: 31, type: "public" }
+          ],
+          satPolicy: "2nd_4th_holiday",
+        },
+        10: { // Nov
+          singles: [
+            { day: 8, type: "public" }, { day: 9, type: "public" }, { day: 24, type: "public" },
+            { day: 1, type: "restricted" }, { day: 11, type: "restricted" }, { day: 15, type: "restricted" },
+          ],
+          satPolicy: "2nd_4th_holiday",
+        },
+        11: { // Dec
+          singles: [
+            { day: 24, type: "public" }, { day: 25, type: "public" }, { day: 26, type: "public" }, { day: 27, type: "public" }, { day: 28, type: "public" }, { day: 29, type: "public" }, { day: 30, type: "public" }, { day: 31, type: "public" },
+            { day: 2, type: "restricted" }, { day: 5, type: "restricted" }, { day: 10, type: "restricted" },
+          ],
+          satPolicy: "2nd_4th_holiday",
+        }
+      };
+      return config2026[month] || { singles: [], satPolicy: "2nd_4th_holiday" };
+    }
+
     if (month === 11 && year === 2025) {
       return {
         singles: [
@@ -52,24 +145,6 @@ export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = []
           { day: 29, type: "public" },
           { day: 30, type: "public" },
           { day: 31, type: "public" },
-        ],
-        satPolicy: "2nd_4th_holiday",
-      };
-    }
-    if (month === 0 && year === 2026) {
-      return {
-        singles: [
-          { day: 1, type: "public" },
-          { day: 13, type: "public" },
-          { day: 14, type: "public" },
-          { day: 15, type: "public" },
-          { day: 23, type: "public" },
-          { day: 26, type: "public" },
-          { day: 10, type: "public" },
-          { day: 24, type: "public" },
-          { day: 3, type: "working" },
-          { day: 17, type: "working" },
-          { day: 31, type: "working" },
         ],
         satPolicy: "2nd_4th_holiday",
       };
@@ -111,47 +186,53 @@ export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = []
               const isHighlighted = day && highlightedDays.includes(day);
               let bubbleStyle = styles.dayBubble;
               let textStyle = styles.dayText;
+              let single = undefined;
+              let dow = undefined;
+              let idx = undefined;
+
               if (day) {
-                const single = monthConfig.singles.find((s) => s.day === day);
+                single = monthConfig.singles.find((s) => s.day === day);
+                dow = new Date(year, month, day).getDay();
+
                 if (isHighlighted) {
-                   bubbleStyle = [styles.dayBubble, { backgroundColor: "#8B5CF6", borderWidth: 2, borderColor: "#7C3AED" }];
-                   textStyle = [styles.dayText, { color: "#fff", fontWeight: "bold" }];
+                  bubbleStyle = [styles.dayBubble, { backgroundColor: "#8B5CF6", borderWidth: 2, borderColor: "#7C3AED" }];
+                  textStyle = [styles.dayText, { color: "#fff", fontWeight: "bold" }];
                 } else if (single) {
                   const color = colorsMap[single.type];
-                  bubbleStyle = [styles.dayBubble, { backgroundColor: color}];
+                  bubbleStyle = [styles.dayBubble, { backgroundColor: color }];
                   textStyle = [styles.dayText, { color: "#fff" }];
                 } else {
-                  const dow = new Date(year, month, day).getDay();
                   if (monthConfig.satPolicy === "2nd_4th_holiday" && dow === 6) {
-                    const idx = saturdays.indexOf(day) + 1; // 1-based
+                    idx = saturdays.indexOf(day) + 1; // 1-based
                     const isHolidaySat = idx === 2 || idx === 4;
                     const color = isHolidaySat ? colorsMap.public : colorsMap.working;
-                    bubbleStyle = [styles.dayBubble, { backgroundColor: color}];
+                    bubbleStyle = [styles.dayBubble, { backgroundColor: color }];
                     textStyle = [styles.dayText, { color: "#fff" }];
                   } else if (dow === 0) {
                     const color = colorsMap.public;
-                    bubbleStyle = [styles.dayBubble, { backgroundColor: color}];
+                    bubbleStyle = [styles.dayBubble, { backgroundColor: color }];
                     textStyle = [styles.dayText, { color: "#fff" }];
                   }
                 }
               }
+
               return (
                 <View style={styles.calendarCell} key={`${row}-${colIdx}`}>
                   {day ? (
                     <>
                       {isHighlighted ? (
                         <View style={[bubbleStyle, { transform: [{ scale: 1.1 }] }]}>
-                            <Text style={textStyle}>{day}</Text>
+                          <Text style={textStyle}>{day}</Text>
                         </View>
                       ) : (
                         <View style={bubbleStyle}>
-                           <Text style={textStyle}>{day}</Text>
+                          <Text style={textStyle}>{day}</Text>
                         </View>
                       )}
-                      
+
                       {isToday && (
-                        <View 
-                          pointerEvents="none" 
+                        <View
+                          pointerEvents="none"
                           style={{
                             position: 'absolute',
                             width: 28,
@@ -159,7 +240,7 @@ export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = []
                             borderRadius: 8,
                             borderWidth: 2,
                             borderColor: '#f99e16ff'
-                          }} 
+                          }}
                         />
                       )}
                     </>

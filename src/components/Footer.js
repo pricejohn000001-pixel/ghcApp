@@ -20,7 +20,7 @@ export const Footer = ({ onAbout, onContact, onPrivacy }) => {
         </TouchableOpacity>
       </View>
       <Text style={styles.footerMeta}>
-        Developed by eCourts Team Gauhati High Court{"\n"}Assam.
+        Developed by eCourts Team Gauhati High Court
       </Text>
       <View style={styles.socialRow}>
         <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://t.me/GHCInfoChannel")}>
@@ -31,10 +31,10 @@ export const Footer = ({ onAbout, onContact, onPrivacy }) => {
           <AntDesign name="youtube" size={16} color="#ADB9D8" />
           <Text style={styles.socialText}>YouTube</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://www.facebook.com/GuwahatiHighCourt/")}> 
+        {/* <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://www.facebook.com/GuwahatiHighCourt/")}> 
           <Feather name="facebook" size={16} color="#ADB9D8" />
           <Text style={styles.socialText}>Facebook</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );

@@ -1,0 +1,14 @@
+{
+  "build": {
+    "release": {
+      "android": {
+        "buildType": "app-bundle" 
+      }
+    },
+    "apk": {
+      "android": {
+        "buildType": "apk"
+      }
+    }
+  }
+}

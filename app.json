@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ghc_app",
-    "slug": "ghc_app",
+    "name": "Gauhati High Court",
+    "slug": "gauhati_high_court",
     "version": "1.0.0",
     "sdkVersion": "51.0.0",
     "platforms": [
@@ -16,6 +16,11 @@
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c25b3689-5e00-482e-a4c5-068db9985f57"
+      }
+    }
   }
 }

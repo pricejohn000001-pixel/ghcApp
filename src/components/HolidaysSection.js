@@ -50,18 +50,8 @@ export const HolidaysSection = ({ tags, holidays, parentScrollRef, sectionY = 0 
 
   const filteredHolidays = useMemo(() => {
     const monthAbbr = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
     ];
     const byMonth = holidays.filter((h) => {
       // Use explicit month/year if available, else parse label
@@ -75,7 +65,25 @@ export const HolidaysSection = ({ tags, holidays, parentScrollRef, sectionY = 0 
       const monIdx = monthAbbr.findIndex((a) => a.toLowerCase() === monStr);
       return yr === year && monIdx === month;
     });
-    const byTag = activeTag === "All" ? byMonth : byMonth.filter((h) => h.badge === activeTag);
+
+    // Remove Working Saturday entries if a Public/Restricted holiday exists on the same day
+    const getDayNum = (label) => {
+      const firstToken = String(label).trim().split(/\s+/)[0] || "";
+      return parseInt(firstToken.split(/[–—-]/)[0], 10);
+    };
+    const realHolidayDays = new Set(
+      byMonth
+        .filter(h => h.badge !== "Working Saturday")
+        .map(h => getDayNum(h.label))
+        .filter(d => !isNaN(d))
+    );
+    const deduped = byMonth.filter(h => {
+      if (h.badge !== "Working Saturday") return true;
+      const day = getDayNum(h.label);
+      return !realHolidayDays.has(day);
+    });
+
+    const byTag = activeTag === "All" ? deduped : deduped.filter((h) => h.badge === activeTag);
     const dayOf = (label) => {
       const firstToken = String(label).trim().split(/\s+/)[0] || "";
       const firstPart = firstToken.split(/[–—-]/)[0];
@@ -84,6 +92,80 @@ export const HolidaysSection = ({ tags, holidays, parentScrollRef, sectionY = 0 
     };
     return byTag.slice().sort((a, b) => dayOf(a.label) - dayOf(b.label));
   }, [holidays, activeTag, month, year]);
+
+  const renderHolidayItem = (h, index) => {
+    const dateMatch = h.label.match(/^(\d+(?:st|nd|rd|th)?(?:\s*[-–—]\s*\d+(?:st|nd|rd|th)?)?)\s+(.*)$/i);
+    let dateStr = "";
+    let name = "";
+    if (dateMatch) {
+      dateStr = dateMatch[1];
+      name = dateMatch[2];
+    } else {
+      const parts = h.label.trim().split(/\s+/);
+      dateStr = parts[0];
+      name = parts.slice(1).join(" ");
+    }
+
+    const rangeParts = dateStr.split(/[-–—]/);
+    const startDayNum = parseInt(rangeParts[0], 10);
+    let endDayNum = startDayNum;
+    if (rangeParts.length > 1) {
+      const parsedEnd = parseInt(rangeParts[1].trim(), 10);
+      if (!isNaN(parsedEnd)) endDayNum = parsedEnd;
+    }
+
+    const today = new Date();
+    const isCurrentMonthYear = today.getFullYear() === year && today.getMonth() === month;
+    const todayDay = today.getDate();
+    const isCurrentHoliday = isCurrentMonthYear && !isNaN(startDayNum) && todayDay >= startDayNum && todayDay <= endDayNum;
+
+    const handlePress = () => {
+      if (parentScrollRef && parentScrollRef.current) {
+        parentScrollRef.current.scrollToOffset({ offset: sectionY + calendarY, animated: true });
+      }
+      const days = [];
+      if (!isNaN(startDayNum)) {
+        for (let i = startDayNum; i <= endDayNum; i++) days.push(i);
+      }
+      setHighlightedDays(days);
+      setTimeout(() => setHighlightedDays([]), 3000);
+    };
+
+    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    const currentMonthName = monthNames[month];
+    const cleanDateStr = dateStr.replace(/(st|nd|rd|th)/g, "");
+
+    return (
+      <TouchableOpacity
+        key={`holiday-${index}`}
+        activeOpacity={0.9}
+        onPress={handlePress}
+      >
+        <View style={[
+          styles.holidayCard,
+          isCurrentHoliday && styles.holidayCardActive,
+        ]}>
+          <LinearGradient
+            colors={["#3B82F6", "#8B5CF6"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.dateBadge}
+          >
+            <Text style={styles.dateNum}>{cleanDateStr}</Text>
+            <Text style={styles.dateMonth}>{currentMonthName}</Text>
+          </LinearGradient>
+
+          <View style={styles.cardContent}>
+            <Text style={styles.holidayLabel}>{name}</Text>
+          </View>
+
+          <View style={[styles.badge, { backgroundColor: h.badgeColor }]}>
+            <Text style={styles.badgeText}>{h.badge === "Working Saturday" ? "Sat" : h.badge}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.section}>
@@ -136,94 +218,7 @@ export const HolidaysSection = ({ tags, holidays, parentScrollRef, sectionY = 0 
         nestedScrollEnabled
         showsVerticalScrollIndicator={false}
       >
-        {filteredHolidays.map((h, index) => {
-          // Robust date parsing
-          const dateMatch = h.label.match(/^(\d+(?:st|nd|rd|th)?(?:\s*[-–—]\s*\d+(?:st|nd|rd|th)?)?)\s+(.*)$/i);
-
-          let dateStr = "";
-          let name = "";
-
-          if (dateMatch) {
-            dateStr = dateMatch[1];
-            name = dateMatch[2];
-          } else {
-            const parts = h.label.trim().split(/\s+/);
-            dateStr = parts[0];
-            name = parts.slice(1).join(" ");
-          }
-
-          // Calculate Day(s)
-          const rangeParts = dateStr.split(/[-–—]/);
-          const startDayNum = parseInt(rangeParts[0], 10);
-          
-          let endDayNum = startDayNum;
-          if (rangeParts.length > 1) {
-              const parsedEnd = parseInt(rangeParts[1].trim(), 10);
-              if (!isNaN(parsedEnd)) endDayNum = parsedEnd;
-          }
-
-          const today = new Date();
-          const isCurrentMonthYear = today.getFullYear() === year && today.getMonth() === month;
-          const todayDay = today.getDate();
-          const isCurrentHoliday = isCurrentMonthYear && !isNaN(startDayNum) && todayDay >= startDayNum && todayDay <= endDayNum;
-
-          const handlePress = () => {
-             // Scroll to calendar
-             if (parentScrollRef && parentScrollRef.current) {
-                // If FlatList, we might need scrollToOffset.
-                // But we don't know the exact offset of HolidaysSection in HomeContent FlatList.
-                // Assuming HolidaysSection is part of ListHeaderComponent which is rendered at top?
-                // Actually HomeContent uses FlatList with ListHeaderComponent containing everything.
-                // So scrollToOffset({ offset: sectionY + calendarY }) should work if we know sectionY.
-                // However, getting sectionY from HomeContent is tricky.
-                // A simpler approach: Just scroll to top if HolidaysSection is near top?
-                // Or use measure.
-                // For now, let's try scrolling to offset 0 + calendarY relative to section?
-                // Wait, parentScrollRef is passed from HomeContent.
-                // We'll update HomeContent to pass the ref.
-                
-                // Assuming HolidaysSection starts at some Y.
-                // Ideally we want to scroll so Calendar is at top.
-                // Let's assume we can just scroll to a rough estimate or use a callback.
-                parentScrollRef.current.scrollToOffset({ offset: sectionY + calendarY, animated: true });
-             }
-
-             const days = [];
-             if (!isNaN(startDayNum)) {
-                 for (let i = startDayNum; i <= endDayNum; i++) days.push(i);
-             }
-             setHighlightedDays(days);
-             setTimeout(() => setHighlightedDays([]), 3000);
-          };
-
-          const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-          const currentMonthName = monthNames[month];
-          const cleanDateStr = dateStr.replace(/(st|nd|rd|th)/g, "");
-
-          return (
-            <TouchableOpacity key={index} activeOpacity={0.9} onPress={handlePress}>
-                <View style={[styles.holidayCard, isCurrentHoliday && styles.holidayCardActive]}>
-                  <LinearGradient
-                    colors={["#3B82F6", "#8B5CF6"]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                    style={styles.dateBadge}
-                  >
-                    <Text style={styles.dateNum}>{cleanDateStr}</Text>
-                    <Text style={styles.dateMonth}>{currentMonthName}</Text>
-                  </LinearGradient>
-                  
-                  <View style={styles.cardContent}>
-                     <Text style={styles.holidayLabel}>{name}</Text>
-                  </View>
-
-                  <View style={[styles.badge, { backgroundColor: h.badgeColor }]}>
-                    <Text style={styles.badgeText}>{h.badge === "Working Saturday" ? "Sat" : h.badge}</Text>
-                  </View>
-                </View>
-            </TouchableOpacity>
-          );
-        })}
+        {filteredHolidays.map((h, index) => renderHolidayItem(h, index))}
       </ScrollView>
       <TouchableOpacity
         style={styles.pdfButton}

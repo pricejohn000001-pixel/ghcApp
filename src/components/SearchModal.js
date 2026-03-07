@@ -150,14 +150,14 @@ export const SearchModal = ({ visible, onClose, onNavigate }) => {
 
     // Search Holidays
     holidays.forEach((holiday) => {
-        if (holiday.label.toLowerCase().includes(lowerQuery)) {
-            searchResults.push({
-                type: "holiday",
-                title: holiday.label,
-                subtitle: `${holiday.month}/${holiday.year} - ${holiday.badge}`,
-                data: holiday
-            })
-        }
+      if (holiday.label.toLowerCase().includes(lowerQuery)) {
+        searchResults.push({
+          type: "holiday",
+          title: holiday.label,
+          subtitle: `${holiday.month}/${holiday.year} - ${holiday.badge}`,
+          data: holiday
+        })
+      }
     });
 
     // Search Sub-menus (Links)
@@ -203,7 +203,7 @@ export const SearchModal = ({ visible, onClose, onNavigate }) => {
               />
               {query.length > 0 && (
                 <TouchableOpacity onPress={() => handleSearch("")}>
-                    <Feather name="x" size={20} color={colors.textSecondary} />
+                  <Feather name="x" size={20} color={colors.textSecondary} />
                 </TouchableOpacity>
               )}
               <View style={styles.micWrap}>
@@ -218,22 +218,22 @@ export const SearchModal = ({ visible, onClose, onNavigate }) => {
                   />
                 </TouchableOpacity>
               </View>
-          </View>
-          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-            <Text style={styles.closeText}>{t("nav.back", "Cancel")}</Text>
-          </TouchableOpacity>
-        </View>
-
-        {isListening && (
-          <View style={styles.listeningOverlay}>
-            <Text style={styles.listeningText}>Listening...</Text>
-            <View style={styles.waveWrap}>
-              {waveAnims.map((a, idx) => (
-                <Animated.View key={idx} style={[styles.waveBar, { transform: [{ scaleY: a }] }]} />
-              ))}
             </View>
+            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+              <Text style={styles.closeText}>{t("nav.back", "Cancel")}</Text>
+            </TouchableOpacity>
           </View>
-        )}
+
+          {isListening && (
+            <View style={styles.listeningOverlay}>
+              <Text style={styles.listeningText}>Listening...</Text>
+              <View style={styles.waveWrap}>
+                {waveAnims.map((a, idx) => (
+                  <Animated.View key={idx} style={[styles.waveBar, { transform: [{ scaleY: a }] }]} />
+                ))}
+              </View>
+            </View>
+          )}
 
           {error && (!String(error).toLowerCase().includes('no match')) && (
             <Text style={styles.errorText}>{error}</Text>
@@ -257,10 +257,10 @@ export const SearchModal = ({ visible, onClose, onNavigate }) => {
                     <Feather name="grid" size={20} color={colors.primary} />
                   )}
                   {item.type === "holiday" && (
-                     <Feather name="calendar" size={20} color={colors.primary} />
+                    <Feather name="calendar" size={20} color={colors.primary} />
                   )}
                   {item.type === "link" && (
-                     <Feather name="link" size={20} color={colors.primary} />
+                    <Feather name="link" size={20} color={colors.primary} />
                   )}
                 </View>
                 <View style={styles.textContainer}>

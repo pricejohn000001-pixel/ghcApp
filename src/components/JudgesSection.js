@@ -7,24 +7,58 @@ import { colors, radius, spacing } from "../theme";
 const { width } = Dimensions.get("window");
 const cardWidth = width - spacing.lg * 2;
 
-const JudgeCard = React.memo(({ item, onPortfolio, t }) => (
-  <View style={styles.judgeCard}>
-    <Image
-      source={{ uri: item.avatar }}
-      style={styles.judgeImage}
-      progressiveRenderingEnabled
-      loadingIndicatorSource={{ uri: item.avatar }}
-    />
-    <View style={styles.judgeInfo}>
-      <Text style={styles.judgeName}>{item.name}</Text>
-      <Text style={styles.judgeRole}>{item.title}</Text>
-      <TouchableOpacity style={styles.portfolioButton} onPress={onPortfolio} activeOpacity={0.9}>
-        <FontAwesome name="briefcase" size={16} color="#7F56D9" />
-        <Text style={styles.portfolioLabel}>{t("home.portfolio")}</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-));
+const JudgeCard = React.memo(({ item, onPortfolio, t }) => {
+  const [imageLoading, setImageLoading] = React.useState(true);
+  const fadeAnim = useRef(new Animated.Value(0.3)).current;
+
+  React.useEffect(() => {
+    if (imageLoading) {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(fadeAnim, {
+            toValue: 0.8,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+          Animated.timing(fadeAnim, {
+            toValue: 0.3,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+        ])
+      ).start();
+    } else {
+      fadeAnim.stopAnimation();
+    }
+  }, [imageLoading, fadeAnim]);
+
+  return (
+    <TouchableOpacity style={styles.judgeCard} onPress={onPortfolio} activeOpacity={0.9}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={{ uri: item.avatar }}
+          style={styles.judgeImage}
+          progressiveRenderingEnabled
+          loadingIndicatorSource={{ uri: item.avatar }}
+          loading="lazy"
+          onLoadStart={() => setImageLoading(true)}
+          onLoadEnd={() => setImageLoading(false)}
+        />
+        {imageLoading && (
+          <Animated.View style={[StyleSheet.absoluteFill, styles.skeletonLoader, { opacity: fadeAnim }]} />
+        )}
+      </View>
+      <View style={styles.judgeInfo}>
+        <Text style={styles.judgeName}>{item.name}</Text>
+        <Text style={styles.judgeRole}>{item.title}</Text>
+        <View style={styles.portfolioButton}>
+          <FontAwesome name="briefcase" size={16} color="#7F56D9" />
+          <Text style={styles.portfolioLabel}>{t("home.portfolio")}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+});
 
 export const JudgesSection = ({ judges, selectedIndex, onSelect, onPortfolio }) => {
   const { t } = useTranslation();
@@ -129,7 +163,17 @@ const styles = StyleSheet.create({
     elevation: 6,
     width: cardWidth,
   },
-  judgeImage: { width: 112, height: 146, borderRadius: radius.lg, resizeMode: "cover" },
+  imageContainer: {
+    width: 112,
+    height: 146,
+    borderRadius: radius.lg,
+    backgroundColor: "#F4F5F7",
+    overflow: "hidden",
+  },
+  judgeImage: { width: "100%", height: "100%", resizeMode: "cover" },
+  skeletonLoader: {
+    backgroundColor: "#E2E8F0",
+  },
   judgeInfo: { flex: 1 },
   judgeName: { color: "#0B1B3A", fontSize: 17, lineHeight: 22, fontWeight: "700" },
   judgeRole: { color: "#6B7280", marginTop: 4, fontSize: 12 },

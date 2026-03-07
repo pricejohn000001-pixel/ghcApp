@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState, useEffect } from "react";
-import { StatusBar, StyleSheet, View, BackHandler, Animated } from "react-native";
+import { StatusBar, StyleSheet, View, BackHandler, Animated, Linking } from "react-native";
 import { useFonts } from "expo-font";
 import { AntDesign, Entypo, Feather, FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Header } from "./src/components/Header";
@@ -159,7 +159,10 @@ export default function App() {
       return;
     }
     if (id === "display_board") {
-      addToHistory({ type: 'webview', url: displayBoardUrl });
+      const playStoreUrl = "https://play.google.com/store/apps/details?id=com.case_display_app&pcampaignid=web_share";
+      Linking.openURL(playStoreUrl).catch(() =>
+        addToHistory({ type: 'webview', url: displayBoardUrl })
+      );
       return;
     }
     if (id === "judgment_search") {
