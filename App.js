@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useRef, useState, useEffect } from "react"
 import { StatusBar, StyleSheet, View, BackHandler, Animated, Linking } from "react-native";
 import { useFonts } from "expo-font";
 import { AntDesign, Entypo, Feather, FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Header } from "./src/components/Header";
 import { BottomNav } from "./src/components/BottomNav";
 import { DrawerMenu } from "./src/components/DrawerMenu";
@@ -195,7 +196,7 @@ export default function App() {
   };
 
   return (
-    <View style={styles.root}>
+    <SafeAreaProvider style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor={colors.primary} translucent={false} />
       <Header onMenu={() => setDrawerOpen(true)} onSearch={() => setSearchOpen(true)} scrollY={scrollYRef.current} />
       {showWebView && currentUrl ? (
@@ -305,7 +306,7 @@ export default function App() {
           }
         }}
       />
-    </View>
+    </SafeAreaProvider>
   );
 }
 

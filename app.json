@@ -15,7 +15,13 @@
       "package": "com.ghc.app"
     },
     "plugins": [
-      "expo-localization"
+      "expo-localization",
+      [
+        "expo-system-ui",
+        {
+          "windowCompat": true
+        }
+      ]
     ],
     "extra": {
       "eas": {

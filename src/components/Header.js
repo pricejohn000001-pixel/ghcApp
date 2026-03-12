@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View, AppState, useWindowDimensions, Animated } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Entypo, Feather } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors, radius, spacing } from "../theme";
 import { useTranslation } from "react-i18next";
 
@@ -11,6 +12,7 @@ export const Header = ({ onMenu, onSearch, scrollY }) => {
   const { t } = useTranslation();
   const monthNames = t("months", { returnObjects: true });
   const { width } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
 
   const [now, setNow] = useState(new Date());
   const [welcomeHeight, setWelcomeHeight] = useState(0);
@@ -26,7 +28,7 @@ export const Header = ({ onMenu, onSearch, scrollY }) => {
 
   const dateText = `${String(now.getDate()).padStart(2, "0")} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
   return (
-    <LinearGradient colors={["#0F2349", colors.primary]} style={styles.header}>
+    <LinearGradient colors={["#0F2349", colors.primary]} style={[styles.header, { paddingTop: Math.max(insets.top, 12) + 12 }]}>
       <View style={styles.headerRow}>
         <View style={styles.brandRow}>
           <Image source={logo} style={styles.logo} resizeMode="contain" />
@@ -96,7 +98,6 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.lg,
-    paddingTop: 12,
     borderBottomLeftRadius: radius.xl,
     borderBottomRightRadius: radius.xl,
   },

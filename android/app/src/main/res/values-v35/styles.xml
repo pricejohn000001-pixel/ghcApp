@@ -1,0 +1,7 @@
+<resources>
+    <!-- Add edge-to-edge style here -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Edge-to-edge support -->
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">false</item>
+    </style>
+</resources>
