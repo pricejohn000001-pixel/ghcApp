@@ -4,14 +4,18 @@ import { AntDesign } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { colors, spacing } from "../theme";
 
-export const BottomNav = ({ onHome, onBack, onForward, disableBack, disableForward }) => {
+export const BottomNav = ({ onHome, onMactCal, onBack, onForward, disableBack, disableForward, activeTab }) => {
   const { t } = useTranslation();
 
   return (
     <View style={styles.bottomNav}>
       <TouchableOpacity style={styles.navItem} activeOpacity={0.8} onPress={onHome}>
-        <AntDesign name="home" size={20} color="#ADB9D8" />
-        <Text style={styles.navText}>{t("nav.home")}</Text>
+        <AntDesign name="home" size={20} color={activeTab === 'home' ? colors.textPrimary : "#ADB9D8"} />
+        <Text style={[styles.navText, activeTab === 'home' && styles.activeText]}>{t("nav.home")}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navItem} activeOpacity={0.8} onPress={onMactCal}>
+        <AntDesign name="calculator" size={20} color={activeTab === 'mactCal' ? colors.textPrimary : "#ADB9D8"} />
+        <Text style={[styles.navText, activeTab === 'mactCal' && styles.activeText]}>MACT Cal</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.navItem, disableBack && styles.disabled]}
@@ -46,6 +50,7 @@ const styles = StyleSheet.create({
   },
   navItem: { alignItems: "center", gap: spacing.xs },
   navText: { color: "#ADB9D8", fontSize: 12 },
+  activeText: { color: colors.textPrimary, fontWeight: "600" },
   disabled: { opacity: 0.5 },
 });
 

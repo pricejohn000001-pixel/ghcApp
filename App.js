@@ -243,10 +243,12 @@ export default function App() {
 
       <BottomNav
         onHome={handleHome}
+        onMactCal={() => addToHistory({ type: 'webview', url: "https://ghcservices.assam.gov.in/mact/mact_cal.php" })}
         onBack={handleBack}
         onForward={handleForward}
         disableBack={historyIndex === 0 && (!showWebView || !canGoBack)}
         disableForward={historyIndex === history.length - 1 && (!showWebView || !canGoForward)}
+        activeTab={currentState.type === 'home' ? 'home' : (showWebView && currentUrl === "https://ghcservices.assam.gov.in/mact/mact_cal.php") ? 'mactCal' : null}
       />
       <DrawerMenu
         visible={drawerOpen}

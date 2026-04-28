@@ -1,5 +1,8 @@
 import React, { useMemo, useState } from "react";
-import { ActivityIndicator, StyleSheet, View, Platform, ScrollView, RefreshControl } from "react-native";
+import { ActivityIndicator, StyleSheet, View, Platform, ScrollView, RefreshControl, Linking } from "react-native";
+import * as FileSystem from 'expo-file-system';
+import * as Sharing from 'expo-sharing';
+import * as IntentLauncher from 'expo-intent-launcher';
 import { colors } from "../theme";
 import { WebView } from "react-native-webview";
 
@@ -34,6 +37,10 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
   );
   const isGhcJudgesPages = useMemo(
     () => /ghconline\.gov\.in\/index\.php\/(honourable-sitting-judges-of-the-supreme-court-of-india|former-honble-judges-of-the-supreme-court-of-india-chief-justice-of-india-who-served-as-chief-justice-honble-judge-of-this-high-court|former-honourable-chief-justices-of-gauhati-high-court|former-honourable-judges-of-the-gauhati-high-court|honourable-chief-justices-and-judges-of-the-gauhati-high-court-appointed-or-transferred-as-chief-justices-of-other-high-court)\/?$/.test(url || ""),
+    [url]
+  );
+  const isMactCalculator = useMemo(
+    () => /mact_cal\.php/.test(url || ""),
     [url]
   );
 
@@ -541,8 +548,188 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
         true;
       ` + "\n" + commonScript;
     }
+    if (isMactCalculator) {
+              const css = `
+        header, footer, nav, #sp-header, #sp-footer, .t3-header, .t3-footer,
+        .breadcrumb, .breadcrumbs, .uk-breadcrumb, .page-breadcrumb,
+        #sp-title, .sp-page-title, .tm-page-title, .banner, .hero, .page-cover,
+        .site-header, .site-footer, .top-bar, .navbar, .navigation, .menu, .masthead,
+        .sidebar, .sidebar-primary, #secondary, .widget-area,
+        .quick-links, #quick-links, .quicklinks, #quicklinks,
+        .top, .topbar, #top, #topbar, .header, #header, .header-area, .top-header, .top-area,
+        #site-header, .accessibility, ul.access, .font-resizer, .gtranslate_wrapper,
+        #google_translate_element, .logo, .site-logo, .brand, .logo-area, .logo-wrapper, .page-header {
+          display: none !important;
+        }
+        html, body {
+          background: #ffffff !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          height: auto !important;
+          min-height: 100% !important;
+          padding-top: 0 !important;
+          margin-top: 0 !important;
+        }
+        #primary, .content-area, #content, #sp-component, .t3-content, .tm-content, main,
+        .container, .container-fluid, .site-wrapper, .wrapper, article, .item-page, .entry-content {
+          background: #ffffff !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          max-width: 100% !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+          overflow-x: auto !important;
+        }
+        img, iframe, object, embed { max-width: 100% !important; height: auto !important; }
+        
+        /* Make all tables scrollable horizontally to prevent clipping */
+        table, .table-responsive, .table-wrapper { 
+          display: block !important;
+          width: 100% !important; 
+          max-width: 100% !important; 
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch !important;
+        }
+        td, th {
+          word-wrap: break-word !important;
+          white-space: normal !important;
+        }
+      `;
+      return `
+        (function(){
+          function apply(){
+            var style = document.getElementById('rn-mact-calc-style');
+            if(!style){
+              style = document.createElement('style');
+              style.id = 'rn-mact-calc-style';
+              style.type = 'text/css';
+              style.appendChild(document.createTextNode(${JSON.stringify(css)}));
+              (document.head || document.documentElement).appendChild(style);
+            }
+            try {
+              const hiders = '.page-cover, .page-breadcrumb, .t3-sidebar, .tm-sidebar, .sidebar, .sidebar-primary, #secondary, .widget-area, .quick-links, #quick-links, .top, .topbar, #top, #topbar, .header, #header, .header-area, .top-header, .top-area, #site-header, .accessibility, ul.access, .font-resizer, .gtranslate_wrapper, #google_translate_element, .logo, .site-logo, .brand, .logo-area, .logo-wrapper, header, nav, footer';
+              
+              document.querySelectorAll(hiders).forEach(function(el){ el.style.display='none'; });
+              
+              Array.from(document.querySelectorAll('h3, h4, div, span, a')).forEach(function(el) {
+                if ((el.textContent || '').trim().toLowerCase() === 'quick links') {
+                   if (el.parentElement && el.parentElement.tagName !== 'BODY') {
+                       el.parentElement.style.display = 'none';
+                   } else {
+                       el.style.display = 'none';
+                   }
+                }
+              });
+
+              // Aggressive string matching for the top header elements to hide their full containers
+              document.querySelectorAll('*').forEach(function(el) {
+                  let txt = (el.textContent || '').trim().toLowerCase();
+                  if (txt === 'a-' || txt === 'a+' || txt === 'select language' || txt === 'the gauhati high court' || txt.includes('assam, nagaland')) {
+                      let p = el;
+                      for(let i=0; i<6; i++) {
+                          if (!p || p.tagName === 'BODY' || p.tagName === 'HTML') break;
+                          let pTxt = (p.textContent || '').trim();
+                          // Only hide smaller containers so we don't accidentally wipe out the whole calculator body
+                          if (pTxt.length < 500) {
+                              p.style.display = 'none';
+                          }
+                          p = p.parentElement;
+                      }
+                  }
+              });
+              
+              // Find images that are logos and hide their whole container rows
+              document.querySelectorAll('img').forEach(function(img) {
+                const src = (img.src || '').toLowerCase();
+                const alt = (img.alt || '').toLowerCase();
+                if (src.includes('logo') || alt.includes('logo') || alt.includes('court')) {
+                    let p = img;
+                    for(let i=0; i<6; i++) {
+                        if (!p || p.tagName === 'BODY' || p.tagName === 'HTML') break;
+                        let pTxt = (p.textContent || '').trim();
+                        // Again, only wipe out reasonably small containers, like the header wrapping the logo
+                        if (pTxt.length < 500) {
+                            p.style.display = 'none';
+                        }
+                        p = p.parentElement;
+                    }
+                }
+              });
+
+              // Intercept PDF button clicks to generate and download it properly
+              document.addEventListener('click', async function(e) {
+                  let el = e.target;
+                  while(el && el.tagName !== 'BODY' && el.tagName !== 'HTML') {
+                      let txt = (el.textContent || el.value || '').trim().toLowerCase();
+                      if ((el.tagName === 'A' || el.tagName === 'BUTTON' || el.tagName === 'INPUT') && txt.includes('get pdf')) {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          
+                          let originalText = el.tagName === 'INPUT' ? el.value : el.textContent;
+                          if (el.tagName === 'INPUT') el.value = 'Generating...';
+                          else el.textContent = 'Generating...';
+                          
+                          try {
+                              let url, options = {};
+                              if (el.tagName === 'A' && el.href && !el.href.startsWith('javascript')) {
+                                  url = el.href;
+                                  options = { method: 'GET' };
+                              } else if (el.form) {
+                                  url = el.form.action || window.location.href;
+                                  let formData = new FormData(el.form);
+                                  if (el.name) formData.append(el.name, el.value);
+                                  options = { method: el.form.method ? el.form.method.toUpperCase() : 'POST', body: formData };
+                              } else {
+                                  let onclick = el.getAttribute('onclick') || '';
+                                  if (onclick.includes('href')) {
+                                      let match = onclick.match(/href\\s*=\\s*["']([^"']+)["']/);
+                                      if (match && match[1]) {
+                                          url = new URL(match[1], window.location.href).href;
+                                          options = { method: 'GET' };
+                                      }
+                                  }
+                              }
+                              
+                              if (!url) throw new Error("No URL");
+                              
+                              let res = await fetch(url, options);
+                              let blob = await res.blob();
+                              let reader = new FileReader();
+                              reader.onloadend = function() {
+                                  window.ReactNativeWebView.postMessage(JSON.stringify({ 
+                                      type: 'DOWNLOAD_PDF', 
+                                      data: reader.result,
+                                      filename: 'mact_calculation.pdf'
+                                  }));
+                                  if (el.tagName === 'INPUT') el.value = originalText;
+                                  else el.textContent = originalText;
+                              };
+                              reader.readAsDataURL(blob);
+                          } catch (err) {
+                              window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'LOG', msg: 'Fetch error: ' + err.message }));
+                              if (el.tagName === 'INPUT') el.value = originalText;
+                              else el.textContent = originalText;
+                              
+                              // Fallback
+                              if (el.form) el.form.submit();
+                              else if (el.href) window.location.href = el.href;
+                          }
+                          return;
+                      }
+                      el = el.parentElement;
+                  }
+              }, true);
+
+            } catch(e){}
+          }
+          apply();
+          setInterval(apply, 1000);
+        })();
+        true;
+      ` + "\n" + commonScript;
+    }
     return commonScript;
-  }, [isYouTube, isRegistry, isDistrictCourts, isRecruitment, isGhcEbook, isJudgmentSearch, isGhcJudgesPages, isRegistrySection]);
+  }, [isYouTube, isRegistry, isDistrictCourts, isRecruitment, isGhcEbook, isJudgmentSearch, isGhcJudgesPages, isRegistrySection, isMactCalculator]);
 
   return (
     <View style={styles.container}>
@@ -595,10 +782,18 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
             injectedJavaScriptBeforeContentLoaded={injectScript}
             startInLoadingState
             bounces
-            onMessage={(e) => {
+            onMessage={async (e) => {
               try {
                 const data = JSON.parse(e?.nativeEvent?.data || '{}');
-                if (data && data.type === 'SCROLL_TOP') {
+                if (data && data.type === 'DOWNLOAD_PDF') {
+                  const base64Data = data.data.split('base64,')[1];
+                  const fileUri = FileSystem.documentDirectory + (data.filename || 'document.pdf');
+                  await FileSystem.writeAsStringAsync(fileUri, base64Data, { encoding: FileSystem.EncodingType.Base64 });
+                  const canShare = await Sharing.isAvailableAsync();
+                  if (canShare) {
+                    await Sharing.shareAsync(fileUri, { UTI: '.pdf', mimeType: 'application/pdf', dialogTitle: 'Open PDF' });
+                  }
+                } else if (data && data.type === 'SCROLL_TOP') {
                   setCanRefresh(!!data.atTop);
                 } else if (data && data.type === 'SCROLL_Y') {
                   try {
@@ -659,10 +854,28 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
                 setTimeout(() => setRefreshing(false), 500);
               }
             }}
-            onMessage={(e) => {
+            onMessage={async (e) => {
               try {
                 const data = JSON.parse(e?.nativeEvent?.data || '{}');
-                if (data && data.type === 'SCROLL_Y') {
+                if (data && data.type === 'DOWNLOAD_PDF') {
+                  const base64Data = data.data.split('base64,')[1];
+                  const fileUri = FileSystem.documentDirectory + (data.filename || 'document.pdf');
+                  await FileSystem.writeAsStringAsync(fileUri, base64Data, { encoding: FileSystem.EncodingType.Base64 });
+                  
+                  try {
+                    const cUri = await FileSystem.getContentUriAsync(fileUri);
+                    await IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
+                      data: cUri,
+                      flags: 1,
+                      type: 'application/pdf'
+                    });
+                  } catch (err) {
+                    const canShare = await Sharing.isAvailableAsync();
+                    if (canShare) {
+                      await Sharing.shareAsync(fileUri, { UTI: '.pdf', mimeType: 'application/pdf', dialogTitle: 'Open PDF' });
+                    }
+                  }
+                } else if (data && data.type === 'SCROLL_Y') {
                   try {
                     const y = Number(data.y) || 0;
                     if (scrollY && typeof scrollY.setValue === 'function') {
