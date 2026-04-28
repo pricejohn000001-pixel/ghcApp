@@ -18,6 +18,8 @@ import { HomeContent } from "./src/components/HomeContent";
 import { CourtLinks } from "./src/components/CourtLinks";
 import { SplashScreen } from "./src/components/SplashScreen";
 import { SearchModal } from "./src/components/SearchModal";
+import { CaseHistoryScreen } from "./src/components/CaseHistoryScreen";
+import { CaseDetailsScreen } from "./src/components/CaseDetailsScreen";
 import "./src/i18n";
 
 import { initializeJudgesData } from "./src/services/judgesDataService";
@@ -60,6 +62,8 @@ export default function App() {
   const showAbout = currentState.type === 'about';
   const showContact = currentState.type === 'contact';
   const showPrivacy = currentState.type === 'privacy';
+  const showCaseHistory = currentState.type === 'case_history';
+  const showCaseDetails = currentState.type === 'case_details';
   const currentUrl = currentState.url;
 
   const [canGoBack, setCanGoBack] = useState(false);
@@ -222,6 +226,16 @@ export default function App() {
         <ContactScreen scrollY={scrollYRef.current} />
       ) : showPrivacy ? (
         <PrivacyPolicyScreen scrollY={scrollYRef.current} />
+      ) : showCaseHistory ? (
+        <CaseHistoryScreen 
+          scrollY={scrollYRef.current} 
+          onViewDetails={(item) => addToHistory({ type: 'case_details', caseItem: item })} 
+        />
+      ) : showCaseDetails ? (
+        <CaseDetailsScreen 
+          caseItem={currentState.caseItem} 
+          scrollY={scrollYRef.current}
+        />
       ) : (
         <HomeContent
           judges={judgesData}
@@ -244,11 +258,12 @@ export default function App() {
       <BottomNav
         onHome={handleHome}
         onMactCal={() => addToHistory({ type: 'webview', url: "https://ghcservices.assam.gov.in/mact/mact_cal.php" })}
+        onCaseHistory={() => addToHistory({ type: 'case_history' })}
         onBack={handleBack}
         onForward={handleForward}
         disableBack={historyIndex === 0 && (!showWebView || !canGoBack)}
         disableForward={historyIndex === history.length - 1 && (!showWebView || !canGoForward)}
-        activeTab={currentState.type === 'home' ? 'home' : (showWebView && currentUrl === "https://ghcservices.assam.gov.in/mact/mact_cal.php") ? 'mactCal' : null}
+        activeTab={currentState.type === 'home' ? 'home' : (showWebView && currentUrl === "https://ghcservices.assam.gov.in/mact/mact_cal.php") ? 'mactCal' : (showCaseHistory || showCaseDetails) ? 'caseHistory' : null}
       />
       <DrawerMenu
         visible={drawerOpen}
