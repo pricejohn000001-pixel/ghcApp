@@ -19,7 +19,7 @@ export const BottomNav = ({ onHome, onMactCal, onCaseHistory, onBack, onForward,
       </TouchableOpacity>
       <TouchableOpacity style={styles.navItem} activeOpacity={0.8} onPress={onCaseHistory}>
         <AntDesign name="filetext1" size={20} color={activeTab === 'caseHistory' ? colors.textPrimary : "#ADB9D8"} />
-        <Text style={[styles.navText, activeTab === 'caseHistory' && styles.activeText]}>History</Text>
+        <Text style={[styles.navText, activeTab === 'caseHistory' && styles.activeText]}>Case History</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.navItem, disableBack && styles.disabled]}

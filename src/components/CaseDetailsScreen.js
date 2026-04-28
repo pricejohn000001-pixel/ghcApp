@@ -180,11 +180,13 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
   const caseNo = `${caseTypeName} ${data.fil_no || ''}/${data.fil_year || ''}`;
   const regNo = `${regTypeName} ${data.reg_no || ''}/${data.reg_year || ''}`;
 
-  const renderGridItem = (label, value, isHighlight = false, colSpan = 1) => (
-    <View style={[styles.gridCell, { flex: colSpan }, isHighlight && styles.gridCellHighlight]}>
-      <Text style={[styles.gridLabel, isHighlight && { color: "#D97706" }]}>{label}</Text>
-      {isHighlight && <View style={styles.upcomingBadge}><Text style={styles.upcomingBadgeText}>Upcoming</Text></View>}
-      <Text style={[styles.gridValue, isHighlight && { color: "#92400E", fontSize: 16 }]}>{value || '-'}</Text>
+  const renderDetailRow = (label, value, isHighlight = false) => (
+    <View style={styles.detailRow}>
+      <Text style={[styles.detailLabel, isHighlight && { color: "#D97706" }]}>{label}</Text>
+      <View style={styles.detailValueContainer}>
+        {isHighlight && <View style={styles.upcomingBadge}><Text style={styles.upcomingBadgeText}>Upcoming</Text></View>}
+        <Text style={[styles.detailValue, isHighlight && { color: "#92400E" }]} textAlign="right">{value || '-'}</Text>
+      </View>
     </View>
   );
 
@@ -277,7 +279,16 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           <View style={styles.heroIcon}>
             <MaterialCommunityIcons name="gavel" size={20} color="#fff" />
           </View>
-          <Text style={styles.heroTitle}>Case Status Overview</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.heroTitle}>{regTypeName} / {data.reg_no || '-'} / {data.reg_year || '-'}</Text>
+            <Text style={styles.heroSub}>CINO: {data.cino || '-'}</Text>
+            <View style={{ flexDirection: 'row', gap: 8, marginTop: 12 }}>
+              <View style={styles.heroPill}><Text style={styles.heroPillText}>{caseTypeName}</Text></View>
+              <View style={[styles.heroPill, { backgroundColor: currentStatus === 'PENDING' ? 'rgba(245, 158, 11, 0.25)' : 'rgba(16, 185, 129, 0.25)' }]}>
+                <Text style={[styles.heroPillText, { color: currentStatus === 'PENDING' ? '#FCD34D' : '#6EE7B7' }]}>{currentStatus}</Text>
+              </View>
+            </View>
+          </View>
         </View>
       </LinearGradient>
 
@@ -304,26 +315,22 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             <Text style={styles.cardTitle}>Case Details</Text>
           </View>
           
-          <View style={styles.gridContainer}>
-            <View style={styles.gridRow}>
-              {renderGridItem("FILING NO.", caseNo)}
-              {renderGridItem("FILING DATE", formatDate(data.date_of_filing))}
-            </View>
-            <View style={styles.gridDivider} />
-            <View style={styles.gridRow}>
-              {renderGridItem("REGISTRATION NO.", regNo)}
-              {renderGridItem("REGISTRATION DATE", formatDate(data.dt_regis))}
-            </View>
-            <View style={styles.gridDivider} />
-            <View style={styles.gridRow}>
-              {renderGridItem("NEXT HEARING", formatDate(data.date_next_list), true)}
-              {renderGridItem("LISTED FOR", listedFor)}
-            </View>
-            <View style={styles.gridDivider} />
-            <View style={styles.gridRow}>
-              {renderGridItem("LAST LISTING", formatDate(data.date_last_list))}
-              {renderGridItem("EFILING REF NO", data.efilno)}
-            </View>
+          <View style={styles.detailsContainer}>
+            {renderDetailRow("FILING NO.", caseNo)}
+            <View style={styles.detailDivider} />
+            {renderDetailRow("FILING DATE", formatDate(data.date_of_filing))}
+            <View style={styles.detailDivider} />
+            {renderDetailRow("REGISTRATION NO.", regNo)}
+            <View style={styles.detailDivider} />
+            {renderDetailRow("REGISTRATION DATE", formatDate(data.dt_regis))}
+            <View style={styles.detailDivider} />
+            {renderDetailRow("NEXT HEARING", formatDate(data.date_next_list), true)}
+            <View style={styles.detailDivider} />
+            {renderDetailRow("LISTED FOR", listedFor)}
+            <View style={styles.detailDivider} />
+            {renderDetailRow("LAST LISTING", formatDate(data.date_last_list))}
+            <View style={styles.detailDivider} />
+            {renderDetailRow("EFILING REF NO", data.efilno)}
           </View>
           <View style={styles.cardFooter}>
             <Feather name="info" size={12} color="#6B7280" />
@@ -340,20 +347,16 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             <Text style={styles.cardTitle}>Additional Information</Text>
           </View>
           
-          <View style={styles.gridContainer}>
-            <View style={styles.gridRow}>
-              {renderGridItem("CURRENT STATUS", currentStatus)}
-              {renderGridItem("LISTED BEFORE", listedBefore)}
-            </View>
-            <View style={styles.gridDivider} />
-            <View style={styles.gridRow}>
-              {renderGridItem("CASE AGE", caseAgeFormatted)}
-              {renderGridItem("DAYS SINCE LAST LISTED", daysSinceListed)}
-            </View>
-            <View style={styles.gridDivider} />
-            <View style={styles.gridRow}>
-              {renderGridItem("CASE CATEGORY", data.subject?.subject_name || '-', false, 2)}
-            </View>
+          <View style={styles.detailsContainer}>
+            {renderDetailRow("CURRENT STATUS", currentStatus)}
+            <View style={styles.detailDivider} />
+            {renderDetailRow("LISTED BEFORE", listedBefore)}
+            <View style={styles.detailDivider} />
+            {renderDetailRow("CASE AGE", caseAgeFormatted)}
+            <View style={styles.detailDivider} />
+            {renderDetailRow("DAYS SINCE LAST LISTED", daysSinceListed)}
+            <View style={styles.detailDivider} />
+            {renderDetailRow("CASE CATEGORY", data.subject?.subject_name || '-')}
           </View>
           <View style={styles.cardFooter}>
             <Text style={styles.footerText}>{data.filing_case_type?.full_form || "Write Petition under Article 226 and 227 of the Constitution"}</Text>
@@ -378,16 +381,16 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
               <View style={[styles.partyHeaderBg, { backgroundColor: "#ECFDF5", borderTopWidth: 1, borderTopColor: "#F1F5F9" }]}>
                 <Text style={[styles.partyHeaderTitle, { color: "#059669" }]}>PETITIONERS</Text>
               </View>
-              <ScrollView style={styles.partyStackScroll} nestedScrollEnabled showsVerticalScrollIndicator={false} contentContainerStyle={styles.partyScrollContent}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.partyStackScroll} contentContainerStyle={styles.partyScrollContent}>
                 {allPetitioners.map((pet, idx) => (
-                  <View key={idx} style={styles.partyCard}>
+                  <View key={idx} style={[styles.partyCard, { width: 260 }]}>
                     <View style={styles.partyCardHeader}>
                       <View style={[styles.partyAvatar, { backgroundColor: "#059669" }]}><Text style={styles.partyAvatarText}>{pet.party_no}</Text></View>
                       <Text style={[styles.partyCardName, { color: "#065F46" }]}>{pet.name} <Text style={styles.partyAge}>{pet.age ? `${pet.age}y` : ''}</Text></Text>
                     </View>
                     {/* Advocates only render if they exist (enforced to be only on first petitioner) */}
                     {renderAdvocates(pet.adv_name, pet.adv_reg, pet.extra_advs)}
-                    {pet.address && <Text style={styles.partyAddress} numberOfLines={3}>{pet.address}</Text>}
+                    {pet.address && <Text style={styles.partyAddress}>{pet.address}</Text>}
                   </View>
                 ))}
               </ScrollView>
@@ -398,16 +401,16 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
               <View style={[styles.partyHeaderBg, { backgroundColor: "#FFF7ED", borderTopWidth: 1, borderTopColor: "#F1F5F9" }]}>
                 <Text style={[styles.partyHeaderTitle, { color: "#EA580C" }]}>RESPONDENTS</Text>
               </View>
-              <ScrollView style={styles.partyStackScroll} nestedScrollEnabled showsVerticalScrollIndicator={false} contentContainerStyle={styles.partyScrollContent}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.partyStackScroll} contentContainerStyle={styles.partyScrollContent}>
                 {allRespondents.map((res, idx) => (
-                  <View key={idx} style={styles.partyCard}>
+                  <View key={idx} style={[styles.partyCard, { width: 260 }]}>
                     <View style={styles.partyCardHeader}>
                       <View style={[styles.partyAvatar, { backgroundColor: "#EA580C" }]}><Text style={styles.partyAvatarText}>{res.party_no}</Text></View>
                       <Text style={[styles.partyCardName, { color: "#9A3412" }]}>{res.name} <Text style={styles.partyAge}>{res.age ? `${res.age}y` : ''}</Text></Text>
                     </View>
                     {/* Advocates only render if they exist (enforced to be only on first respondent) */}
                     {renderAdvocates(res.adv_name, res.adv_reg, res.extra_advs)}
-                    {res.address && <Text style={styles.partyAddress} numberOfLines={3}>{res.address}</Text>}
+                    {res.address && <Text style={styles.partyAddress}>{res.address}</Text>}
                   </View>
                 ))}
               </ScrollView>
@@ -429,7 +432,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             </View>
           </View>
           {subMatters.length > 0 ? (
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.horizontalScroll}>
               <View style={styles.table}>
                 <View style={styles.tableHeader}>
                   <Text style={[styles.th, { width: 140 }]}>CASE</Text>
@@ -479,7 +482,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             </View>
           </View>
           {linkedCases.length > 0 ? (
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.horizontalScroll}>
               <View style={styles.table}>
                 <View style={styles.tableHeader}>
                   <Text style={[styles.th, { width: 140 }]}>CASE</Text>
@@ -526,7 +529,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           </View>
           {orders.length > 0 ? (
             <>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.horizontalScroll}>
                 <View style={styles.table}>
                   <View style={styles.tableHeader}>
                     <Text style={[styles.th, { width: 40 }]}>#</Text>
@@ -597,16 +600,19 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#ECF1FF" },
-  hero: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.xl },
-  heroRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
-  heroIcon: { width: 36, height: 36, borderRadius: radius.md, backgroundColor: "rgba(255,255,255,0.15)", alignItems: "center", justifyContent: "center" },
+  container: { flex: 1, backgroundColor: colors.primary },
+  hero: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.lg },
+  heroRow: { flexDirection: "row", alignItems: "flex-start", gap: spacing.md },
+  heroIcon: { width: 36, height: 36, borderRadius: 12, backgroundColor: "#1B2C52", alignItems: "center", justifyContent: "center", marginTop: 2 },
   heroTitle: { color: "#fff", fontWeight: "800", fontSize: 18 },
-  scroll: { flex: 1, marginTop: -20 },
-  content: { padding: spacing.lg, gap: spacing.md, paddingBottom: 60 },
+  heroSub: { color: "#ADB9D8", marginTop: 4, fontSize: 13, fontWeight: "500", letterSpacing: 0.5 },
+  heroPill: { backgroundColor: 'rgba(255,255,255,0.15)', paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.pill, alignSelf: 'flex-start' },
+  heroPillText: { color: '#fff', fontSize: 10, fontWeight: '800', textTransform: 'uppercase', letterSpacing: 0.5 },
+  scroll: { flex: 1 },
+  content: { backgroundColor: "#ECF1FF", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, paddingBottom: 60 },
   
   errorIconBg: { width: 64, height: 64, borderRadius: 32, backgroundColor: "#FEE2E2", alignItems: "center", justifyContent: "center", marginBottom: spacing.md },
-  errorText: { color: colors.primary, fontSize: 16, fontWeight: "600" },
+  errorText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 
   card: { backgroundColor: "#fff", borderRadius: radius.xl, overflow: "hidden", shadowColor: "#0B1A38", shadowOpacity: 0.08, shadowOffset: { width: 0, height: 6 }, shadowRadius: 12, elevation: 3 },
   cardHeader: { flexDirection: "row", alignItems: "center", gap: 12, padding: spacing.lg },
@@ -614,14 +620,14 @@ const styles = StyleSheet.create({
   cardTitle: { fontSize: 17, fontWeight: "800", color: colors.primary },
   cardSubtitle: { fontSize: 13, color: "#6B7280", marginTop: 2, fontWeight: "500" },
 
-  gridContainer: { paddingHorizontal: spacing.lg, paddingBottom: spacing.sm },
-  gridRow: { flexDirection: "row", gap: spacing.md, paddingVertical: spacing.sm },
-  gridDivider: { height: 1, backgroundColor: "#F1F5F9" },
-  gridCell: { flex: 1, justifyContent: "center" },
-  gridCellHighlight: { backgroundColor: "#FEF3C7", padding: spacing.sm, borderRadius: radius.md, margin: -spacing.sm },
-  gridLabel: { fontSize: 11, fontWeight: "700", color: "#64748B", marginBottom: 4, letterSpacing: 0.5, textTransform: "uppercase" },
-  gridValue: { fontSize: 14, fontWeight: "700", color: "#0F172A" },
-  upcomingBadge: { position: "absolute", top: spacing.sm, right: spacing.sm, backgroundColor: "#F59E0B", paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4 },
+  detailsContainer: { paddingHorizontal: spacing.lg, paddingBottom: spacing.sm },
+  detailRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: spacing.md, gap: 16 },
+  detailDivider: { height: 1, backgroundColor: "#F1F5F9" },
+  detailLabel: { flex: 1, fontSize: 12, fontWeight: "700", color: "#64748B", letterSpacing: 0.5, textTransform: "uppercase" },
+  detailValueContainer: { flex: 2, flexDirection: "row", alignItems: "center", justifyContent: "flex-end", gap: 8 },
+  detailValue: { fontSize: 14, fontWeight: "700", color: "#0F172A", textAlign: "right" },
+  
+  upcomingBadge: { backgroundColor: "#F59E0B", paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4 },
   upcomingBadgeText: { fontSize: 9, color: "#fff", fontWeight: "800", textTransform: "uppercase" },
   cardFooter: { backgroundColor: "#F8FAFC", padding: spacing.md, flexDirection: "row", alignItems: "flex-start", gap: 6, borderTopWidth: 1, borderTopColor: "#F1F5F9" },
   footerText: { fontSize: 12, color: "#64748B", flex: 1, lineHeight: 18 },
@@ -630,10 +636,10 @@ const styles = StyleSheet.create({
   partyStackColumn: { borderBottomWidth: 4, borderBottomColor: "#F8FAFC" },
   partyHeaderBg: { paddingVertical: 10, paddingHorizontal: spacing.lg, alignItems: "center" },
   partyHeaderTitle: { fontSize: 12, fontWeight: "800", letterSpacing: 1 },
-  partyStackScroll: { height: 150 },
+  partyStackScroll: { flexGrow: 0 },
   partyScrollContent: { padding: spacing.lg, gap: spacing.md },
   
-  partyCard: { backgroundColor: "#fff", borderRadius: radius.lg, padding: spacing.md, borderWidth: 1, borderColor: "#F1F5F9", shadowColor: "#000", shadowOpacity: 0.02, shadowOffset: { width: 0, height: 2 }, shadowRadius: 4, elevation: 1 },
+  partyCard: { backgroundColor: "#fff", borderRadius: radius.lg, padding: spacing.md, borderWidth: 1, borderColor: "#E2E8F0", shadowColor: "#000", shadowOpacity: 0.04, shadowOffset: { width: 0, height: 2 }, shadowRadius: 6, elevation: 1 },
   partyCardHeader: { flexDirection: "row", alignItems: "flex-start", gap: 10, marginBottom: 8 },
   partyAvatar: { width: 22, height: 22, borderRadius: 11, alignItems: "center", justifyContent: "center", marginTop: 1 },
   partyAvatarText: { color: "#fff", fontSize: 11, fontWeight: "800" },
