@@ -86,7 +86,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
     setHasSearched(false);
     
     try {
-      const url = `http://10.177.247.79/paperless-court/public/api/getCaseStatus?caseType=${selectedType.value}&reg_no=${regNo}&reg_year=${year}`;
+      const url = `http://10.177.215.163/case-data/?caseType=${selectedType.value}&reg_no=${regNo}&reg_year=${year}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error('Network response was not ok');
       const data = await res.json();
