@@ -221,7 +221,7 @@ export default function App() {
           }}
         />
       ) : showAbout ? (
-        <AboutScreen scrollY={scrollYRef.current} />
+        <AboutScreen scrollY={scrollYRef.current} judges={judgesData} />
       ) : showContact ? (
         <ContactScreen scrollY={scrollYRef.current} />
       ) : showPrivacy ? (
@@ -307,6 +307,7 @@ export default function App() {
       <SearchModal
         visible={searchOpen}
         onClose={() => setSearchOpen(false)}
+        judges={judgesData}
         onNavigate={(item) => {
           if (item.type === "judge") {
             const idx = judgesData.findIndex((j) => j.id === item.id);

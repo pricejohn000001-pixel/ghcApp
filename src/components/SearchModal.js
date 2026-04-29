@@ -15,9 +15,9 @@ import { Ionicons, Feather } from "@expo/vector-icons";
 import Voice from "@react-native-voice/voice";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
-import { judges, serviceCards, holidays, menuUrls } from "../data";
+import { serviceCards, holidays, menuUrls } from "../data";
 
-export const SearchModal = ({ visible, onClose, onNavigate }) => {
+export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);

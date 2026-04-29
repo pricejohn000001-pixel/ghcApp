@@ -4,9 +4,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
-import { judges } from "../data";
 
-export const AboutScreen = ({ scrollY }) => {
+export const AboutScreen = ({ scrollY, judges = [] }) => {
   const { t } = useTranslation();
 
   return (
@@ -46,7 +45,7 @@ export const AboutScreen = ({ scrollY }) => {
             <Feather name="users" size={18} color={colors.primary} />
             <Text style={styles.cardTitle}>{t("about.judges_title")}</Text>
           </View>
-          <Text style={styles.paragraph}>{t("about.judges_strength")}</Text>
+          <Text style={styles.paragraph}>{t("about.judges_strength", { count: judges.length })}</Text>
           <Text style={styles.subheading}>{t("about.chief_justice")}</Text>
           {(() => {
             const cj = judges.find((j) => j.title === "Chief Justice");

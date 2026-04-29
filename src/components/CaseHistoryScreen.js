@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Animated,
   StyleSheet,
@@ -36,6 +36,8 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
   const [selectedType, setSelectedType] = useState(null);
   const [regNo, setRegNo] = useState("");
   const [year, setYear] = useState(new Date().getFullYear().toString());
+  
+  const scrollViewRef = useRef(null);
   
   const [typeModalVisible, setTypeModalVisible] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
@@ -94,6 +96,11 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
     } finally {
       setIsSearching(false);
       setHasSearched(true);
+      setTimeout(() => {
+        if (scrollViewRef.current) {
+          scrollViewRef.current.scrollToEnd({ animated: true });
+        }
+      }, 100);
     }
   };
 
@@ -113,6 +120,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
       </LinearGradient>
 
       <Animated.ScrollView
+        ref={scrollViewRef}
         style={styles.scroll}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
@@ -234,7 +242,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
               </View>
             ) : searchResults.map((item, index) => {
               const caseNoStr = `${selectedType.label} ${regNo}/${year}`;
-              const isDisposed = item.last_status === 'D';
+              const isDisposed = item.case_stat !== undefined ? item.case_stat == 0 : item.last_status === 'D';
               const statusStr = isDisposed ? 'Disposed' : 'Pending';
 
               return (
