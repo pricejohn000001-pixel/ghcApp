@@ -74,13 +74,15 @@ export const Header = ({ onMenu, onSearch, scrollY, isHome }) => {
       )}
       <Animated.View
         style={{
-          marginTop: scrollY
-            ? scrollY.interpolate({
-                inputRange: [0, 100],
-                outputRange: [spacing.md, -12],
-                extrapolate: 'clamp',
-              })
-            : spacing.md,
+          marginTop: isHome 
+            ? (scrollY
+                ? scrollY.interpolate({
+                    inputRange: [0, 100],
+                    outputRange: [spacing.md, -12],
+                    extrapolate: 'clamp',
+                  })
+                : spacing.md)
+            : spacing.xs, // Use smaller margin when welcome card is hidden
         }}
       >
         <TouchableOpacity 

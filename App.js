@@ -83,8 +83,7 @@ export default function App() {
   const scrollYRef = useRef(new Animated.Value(0));
 
   useEffect(() => {
-    const inHome = currentState.type === 'home';
-    if (!inHome && scrollYRef.current) {
+    if (scrollYRef.current) {
       scrollYRef.current.setValue(0);
     }
   }, [currentState.type]);
