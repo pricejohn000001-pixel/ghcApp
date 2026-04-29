@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   heroTitle: { color: "#fff", fontWeight: "800", fontSize: 18 },
   heroSub: { color: "#ADB9D8", marginTop: 6 },
   scroll: { flex: 1 },
-  content: { backgroundColor: "#ECF1FF", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md },
+  content: { backgroundColor: "#ECF1FF", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, flexGrow: 1 },
   card: { backgroundColor: "#fff", borderRadius: radius.xl, padding: spacing.lg, shadowColor: "#0B1A38", shadowOpacity: 0.12, shadowOffset: { width: 0, height: 6 }, shadowRadius: 10, elevation: 3 },
   cardHeader: { flexDirection: "row", alignItems: "center", gap: spacing.sm, marginBottom: spacing.sm },
   cardTitle: { color: colors.primary, fontWeight: "700" },

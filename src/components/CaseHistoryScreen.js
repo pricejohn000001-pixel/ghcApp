@@ -38,8 +38,10 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
   const [year, setYear] = useState(new Date().getFullYear().toString());
   
   const scrollViewRef = useRef(null);
+  const flatListRef = useRef(null);
   
   const [typeModalVisible, setTypeModalVisible] = useState(false);
+  const [typeSearchQuery, setTypeSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   
@@ -48,14 +50,24 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
 
   const availableTypes = category === "Civil" ? civilCaseTypes : criminalCaseTypes;
 
+  const filteredTypes = React.useMemo(() => {
+    if (!typeSearchQuery) return availableTypes;
+    return availableTypes.filter(type => 
+      type.label.toLowerCase().includes(typeSearchQuery.toLowerCase()) ||
+      type.value.toLowerCase().includes(typeSearchQuery.toLowerCase())
+    );
+  }, [availableTypes, typeSearchQuery]);
+
   const handleCategorySwitch = (cat) => {
     setCategory(cat);
     setSelectedType(null);
+    setTypeSearchQuery("");
   };
 
   const handleTypeSelect = React.useCallback((item) => {
     setSelectedType(item);
     setTypeModalVisible(false);
+    setTypeSearchQuery("");
   }, []);
 
   const renderTypeItem = React.useCallback(({ item }) => (
@@ -124,6 +136,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
         style={styles.scroll}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
+        alwaysBounceVertical={false}
         keyboardShouldPersistTaps="handled"
         onScroll={
           scrollY
@@ -270,23 +283,74 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
       </Animated.ScrollView>
 
       {/* Case Type Modal */}
-      <Modal visible={typeModalVisible} animationType="slide" transparent={true}>
+      <Modal 
+        visible={typeModalVisible} 
+        animationType="slide" 
+        transparent={true}
+        onRequestClose={() => {
+          setTypeModalVisible(false);
+          setTypeSearchQuery("");
+        }}
+      >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Select {category} Case Type</Text>
-              <TouchableOpacity onPress={() => setTypeModalVisible(false)}>
+              <View>
+                <Text style={styles.modalTitle}>Select {category} Case Type</Text>
+                <Text style={styles.modalSubtitle}>{filteredTypes.length} types available</Text>
+              </View>
+              <TouchableOpacity onPress={() => {
+                setTypeModalVisible(false);
+                setTypeSearchQuery("");
+              }}>
                 <AntDesign name="closecircle" size={24} color={colors.textSecondary} />
               </TouchableOpacity>
             </View>
+
+            <View style={styles.modalSearchContainer}>
+              <Feather name="search" size={18} color={colors.textSecondary} style={styles.modalSearchIcon} />
+              <TextInput
+                style={styles.modalSearchInput}
+                placeholder="Search case type (e.g. WP, CRP, etc.)"
+                placeholderTextColor={colors.textSecondary}
+                value={typeSearchQuery}
+                onChangeText={setTypeSearchQuery}
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              {typeSearchQuery.length > 0 && (
+                <TouchableOpacity onPress={() => setTypeSearchQuery("")}>
+                  <Feather name="x-circle" size={18} color={colors.textSecondary} />
+                </TouchableOpacity>
+              )}
+            </View>
+
             <FlatList
-              data={availableTypes}
+              ref={flatListRef}
+              data={filteredTypes}
+              style={{ flex: 1 }}
               keyExtractor={(item) => item.value}
               renderItem={renderTypeItem}
               initialNumToRender={15}
               maxToRenderPerBatch={10}
               windowSize={5}
               removeClippedSubviews={Platform.OS === 'android'}
+              keyboardShouldPersistTaps="handled"
+              initialScrollIndex={selectedType && !typeSearchQuery ? availableTypes.findIndex(t => t.value === selectedType.value) : 0}
+              onScrollToIndexFailed={(info) => {
+                // Fallback for when scroll index fails
+                setTimeout(() => {
+                  if (flatListRef.current) {
+                    flatListRef.current.scrollToIndex({ index: info.index, animated: false });
+                  }
+                }, 100);
+              }}
+              ListEmptyComponent={
+                <View style={styles.modalEmptyState}>
+                  <Feather name="search" size={40} color={colors.textSecondary} />
+                  <Text style={styles.modalEmptyText}>No matching case types found</Text>
+                </View>
+              }
               getItemLayout={(data, index) => (
                 {length: 53, offset: 53 * index, index} // Estimate of item height + border
               )}
@@ -306,7 +370,7 @@ const styles = StyleSheet.create({
   heroTitle: { color: "#fff", fontWeight: "800", fontSize: 18 },
   heroSub: { color: "#ADB9D8", marginTop: 6 },
   scroll: { flex: 1 },
-  content: { backgroundColor: "#ECF1FF", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, minHeight: '100%' },
+  content: { backgroundColor: "#ECF1FF", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, flexGrow: 1 },
   card: { backgroundColor: "#fff", borderRadius: radius.xl, padding: spacing.lg, shadowColor: "#0B1A38", shadowOpacity: 0.12, shadowOffset: { width: 0, height: 6 }, shadowRadius: 10, elevation: 3 },
   label: { fontSize: 13, fontWeight: "600", color: colors.primary, marginBottom: 8 },
   pillContainer: { flexDirection: "row", backgroundColor: "#F3F4F6", borderRadius: radius.pill, padding: 4, marginBottom: spacing.lg },
@@ -352,9 +416,15 @@ const styles = StyleSheet.create({
 
   // Modal UI
   modalOverlay: { flex: 1, backgroundColor: "rgba(9, 22, 48, 0.6)", justifyContent: "flex-end" },
-  modalContent: { backgroundColor: "#fff", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, maxHeight: "80%" },
+  modalContent: { backgroundColor: "#fff", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, height: "85%" },
   modalHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#F3F4F6" },
   modalTitle: { fontSize: 18, fontWeight: "700", color: colors.primary },
+  modalSubtitle: { fontSize: 12, color: colors.textSecondary, marginTop: 2 },
+  modalSearchContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#F3F4F6", margin: spacing.lg, paddingHorizontal: 12, borderRadius: radius.md, height: 48 },
+  modalSearchIcon: { marginRight: 8 },
+  modalSearchInput: { flex: 1, fontSize: 15, color: colors.primary },
+  modalEmptyState: { padding: 40, alignItems: "center", justifyContent: "center" },
+  modalEmptyText: { marginTop: 12, color: colors.textSecondary, fontSize: 14, textAlign: "center" },
   modalItem: { flexDirection: "row", justifyContent: "space-between", paddingVertical: 16, paddingHorizontal: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#F9FAFB" },
   modalItemActive: { backgroundColor: "#F5F3FF" },
   modalItemText: { fontSize: 16, color: "#4B5563" },
