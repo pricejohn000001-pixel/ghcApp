@@ -20,7 +20,6 @@ export const HomeContent = ({
   onRefresh,
   onAbout,
   onContact,
-  onPrivacy,
   scrollY,
 }) => {
   const scrollRef = React.useRef(null);
@@ -49,7 +48,7 @@ export const HomeContent = ({
                 sectionY={holidaysY}
              />
           </View>
-          <Footer onAbout={onAbout} onContact={onContact} onPrivacy={onPrivacy} />
+          <Footer onAbout={onAbout} onContact={onContact} />
         </>
       }
       showsVerticalScrollIndicator={false}

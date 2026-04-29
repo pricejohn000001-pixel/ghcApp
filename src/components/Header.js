@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 const logo = require("../assets/logo.png");
 
-export const Header = ({ onMenu, onSearch, scrollY }) => {
+export const Header = ({ onMenu, onSearch, scrollY, isHome }) => {
   const { t } = useTranslation();
   const monthNames = t("months", { returnObjects: true });
   const { width } = useWindowDimensions();
@@ -42,34 +42,36 @@ export const Header = ({ onMenu, onSearch, scrollY }) => {
             </TouchableOpacity>
         </View>
       </View>
-      <Animated.View
-        style={[
-          styles.welcomeCard,
-          {
-            overflow: 'hidden',
-            marginTop: scrollY
-              ? scrollY.interpolate({ inputRange: [0, 100], outputRange: [spacing.md, 0], extrapolate: 'clamp' })
-              : spacing.md,
-            height:
-              scrollY && welcomeHeight
-                ? scrollY.interpolate({ inputRange: [0, 200], outputRange: [welcomeHeight, 0], extrapolate: 'clamp' })
-                : undefined,
-            opacity: scrollY
-              ? scrollY.interpolate({ inputRange: [0, 60], outputRange: [1, 0], extrapolate: 'clamp' })
-              : 1,
-          },
-        ]}
-        onLayout={(e) => {
-          if (!welcomeHeight) {
-            setWelcomeHeight(e.nativeEvent.layout.height);
-          }
-        }}
-      >
-        <View>
-          <Text style={styles.welcomeLabel}>{t("header.welcome")}</Text>
-          <Text style={styles.dateText}>{dateText}</Text>
-        </View>
-      </Animated.View>
+      {isHome && (
+        <Animated.View
+          style={[
+            styles.welcomeCard,
+            {
+              overflow: 'hidden',
+              marginTop: scrollY
+                ? scrollY.interpolate({ inputRange: [0, 100], outputRange: [spacing.md, 0], extrapolate: 'clamp' })
+                : spacing.md,
+              height:
+                scrollY && welcomeHeight
+                  ? scrollY.interpolate({ inputRange: [0, 200], outputRange: [welcomeHeight, 0], extrapolate: 'clamp' })
+                  : undefined,
+              opacity: scrollY
+                ? scrollY.interpolate({ inputRange: [0, 60], outputRange: [1, 0], extrapolate: 'clamp' })
+                : 1,
+            },
+          ]}
+          onLayout={(e) => {
+            if (!welcomeHeight) {
+              setWelcomeHeight(e.nativeEvent.layout.height);
+            }
+          }}
+        >
+          <View>
+            <Text style={styles.welcomeLabel}>{t("header.welcome")}</Text>
+            <Text style={styles.dateText}>{dateText}</Text>
+          </View>
+        </Animated.View>
+      )}
       <Animated.View
         style={{
           marginTop: scrollY

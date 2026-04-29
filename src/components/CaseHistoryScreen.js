@@ -262,9 +262,11 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                 <View key={item.cino || index} style={styles.resultCard}>
                   <View style={styles.resultHeader}>
                     <Text style={styles.resultCaseNo}>{caseNoStr}</Text>
+                    {/* Commented out disposed badge for now
                     <View style={[styles.statusBadge, isDisposed && styles.statusBadgeDisposed]}>
                       <Text style={[styles.statusText, isDisposed && styles.statusTextDisposed]}>{statusStr}</Text>
                     </View>
+                    */}
                   </View>
                   <View style={styles.resultBody}>
                     <Text style={styles.partyText}><Text style={styles.bold}>Petitioner:</Text> {item.pet_name}</Text>

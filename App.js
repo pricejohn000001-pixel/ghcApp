@@ -13,7 +13,6 @@ import { colors } from "./src/theme";
 import { CauseListModal } from "./src/components/CauseListModal";
 import { AboutScreen } from "./src/components/AboutScreen";
 import { ContactScreen } from "./src/components/ContactScreen";
-import { PrivacyPolicyScreen } from "./src/components/PrivacyPolicyScreen";
 import { HomeContent } from "./src/components/HomeContent";
 import { CourtLinks } from "./src/components/CourtLinks";
 import { SplashScreen } from "./src/components/SplashScreen";
@@ -61,7 +60,6 @@ export default function App() {
   const showCourtLinks = currentState.type === 'court_links';
   const showAbout = currentState.type === 'about';
   const showContact = currentState.type === 'contact';
-  const showPrivacy = currentState.type === 'privacy';
   const showCaseHistory = currentState.type === 'case_history';
   const showCaseDetails = currentState.type === 'case_details';
   const currentUrl = currentState.url;
@@ -202,7 +200,7 @@ export default function App() {
   return (
     <SafeAreaProvider style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor={colors.primary} translucent={false} />
-      <Header onMenu={() => setDrawerOpen(true)} onSearch={() => setSearchOpen(true)} scrollY={scrollYRef.current} />
+      <Header onMenu={() => setDrawerOpen(true)} onSearch={() => setSearchOpen(true)} scrollY={scrollYRef.current} isHome={currentState.type === 'home'} />
       {showWebView && currentUrl ? (
         <LiveWebView
           url={currentUrl}
@@ -224,8 +222,6 @@ export default function App() {
         <AboutScreen scrollY={scrollYRef.current} judges={judgesData} />
       ) : showContact ? (
         <ContactScreen scrollY={scrollYRef.current} />
-      ) : showPrivacy ? (
-        <PrivacyPolicyScreen scrollY={scrollYRef.current} />
       ) : showCaseHistory ? (
         <CaseHistoryScreen 
           scrollY={scrollYRef.current} 
@@ -250,7 +246,6 @@ export default function App() {
           onRefresh={onRefresh}
           onAbout={() => addToHistory({ type: 'about' })}
           onContact={() => addToHistory({ type: 'contact' })}
-          onPrivacy={() => addToHistory({ type: 'privacy' })}
           scrollY={scrollYRef.current}
         />
       )}

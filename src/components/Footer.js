@@ -4,7 +4,7 @@ import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
 import { useTranslation } from "react-i18next";
 
-export const Footer = ({ onAbout, onContact, onPrivacy }) => {
+export const Footer = ({ onAbout, onContact }) => {
   const { t } = useTranslation();
   return (
     <View style={styles.footer}>
@@ -14,9 +14,6 @@ export const Footer = ({ onAbout, onContact, onPrivacy }) => {
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.85} onPress={onContact}>
           <Text style={styles.footerLink}>{t("footer.contact")}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.85} onPress={onPrivacy}>
-          <Text style={styles.footerLink}>{t("footer.privacy")}</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.footerMeta}>
