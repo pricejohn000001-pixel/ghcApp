@@ -271,6 +271,9 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
   const currentStatus = data.case_state ? data.case_state.toUpperCase() : (data.last_status === 'D' ? 'DISPOSED' : 'PENDING');
   const listedBefore = data.bench ? `${data.bench.bench_type_name} (${data.bench.bench_abbreviation})` : (data.benchtype || '-');
   const caseAgeFormatted = data.age_of_case_formatted || getCaseAge(data.date_of_filing);
+  const isDisposed = currentStatus === 'DISPOSED';
+  const isDateNotGiven = data.date_next_list?.startsWith('5000-01-01');
+  const nextHearingDisplay = isDateNotGiven ? 'Date not given. Refer the last order for details' : formatDate(data.date_next_list);
 
   return (
     <View style={styles.container}>
@@ -323,8 +326,12 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             {renderDetailRow("REGISTRATION NO.", regNo)}
             <View style={styles.detailDivider} />
             {renderDetailRow("REGISTRATION DATE", formatDate(data.dt_regis))}
-            <View style={styles.detailDivider} />
-            {renderDetailRow("NEXT HEARING", formatDate(data.date_next_list), true)}
+            {!isDisposed && (
+              <>
+                <View style={styles.detailDivider} />
+                {renderDetailRow("NEXT HEARING", nextHearingDisplay, !isDateNotGiven)}
+              </>
+            )}
             <View style={styles.detailDivider} />
             {renderDetailRow("LISTED FOR", listedFor)}
             <View style={styles.detailDivider} />
@@ -353,8 +360,12 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             {renderDetailRow("LISTED BEFORE", listedBefore)}
             <View style={styles.detailDivider} />
             {renderDetailRow("CASE AGE", caseAgeFormatted)}
-            <View style={styles.detailDivider} />
-            {renderDetailRow("DAYS SINCE LAST LISTED", daysSinceListed)}
+            {!isDisposed && (
+              <>
+                <View style={styles.detailDivider} />
+                {renderDetailRow("DAYS SINCE LAST LISTED", daysSinceListed)}
+              </>
+            )}
             <View style={styles.detailDivider} />
             {renderDetailRow("CASE CATEGORY", data.subject?.subject_name || '-')}
           </View>

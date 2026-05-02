@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Animated,
   StyleSheet,
@@ -15,7 +15,6 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
-import { civilCaseTypes, criminalCaseTypes } from "../data";
 
 const CaseTypeItem = React.memo(({ item, isSelected, onSelect }) => (
   <TouchableOpacity
@@ -44,11 +43,42 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
   const [typeSearchQuery, setTypeSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [caseTypes, setCaseTypes] = useState({ Civil: [], Criminal: [] });
+  const [caseTypesLoading, setCaseTypesLoading] = useState(true);
   
   const [searchResults, setSearchResults] = useState([]);
   const [searchError, setSearchError] = useState(null);
 
-  const availableTypes = category === "Civil" ? civilCaseTypes : criminalCaseTypes;
+  const availableTypes = category === "Civil" ? caseTypes.Civil : caseTypes.Criminal;
+
+  useEffect(() => {
+    const fetchCaseTypes = async () => {
+      try {
+        setCaseTypesLoading(true);
+        const res = await fetch('http://10.177.247.79/case-data/index.php?type=getCaseType');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.status && data.data) {
+            const mapped = { Civil: [], Criminal: [] };
+            data.data.forEach(cat => {
+              if (cat.category === 'Civil' || cat.category === 'Criminal') {
+                mapped[cat.category] = cat.types.map(t => ({
+                  label: t.type_name,
+                  value: String(t.case_type)
+                }));
+              }
+            });
+            setCaseTypes(mapped);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch case types:', err);
+      } finally {
+        setCaseTypesLoading(false);
+      }
+    };
+    fetchCaseTypes();
+  }, []);
 
   const filteredTypes = React.useMemo(() => {
     if (!typeSearchQuery) return availableTypes;
@@ -174,11 +204,16 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             style={styles.dropdownButton}
             onPress={() => setTypeModalVisible(true)}
             activeOpacity={0.8}
+            disabled={caseTypesLoading}
           >
             <Text style={[styles.dropdownText, !selectedType && styles.placeholderText]}>
-              {selectedType ? selectedType.label : "Select Case Type"}
+              {caseTypesLoading ? "Loading case types..." : (selectedType ? selectedType.label : "Select Case Type")}
             </Text>
-            <Feather name="chevron-down" size={20} color={colors.textSecondary} />
+            {caseTypesLoading ? (
+              <ActivityIndicator size="small" color={colors.textSecondary} />
+            ) : (
+              <Feather name="chevron-down" size={20} color={colors.textSecondary} />
+            )}
           </TouchableOpacity>
 
           {/* Reg No and Year Row */}
@@ -218,10 +253,10 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
           <TouchableOpacity
             style={styles.searchButton}
             onPress={handleSearch}
-            disabled={isSearching || !selectedType || !regNo || !year}
+            disabled={isSearching || caseTypesLoading || !selectedType || !regNo || !year}
             activeOpacity={0.8}
           >
-            {isSearching ? (
+            {isSearching || caseTypesLoading ? (
               <ActivityIndicator color="#fff" size="small" />
             ) : (
               <>
@@ -254,24 +289,39 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                  <Text style={styles.emptyStateSub}>We couldn't find any cases matching your search criteria. Please check the registration number and year.</Text>
               </View>
             ) : searchResults.map((item, index) => {
-              const caseNoStr = `${selectedType.label} ${regNo}/${year}`;
-              const isDisposed = item.case_stat !== undefined ? item.case_stat == 0 : item.last_status === 'D';
+              const caseTypeLabel = selectedType?.label || item.filing_case_type?.type_name || '';
+              const itemRegNo = item.reg_no || regNo;
+              const itemYear = item.reg_year || year;
+              const caseNoStr = caseTypeLabel ? `${caseTypeLabel} ${itemRegNo}/${itemYear}` : `${itemRegNo}/${itemYear}`;
+              const isDisposed = item.archive === 'Y';
               const statusStr = isDisposed ? 'Disposed' : 'Pending';
+              const isDateNotGiven = item.date_next_list?.startsWith('5000-01-01');
+              const formatDate = (dateString) => {
+                if (!dateString) return "-";
+                try {
+                  const d = new Date(dateString);
+                  if (isNaN(d.getTime())) return dateString;
+                  return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+                } catch {
+                  return dateString;
+                }
+              };
+              const nextHearingDisplay = isDateNotGiven ? 'Date not given. Refer the last order for details' : formatDate(item.date_next_list);
 
               return (
                 <View key={item.cino || index} style={styles.resultCard}>
                   <View style={styles.resultHeader}>
                     <Text style={styles.resultCaseNo}>{caseNoStr}</Text>
-                    {/* Commented out disposed badge for now
                     <View style={[styles.statusBadge, isDisposed && styles.statusBadgeDisposed]}>
                       <Text style={[styles.statusText, isDisposed && styles.statusTextDisposed]}>{statusStr}</Text>
                     </View>
-                    */}
                   </View>
                   <View style={styles.resultBody}>
                     <Text style={styles.partyText}><Text style={styles.bold}>Petitioner:</Text> {item.pet_name}</Text>
                     <Text style={styles.partyText}><Text style={styles.bold}>Respondent:</Text> {item.res_name}</Text>
-                    <Text style={styles.partyText}><Text style={styles.bold}>Next Hearing:</Text> {item.date_next_list ? new Date(item.date_next_list).toLocaleDateString('en-IN') : '-'}</Text>
+                    {!isDisposed && (
+                      <Text style={styles.partyText}><Text style={styles.bold}>Next Hearing:</Text> {nextHearingDisplay}</Text>
+                    )}
                   </View>
                   <TouchableOpacity style={styles.viewButton} onPress={() => onViewDetails(item)}>
                     <Text style={styles.viewButtonText}>View Details</Text>
