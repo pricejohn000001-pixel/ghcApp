@@ -49,10 +49,10 @@ const JudgeCard = React.memo(({ item, onPortfolio, t }) => {
         )}
       </View>
       <View style={styles.judgeInfo}>
-        <Text style={styles.judgeName}>{item.name}</Text>
+        <Text style={styles.judgeName}>{item.name?.replace(", Chief Justice", "")}</Text>
         <Text style={styles.judgeRole}>{item.title}</Text>
         <View style={styles.portfolioButton}>
-          <FontAwesome name="briefcase" size={16} color="#7F56D9" />
+          <FontAwesome name="briefcase" size={16} color="#D4AF37" />
           <Text style={styles.portfolioLabel}>{t("home.portfolio")}</Text>
         </View>
       </View>
@@ -144,19 +144,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: spacing.lg,
   },
-  sectionTitle: { color: "#fff", fontSize: 18, fontWeight: "700" },
-  sectionSub: { color: colors.textSecondary, fontSize: 12 },
+  sectionTitle: { color: "#FFFFFF", fontSize: 18, fontFamily: 'Georgia' },
+  sectionSub: { color: colors.textSecondary, fontSize: 12, fontFamily: 'Inter_400Regular' },
   listContent: { paddingTop: spacing.sm },
   judgeCard: {
-    backgroundColor: "#fff",
+    backgroundColor: "#111111",
     borderRadius: radius.xl,
     padding: spacing.md + 2,
     flexDirection: "row",
     gap: spacing.md,
     position: "relative",
     borderWidth: 1,
-    borderColor: "#E7ECF4",
-    shadowColor: "#0B1A38",
+    borderColor: "#222222",
+    shadowColor: "#000000",
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 8 },
     shadowRadius: 14,
@@ -167,29 +167,29 @@ const styles = StyleSheet.create({
     width: 112,
     height: 146,
     borderRadius: radius.lg,
-    backgroundColor: "#F4F5F7",
+    backgroundColor: "#222222",
     overflow: "hidden",
   },
   judgeImage: { width: "100%", height: "100%", resizeMode: "cover" },
   skeletonLoader: {
-    backgroundColor: "#E2E8F0",
+    backgroundColor: "#333333",
   },
   judgeInfo: { flex: 1 },
-  judgeName: { color: "#0B1B3A", fontSize: 17, lineHeight: 22, fontWeight: "700" },
-  judgeRole: { color: "#6B7280", marginTop: 4, fontSize: 12 },
+  judgeName: { color: "#FFFFFF", fontSize: 17, lineHeight: 22, fontFamily: 'Georgia' },
+  judgeRole: { color: "#AAAAAA", marginTop: 4, fontSize: 12, fontFamily: 'Inter_400Regular' },
   portfolioButton: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 12,
-    backgroundColor: "#F3E8FF",
+    backgroundColor: "#222222",
     paddingHorizontal: 12,
     paddingVertical: 9,
     borderRadius: 999,
     alignSelf: "flex-start",
     gap: 6,
   },
-  portfolioLabel: { color: "#7C3AED", fontWeight: "700" },
+  portfolioLabel: { color: "#D4AF37", fontFamily: 'Inter_700Bold' },
   sliderWrap: { paddingTop: spacing.sm, alignItems: "center" },
-  sliderTrack: { height: 6, borderRadius: 999, backgroundColor: "#ADB9D8", opacity: 0.6, position: "relative" },
-  sliderFill: { position: "absolute", height: 6, borderRadius: 999, backgroundColor: "#fff" },
+  sliderTrack: { height: 6, borderRadius: 999, backgroundColor: "#333333", opacity: 0.6, position: "relative" },
+  sliderFill: { position: "absolute", height: 6, borderRadius: 999, backgroundColor: colors.accent },
 });

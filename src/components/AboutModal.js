@@ -1,5 +1,6 @@
+import { BlurView } from "expo-blur";
 import React from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Pressable } from "react-native";
 import Modal from "react-native-modal";
 import { AntDesign } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
@@ -9,7 +10,7 @@ export const AboutModal = ({ visible, onClose, judges = [] }) => {
   const { t } = useTranslation();
 
   return (
-    <Modal isVisible={visible} onBackdropPress={onClose} style={styles.modal}>
+    <Modal backdropColor="#000000" backdropOpacity={0.7} hideModalContentWhileAnimating={true} useNativeDriverForBackdrop={true} isVisible={visible} onBackdropPress={onClose} style={styles.modal}>
       <View style={styles.card}>
         <View style={styles.header}>
           <Text style={styles.title}>{t("about.title")}</Text>
@@ -38,20 +39,20 @@ export const AboutModal = ({ visible, onClose, judges = [] }) => {
           <Text style={styles.paragraph}>{t("about.article_227_text")}</Text>
           <Text style={styles.paragraph}>{t("about.jurisdiction_details")}</Text>
         </ScrollView>
-      </View>
+      </BlurView>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   modal: { margin: 0, padding: spacing.lg, justifyContent: "center", alignItems: "center" },
-  card: { backgroundColor: "#fff", borderRadius: radius.xl, padding: spacing.lg, width: "100%" },
+  card: { backgroundColor: "#111111", borderRadius: radius.xl, padding: spacing.lg, width: "100%" },
   header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: spacing.md },
-  title: { color: colors.primary, fontWeight: "800", fontSize: 18 },
+  title: { color: colors.textPrimary, fontWeight: "800", fontSize: 18 },
   scrollArea: { maxHeight: 520 },
   scrollContent: { paddingBottom: spacing.md },
-  paragraph: { color: "#111827", fontSize: 14, lineHeight: 22, marginBottom: spacing.sm },
-  subheading: { color: colors.primary, fontWeight: "700", fontSize: 14, marginTop: spacing.sm, marginBottom: 6 },
+  paragraph: { color: "#FFFFFF", fontSize: 14, lineHeight: 22, marginBottom: spacing.sm },
+  subheading: { color: colors.textPrimary, fontWeight: "700", fontSize: 14, marginTop: spacing.sm, marginBottom: 6 },
   bold: { fontWeight: "700" },
 });
 

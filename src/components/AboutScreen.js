@@ -10,9 +10,9 @@ export const AboutScreen = ({ scrollY, judges = [] }) => {
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={["#0F2349", colors.primary]} style={styles.hero}>
+      <LinearGradient colors={["#000000", "#000000"]} style={styles.hero}>
         <View style={styles.heroRow}>
-          <View style={styles.heroIcon}><Feather name="info" size={20} color="#fff" /></View>
+          <View style={styles.heroIcon}><Feather name="info" size={20} color={colors.accent} /></View>
           <Text style={styles.heroTitle}>{t("about.title")}</Text>
         </View>
         <Text style={styles.heroSub}>{t("about.subtitle")}</Text>
@@ -33,7 +33,7 @@ export const AboutScreen = ({ scrollY, judges = [] }) => {
       >
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <Feather name="book" size={18} color={colors.primary} />
+            <Feather name="book" size={18} color={colors.accent} />
             <Text style={styles.cardTitle}>{t("about.constitution_title")}</Text>
           </View>
           <Text style={styles.paragraph}><Text style={styles.bold}>{t("about.article_214_intro")}</Text></Text>
@@ -42,7 +42,7 @@ export const AboutScreen = ({ scrollY, judges = [] }) => {
         </View>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <Feather name="users" size={18} color={colors.primary} />
+            <Feather name="users" size={18} color={colors.accent} />
             <Text style={styles.cardTitle}>{t("about.judges_title")}</Text>
           </View>
           <Text style={styles.paragraph}>{t("about.judges_strength", { count: judges.length })}</Text>
@@ -61,7 +61,7 @@ export const AboutScreen = ({ scrollY, judges = [] }) => {
         </View>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <Feather name="briefcase" size={18} color={colors.primary} />
+            <Feather name="briefcase" size={18} color={colors.accent} />
             <Text style={styles.cardTitle}>{t("about.jurisdiction_title")}</Text>
           </View>
           <Text style={styles.paragraph}>{t("about.article_226_text")}</Text>
@@ -77,15 +77,15 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.primary },
   hero: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.lg },
   heroRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
-  heroIcon: { width: 36, height: 36, borderRadius: 12, backgroundColor: "#1B2C52", alignItems: "center", justifyContent: "center" },
-  heroTitle: { color: "#fff", fontWeight: "800", fontSize: 18 },
-  heroSub: { color: "#ADB9D8", marginTop: 6 },
+  heroIcon: { width: 36, height: 36, borderRadius: 12, backgroundColor: "#222222", alignItems: "center", justifyContent: "center" },
+  heroTitle: { color: "#FFFFFF", fontFamily: 'Georgia', fontSize: 18 },
+  heroSub: { color: "#AAAAAA", marginTop: 6, fontFamily: 'Inter_400Regular' },
   scroll: { flex: 1 },
-  content: { backgroundColor: "#ECF1FF", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, flexGrow: 1 },
-  card: { backgroundColor: "#fff", borderRadius: radius.xl, padding: spacing.lg, shadowColor: "#0B1A38", shadowOpacity: 0.12, shadowOffset: { width: 0, height: 6 }, shadowRadius: 10, elevation: 3 },
+  content: { backgroundColor: "#000000", borderWidth: 1, borderColor: colors.accent || "#D4AF37", borderBottomWidth: 0, borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, flexGrow: 1 },
+  card: { backgroundColor: "#111111", borderRadius: radius.xl, borderWidth: 1, borderColor: "#222222", borderWidth: 1, borderColor: "#222222", padding: spacing.lg, elevation: 0, overflow: "hidden" },
   cardHeader: { flexDirection: "row", alignItems: "center", gap: spacing.sm, marginBottom: spacing.sm },
-  cardTitle: { color: colors.primary, fontWeight: "700" },
-  paragraph: { color: "#111827", fontSize: 14, lineHeight: 22, marginBottom: spacing.sm },
-  subheading: { color: colors.primary, fontWeight: "700", fontSize: 14, marginTop: spacing.sm, marginBottom: 6 },
-  bold: { fontWeight: "700" },
+  cardTitle: { color: colors.textPrimary, fontFamily: 'Georgia' },
+  paragraph: { color: "#FFFFFF", fontSize: 14, lineHeight: 22, marginBottom: spacing.sm, fontFamily: 'Inter_400Regular' },
+  subheading: { color: colors.textPrimary, fontFamily: 'Georgia', fontSize: 14, marginTop: spacing.sm, marginBottom: 6 },
+  bold: { fontFamily: 'Inter_700Bold' },
 });

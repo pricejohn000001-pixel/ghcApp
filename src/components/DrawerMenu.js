@@ -1,5 +1,6 @@
+import { BlurView } from "expo-blur";
 import React, { useMemo, useRef, useState, useEffect } from "react";
-import { Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, Pressable } from "react-native";
 import Modal from "react-native-modal";
 import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
@@ -66,14 +67,14 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
 
   const sections = useMemo(
     () => [
-      { key: "judges", title: t("drawer.judges"), items: judgesItems, icon: <AntDesign name="team" size={18} color="#fff" /> },
-      { key: "benches", title: t("drawer.benches"), items: benchesItems, icon: <AntDesign name="bank" size={18} color="#fff" /> },
-      { key: "reg_present", title: t("drawer.items.reg_present"), type: "single", icon: <AntDesign name="profile" size={18} color="#fff" /> },
-      { key: "registry", title: t("drawer.registry"), items: registryItems, icon: <AntDesign name="profile" size={18} color="#fff" /> },
-      { key: "district_courts", title: t("drawer.district_courts"), type: "single", icon: <AntDesign name="home" size={18} color="#fff" /> },
-      { key: "recruitments", title: t("drawer.recruitments"), items: recruitmentItems, icon: <AntDesign name="addusergroup" size={18} color="#fff" /> },
-      { key: "ebooks", title: t("drawer.ebooks"), items: ebookItems, icon: <Feather name="book" size={18} color="#fff" /> },
-      { key: "links", title: t("drawer.links"), items: importantLinks, icon: <AntDesign name="link" size={18} color="#fff" /> },
+      { key: "judges", title: t("drawer.judges"), items: judgesItems, icon: <AntDesign name="team" size={18} color={colors.accent} /> },
+      { key: "benches", title: t("drawer.benches"), items: benchesItems, icon: <AntDesign name="bank" size={18} color={colors.accent} /> },
+      { key: "reg_present", title: t("drawer.items.reg_present"), type: "single", icon: <AntDesign name="profile" size={18} color={colors.accent} /> },
+      { key: "registry", title: t("drawer.registry"), items: registryItems, icon: <AntDesign name="profile" size={18} color={colors.accent} /> },
+      { key: "district_courts", title: t("drawer.district_courts"), type: "single", icon: <AntDesign name="home" size={18} color={colors.accent} /> },
+      { key: "recruitments", title: t("drawer.recruitments"), items: recruitmentItems, icon: <AntDesign name="addusergroup" size={18} color={colors.accent} /> },
+      { key: "ebooks", title: t("drawer.ebooks"), items: ebookItems, icon: <Feather name="book" size={18} color={colors.accent} /> },
+      { key: "links", title: t("drawer.links"), items: importantLinks, icon: <AntDesign name="link" size={18} color={colors.accent} /> },
     ],
     [t]
   );
@@ -127,21 +128,21 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
   }, [visible, expandSection]);
 
   return (
-    <Modal
+    <Modal backdropColor="#000000" backdropOpacity={0.7} hideModalContentWhileAnimating={true} useNativeDriverForBackdrop={true}
       isVisible={visible}
       onBackdropPress={onClose}
       animationIn="slideInRight"
       animationOut="slideOutRight"
       style={styles.drawerModal}
     >
-      <View style={styles.drawer}>
+      <BlurView intensity={70} tint="dark" style={styles.drawer}>
         <View style={styles.drawerHeader}>
           <Image source={logo} style={styles.drawerAvatar} />
           <View style={styles.drawerText}>
             <Text style={styles.drawerTitle}>{t("drawer.title")}</Text>
           </View>
           <TouchableOpacity onPress={onClose} activeOpacity={0.8}>
-            <AntDesign name="close" size={18} color="#fff" />
+            <AntDesign name="close" size={18} color={colors.accent} />
           </TouchableOpacity>
         </View>
 
@@ -202,7 +203,7 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
                   <View style={{ flex: 1 }}>
                     <Text style={styles.drawerItemLabel}>{section.title}</Text>
                   </View>
-                  <AntDesign name={expanded[section.key] ? "up" : "down"} size={16} color="#ADB9D8" />
+                  <AntDesign name={expanded[section.key] ? "up" : "down"} size={16} color={colors.accent} />
                 </TouchableOpacity>
                 {shown[section.key] ? (
                   <Animated.View style={[styles.submenuWrap, animatedStyle]}>
@@ -217,7 +218,7 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
                             if (onClose) onClose();
                           }}
                         >
-                          <View style={styles.submenuIcon}><AntDesign name="right" size={14} color="#ADB9D8" /></View>
+                          <View style={styles.submenuIcon}><AntDesign name="right" size={14} color={colors.accent} /></View>
                           <Text style={[styles.submenuLabel, activeItemLabel === itemKey && styles.submenuLabelActive]}>
                             {t(`drawer.items.${itemKey}`)}
                           </Text>
@@ -232,7 +233,8 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
         </ScrollView>
 
         <Text style={styles.drawerFooter}>{t("home.hero_subtitle")}</Text>
-      </View>
+      </BlurView>
+    
     </Modal>
   );
 };
@@ -241,7 +243,7 @@ const styles = StyleSheet.create({
   drawerModal: { margin: 0, justifyContent: "flex-start", alignItems: "flex-end" },
   drawer: {
     width: "72%",
-    backgroundColor: "#0D1B38",
+    backgroundColor: "#0A0A0A",
     height: "100%",
     padding: spacing.lg,
     paddingTop: 48,
@@ -251,8 +253,8 @@ const styles = StyleSheet.create({
   drawerHeader: { flexDirection: "row", alignItems: "center", marginBottom: spacing.md },
   drawerAvatar: { width: 44, height: 44, resizeMode: "contain" },
   drawerText: { flex: 1, marginLeft: spacing.md },
-  drawerTitle: { color: "#fff", fontWeight: "700", fontSize: 16 },
-  drawerSubtitle: { color: colors.textSecondary, fontSize: 12 },
+  drawerTitle: { color: "#FFFFFF", fontFamily: 'Georgia', fontSize: 16 },
+  drawerSubtitle: { color: colors.textSecondary, fontSize: 12, fontFamily: 'Inter_400Regular' },
   drawerItem: {
     flexDirection: "row",
     alignItems: "center",
@@ -263,41 +265,36 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: radius.md,
-    backgroundColor: "#13274C",
+    backgroundColor: "#1A1A1A",
     alignItems: "center",
     justifyContent: "center",
   },
-  drawerItemLabel: { color: "#fff", fontWeight: "700" },
-  drawerHint: { color: colors.textSecondary, fontSize: 12 },
-  submenuWrap: { overflow: "hidden" },
+  drawerItemLabel: { color: "#FFFFFF", fontFamily: 'Inter_700Bold' },
+  drawerHint: { color: colors.textSecondary, fontSize: 12, fontFamily: 'Inter_400Regular' },
+  submenuWrap: { overflow: "hidden", marginBottom: 0 },
   submenuList: { paddingLeft: 44, paddingRight: 4, gap: 8, marginBottom: 8 },
   submenuCard: {
     flexDirection: "row",
     alignItems: "center",
     gap: spacing.sm,
-    backgroundColor: "#13274C",
+    backgroundColor: "#1A1A1A",
     borderRadius: radius.lg,
     paddingVertical: 10,
     paddingHorizontal: spacing.md,
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 2,
   },
   submenuCardActive: {
-    backgroundColor: "#1B3A6B",
+    backgroundColor: "#222222",
     borderWidth: 1,
-    borderColor: "#335C9D",
+    borderColor: "#333333",
   },
-  submenuIcon: { width: 24, height: 24, borderRadius: 12, backgroundColor: "#0E2043", alignItems: "center", justifyContent: "center" },
-  submenuLabel: { color: "#E7ECF6", fontSize: 13, flex: 1 },
-  submenuLabelActive: { color: "#FFFFFF" },
-  drawerFooter: { color: colors.textSecondary, fontSize: 12, marginTop: spacing.md },
+  submenuIcon: { width: 24, height: 24, borderRadius: 12, backgroundColor: "#0A0A0A", alignItems: "center", justifyContent: "center" },
+  submenuLabel: { color: colors.textSecondary, fontSize: 13, flex: 1, fontFamily: 'Inter_400Regular' },
+  submenuLabelActive: { color: colors.accent, fontFamily: 'Inter_600SemiBold' },
+  drawerFooter: { color: colors.textSecondary, fontSize: 12, marginTop: spacing.md, fontFamily: 'Inter_400Regular' },
   langContainer: {
     marginBottom: spacing.md,
     padding: spacing.sm,
-    backgroundColor: "#13274C",
+    backgroundColor: "#1A1A1A",
     borderRadius: radius.md,
   },
   langLabel: {
@@ -314,22 +311,22 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     alignItems: "center",
     borderRadius: radius.sm,
-    backgroundColor: "#0E2043",
+    backgroundColor: "#0A0A0A",
   },
   langButtonActive: {
     backgroundColor: colors.primary,
   },
   langButtonText: {
-    color: "#ADB9D8",
+    color: "#666666",
     fontSize: 12,
     fontWeight: "600",
   },
   langButtonTextActive: {
-    color: "#fff",
+    color: colors.accent,
   },
   divider: {
     height: 1,
-    backgroundColor: "#1E3A63",
+    backgroundColor: "#222222",
     marginBottom: spacing.md,
     marginTop: spacing.sm,
   },

@@ -1,14 +1,14 @@
 export const colors = {
-  primary: "#091630",
-  primaryDark: "#0B2148",
-  accent: "#6D4AFF",
-  navy: "#0D1F3F",
+  primary: "#000000",
+  primaryDark: "#000000",
+  accent: "#D4AF37",
+  navy: "#0A0A0A",
   textPrimary: "#ffffff",
-  textSecondary: "#B7C6E7",
-  card: "#0F2145",
-  border: "#1B2E57",
-  surface: "#F6F7FB",
-  footer: "#081224",
+  textSecondary: "#A3A3A3",
+  card: "#111111",
+  border: "#333333",
+  surface: "#000000",
+  footer: "#050505",
 };
 
 export const spacing = {
@@ -28,7 +28,8 @@ export const radius = {
 };
 
 export const fonts = {
-  title: { fontWeight: "700" },
-  subtitle: { fontWeight: "600" },
+  heading: 'Georgia',
+  body: 'Inter_400Regular',
+  bodySemiBold: 'Inter_600SemiBold',
+  bodyBold: 'Inter_700Bold',
 };
-

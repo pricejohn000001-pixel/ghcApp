@@ -1,19 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  Animated,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Modal,
-  FlatList,
-  KeyboardAvoidingView,
-  Platform,
-  ActivityIndicator,
-} from "react-native";
+import { Animated, StyleSheet, Text, View, TextInput, TouchableOpacity, Modal, FlatList, KeyboardAvoidingView, Platform, ActivityIndicator } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { CameraView, useCameraPermissions } from "expo-camera";
 import { colors, radius, spacing } from "../theme";
 
 const CaseTypeItem = React.memo(({ item, isSelected, onSelect }) => (
@@ -36,6 +25,11 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
   const [regNo, setRegNo] = useState("");
   const [year, setYear] = useState(new Date().getFullYear().toString());
   
+  const [searchMode, setSearchMode] = useState("Case No"); // "Case No", "CNR", "QR Scan"
+  const [cnr, setCnr] = useState("");
+  const [scanned, setScanned] = useState(false);
+  const [permission, requestPermission] = useCameraPermissions();
+
   const scrollViewRef = useRef(null);
   const flatListRef = useRef(null);
   
@@ -108,29 +102,46 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
     />
   ), [selectedType, handleTypeSelect]);
 
-  const handleSearch = async () => {
-    if (!selectedType || !regNo || !year) return;
+  const handleSearch = async (overrideCnr = null) => {
+    const cnrToSearch = typeof overrideCnr === 'string' ? overrideCnr : cnr;
+
+    if (searchMode === "Case No" && (!selectedType || !regNo || !year)) return;
+    if ((searchMode === "CNR" || searchMode === "QR Scan") && !cnrToSearch) return;
     
     setIsSearching(true);
     setSearchError(null);
     setHasSearched(false);
     
     try {
-      const url = `http://10.177.215.163/case-data/?caseType=${selectedType.value}&reg_no=${regNo}&reg_year=${year}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('Network response was not ok');
-      const data = await res.json();
-      
-      if (data.status && data.data) {
-        if (Array.isArray(data.data)) {
-          setSearchResults(data.data.length > 0 ? data.data : []);
-        } else if (Object.keys(data.data).length > 0) {
-          setSearchResults([data.data]);
+      if (searchMode === "Case No") {
+        const url = `http://10.177.215.163/case-data/?caseType=${selectedType.value}&reg_no=${regNo}&reg_year=${year}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Network response was not ok');
+        const data = await res.json();
+        
+        if (data.status && data.data) {
+          if (Array.isArray(data.data)) {
+            setSearchResults(data.data.length > 0 ? data.data : []);
+          } else if (data.data !== null && typeof data.data === 'object' && Object.keys(data.data).length > 0) {
+            setSearchResults([data.data]);
+          } else {
+            setSearchResults([]);
+          }
         } else {
           setSearchResults([]);
         }
       } else {
-        setSearchResults([]);
+        // CNR or QR Scan Search
+        const url = `http://10.177.247.79/case-data/index.php?cino=${cnrToSearch}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Network response was not ok');
+        const data = await res.json();
+        
+        if (data.status && data.data) {
+          setSearchResults([data.data]);
+        } else {
+          setSearchResults([]);
+        }
       }
     } catch (err) {
       setSearchError('Failed to fetch case. Please check your inputs or ensure you are connected to the court network.');
@@ -151,12 +162,12 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <LinearGradient colors={["#0F2349", colors.primary]} style={styles.hero}>
+    <LinearGradient colors={["#000000", "#000000"]} style={styles.hero}>
         <View style={styles.heroRow}>
           <View style={styles.heroIcon}>
-            <AntDesign name="filetext1" size={20} color="#fff" />
+            <AntDesign name="filetext1" size={20} color={colors.accent} />
           </View>
-          <Text style={styles.heroTitle}>Case History Search</Text>
+          <Text style={styles.heroTitle}>Case Status Search</Text>
         </View>
         <Text style={styles.heroSub}>Find case details, status, and history</Text>
       </LinearGradient>
@@ -179,9 +190,32 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
         scrollEventThrottle={16}
       >
         <View style={styles.card}>
-          {/* Category Selector */}
-          <Text style={styles.label}>Case Category</Text>
-          <View style={styles.pillContainer}>
+          {/* Search Mode Tabs */}
+          <View style={styles.searchModeContainer}>
+            {["Case No", "CNR", "QR Scan"].map((mode) => (
+              <TouchableOpacity
+                key={mode}
+                style={[styles.modeTab, searchMode === mode && styles.modeTabActive]}
+                onPress={() => {
+                  setSearchMode(mode);
+                  setHasSearched(false);
+                  setSearchResults([]);
+                  setScanned(false);
+                  if (mode === "QR Scan" && (!permission || !permission.granted)) {
+                    requestPermission();
+                  }
+                }}
+              >
+                <Text style={[styles.modeTabText, searchMode === mode && styles.modeTabTextActive]}>{mode}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          {searchMode === "Case No" && (
+            <>
+              {/* Category Selector */}
+              <Text style={styles.label}>Case Category</Text>
+              <View style={styles.pillContainer}>
             <TouchableOpacity
               style={[styles.pill, category === "Civil" && styles.pillActive]}
               onPress={() => handleCategorySwitch("Civil")}
@@ -248,23 +282,88 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
               </View>
             </View>
           </View>
+        </>
+      )}
+
+      {searchMode === "CNR" && (
+            <View style={{ marginBottom: spacing.xl }}>
+              <Text style={styles.label}>Enter CNR Number</Text>
+              <View style={styles.inputContainer}>
+                <Feather name="hash" size={16} color={colors.textSecondary} style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="e.g. ASGH010000012023"
+                  placeholderTextColor={colors.textSecondary}
+                  autoCapitalize="characters"
+                  value={cnr}
+                  onChangeText={setCnr}
+                />
+              </View>
+            </View>
+          )}
+
+          {searchMode === "QR Scan" && (
+            <View style={{ marginBottom: spacing.xl, alignItems: "center" }}>
+              {!permission ? (
+                <View style={styles.cameraPlaceholder}>
+                  <ActivityIndicator size="small" color={colors.primary} />
+                </View>
+              ) : !permission.granted ? (
+                <View style={styles.cameraPlaceholder}>
+                  <Text style={styles.cameraText}>We need your permission to show the camera</Text>
+                  <TouchableOpacity style={styles.permissionBtn} onPress={requestPermission}>
+                    <Text style={styles.permissionBtnText}>Grant Permission</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <View style={styles.cameraContainer}>
+                  <CameraView
+                    style={styles.camera}
+                    facing="back"
+                    barcodeScannerSettings={{
+                      barcodeTypes: ["qr"],
+                    }}
+                    onBarcodeScanned={scanned ? undefined : ({ data }) => {
+                      setScanned(true);
+                      setCnr(data); // Assume QR contains just the CNR
+                      handleSearch(data);
+                    }}
+                  />
+                  <View style={styles.scannerOverlay}>
+                    <View style={styles.scannerTarget} />
+                  </View>
+                  {scanned && (
+                    <TouchableOpacity style={styles.rescanBtn} onPress={() => setScanned(false)}>
+                      <Text style={styles.rescanBtnText}>Tap to Scan Again</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              )}
+            </View>
+          )}
 
           {/* Search Button */}
-          <TouchableOpacity
-            style={styles.searchButton}
-            onPress={handleSearch}
-            disabled={isSearching || caseTypesLoading || !selectedType || !regNo || !year}
-            activeOpacity={0.8}
-          >
-            {isSearching || caseTypesLoading ? (
-              <ActivityIndicator color="#fff" size="small" />
-            ) : (
-              <>
-                <Feather name="search" size={18} color="#fff" />
-                <Text style={styles.searchButtonText}>Search Case</Text>
-              </>
-            )}
-          </TouchableOpacity>
+          {searchMode !== "QR Scan" && (
+            <TouchableOpacity
+              style={styles.searchButton}
+              onPress={() => handleSearch()}
+              disabled={
+                isSearching || 
+                (searchMode === "Case No" && (caseTypesLoading || !selectedType || !regNo || !year)) ||
+                (searchMode === "CNR" && !cnr)
+              }
+              activeOpacity={0.8}
+            >
+              {isSearching || (searchMode === "Case No" && caseTypesLoading) ? (
+                <ActivityIndicator color={colors.accent} size="small" />
+              ) : (
+                <>
+                  <Feather name="search" size={18} color="#FFFFFF" />
+                  <Text style={styles.searchButtonText}>Search Case</Text>
+                </>
+              )}
+            </TouchableOpacity>
+          )}
         </View>
 
         {/* Search Results Area */}
@@ -283,7 +382,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             ) : searchResults.length === 0 ? (
               <View style={styles.emptyStateCard}>
                  <View style={styles.emptyStateIconBg}>
-                   <Feather name="search" size={32} color="#9CA3AF" />
+                   <Feather name="search" size={32} color="#777777" />
                  </View>
                  <Text style={styles.emptyStateTitle}>No Cases Found</Text>
                  <Text style={styles.emptyStateSub}>We couldn't find any cases matching your search criteria. Please check the registration number and year.</Text>
@@ -325,7 +424,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                   </View>
                   <TouchableOpacity style={styles.viewButton} onPress={() => onViewDetails(item)}>
                     <Text style={styles.viewButtonText}>View Details</Text>
-                    <Feather name="arrow-right" size={16} color="#fff" />
+                    <Feather name="arrow-right" size={16} color={colors.accent} />
                   </TouchableOpacity>
                 </View>
               );
@@ -363,7 +462,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
               <Feather name="search" size={18} color={colors.textSecondary} style={styles.modalSearchIcon} />
               <TextInput
                 style={styles.modalSearchInput}
-                placeholder="Search case type (e.g. WP, CRP, etc.)"
+                placeholder="Search case type"
                 placeholderTextColor={colors.textSecondary}
                 value={typeSearchQuery}
                 onChangeText={setTypeSearchQuery}
@@ -418,67 +517,84 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.primary },
   hero: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.lg },
   heroRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
-  heroIcon: { width: 36, height: 36, borderRadius: 12, backgroundColor: "#1B2C52", alignItems: "center", justifyContent: "center" },
-  heroTitle: { color: "#fff", fontWeight: "800", fontSize: 18 },
-  heroSub: { color: "#ADB9D8", marginTop: 6 },
+  heroIcon: { width: 36, height: 36, borderRadius: 12, backgroundColor: "#222222", alignItems: "center", justifyContent: "center" },
+  heroTitle: { color: "#FFFFFF", fontFamily: 'Georgia', fontSize: 18 },
+  heroSub: { color: "#ADB9D8", marginTop: 6, fontFamily: 'Inter_400Regular' },
   scroll: { flex: 1 },
-  content: { backgroundColor: "#ECF1FF", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, flexGrow: 1 },
-  card: { backgroundColor: "#fff", borderRadius: radius.xl, padding: spacing.lg, shadowColor: "#0B1A38", shadowOpacity: 0.12, shadowOffset: { width: 0, height: 6 }, shadowRadius: 10, elevation: 3 },
-  label: { fontSize: 13, fontWeight: "600", color: colors.primary, marginBottom: 8 },
-  pillContainer: { flexDirection: "row", backgroundColor: "#F3F4F6", borderRadius: radius.pill, padding: 4, marginBottom: spacing.lg },
+  content: { backgroundColor: "#000000", borderWidth: 1, borderColor: colors.accent || "#D4AF37", borderBottomWidth: 0, borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, flexGrow: 1 },
+  card: { backgroundColor: "#111111", borderRadius: radius.xl, borderWidth: 1, borderColor: "#222222", borderWidth: 1, borderColor: "#222222", padding: spacing.lg, elevation: 0, overflow: "hidden" },
+  label: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: colors.textPrimary, marginBottom: 8 },
+  pillContainer: { flexDirection: "row", backgroundColor: "#222222", borderRadius: radius.pill, padding: 4, marginBottom: spacing.lg },
   pill: { flex: 1, paddingVertical: 10, alignItems: "center", borderRadius: radius.pill },
-  pillActive: { backgroundColor: "#fff", shadowColor: "#000", shadowOpacity: 0.05, shadowOffset: { width: 0, height: 2 }, shadowRadius: 4, elevation: 2 },
-  pillText: { fontSize: 14, fontWeight: "600", color: "#6B7280" },
-  pillTextActive: { color: colors.accent },
-  dropdownButton: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#F9FAFB", borderWidth: 1, borderColor: "#E5E7EB", borderRadius: radius.md, paddingHorizontal: 16, paddingVertical: 14, marginBottom: spacing.lg },
-  dropdownText: { fontSize: 15, color: colors.primary },
-  placeholderText: { color: "#9CA3AF" },
+  pillActive: { backgroundColor: "#111111", borderWidth: 1, borderColor: colors.accent, elevation: 0, overflow: "hidden" },
+  pillText: { fontSize: 14, fontFamily: 'Inter_400Regular', color: "#AAAAAA" },
+  pillTextActive: { color: colors.accent, fontFamily: 'Inter_600SemiBold' },
+
+  searchModeContainer: { flexDirection: "row", marginBottom: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#333333" },
+  modeTab: { flex: 1, paddingVertical: 12, alignItems: "center", borderBottomWidth: 2, borderBottomColor: "transparent" },
+  modeTabActive: { borderBottomColor: colors.accent },
+  modeTabText: { fontSize: 14, fontFamily: 'Inter_400Regular', color: "#AAAAAA" },
+  modeTabTextActive: { color: colors.accent, fontFamily: 'Inter_600SemiBold' },
+
+  cameraPlaceholder: { height: 300, width: "100%", backgroundColor: "#222222", borderRadius: radius.lg, alignItems: "center", justifyContent: "center", padding: spacing.xl },
+  cameraText: { textAlign: "center", color: "#CCCCCC", marginBottom: spacing.md },
+  permissionBtn: { backgroundColor: colors.primary, paddingHorizontal: 20, paddingVertical: 10, borderRadius: radius.md },
+  permissionBtnText: { color: "#FFFFFF", fontWeight: "600" },
+  cameraContainer: { height: 300, width: "100%", borderRadius: radius.lg, overflow: "hidden", backgroundColor: "#FFFFFF" },
+  camera: { flex: 1 },
+  scannerOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,0.5)", alignItems: "center", justifyContent: "center" },
+  scannerTarget: { width: 200, height: 200, borderWidth: 2, borderColor: "#D4AF37", backgroundColor: "transparent" },
+  rescanBtn: { position: "absolute", bottom: 20, alignSelf: "center", backgroundColor: "rgba(0,0,0,0.7)", paddingHorizontal: 20, paddingVertical: 10, borderRadius: radius.pill },
+  rescanBtnText: { color: "#FFFFFF", fontWeight: "600" },
+  dropdownButton: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#222222", borderWidth: 1, borderColor: "#333333", borderRadius: radius.md, paddingHorizontal: 16, paddingVertical: 14, marginBottom: spacing.lg },
+  dropdownText: { fontSize: 15, color: colors.textPrimary },
+  placeholderText: { color: "#777777" },
   row: { flexDirection: "row", gap: spacing.md, marginBottom: spacing.xl },
   flex1: { flex: 1 },
-  inputContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#F9FAFB", borderWidth: 1, borderColor: "#E5E7EB", borderRadius: radius.md, paddingHorizontal: 12 },
+  inputContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#222222", borderWidth: 1, borderColor: "#333333", borderRadius: radius.md, paddingHorizontal: 12 },
   inputIcon: { marginRight: 8 },
-  input: { flex: 1, height: 48, fontSize: 15, color: colors.primary },
+  input: { flex: 1, height: 48, fontSize: 15, color: colors.textPrimary },
   searchButton: { backgroundColor: colors.accent, borderRadius: radius.md, height: 52, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8 },
-  searchButtonText: { color: "#fff", fontSize: 16, fontWeight: "700" },
+  searchButtonText: { color: "#FFFFFF", fontSize: 16, fontFamily: 'Inter_700Bold' },
   
   // Results UI
   resultsContainer: { marginTop: spacing.sm },
-  resultsHeader: { fontSize: 18, fontWeight: "700", color: colors.primary, marginBottom: spacing.md },
-  resultCard: { backgroundColor: "#fff", borderRadius: radius.lg, overflow: "hidden", marginBottom: spacing.md, shadowColor: "#000", shadowOpacity: 0.05, shadowOffset: { width: 0, height: 4 }, shadowRadius: 8, elevation: 2 },
-  resultHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: spacing.md, borderBottomWidth: 1, borderBottomColor: "#F3F4F6" },
-  resultCaseNo: { fontSize: 16, fontWeight: "700", color: colors.primary },
+  resultsHeader: { fontSize: 18, fontFamily: 'Georgia', color: colors.textPrimary, marginBottom: spacing.md },
+  resultCard: { backgroundColor: "#111111", borderRadius: radius.lg, overflow: "hidden", marginBottom: spacing.md, elevation: 0, borderWidth: 1, borderColor: colors.accent },
+  resultHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: spacing.md, borderBottomWidth: 1, borderBottomColor: "#222222" },
+  resultCaseNo: { fontSize: 16, fontFamily: 'Inter_700Bold', color: colors.textPrimary },
   statusBadge: { backgroundColor: "#FEF3C7", paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.pill },
-  statusBadgeDisposed: { backgroundColor: "#D1FAE5" },
-  statusText: { fontSize: 12, fontWeight: "600", color: "#D97706" },
-  statusTextDisposed: { color: "#059669" },
+  statusBadgeDisposed: { backgroundColor: "#0A0A0A" },
+  statusText: { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: "#B8860B" },
+  statusTextDisposed: { color: "#B8860B" },
   resultBody: { padding: spacing.md, gap: 6 },
-  partyText: { fontSize: 14, color: "#4B5563" },
-  bold: { fontWeight: "600", color: colors.primary },
+  partyText: { fontSize: 14, color: "#CCCCCC", fontFamily: 'Inter_400Regular' },
+  bold: { fontFamily: 'Inter_600SemiBold', color: colors.textPrimary },
   viewButton: { backgroundColor: colors.primary, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, paddingVertical: 14 },
-  viewButtonText: { color: "#fff", fontSize: 15, fontWeight: "600" },
+  viewButtonText: { color: "#FFFFFF", fontSize: 15, fontFamily: 'Inter_600SemiBold' },
 
-  emptyStateCard: { backgroundColor: "#fff", borderRadius: radius.xl, padding: spacing.xl, alignItems: "center", justifyContent: "center", shadowColor: "#0B1A38", shadowOpacity: 0.05, shadowOffset: { width: 0, height: 4 }, shadowRadius: 8, elevation: 2, marginTop: spacing.sm, borderWidth: 1, borderColor: "#F3F4F6" },
-  emptyStateIconBg: { width: 64, height: 64, borderRadius: 32, backgroundColor: "#F3F4F6", alignItems: "center", justifyContent: "center", marginBottom: spacing.md },
-  emptyStateTitle: { fontSize: 18, fontWeight: "700", color: colors.primary, marginBottom: 8 },
-  emptyStateSub: { fontSize: 14, color: "#6B7280", textAlign: "center", lineHeight: 20, paddingHorizontal: spacing.lg },
-  errorStateCard: { backgroundColor: "#FEF2F2", borderRadius: radius.xl, padding: spacing.xl, alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: "#FCA5A5", marginTop: spacing.sm },
-  errorStateIconBg: { width: 64, height: 64, borderRadius: 32, backgroundColor: "#FEE2E2", alignItems: "center", justifyContent: "center", marginBottom: spacing.md },
-  errorStateTitle: { fontSize: 18, fontWeight: "700", color: "#991B1B", marginBottom: 8 },
-  errorStateSub: { fontSize: 14, color: "#B91C1C", textAlign: "center", lineHeight: 20 },
+  emptyStateCard: { backgroundColor: "#111111", borderRadius: radius.xl, padding: spacing.xl, alignItems: "center", justifyContent: "center", elevation: 0, marginTop: spacing.sm, borderWidth: 1, borderColor: "#222222" },
+  emptyStateIconBg: { width: 64, height: 64, borderRadius: 32, backgroundColor: "#222222", alignItems: "center", justifyContent: "center", marginBottom: spacing.md },
+  emptyStateTitle: { fontSize: 18, fontWeight: "700", color: colors.textPrimary, marginBottom: 8 },
+  emptyStateSub: { fontSize: 14, color: "#AAAAAA", textAlign: "center", lineHeight: 20, paddingHorizontal: spacing.lg },
+  errorStateCard: { backgroundColor: "#222222", borderRadius: radius.xl, padding: spacing.xl, alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: "#552222", marginTop: spacing.sm },
+  errorStateIconBg: { width: 64, height: 64, borderRadius: 32, backgroundColor: "#222222", alignItems: "center", justifyContent: "center", marginBottom: spacing.md },
+  errorStateTitle: { fontSize: 18, fontWeight: "700", color: "#FF6666", marginBottom: 8 },
+  errorStateSub: { fontSize: 14, color: "#FF8888", textAlign: "center", lineHeight: 20 },
 
   // Modal UI
-  modalOverlay: { flex: 1, backgroundColor: "rgba(9, 22, 48, 0.6)", justifyContent: "flex-end" },
-  modalContent: { backgroundColor: "#fff", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, height: "85%" },
-  modalHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#F3F4F6" },
-  modalTitle: { fontSize: 18, fontWeight: "700", color: colors.primary },
-  modalSubtitle: { fontSize: 12, color: colors.textSecondary, marginTop: 2 },
-  modalSearchContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#F3F4F6", margin: spacing.lg, paddingHorizontal: 12, borderRadius: radius.md, height: 48 },
+  modalOverlay: { flex: 1, backgroundColor: "transparent", justifyContent: "flex-end" },
+  modalContent: { backgroundColor: "#000000", overflow: "hidden", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, height: "85%", borderWidth: 1, borderColor: "rgba(212,175,55,0.25)", borderBottomWidth: 0 },
+  modalHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#222222" },
+  modalTitle: { fontSize: 18, fontFamily: 'Georgia', color: colors.textPrimary },
+  modalSubtitle: { fontSize: 12, color: colors.textSecondary, marginTop: 2, fontFamily: 'Inter_400Regular' },
+  modalSearchContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#222222", margin: spacing.lg, paddingHorizontal: 12, borderRadius: radius.md, height: 48 },
   modalSearchIcon: { marginRight: 8 },
-  modalSearchInput: { flex: 1, fontSize: 15, color: colors.primary },
+  modalSearchInput: { flex: 1, fontSize: 15, color: colors.textPrimary, fontFamily: 'Inter_400Regular' },
   modalEmptyState: { padding: 40, alignItems: "center", justifyContent: "center" },
-  modalEmptyText: { marginTop: 12, color: colors.textSecondary, fontSize: 14, textAlign: "center" },
-  modalItem: { flexDirection: "row", justifyContent: "space-between", paddingVertical: 16, paddingHorizontal: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#F9FAFB" },
-  modalItemActive: { backgroundColor: "#F5F3FF" },
-  modalItemText: { fontSize: 16, color: "#4B5563" },
-  modalItemTextActive: { color: colors.accent, fontWeight: "600" },
+  modalEmptyText: { marginTop: 12, color: colors.textSecondary, fontSize: 14, textAlign: "center", fontFamily: 'Inter_400Regular' },
+  modalItem: { flexDirection: "row", justifyContent: "space-between", paddingVertical: 16, paddingHorizontal: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#222222" },
+  modalItemActive: { backgroundColor: "#111111" },
+  modalItemText: { fontSize: 16, color: "#CCCCCC", fontFamily: 'Inter_400Regular' },
+  modalItemTextActive: { color: colors.accent, fontFamily: 'Inter_600SemiBold' },
 });

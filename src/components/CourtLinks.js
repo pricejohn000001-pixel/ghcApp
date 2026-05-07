@@ -97,7 +97,7 @@ export const CourtLinks = ({ onSelect, scrollY }) => {
   if (loading) {
     return (
       <View style={styles.loadingWrap}>
-        <ActivityIndicator color="#fff" size="large" />
+        <ActivityIndicator color={colors.accent} size="large" />
         <Text style={styles.loadingText}>{t("court_links.loading")}</Text>
       </View>
     );
@@ -127,7 +127,7 @@ export const CourtLinks = ({ onSelect, scrollY }) => {
         ListEmptyComponent={
           !error ? (
             <View style={styles.emptyWrap}>
-              <View style={styles.emptyIcon}><AntDesign name="youtube" size={40} color="#ADB9D8" /></View>
+              <View style={styles.emptyIcon}><AntDesign name="youtube" size={40} color={colors.accent} /></View>
               <Text style={styles.emptyTitle}>{t("court_links.no_streams")}</Text>
               <Text style={styles.emptySub}>{t("court_links.check_back")}</Text>
             </View>
@@ -140,7 +140,7 @@ export const CourtLinks = ({ onSelect, scrollY }) => {
               setRefreshing(true);
               load();
             }}
-            tintColor="#fff"
+            tintColor={colors.accent}
           />
         }
         onScroll={
@@ -161,20 +161,20 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.primary, paddingHorizontal: spacing.lg},
   listContent: { paddingBottom: spacing.xl, flexGrow: 1 },
   loadingWrap: { flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.primary, gap: spacing.sm },
-  loadingText: { color: "#fff", fontSize: 14 },
+  loadingText: { color: "#FFFFFF", fontSize: 14 },
   errorText: { color: "#ffb4b4", textAlign: "center", marginBottom: spacing.md },
   emptyWrap: { flex: 1, alignItems: "center", justifyContent: "center", gap: 6 },
-  emptyIcon: { width: 64, height: 64, borderRadius: 20, backgroundColor: "#132A52", alignItems: "center", justifyContent: "center" },
-  emptyTitle: { color: "#fff", fontSize: 16, fontWeight: "700", marginTop: spacing.sm },
+  emptyIcon: { width: 64, height: 64, borderRadius: 20, backgroundColor: "#111111", alignItems: "center", justifyContent: "center" },
+  emptyTitle: { color: "#FFFFFF", fontSize: 16, fontWeight: "700", marginTop: spacing.sm },
   emptySub: { color: colors.textSecondary, fontSize: 12 },
   item: {
-    backgroundColor: "#fff",
+    backgroundColor: "#111111",
     borderRadius: radius.xl,
     padding: spacing.md,
     flexDirection: "row",
     alignItems: "center",
     gap: spacing.md,
-    shadowColor: "#0B1A38",
+    shadowColor: "#000000",
     shadowOpacity: 0.12,
     shadowOffset: { width: 0, height: 6 },
     shadowRadius: 10,
@@ -184,12 +184,12 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 12,
-    backgroundColor: "#1F3B70",
+    backgroundColor: "#222222",
     alignItems: "center",
     justifyContent: "center",
   },
-  badgeText: { color: "#fff", fontSize: 16, fontWeight: "700" },
+  badgeText: { color: "#FFFFFF", fontSize: 16, fontFamily: 'Inter_700Bold' },
   itemTextBlock: { flex: 1 },
-  itemTitle: { color: "#0B1B3A", fontWeight: "700", fontSize: 16 },
-  itemSub: { color: "#6B7280", fontSize: 12, marginTop: 2 },
+  itemTitle: { color: "#FFFFFF", fontFamily: 'Inter_700Bold', fontSize: 16 },
+  itemSub: { color: "#AAAAAA", fontSize: 12, marginTop: 2, fontFamily: 'Inter_400Regular' },
 });

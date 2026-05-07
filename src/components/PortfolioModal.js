@@ -1,5 +1,6 @@
+import { BlurView } from "expo-blur";
 import React from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Pressable } from "react-native";
 import Modal from "react-native-modal";
 import { AntDesign } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
@@ -39,12 +40,24 @@ export const PortfolioModal = ({ visible, onClose, judge }) => {
   const { t } = useTranslation();
 
   return (
-    <Modal isVisible={visible} onBackdropPress={onClose} style={styles.portfolioModal}>
+    <Modal 
+      customBackdrop={
+        <Pressable style={StyleSheet.absoluteFill} onPress={onClose}>
+          <BlurView style={StyleSheet.absoluteFill} intensity={80} tint="dark"/>
+        </Pressable>
+      }
+      backdropOpacity={1}
+      hideModalContentWhileAnimating={true} 
+      useNativeDriverForBackdrop={true} 
+      isVisible={visible} 
+      onBackdropPress={onClose} 
+      style={styles.portfolioModal}
+    >
       <View style={styles.portfolioCard}>
         <View style={styles.portfolioHeader}>
           <Text style={styles.portfolioTitle}>{t("portfolio.title")}</Text>
           <TouchableOpacity onPress={onClose} activeOpacity={0.8}>
-            <AntDesign name="close" size={18} color={colors.primary} />
+            <AntDesign name="close" size={18} color={colors.accent} />
           </TouchableOpacity>
         </View>
         <ScrollView style={styles.scrollArea} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -92,9 +105,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  portfolioCard: {
-    backgroundColor: "#fff",
-    borderRadius: radius.xl,
+  portfolioCard: { backgroundColor: "#000000", borderWidth: 1, borderColor: "rgba(212,175,55,0.25)", borderRadius: radius.xl,
     padding: spacing.lg,
     width: "100%",
     maxHeight: "90%",
@@ -107,19 +118,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: spacing.sm,
   },
-  portfolioTitle: { fontWeight: "700", fontSize: 18, color: colors.primary },
-  portfolioName: { fontWeight: "700", fontSize: 16, color: colors.primary },
-  portfolioRole: { color: "#6B7280", marginTop: 2, marginBottom: spacing.md },
-  bioTitle: { fontWeight: "700", fontSize: 14, marginBottom: spacing.xs, color: colors.primary },
-  bioText: { color: "#111827", lineHeight: 20 },
-  bioParagraph: { color: "#111827", lineHeight: 20, marginBottom: spacing.sm },
+  portfolioTitle: { fontFamily: 'Georgia', fontSize: 18, color: colors.textPrimary },
+  portfolioName: { fontFamily: 'Georgia', fontSize: 16, color: colors.textPrimary },
+  portfolioRole: { color: "#AAAAAA", marginTop: 2, marginBottom: spacing.md, fontFamily: 'Inter_400Regular' },
+  bioTitle: { fontFamily: 'Georgia', fontSize: 14, marginBottom: spacing.xs, color: colors.textPrimary },
+  bioText: { color: "#FFFFFF", lineHeight: 20, fontFamily: 'Inter_400Regular' },
+  bioParagraph: { color: "#FFFFFF", lineHeight: 20, marginBottom: spacing.sm, fontFamily: 'Inter_400Regular' },
   table: { marginTop: spacing.md, borderRadius: radius.lg, overflow: "hidden" },
   tableRow: {
     flexDirection: "row",
-    borderBottomColor: "#E5E7EB",
+    borderBottomColor: "#333333",
     borderBottomWidth: 1,
   },
-  tableLabel: { flex: 1, backgroundColor: "#F3F4F6", padding: spacing.md, color: "#111827" },
-  tableValue: { flex: 1, padding: spacing.md, color: "#111827" },
+  tableLabel: { flex: 1, backgroundColor: "#222222", padding: spacing.md, color: "#FFFFFF", fontFamily: 'Inter_600SemiBold' },
+  tableValue: { flex: 1, padding: spacing.md, color: "#FFFFFF", fontFamily: 'Inter_400Regular' },
 });
 

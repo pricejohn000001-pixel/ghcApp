@@ -109,7 +109,7 @@ export const HeroBanner = () => {
       <Animated.View style={{ transform: [{ translateX: panX }] }}>
         <Animated.Image source={currentSlide.src} style={[styles.hero, { opacity: fade }]} />
         <LinearGradient
-          colors={["transparent", "rgba(9,22,48,0.9)"]}
+          colors={["transparent", "rgba(0,0,0,0.9)"]}
           style={styles.overlay}
           pointerEvents="none"
         />
@@ -132,6 +132,6 @@ const styles = StyleSheet.create({
     right: spacing.lg,
     bottom: spacing.lg,
   },
-  heroTitle: { color: "#fff", fontWeight: "700", fontSize: 16, lineHeight: 22 },
-  heroSub: { color: colors.textSecondary, marginTop: 4, fontSize: 12 },
+  heroTitle: { color: "#FFFFFF", fontFamily: 'Georgia', fontSize: 16, lineHeight: 22 },
+  heroSub: { color: colors.textSecondary, marginTop: 4, fontSize: 12, fontFamily: 'Inter_400Regular' },
 });

@@ -146,7 +146,7 @@ export const HolidaysSection = ({ tags, holidays, parentScrollRef, sectionY = 0 
           isCurrentHoliday && styles.holidayCardActive,
         ]}>
           <LinearGradient
-            colors={["#3B82F6", "#8B5CF6"]}
+            colors={["#D4AF37", "#D4AF37"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.dateBadge}
@@ -207,7 +207,7 @@ export const HolidaysSection = ({ tags, holidays, parentScrollRef, sectionY = 0 
               onPress={() => setActiveTag(tag.label)}
               style={[styles.tag, isActive && { backgroundColor: tag.color }]}
             >
-              <Text style={[styles.tagText, isActive && { color: "#fff" }]}>{t(`holiday_tags.${tag.label}`)}</Text>
+              <Text style={[styles.tagText, isActive && { color: "#FFFFFF" }]}>{t(`holiday_tags.${tag.label}`)}</Text>
             </TouchableOpacity>
           );
         })}
@@ -242,11 +242,11 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: radius.pill,
-    backgroundColor: "#0F2347",
+    backgroundColor: "#111111",
     alignItems: "center",
     justifyContent: "center",
   },
-  sectionTitle: { color: "#fff", fontSize: 18, fontWeight: "700" },
+  sectionTitle: { color: "#FFFFFF", fontSize: 18, fontWeight: "700" },
   sectionSub: { color: colors.textSecondary, fontSize: 12 },
   infoRows: { gap: spacing.xs, marginTop: spacing.xs },
   infoRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
@@ -255,10 +255,10 @@ const styles = StyleSheet.create({
     height: 22,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: "#22345E",
-    backgroundColor: "#0C1E3E",
+    borderColor: "#222222",
+    backgroundColor: "#0A0A0A",
   },
-  infoLabel: { color: "#E7ECF6", fontWeight: "700" },
+  infoLabel: { color: "#222222", fontWeight: "700" },
   monthRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -266,19 +266,19 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
   },
   chevrons: { flexDirection: "row" },
-  monthText: { color: "#fff", fontSize: 16, fontWeight: "700" },
+  monthText: { color: "#FFFFFF", fontSize: 16, fontWeight: "700" },
   tagsRow: { flexDirection: "row", gap: spacing.sm, marginTop: spacing.md },
   tag: {
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
     borderRadius: radius.lg,
-    backgroundColor: "#0F2347",
+    backgroundColor: "#111111",
   },
   tagText: { color: colors.textSecondary, fontWeight: "700", fontSize: 12 },
   holidayListContent: { gap: 10, paddingBottom: spacing.sm },
   holidayListFlat: { maxHeight: 300, marginTop: spacing.sm },
   holidayCard: {
-    backgroundColor: "#0F2B57",
+    backgroundColor: "#111111",
     borderRadius: radius.lg,
     padding: spacing.sm,
     flexDirection: "row",
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   dateNum: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontSize: 18,
     fontWeight: "800",
   },
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     marginRight: spacing.sm,
   },
   holidayLabel: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontWeight: "600",
     fontSize: 14,
     lineHeight: 20,
@@ -327,17 +327,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   badgeText: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontWeight: "700",
     fontSize: 10,
   },
   pdfButton: {
-    backgroundColor: "#0D4199",
+    backgroundColor: "#D4AF37",
     borderRadius: radius.lg,
     paddingVertical: 14,
     alignItems: "center",
     marginTop: spacing.md,
   },
-  pdfText: { color: "#fff", fontWeight: "700" },
+  pdfText: { color: "#FFFFFF", fontWeight: "700" },
 });
 

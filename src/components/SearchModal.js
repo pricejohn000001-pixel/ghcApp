@@ -1,16 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  FlatList,
-  Modal,
-  ActivityIndicator,
-  Platform,
-  Animated,
-} from "react-native";
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, FlatList, Modal, ActivityIndicator, Platform, Animated } from "react-native";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import Voice from "@react-native-voice/voice";
 import { useTranslation } from "react-i18next";
@@ -193,10 +182,10 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
         <View style={styles.content}>
           <View style={styles.header}>
             <View style={styles.searchBar}>
-              <Feather name="search" size={20} color={colors.textSecondary} />
+              <Feather name="search" size={20} color={colors.accent} />
               <TextInput
-                style={styles.input}
-                placeholder={t("search.placeholder", "Search...")}
+                style={[styles.input, { color: colors.accent }]}
+                placeholder={t("search.placeholder", "Search...")} placeholderTextColor="rgba(212,175,55,0.5)"
                 value={query}
                 onChangeText={handleSearch}
                 autoFocus
@@ -214,7 +203,7 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
                   <Ionicons
                     name={isListening ? "mic" : "mic-outline"}
                     size={20}
-                    color={colors.primary}
+                    color={colors.accent}
                   />
                 </TouchableOpacity>
               </View>
@@ -251,16 +240,16 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
               >
                 <View style={styles.iconContainer}>
                   {item.type === "judge" && (
-                    <Feather name="user" size={20} color={colors.primary} />
+                    <Feather name="user" size={20} color={colors.accent} />
                   )}
                   {item.type === "service" && (
-                    <Feather name="grid" size={20} color={colors.primary} />
+                    <Feather name="grid" size={20} color={colors.accent} />
                   )}
                   {item.type === "holiday" && (
-                    <Feather name="calendar" size={20} color={colors.primary} />
+                    <Feather name="calendar" size={20} color={colors.accent} />
                   )}
                   {item.type === "link" && (
-                    <Feather name="link" size={20} color={colors.primary} />
+                    <Feather name="link" size={20} color={colors.accent} />
                   )}
                 </View>
                 <View style={styles.textContainer}>
@@ -270,7 +259,7 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
                 <Feather
                   name="chevron-right"
                   size={20}
-                  color="#666"
+                  color={colors.accent}
                 />
               </TouchableOpacity>
             )}
@@ -293,14 +282,10 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: "rgba(0,0,0,0.7)",
     justifyContent: "flex-start",
   },
-  content: {
-    flex: 1,
-    marginTop: Platform.OS === "ios" ? 40 : 0,
-    backgroundColor: "#fff",
-    borderTopLeftRadius: radius.xl,
+  content: { flex: 1, marginTop: Platform.OS === "ios" ? 40 : 0, backgroundColor: "#000000", overflow: "hidden", borderWidth: 1, borderColor: "rgba(212,175,55,0.25)", borderTopLeftRadius: radius.xl,
     borderTopRightRadius: radius.xl,
   },
   header: {
@@ -308,14 +293,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+    borderBottomColor: "#333333",
     gap: spacing.sm,
   },
   searchBar: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#222222",
     borderRadius: radius.lg,
     paddingHorizontal: spacing.sm,
     height: 44,
@@ -330,20 +315,19 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
-    color: "#000",
+    color: "#FFFFFF",
     paddingVertical: 8,
   },
   voiceButton: {
     padding: 4,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "transparent",
   },
   closeButton: {
     padding: spacing.sm,
   },
   closeText: {
-    color: colors.primary,
+    color: colors.textPrimary,
     fontSize: 16,
     fontWeight: "600",
   },
@@ -352,13 +336,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: "#f5f5f5",
+    borderBottomColor: "#222222",
   },
   iconContainer: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "#f0f4ff",
+    backgroundColor: "#111111",
     alignItems: "center",
     justifyContent: "center",
     marginRight: spacing.md,
@@ -369,12 +353,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#000",
+    color: "#FFFFFF",
     marginBottom: 2,
   },
   subtitle: {
     fontSize: 14,
-    color: "#444",
+    color: "#CCCCCC",
   },
   errorText: {
     color: "red",
@@ -417,7 +401,7 @@ const styles = StyleSheet.create({
   waveBar: {
     width: 6,
     height: 28,
-    backgroundColor: "#1E63D6",
+    backgroundColor: "#D4AF37",
     borderRadius: 3,
   },
 });

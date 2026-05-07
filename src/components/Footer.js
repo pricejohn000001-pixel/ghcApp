@@ -21,15 +21,15 @@ export const Footer = ({ onAbout, onContact }) => {
       </Text>
       <View style={styles.socialRow}>
         <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://t.me/GHCInfoChannel")}>
-          <Entypo name="paper-plane" size={16} color="#ADB9D8" />
+          <Entypo name="paper-plane" size={16} color={colors.accent} />
           <Text style={styles.socialText}>Telegram</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://www.youtube.com/@gauhatihighcourtguwahatili6982")}>
-          <AntDesign name="youtube" size={16} color="#ADB9D8" />
+          <AntDesign name="youtube" size={16} color={colors.accent} />
           <Text style={styles.socialText}>YouTube</Text>
         </TouchableOpacity>
         {/* <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://www.facebook.com/GuwahatiHighCourt/")}> 
-          <Feather name="facebook" size={16} color="#ADB9D8" />
+          <Feather name="facebook" size={16} color={colors.accent} />
           <Text style={styles.socialText}>Facebook</Text>
         </TouchableOpacity> */}
       </View>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: spacing.lg,
   },
-  footerLink: { color: "#fff", fontWeight: "700" },
+  footerLink: { color: "#FFFFFF", fontWeight: "700" },
   footerMeta: { color: "#ADB9D8", textAlign: "center", marginTop: 4 },
   socialRow: { flexDirection: "row", gap: spacing.sm, marginTop: spacing.sm },
   socialButton: {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
-    backgroundColor: "#121E3D",
+    backgroundColor: "#111111",
     borderRadius: radius.lg,
     alignItems: "center",
   },

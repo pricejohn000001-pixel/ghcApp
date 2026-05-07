@@ -72,6 +72,13 @@ export default function App() {
   const registryUrl = "https://ghconline.gov.in/index.php/registry/";
 
   const [fontsLoaded] = useFonts({
+    'Georgia-Bold': require('./src/assets/fonts/georgiab.ttf'),
+    'Georgia-Italic': require('./src/assets/fonts/georgiai.ttf'),
+    'Georgia-BoldItalic': require('./src/assets/fonts/georgiaz.ttf'),
+    'Inter_400Regular': require('./src/assets/fonts/Inter-Regular.otf'),
+    'Inter_600SemiBold': require('./src/assets/fonts/Inter-Bold.otf'),
+    'Inter_700Bold': require('./src/assets/fonts/Inter-SemiBold.otf'),
+    Georgia: require('./src/assets/fonts/georgia.ttf'),
     ...AntDesign.font,
     ...Entypo.font,
     ...Feather.font,
@@ -147,7 +154,13 @@ export default function App() {
   }, []);
 
   const [splashVisible, setSplashVisible] = useState(true);
-  if (!fontsLoaded || splashVisible) {
+  
+  // Return null or SplashScreen while fonts are loading to ensure they are available
+  if (!fontsLoaded) {
+    return null; 
+  }
+
+  if (splashVisible) {
     return <SplashScreen ready={fontsLoaded} onDone={() => setSplashVisible(false)} />;
   }
 
@@ -160,15 +173,8 @@ export default function App() {
       setCauseOpen(true);
       return;
     }
-    if (id === "display_board") {
-      const playStoreUrl = "https://play.google.com/store/apps/details?id=com.case_display_app&pcampaignid=web_share";
-      Linking.openURL(playStoreUrl).catch(() =>
-        addToHistory({ type: 'webview', url: displayBoardUrl })
-      );
-      return;
-    }
-    if (id === "judgment_search") {
-      addToHistory({ type: 'webview', url: "https://judgments.ecourts.gov.in/pdfsearch/index.php" });
+    if (id === "case_status") {
+      addToHistory({ type: 'case_history' });
       return;
     }
     if (id === "registry") {
@@ -186,6 +192,10 @@ export default function App() {
     }
     if (id === "justice_clock") {
       addToHistory({ type: 'webview', url: "https://justiceclock.ecourts.gov.in/justiceClock/?p=home/state&fstate_code=6" });
+      return;
+    }
+    if (id === "statistics") {
+      addToHistory({ type: 'webview', url: "https://ghconline.gov.in/index.php/statistics/" });
       return;
     }
     if (id === "ebooks") {
@@ -252,7 +262,6 @@ export default function App() {
       <BottomNav
         onHome={handleHome}
         onMactCal={() => addToHistory({ type: 'webview', url: "https://ghcservices.assam.gov.in/mact/mact_cal.php" })}
-        onCaseHistory={() => addToHistory({ type: 'case_history' })}
         onBack={handleBack}
         onForward={handleForward}
         disableBack={historyIndex === 0 && (!showWebView || !canGoBack)}

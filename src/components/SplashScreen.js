@@ -14,7 +14,7 @@ export const SplashScreen = ({ ready, onDone }) => {
     }
   }, [ready, onDone]);
 
-  const bgColors = useMemo(() => ["#0D1B38", colors.primary], []);
+  const bgColors = useMemo(() => ["#0A0A0A", colors.primary], []);
 
   return (
     <LinearGradient colors={bgColors} style={styles.container}>
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, width, height, alignItems: "center", justifyContent: "center", backgroundColor: colors.primary },
   center: { alignItems: "center", justifyContent: "center" },
   logo: { width: 180, height: 180, marginBottom: spacing.md },
-  brand: { color: "#fff", fontSize: 24, fontWeight: "700", marginBottom: spacing.sm },
-  subline: { color: "#ADB9D8", fontSize: 14, marginBottom: 40 },
-  meta: { color: "#ADB9D8", fontSize: 12 },
+  brand: { color: "#FFFFFF", fontSize: 24, fontFamily: 'Georgia-Bold', marginBottom: spacing.sm },
+  subline: { color: "#AAAAAA", fontSize: 14, fontFamily: 'Inter_400Regular', marginBottom: 40 },
+  meta: { color: "#AAAAAA", fontSize: 12, fontFamily: 'Inter_400Regular' },
 });

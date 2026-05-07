@@ -1,5 +1,6 @@
+import { BlurView } from "expo-blur";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { ActivityIndicator, Linking, ScrollView, Text, TouchableOpacity, View, Animated } from "react-native";
+import { ActivityIndicator, Linking, ScrollView, Text, TouchableOpacity, View, Animated, StyleSheet, Pressable } from "react-native";
 import Modal from "react-native-modal";
 import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -10,10 +11,10 @@ const BASE = "https://ghconline.gov.in/NewCList";
 const DAILY_SUFFIXES = ["LokAdalat"];
 
 const typeDefs = [
-  { key: "dl", tKey: "daily", colors: ["#1E63D6", "#6C40FF"], icon: <AntDesign name="filetext1" size={20} color="#fff" /> },
-  { key: "sl", tKey: "supplementary", colors: ["#10B981", "#0FA3B1"], icon: <Feather name="plus" size={20} color="#fff" /> },
-  { key: "lz", tKey: "lawazima", colors: ["#F97316", "#F29F3F"], icon: <Feather name="anchor" size={20} color="#fff" /> },
-  { key: "no", tKey: "notices", colors: ["#7F56D9", "#6C40FF"], icon: <Feather name="bell" size={20} color="#fff" /> },
+  { key: "dl", tKey: "daily", colors: ["#8B6508", "#5C4300"], icon: <AntDesign name="filetext1" size={20} color="#FFFFFF" /> },
+  { key: "sl", tKey: "supplementary", colors: ["#4F4F4F", "#2F2F2F"], icon: <Feather name="plus" size={20} color="#FFFFFF" /> },
+  { key: "lz", tKey: "lawazima", colors: ["#8B4513", "#5C2E00"], icon: <Feather name="anchor" size={20} color="#FFFFFF" /> },
+  { key: "no", tKey: "notices", colors: ["#4C1D95", "#2E1065"], icon: <Feather name="bell" size={20} color="#FFFFFF" /> },
 ];
 
 function formatDate(d) {
@@ -168,33 +169,45 @@ export const CauseListModal = ({ visible, onClose }) => {
   };
 
   return (
-    <Modal isVisible={visible} onBackdropPress={onClose} style={{ margin: 0, padding: spacing.lg, justifyContent: "center", alignItems: "center" }}>
-      <View style={{ backgroundColor: colors.primary, borderRadius: radius.xl, padding: spacing.lg, width: "100%" }}>
+    <Modal 
+      customBackdrop={
+        <Pressable style={StyleSheet.absoluteFill} onPress={onClose}>
+          <BlurView style={StyleSheet.absoluteFill} intensity={80} tint="dark"/>
+        </Pressable>
+      }
+      backdropOpacity={1}
+      hideModalContentWhileAnimating={true} 
+      useNativeDriverForBackdrop={true} 
+      isVisible={visible} 
+      onBackdropPress={onClose} 
+      style={{ margin: 0, padding: spacing.lg, justifyContent: "center", alignItems: "center" }}
+    >
+      <View style={{ backgroundColor: "#000000", borderWidth: 1, borderColor: "rgba(212,175,55,0.3)", overflow: "hidden", borderRadius: radius.xl, padding: spacing.lg, width: "100%" }}>
         <View style={{ marginBottom: spacing.md, alignItems: "center" }}>
-          <Text style={{ fontWeight: "800", fontSize: 18, color: "#fff" }}>{t("cause_list.title")}</Text>
+          <Text style={{ fontFamily: 'Georgia', fontSize: 18, color: "#FFFFFF" }}>{t("cause_list.title")}</Text>
           <View style={{ flexDirection: "row", gap: spacing.sm, marginTop: spacing.sm, flexWrap: "wrap", justifyContent: "center" }}>
             <TouchableOpacity
               activeOpacity={0.9}
               onPress={() => setActiveDateKey("today")}
-              style={{ flex: 1, minWidth: 0, alignItems: "center", paddingVertical: 8, paddingHorizontal: 12, borderRadius: radius.lg, backgroundColor: activeDateKey === "today" ? "#1E63D6" : "#132A52" }}
+              style={{ flex: 1, minWidth: 0, alignItems: "center", paddingVertical: 8, paddingHorizontal: 12, borderRadius: radius.lg, backgroundColor: activeDateKey === "today" ? "#D4AF37" : "#111111" }}
             >
-              <Text style={{ color: "#fff", fontWeight: "700", textAlign: "center" }}>{t("cause_list.today")}</Text>
-              <Text style={{ color: "#fff", opacity: 0.8, fontSize: 12, textAlign: "center" }}>{todayStr}</Text>
+              <Text style={{ color: "#FFFFFF", fontFamily: 'Inter_700Bold', textAlign: "center" }}>{t("cause_list.today")}</Text>
+              <Text style={{ color: "#FFFFFF", opacity: 0.8, fontSize: 12, textAlign: "center", fontFamily: 'Inter_400Regular' }}>{todayStr}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.9}
               onPress={() => setActiveDateKey("tomorrow")}
-              style={{ flex: 1, minWidth: 0, alignItems: "center", paddingVertical: 8, paddingHorizontal: 12, borderRadius: radius.lg, backgroundColor: activeDateKey === "tomorrow" ? "#1E63D6" : "#132A52" }}
+              style={{ flex: 1, minWidth: 0, alignItems: "center", paddingVertical: 8, paddingHorizontal: 12, borderRadius: radius.lg, backgroundColor: activeDateKey === "tomorrow" ? "#D4AF37" : "#111111" }}
             >
-              <Text style={{ color: "#fff", fontWeight: "700", textAlign: "center" }}>{t("cause_list.tomorrow")}</Text>
-              <Text style={{ color: "#fff", opacity: 0.8, fontSize: 12, textAlign: "center" }}>{tomorrowStr}</Text>
+              <Text style={{ color: "#FFFFFF", fontFamily: 'Inter_700Bold', textAlign: "center" }}>{t("cause_list.tomorrow")}</Text>
+              <Text style={{ color: "#FFFFFF", opacity: 0.8, fontSize: 12, textAlign: "center", fontFamily: 'Inter_400Regular' }}>{tomorrowStr}</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         {loading ? (
           <View style={{ alignItems: "center", justifyContent: "center", paddingVertical: spacing.lg }}>
-            <ActivityIndicator color="#fff" size="large" />
+            <ActivityIndicator color={colors.accent} size="large" />
           </View>
         ) : (
           <ScrollView>
@@ -209,10 +222,10 @@ export const CauseListModal = ({ visible, onClose }) => {
               // Let's stick to expand/collapse for consistency if > 0.
               
               const rightIcon = (() => {
-                if (disabled) return <AntDesign name="close" size={18} color="#fff" />;
+                if (disabled) return <AntDesign name="close" size={18} color={colors.accent} />;
                 return (
                   <Animated.View style={{ transform: [{ rotate: anims[tDef.key].interpolate({ inputRange: [0, 1], outputRange: ["0deg", "180deg"] }) }] }}>
-                    <Feather name="chevron-down" size={20} color="#fff" />
+                    <Feather name="chevron-down" size={20} color={colors.accent} />
                   </Animated.View>
                 );
               })();
@@ -227,12 +240,12 @@ export const CauseListModal = ({ visible, onClose }) => {
                       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                           {tDef.icon}
-                          <Text style={{ color: "#fff", fontWeight: "700", marginLeft: spacing.sm, marginRight: 14 }}>{t(`cause_list.${tDef.tKey}`)}</Text>
+                          <Text style={{ color: "#FFFFFF", fontFamily: 'Inter_700Bold', marginLeft: spacing.sm, marginRight: 14 }}>{t(`cause_list.${tDef.tKey}`)}</Text>
                           {!disabled ? (
-                            <Text style={{ color: "#fff", opacity: 0.9 }}>{`  •  ${count} ${t("cause_list.available")}`}</Text>
+                            <Text style={{ color: "#FFFFFF", opacity: 0.9 }}>{`  •  ${count} ${t("cause_list.available")}`}</Text>
                           ) : null}
                           {disabled ? (
-                            <Text style={{ color: "#fff", opacity: 0.8, marginLeft: spacing.sm }}>{t("cause_list.not_available")}</Text>
+                            <Text style={{ color: "#FFFFFF", opacity: 0.8, marginLeft: spacing.sm }}>{t("cause_list.not_available")}</Text>
                           ) : null}
                         </View>
                         {rightIcon}
@@ -246,13 +259,13 @@ export const CauseListModal = ({ visible, onClose }) => {
                       style={{
                         opacity: anims[tDef.key],
                         transform: [{ translateY: anims[tDef.key].interpolate({ inputRange: [0, 1], outputRange: [-8, 0] }) }],
-                        backgroundColor: "#132A52",
+                        backgroundColor: "#111111",
                       }}
                     >
                       <View style={{ padding: spacing.md }}>
                         {items.map((item, idx) => (
                           <TouchableOpacity key={idx} activeOpacity={0.85} onPress={() => openUrlSafely(item.url)} style={{ paddingVertical: 10 }}>
-                            <Text style={{ color: "#fff" }}>{item.label}</Text>
+                            <Text style={{ color: "#FFFFFF", fontFamily: 'Inter_400Regular' }}>{item.label}</Text>
                           </TouchableOpacity>
                         ))}
                       </View>
@@ -266,11 +279,12 @@ export const CauseListModal = ({ visible, onClose }) => {
 
 
         {/* <View style={{ marginTop: spacing.md, alignItems: "center" }}>
-          <TouchableOpacity onPress={onClose} activeOpacity={0.85} style={{ paddingVertical: 10, paddingHorizontal: 16, backgroundColor: "#132A52", borderRadius: radius.lg }}>
-            <Text style={{ color: "#fff", fontWeight: "700" }}>Close</Text>
+          <TouchableOpacity onPress={onClose} activeOpacity={0.85} style={{ paddingVertical: 10, paddingHorizontal: 16, backgroundColor: "#111111", borderRadius: radius.lg }}>
+            <Text style={{ color: "#FFFFFF", fontWeight: "700" }}>Close</Text>
           </TouchableOpacity>
         </View> */}
       </View>
+    
     </Modal>
   );
 };

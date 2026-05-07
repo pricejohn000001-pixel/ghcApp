@@ -43,6 +43,10 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
     () => /mact_cal\.php/.test(url || ""),
     [url]
   );
+  const isStatistics = useMemo(
+    () => /ghconline\.gov\.in\/index\.php\/statistics\/?/.test(url || ""),
+    [url]
+  );
 
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -205,7 +209,7 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
             ih = document.createElement('style');
             ih.id = 'rn-initial-hide';
             ih.type = 'text/css';
-            ih.appendChild(document.createTextNode('html,body{opacity:0 !important;background:#0D1B38 !important}'));
+            ih.appendChild(document.createTextNode('html,body{opacity:0 !important;background:#0A0A0A !important}'));
             (document.head || document.documentElement).appendChild(ih);
           }
           apply();
@@ -341,7 +345,7 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
           display: none !important;
         }
         html, body {
-          background: #0D1B38 !important;
+          background: #0A0A0A !important;
           margin: 0 !important;
           padding: 0 !important;
           height: 100% !important;
@@ -728,8 +732,61 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
         true;
       ` + "\n" + commonScript;
     }
+    if (isStatistics) {
+      const css = `
+        header, footer, nav, #sp-header, #sp-footer, .t3-header, .t3-footer,
+        .breadcrumb, .breadcrumbs, .uk-breadcrumb, .page-breadcrumb,
+        #sp-title, .sp-page-title, .tm-page-title, .banner, .hero, .page-cover,
+        .site-header, .site-footer, .top-bar, .navbar, .navigation, .menu, .masthead,
+        .sidebar, .sidebar-primary, #secondary, .widget-area,
+        .calendar, .widget_calendar, .calendar_wrap {
+          display: none !important;
+        }
+        html, body {
+          background: #ffffff !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow-x: hidden !important;
+          height: auto !important;
+          min-height: 100% !important;
+        }
+        #primary, .content-area, #content, #sp-component, .t3-content, .tm-content, main,
+        .container, .container-fluid, .site-wrapper, .wrapper, article, .item-page, .entry-content {
+          background: #ffffff !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          max-width: 900px !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        img, iframe, object, embed { max-width: 100% !important; height: auto !important; }
+        table { width: 100% !important; max-width: 100% !important; }
+      `;
+      return `
+        (function(){
+          function apply(){
+            var style = document.getElementById('rn-ghc-stats-style');
+            if(!style){
+              style = document.createElement('style');
+              style.id = 'rn-ghc-stats-style';
+              style.type = 'text/css';
+              style.appendChild(document.createTextNode(${JSON.stringify(css)}));
+              (document.head || document.documentElement).appendChild(style);
+            }
+            try {
+              document.documentElement.style.overflowX='hidden';
+              document.body.style.overflowX='hidden';
+              document.querySelectorAll('header,footer,nav,.page-cover,.page-breadcrumb,.t3-sidebar,.tm-sidebar,.sidebar,.sidebar-primary,#secondary,.widget-area,.calendar,.widget_calendar,.calendar_wrap').forEach(function(el){ el.style.display='none'; });
+            } catch(e){}
+          }
+          apply();
+          setInterval(apply, 1000);
+        })();
+        true;
+      ` + "\n" + commonScript;
+    }
     return commonScript;
-  }, [isYouTube, isRegistry, isDistrictCourts, isRecruitment, isGhcEbook, isJudgmentSearch, isGhcJudgesPages, isRegistrySection, isMactCalculator]);
+  }, [isYouTube, isRegistry, isDistrictCourts, isRecruitment, isGhcEbook, isJudgmentSearch, isGhcJudgesPages, isRegistrySection, isMactCalculator, isStatistics]);
 
   return (
     <View style={styles.container}>
@@ -748,7 +805,7 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
                   setTimeout(() => setRefreshing(false), 500);
                 }
               }}
-              tintColor="#fff"
+              tintColor={colors.accent}
             />
           }
         >
@@ -775,7 +832,7 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
             }}
             renderLoading={() => (
               <View style={styles.overlay} pointerEvents="none">
-                <ActivityIndicator color="#fff" size="large" />
+                <ActivityIndicator color={colors.accent} size="large" />
               </View>
             )}
             injectedJavaScript={injectScript}
@@ -808,7 +865,7 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
           />
           {overlayVisible && (
             <View style={styles.overlay} pointerEvents="none">
-              <ActivityIndicator color="#fff" size="large" />
+              <ActivityIndicator color={colors.accent} size="large" />
             </View>
           )}
         </ScrollView>
@@ -837,7 +894,7 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
             }}
             renderLoading={() => (
               <View style={styles.overlay} pointerEvents="none">
-                <ActivityIndicator color="#fff" size="large" />
+                <ActivityIndicator color={colors.accent} size="large" />
               </View>
             )}
             injectedJavaScript={injectScript}
@@ -890,7 +947,7 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
           />
           {overlayVisible && (
             <View style={styles.overlay} pointerEvents="none">
-              <ActivityIndicator color="#fff" size="large" />
+              <ActivityIndicator color={colors.accent} size="large" />
             </View>
           )}
         </View>

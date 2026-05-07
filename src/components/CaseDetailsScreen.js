@@ -13,7 +13,6 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
-import { civilCaseTypes, criminalCaseTypes } from "../data";
 
 export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
   // Start with caseItem (from local API search) as baseline data
@@ -53,7 +52,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         if (mainRes.status === 'fulfilled' && mainRes.value.ok) {
           const mainData = await mainRes.value.json();
           if (mainData.status && mainData.data) {
-            setData(prev => ({ ...prev, ...mainData.data }));
+            setData(prev => ({ ...prev, ...(mainData.data || {}) }));
           }
         }
 
@@ -145,16 +144,15 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
   };
 
   const getCaseTypeName = (id) => {
-    const allTypes = [...civilCaseTypes, ...criminalCaseTypes];
-    const type = allTypes.find(t => t.value === String(id));
-    return type ? type.label : '';
+    // Case types are fetched dynamically by CaseHistoryScreen; fallback gracefully
+    return '';
   };
 
   if (loading) {
     return (
       <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
         <ActivityIndicator size="large" color={colors.accent} />
-        <Text style={{ marginTop: 16, color: colors.primary, fontWeight: '600' }}>Fetching Complete Case Profile...</Text>
+        <Text style={{ marginTop: 16, color: colors.textPrimary, fontWeight: '600' }}>Fetching Complete Case Profile...</Text>
       </View>
     );
   }
@@ -182,10 +180,10 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
 
   const renderDetailRow = (label, value, isHighlight = false) => (
     <View style={styles.detailRow}>
-      <Text style={[styles.detailLabel, isHighlight && { color: "#D97706" }]}>{label}</Text>
+      <Text style={[styles.detailLabel, isHighlight && { color: "#D4AF37" }]}>{label}</Text>
       <View style={styles.detailValueContainer}>
         {isHighlight && <View style={styles.upcomingBadge}><Text style={styles.upcomingBadgeText}>Upcoming</Text></View>}
-        <Text style={[styles.detailValue, isHighlight && { color: "#92400E" }]} textAlign="right">{value || '-'}</Text>
+        <Text style={[styles.detailValue, isHighlight && { color: "#D4AF37" }]} textAlign="right">{value || '-'}</Text>
       </View>
     </View>
   );
@@ -277,18 +275,18 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={["#0F2349", colors.primary]} style={styles.hero}>
+      <LinearGradient colors={["#000000", "#000000"]} style={styles.hero}>
         <View style={styles.heroRow}>
           <View style={styles.heroIcon}>
-            <MaterialCommunityIcons name="gavel" size={20} color="#fff" />
+            <MaterialCommunityIcons name="gavel" size={20} color={colors.accent} />
           </View>
           <View style={{ flex: 1 }}>
             <Text style={styles.heroTitle}>{regTypeName} / {data.reg_no || '-'} / {data.reg_year || '-'}</Text>
             <Text style={styles.heroSub}>CINO: {data.cino || '-'}</Text>
             <View style={{ flexDirection: 'row', gap: 8, marginTop: 12 }}>
               <View style={styles.heroPill}><Text style={styles.heroPillText}>{caseTypeName}</Text></View>
-              <View style={[styles.heroPill, { backgroundColor: currentStatus === 'PENDING' ? 'rgba(245, 158, 11, 0.25)' : 'rgba(16, 185, 129, 0.25)' }]}>
-                <Text style={[styles.heroPillText, { color: currentStatus === 'PENDING' ? '#FCD34D' : '#6EE7B7' }]}>{currentStatus}</Text>
+              <View style={[styles.heroPill, { backgroundColor: currentStatus === 'PENDING' ? 'rgba(212, 175, 55, 0.25)' : 'rgba(255, 255, 255, 0.15)' }]}>
+                <Text style={[styles.heroPillText, { color: currentStatus === 'PENDING' ? '#D4AF37' : '#FFFFFF' }]}>{currentStatus}</Text>
               </View>
             </View>
           </View>
@@ -340,7 +338,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             {renderDetailRow("EFILING REF NO", data.efilno)}
           </View>
           <View style={styles.cardFooter}>
-            <Feather name="info" size={12} color="#6B7280" />
+            <Feather name="info" size={12} color="#AAAAAA" />
             <Text style={styles.footerText}>Hearing dates may change based on court proceedings.</Text>
           </View>
         </View>
@@ -348,8 +346,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         {/* Modern App Vibe: Additional Info Card */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <View style={[styles.headerIconContainer, { backgroundColor: "#E0F2FE" }]}>
-              <Feather name="activity" size={18} color="#0284C7" />
+            <View style={[styles.headerIconContainer, { backgroundColor: "#0A0A0A" }]}>
+              <Feather name="activity" size={18} color="#D4AF37" />
             </View>
             <Text style={styles.cardTitle}>Additional Information</Text>
           </View>
@@ -370,15 +368,15 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             {renderDetailRow("CASE CATEGORY", data.subject?.subject_name || '-')}
           </View>
           <View style={styles.cardFooter}>
-            <Text style={styles.footerText}>{data.filing_case_type?.full_form || "Write Petition under Article 226 and 227 of the Constitution"}</Text>
+            <Text style={styles.footerText}>{data.filing_case_type?.full_form || "Writ Petition under Article 226 and 227 of the Constitution"}</Text>
           </View>
         </View>
 
         {/* Modern App Vibe: Parties Vertical Stack */}
         <View style={styles.card}>
           <View style={[styles.cardHeader, { paddingBottom: spacing.sm }]}>
-            <View style={[styles.headerIconContainer, { backgroundColor: "#FEF3C7" }]}>
-              <Feather name="users" size={18} color="#D97706" />
+            <View style={[styles.headerIconContainer, { backgroundColor: "#111111" }]}>
+              <Feather name="users" size={18} color="#D4AF37" />
             </View>
             <View>
               <Text style={styles.cardTitle}>Parties</Text>
@@ -389,15 +387,15 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           <View style={styles.partiesStackLayout}>
             {/* Petitioner Scroll */}
             <View style={styles.partyStackColumn}>
-              <View style={[styles.partyHeaderBg, { backgroundColor: "#ECFDF5", borderTopWidth: 1, borderTopColor: "#F1F5F9" }]}>
-                <Text style={[styles.partyHeaderTitle, { color: "#059669" }]}>PETITIONERS</Text>
+              <View style={[styles.partyHeaderBg, { backgroundColor: "#111111", borderTopWidth: 1, borderTopColor: "#222222" }]}>
+                <Text style={[styles.partyHeaderTitle, { color: "#D4AF37" }]}>PETITIONERS</Text>
               </View>
               <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.partyStackScroll} contentContainerStyle={styles.partyScrollContent}>
                 {allPetitioners.map((pet, idx) => (
                   <View key={idx} style={[styles.partyCard, { width: 260 }]}>
                     <View style={styles.partyCardHeader}>
-                      <View style={[styles.partyAvatar, { backgroundColor: "#059669" }]}><Text style={styles.partyAvatarText}>{pet.party_no}</Text></View>
-                      <Text style={[styles.partyCardName, { color: "#065F46" }]}>{pet.name} <Text style={styles.partyAge}>{pet.age ? `${pet.age}y` : ''}</Text></Text>
+                      <View style={[styles.partyAvatar, { backgroundColor: "#D4AF37" }]}><Text style={styles.partyAvatarText}>{pet.party_no}</Text></View>
+                      <Text style={[styles.partyCardName, { color: "#D4AF37" }]}>{pet.name} <Text style={styles.partyAge}>{pet.age ? `${pet.age}y` : ''}</Text></Text>
                     </View>
                     {/* Advocates only render if they exist (enforced to be only on first petitioner) */}
                     {renderAdvocates(pet.adv_name, pet.adv_reg, pet.extra_advs)}
@@ -409,15 +407,15 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
 
             {/* Respondent Scroll */}
             <View style={styles.partyStackColumn}>
-              <View style={[styles.partyHeaderBg, { backgroundColor: "#FFF7ED", borderTopWidth: 1, borderTopColor: "#F1F5F9" }]}>
-                <Text style={[styles.partyHeaderTitle, { color: "#EA580C" }]}>RESPONDENTS</Text>
+              <View style={[styles.partyHeaderBg, { backgroundColor: "#111111", borderTopWidth: 1, borderTopColor: "#222222" }]}>
+                <Text style={[styles.partyHeaderTitle, { color: "#D4AF37" }]}>RESPONDENTS</Text>
               </View>
               <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.partyStackScroll} contentContainerStyle={styles.partyScrollContent}>
                 {allRespondents.map((res, idx) => (
                   <View key={idx} style={[styles.partyCard, { width: 260 }]}>
                     <View style={styles.partyCardHeader}>
-                      <View style={[styles.partyAvatar, { backgroundColor: "#EA580C" }]}><Text style={styles.partyAvatarText}>{res.party_no}</Text></View>
-                      <Text style={[styles.partyCardName, { color: "#9A3412" }]}>{res.name} <Text style={styles.partyAge}>{res.age ? `${res.age}y` : ''}</Text></Text>
+                      <View style={[styles.partyAvatar, { backgroundColor: "#D4AF37" }]}><Text style={styles.partyAvatarText}>{res.party_no}</Text></View>
+                      <Text style={[styles.partyCardName, { color: "#D4AF37" }]}>{res.name} <Text style={styles.partyAge}>{res.age ? `${res.age}y` : ''}</Text></Text>
                     </View>
                     {/* Advocates only render if they exist (enforced to be only on first respondent) */}
                     {renderAdvocates(res.adv_name, res.adv_reg, res.extra_advs)}
@@ -434,8 +432,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         {/* Sub-Matters Table */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <View style={[styles.headerIconContainer, { backgroundColor: "#F3E8FF" }]}>
-              <Feather name="layers" size={18} color="#9333EA" />
+            <View style={[styles.headerIconContainer, { backgroundColor: "#222222" }]}>
+              <Feather name="layers" size={18} color="#D4AF37" />
             </View>
             <View>
               <Text style={styles.cardTitle}>Sub-Matters</Text>
@@ -473,7 +471,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           ) : (
             <View style={styles.emptyDataCard}>
               <View style={styles.emptyDataIconBg}>
-                <Feather name="layers" size={24} color="#9CA3AF" />
+                <Feather name="layers" size={24} color="#777777" />
               </View>
               <Text style={styles.emptyDataTitle}>No Sub-Matters</Text>
               <Text style={styles.emptyDataSub}>There are no sub-matters filed for this case.</Text>
@@ -484,8 +482,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         {/* Linked Cases */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <View style={[styles.headerIconContainer, { backgroundColor: "#ECFCCB" }]}>
-              <Feather name="link" size={18} color="#65A30D" />
+            <View style={[styles.headerIconContainer, { backgroundColor: "#111111" }]}>
+              <Feather name="link" size={18} color="#D4AF37" />
             </View>
             <View>
               <Text style={styles.cardTitle}>Linked Cases</Text>
@@ -519,7 +517,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           ) : (
             <View style={styles.emptyDataCard}>
               <View style={styles.emptyDataIconBg}>
-                <Feather name="link" size={24} color="#9CA3AF" />
+                <Feather name="link" size={24} color="#777777" />
               </View>
               <Text style={styles.emptyDataTitle}>No Linked Cases</Text>
               <Text style={styles.emptyDataSub}>There are no linked cases associated with this matter.</Text>
@@ -530,8 +528,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         {/* Orders */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <View style={[styles.headerIconContainer, { backgroundColor: "#FFE4E6" }]}>
-              <Feather name="file-text" size={18} color="#E11D48" />
+            <View style={[styles.headerIconContainer, { backgroundColor: "#111111" }]}>
+              <Feather name="file-text" size={18} color="#D4AF37" />
             </View>
             <View style={{ flex: 1 }}>
               <Text style={styles.cardTitle}>Orders</Text>
@@ -567,11 +565,11 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                             style={styles.pdfBtn}
                             onPress={() => Linking.openURL(`https://ghcservices.assam.gov.in/case-status/order-document/${o.uploaded_file_year}/${o.uploaded_file_name}`)}
                           >
-                            <Feather name="file" size={12} color={colors.primary} />
+                            <Feather name="file" size={12} color={colors.accent} />
                             <Text style={styles.pdfBtnText}>View PDF</Text>
                           </TouchableOpacity>
                         ) : (
-                          <Text style={[styles.tdText, { color: "#9CA3AF", fontSize: 11 }]}>Unavailable</Text>
+                          <Text style={[styles.tdText, { color: "#777777", fontSize: 11 }]}>Unavailable</Text>
                         )}
                       </View>
                     </View>
@@ -597,7 +595,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           ) : (
             <View style={styles.emptyDataCard}>
               <View style={styles.emptyDataIconBg}>
-                <Feather name="file-text" size={24} color="#9CA3AF" />
+                <Feather name="file-text" size={24} color="#777777" />
               </View>
               <Text style={styles.emptyDataTitle}>No Orders</Text>
               <Text style={styles.emptyDataSub}>There are no orders or judgements uploaded for this case yet.</Text>
@@ -614,86 +612,86 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.primary },
   hero: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.lg },
   heroRow: { flexDirection: "row", alignItems: "flex-start", gap: spacing.md },
-  heroIcon: { width: 36, height: 36, borderRadius: 12, backgroundColor: "#1B2C52", alignItems: "center", justifyContent: "center", marginTop: 2 },
-  heroTitle: { color: "#fff", fontWeight: "800", fontSize: 18 },
-  heroSub: { color: "#ADB9D8", marginTop: 4, fontSize: 13, fontWeight: "500", letterSpacing: 0.5 },
+  heroIcon: { width: 36, height: 36, borderRadius: 12, backgroundColor: "#222222", alignItems: "center", justifyContent: "center", marginTop: 2 },
+  heroTitle: { color: "#FFFFFF", fontFamily: 'Georgia', fontSize: 18 },
+  heroSub: { color: "#ADB9D8", marginTop: 4, fontSize: 13, fontFamily: 'Inter_400Regular', letterSpacing: 0.5 },
   heroPill: { backgroundColor: 'rgba(255,255,255,0.15)', paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.pill, alignSelf: 'flex-start' },
-  heroPillText: { color: '#fff', fontSize: 10, fontWeight: '800', textTransform: 'uppercase', letterSpacing: 0.5 },
+  heroPillText: { color: '#fff', fontSize: 10, fontFamily: 'Inter_700Bold', textTransform: 'uppercase', letterSpacing: 0.5 },
   scroll: { flex: 1 },
-  content: { backgroundColor: "#ECF1FF", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, paddingBottom: 60 },
+  content: { backgroundColor: "#000000", borderWidth: 1, borderColor: colors.accent || "#D4AF37", borderBottomWidth: 0, borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, paddingBottom: 60 },
   
-  errorIconBg: { width: 64, height: 64, borderRadius: 32, backgroundColor: "#FEE2E2", alignItems: "center", justifyContent: "center", marginBottom: spacing.md },
-  errorText: { color: "#fff", fontSize: 16, fontWeight: "600" },
+  errorIconBg: { width: 64, height: 64, borderRadius: 32, backgroundColor: "#222222", alignItems: "center", justifyContent: "center", marginBottom: spacing.md },
+  errorText: { color: "#FFFFFF", fontSize: 16, fontWeight: "600" },
 
-  card: { backgroundColor: "#fff", borderRadius: radius.xl, overflow: "hidden", shadowColor: "#0B1A38", shadowOpacity: 0.08, shadowOffset: { width: 0, height: 6 }, shadowRadius: 12, elevation: 3 },
+  card: { backgroundColor: "#111111", borderRadius: radius.xl, borderWidth: 1, borderColor: "#222222", borderWidth: 1, borderColor: "#222222", overflow: "hidden", elevation: 0, overflow: "hidden" },
   cardHeader: { flexDirection: "row", alignItems: "center", gap: 12, padding: spacing.lg },
-  headerIconContainer: { width: 38, height: 38, borderRadius: radius.md, backgroundColor: "#EEF2FF", alignItems: "center", justifyContent: "center" },
-  cardTitle: { fontSize: 17, fontWeight: "800", color: colors.primary },
-  cardSubtitle: { fontSize: 13, color: "#6B7280", marginTop: 2, fontWeight: "500" },
+  headerIconContainer: { width: 38, height: 38, borderRadius: radius.md, backgroundColor: "#111111", alignItems: "center", justifyContent: "center" },
+  cardTitle: { fontSize: 17, fontFamily: 'Georgia', color: colors.textPrimary },
+  cardSubtitle: { fontSize: 13, color: "#AAAAAA", marginTop: 2, fontFamily: 'Inter_400Regular' },
 
   detailsContainer: { paddingHorizontal: spacing.lg, paddingBottom: spacing.sm },
   detailRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: spacing.md, gap: 16 },
-  detailDivider: { height: 1, backgroundColor: "#F1F5F9" },
-  detailLabel: { flex: 1, fontSize: 12, fontWeight: "700", color: "#64748B", letterSpacing: 0.5, textTransform: "uppercase" },
+  detailDivider: { height: 1, backgroundColor: "#222222" },
+  detailLabel: { flex: 1, fontSize: 12, fontFamily: 'Inter_600SemiBold', color: "#AAAAAA", letterSpacing: 0.5, textTransform: "uppercase" },
   detailValueContainer: { flex: 2, flexDirection: "row", alignItems: "center", justifyContent: "flex-end", gap: 8 },
-  detailValue: { fontSize: 14, fontWeight: "700", color: "#0F172A", textAlign: "right" },
+  detailValue: { fontSize: 14, fontFamily: 'Inter_700Bold', color: "#FFFFFF", textAlign: "right" },
   
-  upcomingBadge: { backgroundColor: "#F59E0B", paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4 },
-  upcomingBadgeText: { fontSize: 9, color: "#fff", fontWeight: "800", textTransform: "uppercase" },
-  cardFooter: { backgroundColor: "#F8FAFC", padding: spacing.md, flexDirection: "row", alignItems: "flex-start", gap: 6, borderTopWidth: 1, borderTopColor: "#F1F5F9" },
-  footerText: { fontSize: 12, color: "#64748B", flex: 1, lineHeight: 18 },
+  upcomingBadge: { backgroundColor: "#D4AF37", paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4 },
+  upcomingBadgeText: { fontSize: 9, color: "#FFFFFF", fontWeight: "800", textTransform: "uppercase" },
+  cardFooter: { backgroundColor: "#111111", padding: spacing.md, flexDirection: "row", alignItems: "flex-start", gap: 6, borderTopWidth: 1, borderTopColor: "#222222" },
+  footerText: { fontSize: 12, color: "#AAAAAA", flex: 1, lineHeight: 18 },
 
   partiesStackLayout: { marginTop: spacing.sm },
-  partyStackColumn: { borderBottomWidth: 4, borderBottomColor: "#F8FAFC" },
+  partyStackColumn: { borderBottomWidth: 4, borderBottomColor: "#111111" },
   partyHeaderBg: { paddingVertical: 10, paddingHorizontal: spacing.lg, alignItems: "center" },
   partyHeaderTitle: { fontSize: 12, fontWeight: "800", letterSpacing: 1 },
   partyStackScroll: { flexGrow: 0 },
   partyScrollContent: { padding: spacing.lg, gap: spacing.md },
   
-  partyCard: { backgroundColor: "#fff", borderRadius: radius.lg, padding: spacing.md, borderWidth: 1, borderColor: "#E2E8F0", shadowColor: "#000", shadowOpacity: 0.04, shadowOffset: { width: 0, height: 2 }, shadowRadius: 6, elevation: 1 },
+  partyCard: { backgroundColor: "#111111", borderRadius: radius.lg, padding: spacing.md, borderWidth: 1, borderColor: "#333333", elevation: 0, overflow: "hidden" },
   partyCardHeader: { flexDirection: "row", alignItems: "flex-start", gap: 10, marginBottom: 8 },
   partyAvatar: { width: 22, height: 22, borderRadius: 11, alignItems: "center", justifyContent: "center", marginTop: 1 },
-  partyAvatarText: { color: "#fff", fontSize: 11, fontWeight: "800" },
-  partyCardName: { flex: 1, fontSize: 15, fontWeight: "800", lineHeight: 22 },
-  partyAge: { fontSize: 13, fontWeight: "600", color: "#9CA3AF" },
+  partyAvatarText: { color: "#FFFFFF", fontSize: 11, fontWeight: "800" },
+  partyCardName: { flex: 1, fontSize: 15, fontFamily: 'Georgia', lineHeight: 22 },
+  partyAge: { fontSize: 13, fontFamily: 'Inter_400Regular', color: "#777777" },
   
-  advocateRow: { flexDirection: "row", alignItems: "flex-start", gap: 8, marginBottom: 8, backgroundColor: "#F8FAFC", padding: 8, borderRadius: radius.sm },
+  advocateRow: { flexDirection: "row", alignItems: "flex-start", gap: 8, marginBottom: 8, backgroundColor: "#111111", padding: 8, borderRadius: radius.sm },
   advBadge: { backgroundColor: "#EF4444", paddingHorizontal: 5, paddingVertical: 3, borderRadius: 4, marginTop: 1 },
-  advBadgeText: { color: "#fff", fontSize: 9, fontWeight: "800" },
-  advName: { fontSize: 13, fontWeight: "700", color: "#334155", flex: 1, lineHeight: 18 },
-  partyAddress: { fontSize: 13, color: "#64748B", lineHeight: 18 },
+  advBadgeText: { color: "#FFFFFF", fontSize: 9, fontFamily: 'Inter_700Bold' },
+  advName: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: "#CCCCCC", flex: 1, lineHeight: 18 },
+  partyAddress: { fontSize: 13, color: "#AAAAAA", lineHeight: 18, fontFamily: 'Inter_400Regular' },
 
-  statusPill: { alignSelf: "flex-start", backgroundColor: "#FEF3C7", paddingHorizontal: 8, paddingVertical: 4, borderRadius: radius.pill },
-  statusPillText: { fontSize: 10, fontWeight: "800", color: "#D97706" },
+  statusPill: { alignSelf: "flex-start", backgroundColor: "#111111", paddingHorizontal: 8, paddingVertical: 4, borderRadius: radius.pill },
+  statusPillText: { fontSize: 10, fontFamily: 'Inter_700Bold', color: "#D4AF37" },
 
   horizontalScroll: { width: "100%" },
   table: { minWidth: "100%", paddingBottom: spacing.sm },
-  tableHeader: { flexDirection: "row", backgroundColor: "#F8FAFC", paddingVertical: 10, paddingHorizontal: spacing.lg, borderTopWidth: 1, borderTopColor: "#F1F5F9", borderBottomWidth: 1, borderBottomColor: "#F1F5F9" },
-  th: { fontSize: 10, fontWeight: "800", color: "#64748B", letterSpacing: 0.5, marginRight: 16 },
-  tableRow: { flexDirection: "row", paddingVertical: 14, paddingHorizontal: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#F1F5F9", alignItems: "center" },
+  tableHeader: { flexDirection: "row", backgroundColor: "#111111", paddingVertical: 10, paddingHorizontal: spacing.lg, borderTopWidth: 1, borderTopColor: "#222222", borderBottomWidth: 1, borderBottomColor: "#222222" },
+  th: { fontSize: 10, fontFamily: 'Inter_700Bold', color: "#AAAAAA", letterSpacing: 0.5, marginRight: 16 },
+  tableRow: { flexDirection: "row", paddingVertical: 14, paddingHorizontal: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#222222", alignItems: "center" },
   td: { marginRight: 16, justifyContent: "center" },
-  tdTextBold: { fontSize: 13, fontWeight: "700", color: colors.primary },
-  tdTextSub: { fontSize: 11, color: "#64748B", marginTop: 2 },
-  tdText: { fontSize: 13, color: "#334155" },
-  orderBadge: { backgroundColor: "#EEF2FF", borderWidth: 1, borderColor: "#C7D2FE", width: 28, height: 28, borderRadius: 6, alignItems: "center", justifyContent: "center" },
-  orderBadgeText: { fontSize: 12, fontWeight: "800", color: "#4F46E5" },
-  pdfBtn: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: "#ECFDF5", borderWidth: 1, borderColor: "#A7F3D0", paddingHorizontal: 10, paddingVertical: 6, borderRadius: 6, alignSelf: "flex-start" },
-  pdfBtnText: { fontSize: 11, fontWeight: "700", color: "#059669" },
+  tdTextBold: { fontSize: 13, fontFamily: 'Inter_700Bold', color: colors.textPrimary },
+  tdTextSub: { fontSize: 11, color: "#AAAAAA", marginTop: 2, fontFamily: 'Inter_400Regular' },
+  tdText: { fontSize: 13, color: "#CCCCCC", fontFamily: 'Inter_400Regular' },
+  orderBadge: { backgroundColor: "#111111", borderWidth: 1, borderColor: "#0A0A0A", width: 28, height: 28, borderRadius: 6, alignItems: "center", justifyContent: "center" },
+  orderBadgeText: { fontSize: 12, fontFamily: 'Inter_700Bold', color: "#D4AF37" },
+  pdfBtn: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: "#111111", borderWidth: 1, borderColor: "#333333", paddingHorizontal: 10, paddingVertical: 6, borderRadius: 6, alignSelf: "flex-start" },
+  pdfBtnText: { fontSize: 11, fontFamily: 'Inter_700Bold', color: "#D4AF37" },
 
-  loadMoreContainer: { padding: spacing.md, alignItems: 'center', borderTopWidth: 1, borderTopColor: '#F1F5F9' },
-  loadMoreBtn: { backgroundColor: '#F8FAFC', paddingHorizontal: 20, paddingVertical: 10, borderRadius: radius.pill, borderWidth: 1, borderColor: '#E2E8F0' },
-  loadMoreText: { fontSize: 12, fontWeight: '700', color: colors.primary },
+  loadMoreContainer: { padding: spacing.md, alignItems: 'center', borderTopWidth: 1, borderTopColor: '#222222' },
+  loadMoreBtn: { backgroundColor: '#111111', paddingHorizontal: 20, paddingVertical: 10, borderRadius: radius.pill, borderWidth: 1, borderColor: '#333333' },
+  loadMoreText: { fontSize: 12, fontWeight: '700', color: colors.textPrimary },
 
   emptyState: { padding: spacing.xl, alignItems: "center", justifyContent: "center" },
-  emptyStateText: { color: "#9CA3AF", fontSize: 14, fontWeight: "500" },
+  emptyStateText: { color: "#777777", fontSize: 14, fontWeight: "500" },
 
-  emptyDataCard: { padding: spacing.xl, alignItems: "center", justifyContent: "center", backgroundColor: "#F9FAFB", margin: spacing.md, borderRadius: radius.lg, borderWidth: 1, borderColor: "#F3F4F6", borderStyle: "dashed" },
-  emptyDataIconBg: { width: 48, height: 48, borderRadius: 24, backgroundColor: "#F3F4F6", alignItems: "center", justifyContent: "center", marginBottom: spacing.sm },
-  emptyDataTitle: { fontSize: 15, fontWeight: "700", color: "#4B5563", marginBottom: 4 },
-  emptyDataSub: { fontSize: 13, color: "#9CA3AF", textAlign: "center" },
+  emptyDataCard: { padding: spacing.xl, alignItems: "center", justifyContent: "center", backgroundColor: "#222222", margin: spacing.md, borderRadius: radius.lg, borderWidth: 1, borderColor: "#222222", borderStyle: "dashed" },
+  emptyDataIconBg: { width: 48, height: 48, borderRadius: 24, backgroundColor: "#222222", alignItems: "center", justifyContent: "center", marginBottom: spacing.sm },
+  emptyDataTitle: { fontSize: 15, fontWeight: "700", color: "#CCCCCC", marginBottom: 4 },
+  emptyDataSub: { fontSize: 13, color: "#777777", textAlign: "center" },
 
-  errorStateCard: { backgroundColor: "#FEF2F2", borderRadius: radius.xl, padding: spacing.xl, alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: "#FCA5A5", width: '100%', shadowColor: "#EF4444", shadowOpacity: 0.1, shadowOffset: { width: 0, height: 4 }, shadowRadius: 12, elevation: 4 },
-  errorStateIconBg: { width: 72, height: 72, borderRadius: 36, backgroundColor: "#FEE2E2", alignItems: "center", justifyContent: "center", marginBottom: spacing.lg },
-  errorStateTitle: { fontSize: 20, fontWeight: "800", color: "#991B1B", marginBottom: 8 },
-  errorStateSub: { fontSize: 15, color: "#B91C1C", textAlign: "center", lineHeight: 22 },
+  errorStateCard: { backgroundColor: "#222222", borderRadius: radius.xl, padding: spacing.xl, alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: "#552222", width: '100%', elevation: 0, overflow: "hidden" },
+  errorStateIconBg: { width: 72, height: 72, borderRadius: 36, backgroundColor: "#222222", alignItems: "center", justifyContent: "center", marginBottom: spacing.lg },
+  errorStateTitle: { fontSize: 20, fontWeight: "800", color: "#FF6666", marginBottom: 8 },
+  errorStateSub: { fontSize: 15, color: "#FF8888", textAlign: "center", lineHeight: 22 },
 });

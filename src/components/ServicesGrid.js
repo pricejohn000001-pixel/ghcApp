@@ -7,16 +7,17 @@ import { useTranslation } from "react-i18next";
 const { width } = Dimensions.get("window");
 
 const iconMap = {
-  "clipboard-list": <FontAwesome name="list-alt" size={22} color="#fff" />,
-  video: <Entypo name="video-camera" size={22} color="#fff" />,
-  search1: <AntDesign name="search1" size={22} color="#fff" />,
-  tool: <Feather name="tool" size={22} color="#fff" />,
-  calendar: <AntDesign name="calendar" size={22} color="#fff" />,
-  clock: <Feather name="clock" size={22} color="#fff" />,
-  inbox: <Feather name="inbox" size={22} color="#fff" />,
-  bank: <AntDesign name="bank" size={22} color="#fff" />,
-  team: <AntDesign name="team" size={22} color="#fff" />,
-  book: <Feather name="book" size={22} color="#fff" />,
+  "clipboard-list": <FontAwesome name="list-alt" size={22} color={colors.accent} />,
+  video: <Entypo name="video-camera" size={22} color={colors.accent} />,
+  search1: <AntDesign name="search1" size={22} color={colors.accent} />,
+  tool: <Feather name="tool" size={22} color={colors.accent} />,
+  calendar: <AntDesign name="calendar" size={22} color={colors.accent} />,
+  clock: <Feather name="clock" size={22} color={colors.accent} />,
+  inbox: <Feather name="inbox" size={22} color={colors.accent} />,
+  bank: <AntDesign name="bank" size={22} color={colors.accent} />,
+  team: <AntDesign name="team" size={22} color={colors.accent} />,
+  book: <Feather name="book" size={22} color={colors.accent} />,
+  monitor: <Feather name="monitor" size={22} color={colors.accent} />,
 };
 
 export const ServicesGrid = ({ services = [], onServicePress }) => {
@@ -31,7 +32,7 @@ export const ServicesGrid = ({ services = [], onServicePress }) => {
             activeOpacity={0.85}
             onPress={() => onServicePress && onServicePress(card.id)}
           >
-            <View style={[styles.serviceIconWrap, { backgroundColor: card.color }]}>
+            <View style={[styles.serviceIconWrap, { backgroundColor: "#1A1A1A" }]}>
               {iconMap[card.icon]}
             </View>
             <View style={styles.serviceTextContent}>
@@ -59,13 +60,13 @@ const styles = StyleSheet.create({
   },
   serviceCard: {
     width: (width - spacing.lg * 2 - 12) / 2,
-    backgroundColor: "#fff",
+    backgroundColor: "#111111",
     borderRadius: radius.xl,
     padding: spacing.md,
     gap: spacing.xs,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#0B1A38",
+    shadowColor: "#000000",
     shadowOpacity: 0.12,
     shadowOffset: { width: 0, height: 6 },
     shadowRadius: 10,
@@ -82,8 +83,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  serviceTitle: { color: "#0B1B3A", fontWeight: "700", fontSize: 14, textAlign: "center" },
-  serviceHint: { color: "#6B7280", fontSize: 12, textAlign: "center" },
+  serviceTitle: { color: "#FFFFFF", fontFamily: 'Inter_700Bold', fontSize: 14, textAlign: "center" },
+  serviceHint: { color: "#AAAAAA", fontSize: 12, textAlign: "center", fontFamily: 'Inter_400Regular' },
   serviceTextContent: { alignItems: "center", width: "100%" },
 });
 
