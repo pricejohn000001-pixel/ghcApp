@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View, AppState, useWindowDimensions, Animated, Modal, Pressable } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View, AppState, useWindowDimensions, Animated } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Entypo, Feather } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -17,25 +17,6 @@ export const Header = ({ onMenu, onSearch, scrollY, isHome }) => {
 
   const [now, setNow] = useState(new Date());
   const [welcomeHeight, setWelcomeHeight] = useState(0);
-  const [buildInfoVisible, setBuildInfoVisible] = useState(false);
-  const [tapCount, setTapCount] = useState(0);
-  const lastTapRef = React.useRef(0);
-
-  const handleDatePress = () => {
-    const nowTs = Date.now();
-    if (nowTs - lastTapRef.current < 500) {
-      const newCount = tapCount + 1;
-      if (newCount >= 7) {
-        setBuildInfoVisible(true);
-        setTapCount(0);
-      } else {
-        setTapCount(newCount);
-      }
-    } else {
-      setTapCount(1);
-    }
-    lastTapRef.current = nowTs;
-  };
 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (nextAppState) => {
@@ -86,10 +67,10 @@ export const Header = ({ onMenu, onSearch, scrollY, isHome }) => {
             }
           }}
         >
-          <Pressable onPress={handleDatePress}>
+          <View>
             <Text style={styles.welcomeLabel}>{t("header.welcome")}</Text>
             <Text style={styles.dateText}>{dateText}</Text>
-          </Pressable>
+          </View>
           <View style={styles.japiContainer}>
             <Image source={japi} style={styles.japiIcon} resizeMode="contain" />
           </View>
@@ -116,50 +97,6 @@ export const Header = ({ onMenu, onSearch, scrollY, isHome }) => {
           <Text style={styles.searchText}>{t("search.trigger", "Search cases, orders, cause list...")}</Text>
         </TouchableOpacity>
       </Animated.View>
-
-      <Modal
-        visible={buildInfoVisible}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={() => setBuildInfoVisible(false)}
-      >
-        <Pressable 
-          style={styles.modalOverlay} 
-          onPress={() => setBuildInfoVisible(false)}
-        >
-          <View style={styles.buildInfoCard}>
-            <View style={styles.buildInfoHeader}>
-              <Feather name="info" size={20} color={colors.accent} />
-              <Text style={styles.buildInfoTitle}>System Information</Text>
-            </View>
-            <View style={styles.buildInfoBody}>
-              <View style={styles.buildInfoRow}>
-                <Text style={styles.buildInfoLabel}>Build:</Text>
-                <Text style={styles.buildInfoValue}>GHC-APP</Text>
-              </View>
-              <View style={styles.buildInfoRow}>
-                <Text style={styles.buildInfoLabel}>Developed by:</Text>
-                <Text style={styles.buildInfoValue}>Sahil Amin</Text>
-              </View>
-              <View style={styles.buildInfoRow}>
-                <Text style={styles.buildInfoLabel}>Email:</Text>
-                <Text style={styles.buildInfoValue}>sahilamin68@gmail.com</Text>
-              </View>
-              <View style={styles.buildInfoRow}>
-                <Text style={styles.buildInfoLabel}>Build Date:</Text>
-                <Text style={styles.buildInfoValue}>May 2026</Text>
-              </View>
-            </View>
-            <TouchableOpacity 
-              style={styles.buildInfoClose} 
-              onPress={() => setBuildInfoVisible(false)}
-            >
-              <Text style={styles.buildInfoCloseText}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </Pressable>
-      </Modal>
-
     </LinearGradient>
   );
 };
@@ -226,65 +163,5 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     opacity: 0.5,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: spacing.xl,
-  },
-  buildInfoCard: {
-    backgroundColor: '#1A1A1A',
-    borderRadius: radius.xl,
-    padding: spacing.xl,
-    width: '100%',
-    maxWidth: 400,
-    borderWidth: 1,
-    borderColor: '#333333',
-  },
-  buildInfoHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    marginBottom: spacing.xl,
-    borderBottomWidth: 1,
-    borderBottomColor: '#333333',
-    paddingBottom: spacing.md,
-  },
-  buildInfoTitle: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontFamily: 'Inter_700Bold',
-  },
-  buildInfoBody: {
-    gap: spacing.md,
-    marginBottom: spacing.xl,
-  },
-  buildInfoRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  buildInfoLabel: {
-    color: '#AAAAAA',
-    fontSize: 14,
-    fontFamily: 'Inter_400Regular',
-  },
-  buildInfoValue: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontFamily: 'Inter_600SemiBold',
-  },
-  buildInfoClose: {
-    backgroundColor: '#333333',
-    paddingVertical: 12,
-    borderRadius: radius.md,
-    alignItems: 'center',
-  },
-  buildInfoCloseText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontFamily: 'Inter_600SemiBold',
   },
 });

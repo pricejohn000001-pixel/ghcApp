@@ -4,7 +4,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { colors, spacing } from "../theme";
 
-export const BottomNav = ({ onHome, onMactCal, onBack, onForward, disableBack, disableForward, activeTab }) => {
+export const BottomNav = ({ onHome, onMactCal, onCaseDisplay, onBack, onForward, disableBack, disableForward, activeTab }) => {
   const { t } = useTranslation();
 
   return (
@@ -16,6 +16,10 @@ export const BottomNav = ({ onHome, onMactCal, onBack, onForward, disableBack, d
       <TouchableOpacity style={styles.navItem} activeOpacity={0.8} onPress={onMactCal}>
         <AntDesign name="calculator" size={20} color={activeTab === 'mactCal' ? colors.accent : "#666666"} />
         <Text style={[styles.navText, activeTab === 'mactCal' && styles.activeText]}>MACT Cal</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navItem} activeOpacity={0.8} onPress={onCaseDisplay}>
+        <AntDesign name="database" size={20} color="#666666" />
+        <Text style={styles.navText}>Case Display</Text>
       </TouchableOpacity>
 
       <TouchableOpacity

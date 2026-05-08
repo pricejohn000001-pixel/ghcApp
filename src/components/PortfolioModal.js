@@ -61,7 +61,7 @@ export const PortfolioModal = ({ visible, onClose, judge }) => {
           </TouchableOpacity>
         </View>
         <ScrollView style={styles.scrollArea} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          <Text style={styles.portfolioName}>{judge?.name}</Text>
+          <Text style={styles.portfolioName}>{judge?.name?.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().replace(/,?\s*chief justice/gi, '').trim()}</Text>
           <Text style={styles.portfolioRole}>{judge?.title}</Text>
           {judge?.biography && judge.biography !== placeholderBio ? (
             <>

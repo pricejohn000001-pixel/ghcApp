@@ -132,7 +132,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
         }
       } else {
         // CNR or QR Scan Search
-        const url = `http://10.177.247.79/case-data/index.php?cino=${cnrToSearch}`;
+        const url = `https://ghcservices.assam.gov.in/case-status/proxy/cases/${cnrToSearch}`;
         const res = await fetch(url);
         if (!res.ok) throw new Error('Network response was not ok');
         const data = await res.json();

@@ -646,9 +646,9 @@ export const serviceCards = [
   { id: "live_streaming", icon: "video", color: "#D4AF37" },
   { id: "cause_list", icon: "calendar", color: "#D4AF37" },
   { id: "case_status", icon: "search1", color: "#D4AF37" },
+  { id: "statistics", icon: "bank", color: "#D4AF37" },
   { id: "justice_clock", icon: "clock", color: "#D4AF37" },
   { id: "virtual_justice_clock_principal", icon: "clipboard-list", color: "#D4AF37" },
-  { id: "statistics", icon: "bank", color: "#D4AF37" },
 ];
 
 export const holidayTags = [

@@ -262,6 +262,7 @@ export default function App() {
       <BottomNav
         onHome={handleHome}
         onMactCal={() => addToHistory({ type: 'webview', url: "https://ghcservices.assam.gov.in/mact/mact_cal.php" })}
+        onCaseDisplay={() => Linking.openURL("https://play.google.com/store/apps/details?id=com.case_display_app&pcampaignid=web_share")}
         onBack={handleBack}
         onForward={handleForward}
         disableBack={historyIndex === 0 && (!showWebView || !canGoBack)}
