@@ -16,15 +16,27 @@ export const Footer = ({ onAbout, onContact }) => {
           <Text style={styles.footerLink}>{t("footer.contact")}</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.footerMeta}>
-        Developed by eCourts Team Gauhati High Court
-      </Text>
+      <View style={styles.metaContainer}>
+        <Text style={styles.footerMeta}>
+          Designed and Developed by{" "}
+          <Text 
+            style={styles.linkText} 
+            onPress={() => Linking.openURL("https://ecourtsghc.assam.gov.in/")}
+          >
+            e-Courts Services
+          </Text>
+          , Gauhati High Court, Guwahati.
+        </Text>
+        <Text style={styles.footerCopyright}>
+          © Gauhati High Court, Guwahati. All rights reserved.
+        </Text>
+      </View>
       <View style={styles.socialRow}>
         <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://t.me/GHCInfoChannel")}>
           <Entypo name="paper-plane" size={16} color={colors.accent} />
           <Text style={styles.socialText}>Telegram</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://www.youtube.com/@gauhatihighcourtguwahatili6982")}>
+        <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://youtube.com/@ecourtsgauhatihighcourt4597?si=AGl6ey2vxW1D3IzA")}>
           <AntDesign name="youtube" size={16} color={colors.accent} />
           <Text style={styles.socialText}>YouTube</Text>
         </TouchableOpacity>
@@ -49,7 +61,10 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
   },
   footerLink: { color: "#FFFFFF", fontWeight: "700" },
-  footerMeta: { color: "#ADB9D8", textAlign: "center", marginTop: 4 },
+  metaContainer: { alignItems: "center", marginTop: 8, paddingHorizontal: spacing.md },
+  footerMeta: { color: "#ADB9D8", textAlign: "center", fontSize: 11, lineHeight: 16 },
+  linkText: { color: colors.accent, textDecorationLine: "underline" },
+  footerCopyright: { color: "#ADB9D8", textAlign: "center", fontSize: 11, marginTop: 4, opacity: 0.8 },
   socialRow: { flexDirection: "row", gap: spacing.sm, marginTop: spacing.sm },
   socialButton: {
     flexDirection: "row",

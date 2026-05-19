@@ -23,17 +23,22 @@ export const SplashScreen = ({ ready, onDone }) => {
         <Image source={logo} style={styles.logo} resizeMode="contain" />
         <Text style={styles.brand}>The Gauhati High Court</Text>
         <Text style={styles.subline}>Official Mobile Application</Text>
-        <Text style={styles.meta}>Developed by eCourts Team Gauhati High Court</Text>
+      </View>
+      <View style={styles.footerWrap}>
+        <Text style={styles.meta}>Designed and Developed by e-Courts Services, Gauhati High Court, Guwahati.</Text>
+        <Text style={styles.copyright}>© Gauhati High Court, Guwahati. All rights reserved.</Text>
       </View>
     </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, width, height, alignItems: "center", justifyContent: "center", backgroundColor: colors.primary },
-  center: { alignItems: "center", justifyContent: "center" },
+  container: { flex: 1, width, height, alignItems: "center", justifyContent: "space-between", backgroundColor: colors.primary, paddingVertical: 40 },
+  center: { alignItems: "center", justifyContent: "center", flex: 1 },
   logo: { width: 180, height: 180, marginBottom: spacing.md },
-  brand: { color: "#FFFFFF", fontSize: 24, fontFamily: 'Georgia-Bold', marginBottom: spacing.sm },
-  subline: { color: "#AAAAAA", fontSize: 14, fontFamily: 'Inter_400Regular', marginBottom: 40 },
-  meta: { color: "#AAAAAA", fontSize: 12, fontFamily: 'Inter_400Regular' },
+  brand: { color: "#FFFFFF", fontSize: 24, fontFamily: 'Georgia-Bold', marginBottom: spacing.sm, textAlign: "center" },
+  subline: { color: "#AAAAAA", fontSize: 14, fontFamily: 'Inter_400Regular' },
+  footerWrap: { alignItems: "center", paddingHorizontal: spacing.xl, paddingBottom: spacing.lg },
+  meta: { color: "#888888", fontSize: 11, fontFamily: 'Inter_400Regular', textAlign: "center", lineHeight: 16 },
+  copyright: { color: "#777777", fontSize: 11, fontFamily: 'Inter_400Regular', textAlign: "center", marginTop: 4 },
 });

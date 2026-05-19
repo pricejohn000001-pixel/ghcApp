@@ -1,5 +1,5 @@
 import React from "react";
-import { Animated, StyleSheet, Text, View } from "react-native";
+import { Animated, StyleSheet, Text, View, TouchableOpacity, Linking } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,12 @@ import { colors, radius, spacing } from "../theme";
 
 export const ContactScreen = ({ scrollY }) => {
   const { t } = useTranslation();
+
+  const handleEmailPress = (email) => {
+    // Replace [at] and [dot] with actual characters
+    const cleanEmail = email.replace(/\[at\]/g, '@').replace(/\[dot\]/g, '.');
+    Linking.openURL(`mailto:${cleanEmail}`);
+  };
 
   return (
     <View style={styles.container}>
@@ -41,10 +47,63 @@ export const ContactScreen = ({ scrollY }) => {
           <Text style={styles.paragraph}>(0361) 2735863, 2735867,2732541, 2734346, 2733439</Text>
         </View>
         <View style={styles.card}>
-          <View style={styles.cardHeader}><AntDesign name="mail" size={18} color={colors.accent} /><Text style={styles.cardTitle}>{t("contact.email")}</Text></View>
-          <Text style={styles.paragraph}>hc-asm[at]nic[dot]in</Text>
-          <Text style={styles.paragraph}>highcourt[dot]ghc[at]gmail[dot]com</Text>
+          <View style={styles.cardHeader}>
+            <AntDesign name="mail" size={18} color={colors.accent} />
+            <Text style={styles.cardTitle}>{t("contact.email")}</Text>
+          </View>
+          
+          <View style={styles.emailSection}>
+            <View style={styles.subSectionHeader}>
+              <Feather name="inbox" size={14} color={colors.accent} />
+              <Text style={styles.subSectionTitle}>General Registry</Text>
+            </View>
+            <View style={styles.emailRowContainer}>
+              <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('hc-asm[at]nic[dot]in')}>
+                <Feather name="at-sign" size={14} color="#777777" />
+                <Text style={styles.emailText}>hc-asm[at]nic[dot]in</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('highcourt[dot]ghc[at]gmail[dot]com')}>
+                <Feather name="at-sign" size={14} color="#777777" />
+                <Text style={styles.emailText}>highcourt[dot]ghc[at]gmail[dot]com</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          
+          <View style={styles.subSection}>
+            <View style={styles.subSectionHeader}>
+              <Feather name="monitor" size={14} color={colors.accent} />
+              <Text style={styles.subSectionTitle}>eCourts Services</Text>
+            </View>
+            <View style={styles.emailRowContainer}>
+              <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('cpc-asm[at]aji[dot]gov[dot]in')}>
+                <Feather name="at-sign" size={14} color="#777777" />
+                <Text style={styles.emailText}>cpc-asm[at]aji[dot]gov[dot]in</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('ecourts[dot]ghc-as[at]nic[dot]in')}>
+                <Feather name="at-sign" size={14} color="#777777" />
+                <Text style={styles.emailText}>ecourts[dot]ghc-as[at]nic[dot]in</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
+
+        <TouchableOpacity 
+          style={[styles.card, styles.locationCard]} 
+          activeOpacity={0.85}
+          onPress={() => Linking.openURL("https://www.google.com/maps/search/?api=1&query=Gauhati+High+Court,+Mahatma+Gandhi+Rd,+Latasil,+Uzan+Bazar,+Guwahati,+Assam+781001")}
+        >
+          <View style={styles.cardHeader}>
+            <Feather name="map-pin" size={18} color={colors.accent} />
+            <Text style={styles.cardTitle}>Find Us Here</Text>
+          </View>
+          <Text style={styles.paragraph}>Gauhati High Court, New Block</Text>
+          <Text style={styles.metaSmall}>Mahatma Gandhi Rd, Latasil, Uzan Bazar, Guwahati, Assam 781001</Text>
+          
+          <View style={styles.locationAction}>
+            <Text style={styles.locationActionText}>Get Directions on Google Maps</Text>
+            <Feather name="navigation" size={14} color={colors.accent} />
+          </View>
+        </TouchableOpacity>
       </Animated.ScrollView>
     </View>
   );
@@ -64,4 +123,28 @@ const styles = StyleSheet.create({
   cardTitle: { color: colors.textPrimary, fontFamily: 'Georgia' },
   paragraph: { color: "#FFFFFF", fontSize: 14, lineHeight: 22, marginBottom: spacing.xs, fontFamily: 'Inter_400Regular' },
   metaSmall: { color: "#AAAAAA", fontSize: 12, fontFamily: 'Inter_400Regular' },
+  emailSection: { marginTop: spacing.xs },
+  emailRowContainer: { gap: 8, marginTop: 4 },
+  emailRow: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: "#1A1A1A", padding: 10, borderRadius: radius.md },
+  emailText: { color: "#FFFFFF", fontSize: 14, fontFamily: 'Inter_400Regular' },
+  subSection: { marginTop: spacing.md, paddingTop: spacing.md, borderTopWidth: 1, borderTopColor: "#222222" },
+  subSectionHeader: { flexDirection: "row", alignItems: "center", gap: 6, marginBottom: spacing.xs },
+  subSectionTitle: { color: "#ADB9D8", fontSize: 13, fontFamily: 'Inter_600SemiBold', textTransform: "uppercase", letterSpacing: 0.5 },
+  locationCard: {
+    borderColor: "#333333",
+  },
+  locationAction: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginTop: spacing.md,
+    paddingTop: spacing.md,
+    borderTopWidth: 1,
+    borderTopColor: "#222222",
+  },
+  locationActionText: {
+    color: colors.accent,
+    fontSize: 13,
+    fontFamily: 'Inter_600SemiBold',
+  },
 });

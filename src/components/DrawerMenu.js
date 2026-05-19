@@ -13,12 +13,8 @@ const importantLinks = [
   "link_sci",
   "link_sclsc",
   "link_ghclsc",
-  "link_lri",
-  "link_jjc",
-  "link_bar",
   "link_med",
   "link_ja",
-  "link_lawmin",
 ];
 
 const judgesItems = [
@@ -33,15 +29,6 @@ const benchesItems = [
   "bench_kohima",
   "bench_aizawl",
   "bench_itanagar",
-];
-
-const registryItems = [
-  "reg_former_gen",
-  "reg_former_vig",
-  "reg_former_sec",
-  "reg_former_jud",
-  "reg_former_admin",
-  "reg_former_est",
 ];
 
 const recruitmentItems = [
@@ -68,9 +55,8 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
   const sections = useMemo(
     () => [
       { key: "judges", title: t("drawer.judges"), items: judgesItems, icon: <AntDesign name="team" size={18} color={colors.accent} /> },
-      { key: "benches", title: t("drawer.benches"), items: benchesItems, icon: <AntDesign name="bank" size={18} color={colors.accent} /> },
       { key: "reg_present", title: t("drawer.items.reg_present"), type: "single", icon: <AntDesign name="profile" size={18} color={colors.accent} /> },
-      { key: "registry", title: t("drawer.registry"), items: registryItems, icon: <AntDesign name="profile" size={18} color={colors.accent} /> },
+      { key: "benches", title: t("drawer.benches"), items: benchesItems, icon: <AntDesign name="bank" size={18} color={colors.accent} /> },
       { key: "district_courts", title: t("drawer.district_courts"), type: "single", icon: <AntDesign name="home" size={18} color={colors.accent} /> },
       { key: "recruitments", title: t("drawer.recruitments"), items: recruitmentItems, icon: <AntDesign name="addusergroup" size={18} color={colors.accent} /> },
       { key: "ebooks", title: t("drawer.ebooks"), items: ebookItems, icon: <Feather name="book" size={18} color={colors.accent} /> },
@@ -79,8 +65,8 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
     [t]
   );
 
-  const [expanded, setExpanded] = useState({ judges: false, benches: false, registry: false, links: false, recruitments: false, ebooks: false });
-  const [shown, setShown] = useState({ judges: false, benches: false, registry: false, links: false, recruitments: false, ebooks: false });
+  const [expanded, setExpanded] = useState({ judges: false, benches: false, links: false, recruitments: false, ebooks: false });
+  const [shown, setShown] = useState({ judges: false, benches: false, links: false, recruitments: false, ebooks: false });
   const scrollRef = useRef(null);
   const sectionTopsRef = useRef({});
   const animsRef = useRef(
