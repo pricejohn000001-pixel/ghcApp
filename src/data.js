@@ -641,7 +641,7 @@ export const judges = [
     ],
   },
 ];
-
+ 
 export const serviceCards = [
   { id: "live_streaming", icon: "video", color: "#D4AF37" },
   { id: "cause_list", icon: "calendar", color: "#D4AF37" },
@@ -653,121 +653,11 @@ export const serviceCards = [
 
 export const holidayTags = [
   { label: "All", color: "#0F2349" },
-  { label: "Public", color: "#EF4444" },
-  { label: "Restricted", color: "#F59E0B" },
+  { label: "Holiday", color: "#EF4444" },
   { label: "Working Saturday", color: "#10B981" },
 ];
 
-export const holidays = [
-  // Jan
-  { label: "1st – 2nd New Year Holiday", badge: "Public", badgeColor: "#cf2b0eff", month: 0, year: 2026 },
-  { label: "3rd Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 0, year: 2026 },
-  { label: "12th – 16th Magh Bihu & Tusu Puja", badge: "Public", badgeColor: "#cf2b0eff", month: 0, year: 2026 },
-  { label: "17th Silpi Divas", badge: "Restricted", badgeColor: "#F59E0B", month: 0, year: 2026 },
-  { label: "17th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 0, year: 2026 },
-  { label: "23rd Sri Panchami", badge: "Public", badgeColor: "#cf2b0eff", month: 0, year: 2026 },
-  { label: "23rd Netaji's Birth Day", badge: "Restricted", badgeColor: "#F59E0B", month: 0, year: 2026 },
-  { label: "26th Republic Day", badge: "Public", badgeColor: "#cf2b0eff", month: 0, year: 2026 },
-  { label: "27th Busu Dima Festival", badge: "Restricted", badgeColor: "#F59E0B", month: 0, year: 2026 },
-  { label: "27th Gwther Bathaw Saan (Baithow Puja)", badge: "Restricted", badgeColor: "#F59E0B", month: 0, year: 2026 },
-  { label: "31st Medam-Me-Phi", badge: "Public", badgeColor: "#cf2b0eff", month: 0, year: 2026 },
-  { label: "31st Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 0, year: 2026 },
-
-  // Feb
-  { label: "1st Bir Chilarai Divas", badge: "Restricted", badgeColor: "#F59E0B", month: 1, year: 2026 },
-  { label: "4th Shab e-Barat", badge: "Restricted", badgeColor: "#F59E0B", month: 1, year: 2026 },
-  { label: "7th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 1, year: 2026 },
-  { label: "15th Siva Ratri", badge: "Public", badgeColor: "#cf2b0eff", month: 1, year: 2026 },
-  { label: "17th Karbi Dehal Kachir Dom", badge: "Restricted", badgeColor: "#F59E0B", month: 1, year: 2026 },
-  { label: "18th Ali-Aye-Linqang", badge: "Restricted", badgeColor: "#F59E0B", month: 1, year: 2026 },
-  { label: "21st Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 1, year: 2026 },
-  { label: "23rd Bathow Puja/Khiring Khiring Baithow Puja", badge: "Restricted", badgeColor: "#F59E0B", month: 1, year: 2026 },
-
-  // Mar
-  { label: "3rd – 4th Dol Jatra/ Holi", badge: "Public", badgeColor: "#cf2b0eff", month: 2, year: 2026 },
-  { label: "7th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 2, year: 2026 },
-  { label: "17th Shab-e-Qadr (Laylat ul-Qadr)", badge: "Restricted", badgeColor: "#F59E0B", month: 2, year: 2026 },
-  { label: "21st Id-ul-Fitre", badge: "Public", badgeColor: "#cf2b0eff", month: 2, year: 2026 },
-  { label: "21st Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 2, year: 2026 },
-  { label: "31st Mahavir Jayanti", badge: "Restricted", badgeColor: "#F59E0B", month: 2, year: 2026 },
-
-  // Apr
-  { label: "3rd Good Friday", badge: "Public", badgeColor: "#cf2b0eff", month: 3, year: 2026 },
-  { label: "4th Easter Saturday", badge: "Restricted", badgeColor: "#F59E0B", month: 3, year: 2026 },
-  { label: "4th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 3, year: 2026 },
-  { label: "13th – 18th BIHU VACATION", badge: "Public", badgeColor: "#cf2b0eff", month: 3, year: 2026 },
-  { label: "15th Deuri Bihu", badge: "Restricted", badgeColor: "#F59E0B", month: 3, year: 2026 },
-  { label: "18th Tithi of Sri Sri Damodar Dev", badge: "Restricted", badgeColor: "#F59E0B", month: 3, year: 2026 },
-  { label: "18th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 3, year: 2026 },
-  { label: "21st Sati Sadhani Divas", badge: "Restricted", badgeColor: "#F59E0B", month: 3, year: 2026 },
-  { label: "22nd Tithi of Gopal Dev", badge: "Restricted", badgeColor: "#F59E0B", month: 3, year: 2026 },
-
-  // May
-  { label: "1st Buddha Purnima & May Day", badge: "Public", badgeColor: "#cf2b0eff", month: 4, year: 2026 },
-  { label: "2nd Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 4, year: 2026 },
-  { label: "16th Tithi of Hari Dev", badge: "Restricted", badgeColor: "#F59E0B", month: 4, year: 2026 },
-  { label: "16th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 4, year: 2026 },
-  { label: "27th Id-Uz-Zuha", badge: "Public", badgeColor: "#cf2b0eff", month: 4, year: 2026 },
-  { label: "30th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 4, year: 2026 },
-  { label: "31st Baikhow Festival", badge: "Restricted", badgeColor: "#F59E0B", month: 4, year: 2026 },
-
-  // Jun
-  { label: "1st Janmotsav of Sri Sri Madhab Dev", badge: "Restricted", badgeColor: "#F59E0B", month: 5, year: 2026 },
-  { label: "6th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 5, year: 2026 },
-  { label: "20th Death Anniversary of Bishnu Prasad Rabha", badge: "Restricted", badgeColor: "#F59E0B", month: 5, year: 2026 },
-  { label: "20th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 5, year: 2026 },
-  { label: "26th Muharram", badge: "Restricted", badgeColor: "#F59E0B", month: 5, year: 2026 },
-  { label: "29th – 30th SUMMER VACATION", badge: "Public", badgeColor: "#cf2b0eff", month: 5, year: 2026 },
-
-  // Jul
-  { label: "1st – 10th SUMMER VACATION", badge: "Public", badgeColor: "#cf2b0eff", month: 6, year: 2026 },
-  { label: "4th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 6, year: 2026 },
-  { label: "13th Birth Day of Nepali Poet Bhanu Bhakta Acharya", badge: "Restricted", badgeColor: "#F59E0B", month: 6, year: 2026 },
-  { label: "18th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 6, year: 2026 },
-
-  // Aug
-  { label: "1st Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 7, year: 2026 },
-  { label: "13th Death Anniversary of Bir Tikendrajit", badge: "Restricted", badgeColor: "#F59E0B", month: 7, year: 2026 },
-  { label: "15th Independence Day", badge: "Public", badgeColor: "#cf2b0eff", month: 7, year: 2026 },
-  { label: "15th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 7, year: 2026 },
-  { label: "26th Fateha-Dwaj-Daham", badge: "Restricted", badgeColor: "#F59E0B", month: 7, year: 2026 },
-  { label: "29th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 7, year: 2026 },
-
-  // Sep
-  { label: "1st Tithi of Sri Sri Madhab Dev", badge: "Public", badgeColor: "#cf2b0eff", month: 8, year: 2026 },
-  { label: "4th Janmastami", badge: "Public", badgeColor: "#cf2b0eff", month: 8, year: 2026 },
-  { label: "5th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 8, year: 2026 },
-  { label: "12th Tithi of Srimanta Sankar Dev", badge: "Public", badgeColor: "#cf2b0eff", month: 8, year: 2026 },
-  { label: "16th Abirbhab Tithi of Sri Sri Thakur Anukul Chandra", badge: "Restricted", badgeColor: "#F59E0B", month: 8, year: 2026 },
-  { label: "19th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 8, year: 2026 },
-  { label: "21st Janmotsava of Srimanta Sankar Dev", badge: "Public", badgeColor: "#cf2b0eff", month: 8, year: 2026 },
-  { label: "22nd Karam Puja", badge: "Restricted", badgeColor: "#F59E0B", month: 8, year: 2026 },
-
-  // Oct
-  { label: "2nd Birth day of Mahatma Gandhi", badge: "Public", badgeColor: "#cf2b0eff", month: 9, year: 2026 },
-  { label: "3rd Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 9, year: 2026 },
-  { label: "17th – 31st LONG VACATION", badge: "Public", badgeColor: "#cf2b0eff", month: 9, year: 2026 },
-  { label: "17th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 9, year: 2026 },
-  { label: "31st Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 9, year: 2026 },
-
-  // Nov
-  { label: "1st Kuki Chavanq Kut", badge: "Restricted", badgeColor: "#F59E0B", month: 10, year: 2026 },
-  { label: "7th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 10, year: 2026 },
-  { label: "8th – 9th Kali Puja/Diwali", badge: "Public", badgeColor: "#cf2b0eff", month: 10, year: 2026 },
-  { label: "11th Bhatri Dwitia & Abirbhab Tithi of Sri Bhubaneswar Sadhu Thakur", badge: "Restricted", badgeColor: "#F59E0B", month: 10, year: 2026 },
-  { label: "15th Chhat Puja", badge: "Restricted", badgeColor: "#F59E0B", month: 10, year: 2026 },
-  { label: "21st Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 10, year: 2026 },
-  { label: "24th Guru Nanak's Birthday", badge: "Public", badgeColor: "#cf2b0eff", month: 10, year: 2026 },
-  { label: "24th Lachit Divas & Death Anniversary of Guru Teg Bahadurji", badge: "Restricted", badgeColor: "#F59E0B", month: 10, year: 2026 },
-
-  // Dec
-  { label: "2nd Assam Divas", badge: "Restricted", badgeColor: "#F59E0B", month: 11, year: 2026 },
-  { label: "5th Sikpuoi Ruoi", badge: "Restricted", badgeColor: "#F59E0B", month: 11, year: 2026 },
-  { label: "5th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 11, year: 2026 },
-  { label: "10th Martyr's Day", badge: "Restricted", badgeColor: "#F59E0B", month: 11, year: 2026 },
-  { label: "19th Working Saturday", badge: "Working Saturday", badgeColor: "#10B981", month: 11, year: 2026 },
-  { label: "24th – 31st WINTER VACATION Christmas Holidays", badge: "Public", badgeColor: "#cf2b0eff", month: 11, year: 2026 },
-];
+export const holidays = [];
 
 export const menuUrls = {
   "judges_sc_sitting": "https://ghconline.gov.in/index.php/honourable-sitting-judges-of-the-supreme-court-of-india/",

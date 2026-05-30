@@ -21,6 +21,12 @@ axiosInstance.interceptors.request.use(
   async function (config) {
     config.headers = config.headers || {};
     config.headers["Content-Type"] = config.headers["Content-Type"] || "application/json";
+    
+    // Add Bearer Token for cis-api endpoints
+    if (config.url && config.url.includes("/cis-api/")) {
+      config.headers["Authorization"] = `Bearer ${process.env.EXPO_PUBLIC_API_TOKEN}`;
+    }
+    
     return config;
   },
   function (error) {
@@ -37,6 +43,7 @@ class ApiCall {
       params: request.params,
       headers: request.headers || { "Content-Type": "application/json" },
       responseType: request.responseType || "json",
+      withCredentials: request.withCredentials !== undefined ? request.withCredentials : true,
     };
 
     axiosInstance
@@ -45,10 +52,17 @@ class ApiCall {
         callback(res.data, false);
       })
       .catch((err) => {
+        console.error("API Error Details:", {
+          message: err.message,
+          url: config.url,
+          method: config.method,
+          status: err.response?.status,
+          data: err.response?.data
+        });
         if (err.response !== undefined) {
           callback(err.response, true);
         } else {
-          callback(undefined, true);
+          callback(err, true);
         }
       });
   }

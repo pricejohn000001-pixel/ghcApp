@@ -49,24 +49,44 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
     const fetchCaseTypes = async () => {
       try {
         setCaseTypesLoading(true);
-        const res = await fetch('http://10.177.247.79/case-data/index.php?type=getCaseType');
-        if (res.ok) {
-          const data = await res.json();
-          if (data.status && data.data) {
-            const mapped = { Civil: [], Criminal: [] };
-            data.data.forEach(cat => {
-              if (cat.category === 'Civil' || cat.category === 'Criminal') {
-                mapped[cat.category] = cat.types.map(t => ({
-                  label: t.type_name,
-                  value: String(t.case_type)
-                }));
-              }
-            });
-            setCaseTypes(mapped);
+        
+        // Use fetch directly to avoid any potential axios configuration issues
+        const response = await fetch('https://ghcservices.assam.gov.in/cis-api/api/v1/cases/case-type', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.EXPO_PUBLIC_API_TOKEN}`
           }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const mapped = { Civil: [], Criminal: [] };
+          const items = Array.isArray(data) ? data : (data.data || []);
+          
+          items.forEach(t => {
+            const item = {
+              label: t.type_name,
+              value: String(t.case_type)
+            };
+            
+            if (t.type_flag === "1" || t.type_flag === 1) {
+              mapped.Civil.push(item);
+            } else if (t.type_flag === "2" || t.type_flag === 2) {
+              mapped.Criminal.push(item);
+            }
+          });
+          
+          mapped.Civil.sort((a, b) => a.label.localeCompare(b.label));
+          mapped.Criminal.sort((a, b) => a.label.localeCompare(b.label));
+          
+          setCaseTypes(mapped);
+        } else {
+          const errorText = await response.text();
+          console.error('Failed to fetch case types from new API. Status:', response.status, 'Response:', errorText);
         }
       } catch (err) {
-        console.error('Failed to fetch case types:', err);
+        console.error('Failed to fetch case types from new API. Network Error:', err);
       } finally {
         setCaseTypesLoading(false);
       }
@@ -114,9 +134,18 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
     
     try {
       if (searchMode === "Case No") {
-        const url = `http://10.177.215.163/case-data/?caseType=${selectedType.value}&reg_no=${regNo}&reg_year=${year}`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('Network response was not ok');
+        const url = `https://ghcservices.assam.gov.in/cis-api/api/v1/cases/search/registration?case_type=${selectedType.value}&reg_no=${regNo}&reg_year=${year}`;
+        const res = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.EXPO_PUBLIC_API_TOKEN}`
+          }
+        });
+        if (!res.ok) {
+          const errorText = await res.text();
+          throw new Error(`Search failed with status ${res.status}: ${errorText}`);
+        }
         const data = await res.json();
         
         if (data.status && data.data) {

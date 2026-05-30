@@ -46,7 +46,7 @@
     "hero_subtitle": "গুৱাহাটী উচ্চ ন্যায়ালয়ৰ চৰকাৰী মোবাইল এপ্লিকেচন",
     "services_title": "আমাৰ সেৱাসমূহ",
     "holidays_title": "উচ্চ ন্যায়ালয়ৰ বন্ধৰ দিন",
-    "holidays_subtitle": "চৰকাৰী বন্ধ আৰু সীমিত কৰ্মদিৱস",
+    "holidays_subtitle": "চৰকাৰী বন্ধ আৰু কৰ্মৰত শনিবাৰ",
     "view_calendar": "কেলেন্ডাৰ চাওক",
     "download_holiday_list": "বন্ধৰ তালিকা ডাউনলোড কৰক (PDF)",
     "judges_title": "ন্যায়াধীশসকল",
@@ -79,8 +79,7 @@
   },
   "holiday_tags": {
     "All": "সকলো",
-    "Public": "চৰকাৰী",
-    "Restricted": "সীমিত",
+    "Holiday": "বন্ধৰ দিন",
     "Working Saturday": "কৰ্মৰত শনিবাৰ"
   },
   "nav": {

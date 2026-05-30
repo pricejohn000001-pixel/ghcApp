@@ -46,7 +46,7 @@
     "hero_subtitle": "Official mobile app of Gauhati High Court",
     "services_title": "Our Services",
     "holidays_title": "High Court Holidays",
-    "holidays_subtitle": "Official holidays and restricted working days",
+    "holidays_subtitle": "Official holidays and working Saturdays",
     "view_calendar": "View Calendar",
     "download_holiday_list": "Download Holiday List (PDF)",
     "judges_title": "Judges",
@@ -81,8 +81,7 @@
   },
   "holiday_tags": {
     "All": "All",
-    "Public": "Public",
-    "Restricted": "Restricted",
+    "Holiday": "Holidays",
     "Working Saturday": "Working Saturday"
   },
   "nav": {

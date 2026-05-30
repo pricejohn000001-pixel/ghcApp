@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { CalendarGrid } from "./CalendarGrid";
 import { colors, radius, spacing } from "../theme";
 
-export const HolidaysSection = ({ tags, holidays, parentScrollRef, sectionY = 0 }) => {
+export const HolidaysSection = ({ tags, holidays, calendarConfig, parentScrollRef, sectionY = 0 }) => {
   const { t } = useTranslation();
   const [month, setMonth] = useState(new Date().getMonth());
   const [year, setYear] = useState(new Date().getFullYear());
@@ -195,7 +195,14 @@ export const HolidaysSection = ({ tags, holidays, parentScrollRef, sectionY = 0 
           })
         ).current.panHandlers}
       >
-        <CalendarGrid month={month} year={year} onPrev={goPrev} onNext={goNext} highlightedDays={highlightedDays} />
+        <CalendarGrid 
+          month={month} 
+          year={year} 
+          onPrev={goPrev} 
+          onNext={goNext} 
+          highlightedDays={highlightedDays} 
+          config={calendarConfig?.[month]}
+        />
       </Animated.View>
       <View style={styles.tagsRow}>
         {tags.map((tag) => {

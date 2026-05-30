@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
 import { useTranslation } from "react-i18next";
 
-export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = [] }) => {
+export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = [], config }) => {
   const { t } = useTranslation();
   const daysInMonth = useMemo(() => new Date(year, month + 1, 0).getDate(), [month, year]);
   const firstWeekday = useMemo(() => new Date(year, month, 1).getDay(), [month, year]);
@@ -32,125 +32,11 @@ export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = []
   }, [month, year, t]);
 
   const monthConfig = useMemo(() => {
-    if (year === 2026) {
-      const config2026 = {
-        0: { // Jan
-          singles: [
-            { day: 1, type: "public" }, { day: 2, type: "public" },
-            { day: 12, type: "public" }, { day: 13, type: "public" }, { day: 14, type: "public" }, { day: 15, type: "public" }, { day: 16, type: "public" },
-            { day: 23, type: "public" }, { day: 26, type: "public" }, { day: 31, type: "public" },
-            { day: 17, type: "restricted" }, { day: 27, type: "restricted" },
-          ],
-          satPolicy: "2nd_4th_holiday",
-        },
-        1: { // Feb
-          singles: [
-            { day: 15, type: "public" },
-            { day: 4, type: "restricted" }, { day: 17, type: "restricted" }, { day: 18, type: "restricted" }, { day: 23, type: "restricted" },
-          ],
-          satPolicy: "2nd_4th_holiday",
-        },
-        2: { // Mar
-          singles: [
-            { day: 3, type: "public" }, { day: 4, type: "public" }, { day: 21, type: "public" },
-            { day: 17, type: "restricted" }, { day: 31, type: "restricted" },
-          ],
-          satPolicy: "2nd_4th_holiday",
-        },
-        3: { // Apr
-          singles: [
-            { day: 3, type: "public" },
-            { day: 13, type: "public" }, { day: 14, type: "public" }, { day: 15, type: "public" }, { day: 16, type: "public" }, { day: 17, type: "public" }, { day: 18, type: "public" },
-            { day: 4, type: "restricted" }, { day: 21, type: "restricted" }, { day: 22, type: "restricted" },
-          ],
-          satPolicy: "2nd_4th_holiday",
-        },
-        4: { // May
-          singles: [
-            { day: 1, type: "public" }, { day: 27, type: "public" },
-            { day: 16, type: "restricted" }, { day: 31, type: "restricted" },
-          ],
-          satPolicy: "2nd_4th_holiday",
-        },
-        5: { // Jun
-          singles: [
-            { day: 29, type: "public" }, { day: 30, type: "public" },
-            { day: 1, type: "restricted" }, { day: 20, type: "restricted" }, { day: 26, type: "restricted" }
-          ],
-          satPolicy: "2nd_4th_holiday",
-        },
-        6: { // Jul
-          singles: [
-            { day: 1, type: "public" }, { day: 2, type: "public" }, { day: 3, type: "public" }, { day: 4, type: "public" }, { day: 5, type: "public" }, { day: 6, type: "public" }, { day: 7, type: "public" }, { day: 8, type: "public" }, { day: 9, type: "public" }, { day: 10, type: "public" },
-            { day: 13, type: "restricted" },
-          ],
-          satPolicy: "2nd_4th_holiday",
-        },
-        7: { // Aug
-          singles: [
-            { day: 15, type: "public" },
-            { day: 13, type: "restricted" }, { day: 26, type: "restricted" },
-          ],
-          satPolicy: "2nd_4th_holiday",
-        },
-        8: { // Sep
-          singles: [
-            { day: 1, type: "public" }, { day: 4, type: "public" }, { day: 12, type: "public" }, { day: 21, type: "public" },
-            { day: 16, type: "restricted" }, { day: 22, type: "restricted" },
-          ],
-          satPolicy: "2nd_4th_holiday",
-        },
-        9: { // Oct
-          singles: [
-            { day: 2, type: "public" },
-            { day: 17, type: "public" }, { day: 18, type: "public" }, { day: 19, type: "public" }, { day: 20, type: "public" }, { day: 21, type: "public" }, { day: 22, type: "public" }, { day: 23, type: "public" }, { day: 24, type: "public" }, { day: 25, type: "public" }, { day: 26, type: "public" }, { day: 27, type: "public" }, { day: 28, type: "public" }, { day: 29, type: "public" }, { day: 30, type: "public" }, { day: 31, type: "public" }
-          ],
-          satPolicy: "2nd_4th_holiday",
-        },
-        10: { // Nov
-          singles: [
-            { day: 8, type: "public" }, { day: 9, type: "public" }, { day: 24, type: "public" },
-            { day: 1, type: "restricted" }, { day: 11, type: "restricted" }, { day: 15, type: "restricted" },
-          ],
-          satPolicy: "2nd_4th_holiday",
-        },
-        11: { // Dec
-          singles: [
-            { day: 24, type: "public" }, { day: 25, type: "public" }, { day: 26, type: "public" }, { day: 27, type: "public" }, { day: 28, type: "public" }, { day: 29, type: "public" }, { day: 30, type: "public" }, { day: 31, type: "public" },
-            { day: 2, type: "restricted" }, { day: 5, type: "restricted" }, { day: 10, type: "restricted" },
-          ],
-          satPolicy: "2nd_4th_holiday",
-        }
-      };
-      return config2026[month] || { singles: [], satPolicy: "2nd_4th_holiday" };
-    }
-
-    if (month === 11 && year === 2025) {
-      return {
-        singles: [
-          { day: 2, type: "restricted" },
-          { day: 5, type: "restricted" },
-          { day: 10, type: "restricted" },
-          { day: 13, type: "public" },
-          { day: 27, type: "public" },
-          { day: 6, type: "working" },
-          { day: 20, type: "working" },
-          { day: 21, type: "public" },
-          { day: 22, type: "public" },
-          { day: 23, type: "public" },
-          { day: 24, type: "public" },
-          { day: 25, type: "public" },
-          { day: 26, type: "public" },
-          { day: 28, type: "public" },
-          { day: 29, type: "public" },
-          { day: 30, type: "public" },
-          { day: 31, type: "public" },
-        ],
-        satPolicy: "2nd_4th_holiday",
-      };
-    }
-    return { singles: [] };
-  }, [month, year]);
+    if (config) return config;
+    
+    // Fallback or empty config if none provided
+    return { singles: [], satPolicy: "2nd_4th_holiday" };
+  }, [config]);
 
   const cells = useMemo(() => {
     const total = 42; // 6 rows x 7 cols

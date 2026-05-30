@@ -16,6 +16,7 @@ export const HomeContent = ({
   onServicePress,
   holidayTags,
   holidays,
+  calendarConfig,
   refreshing,
   onRefresh,
   onAbout,
@@ -44,6 +45,7 @@ export const HomeContent = ({
              <HolidaysSection 
                 tags={holidayTags} 
                 holidays={holidays} 
+                calendarConfig={calendarConfig}
                 parentScrollRef={scrollRef} 
                 sectionY={holidaysY}
              />

@@ -22,6 +22,7 @@ import { CaseDetailsScreen } from "./src/components/CaseDetailsScreen";
 import "./src/i18n";
 
 import { initializeJudgesData } from "./src/services/judgesDataService";
+import { fetchHolidaysData } from "./src/services/holidaysService";
 
 export default function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -32,22 +33,32 @@ export default function App() {
   const [selectedJudgeIndex, setSelectedJudgeIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
 
-  // Judges Data State
-  const [judgesData, setJudgesData] = useState(judges); // Start with static data
+  // Data State
+  const [judgesData, setJudgesData] = useState(judges);
+  const [holidaysData, setHolidaysData] = useState(holidays);
+  const [calendarConfig, setCalendarConfig] = useState({});
 
-  // Initialize judges data
+  // Initialize data
   useEffect(() => {
-    const loadJudges = async () => {
+    const loadData = async () => {
       try {
-        const data = await initializeJudgesData();
-        if (data && data.length > 0) {
-          setJudgesData(data);
+        // Load Judges
+        const jData = await initializeJudgesData();
+        if (jData && jData.length > 0) {
+          setJudgesData(jData);
+        }
+
+        // Load Holidays
+        const hData = await fetchHolidaysData(new Date().getFullYear());
+        if (hData) {
+          setHolidaysData(hData.holidays);
+          setCalendarConfig(hData.calendarConfig);
         }
       } catch (e) {
-        console.log("Failed to load dynamic judges data", e);
+        console.log("Failed to load dynamic data", e);
       }
     };
-    loadJudges();
+    loadData();
   }, []);
 
   // Navigation State
@@ -194,6 +205,10 @@ export default function App() {
       addToHistory({ type: 'webview', url: "https://justiceclock.ecourts.gov.in/justiceClock/?p=home/state&fstate_code=6" });
       return;
     }
+    if (id === "virtual_justice_clock_principal") {
+      addToHistory({ type: 'webview', url: "https://ghcservices.assam.gov.in/justice-clock/" });
+      return;
+    }
     if (id === "statistics") {
       addToHistory({ type: 'webview', url: "https://ghconline.gov.in/index.php/statistics/" });
       return;
@@ -243,20 +258,21 @@ export default function App() {
         />
       ) : (
         <HomeContent
-          judges={judgesData}
-          selectedJudgeIndex={selectedJudgeIndex}
-          onSelectJudge={(idx) => setSelectedJudgeIndex(idx)}
-          onOpenPortfolio={() => setPortfolioOpen(true)}
-          services={serviceCards}
-          onServicePress={handleServicePress}
-          holidayTags={holidayTags}
-          holidays={holidays}
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          onAbout={() => addToHistory({ type: 'about' })}
-          onContact={() => addToHistory({ type: 'contact' })}
-          scrollY={scrollYRef.current}
-        />
+              judges={judgesData}
+              selectedJudgeIndex={selectedJudgeIndex}
+              onSelectJudge={setSelectedJudgeIndex}
+              onOpenPortfolio={() => setPortfolioOpen(true)}
+              services={serviceCards}
+              onServicePress={handleServicePress}
+              holidayTags={holidayTags}
+              holidays={holidaysData}
+              calendarConfig={calendarConfig}
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              onAbout={() => addToHistory({ type: 'about' })}
+              onContact={() => addToHistory({ type: 'contact' })}
+              scrollY={scrollYRef.current}
+            />
       )}
 
       <BottomNav
