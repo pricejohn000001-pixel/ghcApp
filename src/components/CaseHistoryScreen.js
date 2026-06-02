@@ -436,6 +436,9 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
               };
               const nextHearingDisplay = isDateNotGiven ? 'Date not given. Refer the last order for details' : formatDate(item.date_next_list);
 
+              const shouldHideParties = item.hide_partyname === 'Y' || item.hide_pet_name === 'Y' || item.hide_res_name === 'Y';
+              const getPartyName = (name) => shouldHideParties && name ? 'XXXX' : name;
+
               return (
                 <View key={item.cino || index} style={styles.resultCard}>
                   <View style={styles.resultHeader}>
@@ -445,8 +448,8 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                     </View>
                   </View>
                   <View style={styles.resultBody}>
-                    <Text style={styles.partyText}><Text style={styles.bold}>Petitioner:</Text> {item.pet_name}</Text>
-                    <Text style={styles.partyText}><Text style={styles.bold}>Respondent:</Text> {item.res_name}</Text>
+                    <Text style={styles.partyText}><Text style={styles.bold}>Petitioner:</Text> {getPartyName(item.pet_name)}</Text>
+                    <Text style={styles.partyText}><Text style={styles.bold}>Respondent:</Text> {getPartyName(item.res_name)}</Text>
                     {!isDisposed && (
                       <Text style={styles.partyText}><Text style={styles.bold}>Next Hearing:</Text> {nextHearingDisplay}</Text>
                     )}
@@ -592,10 +595,10 @@ const styles = StyleSheet.create({
   resultCard: { backgroundColor: "#111111", borderRadius: radius.lg, overflow: "hidden", marginBottom: spacing.md, elevation: 0, borderWidth: 1, borderColor: colors.accent },
   resultHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: spacing.md, borderBottomWidth: 1, borderBottomColor: "#222222" },
   resultCaseNo: { fontSize: 16, fontFamily: 'Inter_700Bold', color: colors.textPrimary },
-  statusBadge: { backgroundColor: "#FEF3C7", paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.pill },
-  statusBadgeDisposed: { backgroundColor: "#0A0A0A" },
-  statusText: { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: "#B8860B" },
-  statusTextDisposed: { color: "#B8860B" },
+  statusBadge: { backgroundColor: "rgba(212, 175, 55, 0.25)", paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.pill },
+  statusBadgeDisposed: { backgroundColor: "rgba(212, 175, 55, 0.25)" },
+  statusText: { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: "#D4AF37" },
+  statusTextDisposed: { color: "#D4AF37" },
   resultBody: { padding: spacing.md, gap: 6 },
   partyText: { fontSize: 14, color: "#CCCCCC", fontFamily: 'Inter_400Regular' },
   bold: { fontFamily: 'Inter_600SemiBold', color: colors.textPrimary },

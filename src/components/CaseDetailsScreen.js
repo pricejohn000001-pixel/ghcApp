@@ -105,6 +105,20 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
     }
   };
 
+  const getStatusStyles = (status) => {
+    const s = status?.toUpperCase();
+    if (s === 'PENDING' || s === 'DISPOSED') {
+      return {
+        bg: 'rgba(212, 175, 55, 0.25)',
+        text: '#D4AF37'
+      };
+    }
+    return {
+      bg: 'rgba(255, 255, 255, 0.15)',
+      text: '#FFFFFF'
+    };
+  };
+
   const formatDate = (dateString) => {
     if (!dateString) return "-";
     try {
@@ -171,6 +185,12 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
     );
   }
 
+  const shouldHideParties = data.hide_partyname === 'Y' || data.hide_pet_name === 'Y' || data.hide_res_name === 'Y';
+  const getPartyName = (name, item) => {
+    const isHidden = shouldHideParties || (item && (item.hide_partyname === 'Y' || item.hide_pet_name === 'Y' || item.hide_res_name === 'Y'));
+    return isHidden && name ? 'XXXX' : name;
+  };
+
   // Safe mapping with rich field fallbacks
   const caseTypeName = data.filing_case_type?.type_name || getCaseTypeName(data.filcase_type);
   const regTypeName = data.registered_case_type?.type_name || getCaseTypeName(data.regcase_type);
@@ -178,15 +198,24 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
   const caseNo = `${caseTypeName} ${data.fil_no || ''}/${data.fil_year || ''}`;
   const regNo = `${regTypeName} ${data.reg_no || ''}/${data.reg_year || ''}`;
 
-  const renderDetailRow = (label, value, isHighlight = false) => (
-    <View style={styles.detailRow}>
-      <Text style={[styles.detailLabel, isHighlight && { color: "#D4AF37" }]}>{label}</Text>
-      <View style={styles.detailValueContainer}>
-        {isHighlight && <View style={styles.upcomingBadge}><Text style={styles.upcomingBadgeText}>Upcoming</Text></View>}
-        <Text style={[styles.detailValue, isHighlight && { color: "#D4AF37" }]} textAlign="right">{value || '-'}</Text>
+  const renderDetailRow = (label, value, isHighlight = false) => {
+    const statusStyles = label === "CURRENT STATUS" ? getStatusStyles(value) : null;
+    return (
+      <View style={styles.detailRow}>
+        <Text style={[styles.detailLabel, isHighlight && { color: "#D4AF37" }]}>{label}</Text>
+        <View style={styles.detailValueContainer}>
+          {isHighlight && <View style={styles.upcomingBadge}><Text style={styles.upcomingBadgeText}>Upcoming</Text></View>}
+          {label === "CURRENT STATUS" ? (
+            <View style={[styles.statusPill, { alignSelf: 'center', backgroundColor: statusStyles.bg }]}>
+              <Text style={[styles.statusPillText, { color: statusStyles.text }]}>{value}</Text>
+            </View>
+          ) : (
+            <Text style={[styles.detailValue, isHighlight && { color: "#D4AF37" }]} textAlign="right">{value || '-'}</Text>
+          )}
+        </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   const renderAdvocates = (adv_name, adv_reg, extraAdvs = []) => {
     const advs = [];
@@ -212,7 +241,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
   if (data.pet_name) {
     allPetitioners.push({
       party_no: 1,
-      name: data.pet_name,
+      name: getPartyName(data.pet_name),
       age: data.pet_age,
       address: null,
       adv_name: data.petitioner_advocate?.adv_name || data.pet_adv,
@@ -224,7 +253,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
       data.petitioners.forEach((p, idx) => {
         allPetitioners.push({
           party_no: idx + 2,
-          name: p.pet_name || p.name,
+          name: getPartyName(p.pet_name || p.name),
           age: p.pet_age || p.age,
           address: p.address,
           adv_name: null,
@@ -240,7 +269,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
   if (data.res_name) {
     allRespondents.push({
       party_no: 1,
-      name: data.res_name,
+      name: getPartyName(data.res_name),
       age: data.res_age,
       address: null,
       adv_name: data.respondent_advocate?.adv_name || data.res_adv,
@@ -252,7 +281,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
       data.respondents.forEach((r, idx) => {
         allRespondents.push({
           party_no: idx + 2,
-          name: r.res_name || r.name,
+          name: getPartyName(r.res_name || r.name),
           age: r.res_age || r.age,
           address: r.address,
           adv_name: null,
@@ -285,8 +314,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             <Text style={styles.heroSub}>CINO: {data.cino || '-'}</Text>
             <View style={{ flexDirection: 'row', gap: 8, marginTop: 12 }}>
               <View style={styles.heroPill}><Text style={styles.heroPillText}>{caseTypeName}</Text></View>
-              <View style={[styles.heroPill, { backgroundColor: currentStatus === 'PENDING' ? 'rgba(212, 175, 55, 0.25)' : 'rgba(255, 255, 255, 0.15)' }]}>
-                <Text style={[styles.heroPillText, { color: currentStatus === 'PENDING' ? '#D4AF37' : '#FFFFFF' }]}>{currentStatus}</Text>
+              <View style={[styles.heroPill, { backgroundColor: (currentStatus === 'PENDING' || currentStatus === 'DISPOSED') ? 'rgba(212, 175, 55, 0.25)' : 'rgba(255, 255, 255, 0.15)' }]}>
+                <Text style={[styles.heroPillText, { color: (currentStatus === 'PENDING' || currentStatus === 'DISPOSED') ? '#D4AF37' : '#FFFFFF' }]}>{currentStatus}</Text>
               </View>
             </View>
           </View>
@@ -385,14 +414,14 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           </View>
           
           <View style={styles.partiesStackLayout}>
-            {/* Petitioner Scroll */}
+            {/* Petitioner List */}
             <View style={styles.partyStackColumn}>
               <View style={[styles.partyHeaderBg, { backgroundColor: "#111111", borderTopWidth: 1, borderTopColor: "#222222" }]}>
                 <Text style={[styles.partyHeaderTitle, { color: "#D4AF37" }]}>PETITIONERS</Text>
               </View>
-              <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.partyStackScroll} contentContainerStyle={styles.partyScrollContent}>
+              <View style={styles.verticalListContainer}>
                 {allPetitioners.map((pet, idx) => (
-                  <View key={idx} style={[styles.partyCard, { width: 260 }]}>
+                  <View key={idx} style={[styles.partyCard, { width: '100%' }]}>
                     <View style={styles.partyCardHeader}>
                       <View style={[styles.partyAvatar, { backgroundColor: "#D4AF37" }]}><Text style={styles.partyAvatarText}>{pet.party_no}</Text></View>
                       <Text style={[styles.partyCardName, { color: "#D4AF37" }]}>{pet.name} <Text style={styles.partyAge}>{pet.age ? `${pet.age}y` : ''}</Text></Text>
@@ -402,17 +431,17 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                     {pet.address && <Text style={styles.partyAddress}>{pet.address}</Text>}
                   </View>
                 ))}
-              </ScrollView>
+              </View>
             </View>
 
-            {/* Respondent Scroll */}
+            {/* Respondent List */}
             <View style={styles.partyStackColumn}>
               <View style={[styles.partyHeaderBg, { backgroundColor: "#111111", borderTopWidth: 1, borderTopColor: "#222222" }]}>
                 <Text style={[styles.partyHeaderTitle, { color: "#D4AF37" }]}>RESPONDENTS</Text>
               </View>
-              <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.partyStackScroll} contentContainerStyle={styles.partyScrollContent}>
+              <View style={styles.verticalListContainer}>
                 {allRespondents.map((res, idx) => (
-                  <View key={idx} style={[styles.partyCard, { width: 260 }]}>
+                  <View key={idx} style={[styles.partyCard, { width: '100%' }]}>
                     <View style={styles.partyCardHeader}>
                       <View style={[styles.partyAvatar, { backgroundColor: "#D4AF37" }]}><Text style={styles.partyAvatarText}>{res.party_no}</Text></View>
                       <Text style={[styles.partyCardName, { color: "#D4AF37" }]}>{res.name} <Text style={styles.partyAge}>{res.age ? `${res.age}y` : ''}</Text></Text>
@@ -422,7 +451,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                     {res.address && <Text style={styles.partyAddress}>{res.address}</Text>}
                   </View>
                 ))}
-              </ScrollView>
+              </View>
             </View>
           </View>
         </View>
@@ -441,33 +470,35 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             </View>
           </View>
           {subMatters.length > 0 ? (
-            <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.horizontalScroll}>
-              <View style={styles.table}>
-                <View style={styles.tableHeader}>
-                  <Text style={[styles.th, { width: 140 }]}>CASE</Text>
-                  <Text style={[styles.th, { width: 90 }]}>STATUS</Text>
-                  <Text style={[styles.th, { width: 180 }]}>PETITIONER</Text>
-                  <Text style={[styles.th, { width: 180 }]}>RESPONDENT</Text>
-                  <Text style={[styles.th, { width: 100 }]}>FILED ON</Text>
-                </View>
-                {subMatters.map((sub, idx) => (
-                  <View key={idx} style={styles.tableRow}>
-                    <View style={[styles.td, { width: 140 }]}>
-                      <Text style={styles.tdTextBold}>{`${sub.filing_case_type?.type_name || ''} ${sub.reg_no || ''}/${sub.reg_year || ''}`}</Text>
-                      <Text style={styles.tdTextSub}>{sub.cino}</Text>
+            <View style={styles.verticalListContainer}>
+              {subMatters.map((sub, idx) => (
+                <View key={idx} style={styles.verticalCard}>
+                  <View style={styles.verticalCardHeader}>
+                    <View style={{ flex: 1, marginRight: 12 }}>
+                      <Text style={styles.verticalCardTitle}>{`${sub.filing_case_type?.type_name || ''} ${sub.reg_no || ''}/${sub.reg_year || ''}`}</Text>
+                      <Text style={styles.verticalCardSub}>{sub.cino}</Text>
                     </View>
-                    <View style={[styles.td, { width: 90 }]}>
-                      <View style={styles.statusPill}>
-                        <Text style={styles.statusPillText}>{sub.case_state?.toUpperCase() || 'UNKNOWN'}</Text>
-                      </View>
+                    <View style={[styles.statusPill, { backgroundColor: getStatusStyles(sub.case_state).bg }]}>
+                      <Text style={[styles.statusPillText, { color: getStatusStyles(sub.case_state).text }]}>{sub.case_state?.toUpperCase() || 'UNKNOWN'}</Text>
                     </View>
-                    <View style={[styles.td, { width: 180 }]}><Text style={styles.tdText}>{sub.pet_name}</Text></View>
-                    <View style={[styles.td, { width: 180 }]}><Text style={styles.tdText}>{sub.res_name}</Text></View>
-                    <View style={[styles.td, { width: 100 }]}><Text style={styles.tdText}>{formatDate(sub.date_of_filing)}</Text></View>
                   </View>
-                ))}
-              </View>
-            </ScrollView>
+                  <View style={styles.verticalCardBody}>
+                    <View style={styles.verticalCardRow}>
+                      <Text style={styles.verticalCardLabel}>PETITIONER</Text>
+                      <Text style={styles.verticalCardValue}>{getPartyName(sub.pet_name, sub)}</Text>
+                    </View>
+                    <View style={styles.verticalCardRow}>
+                      <Text style={styles.verticalCardLabel}>RESPONDENT</Text>
+                      <Text style={styles.verticalCardValue}>{getPartyName(sub.res_name, sub)}</Text>
+                    </View>
+                    <View style={styles.verticalCardRow}>
+                      <Text style={styles.verticalCardLabel}>FILED ON</Text>
+                      <Text style={styles.verticalCardValue}>{formatDate(sub.date_of_filing)}</Text>
+                    </View>
+                  </View>
+                </View>
+              ))}
+            </View>
           ) : (
             <View style={styles.emptyDataCard}>
               <View style={styles.emptyDataIconBg}>
@@ -491,29 +522,26 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             </View>
           </View>
           {linkedCases.length > 0 ? (
-            <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.horizontalScroll}>
-              <View style={styles.table}>
-                <View style={styles.tableHeader}>
-                  <Text style={[styles.th, { width: 140 }]}>CASE</Text>
-                  <Text style={[styles.th, { width: 90 }]}>STATUS</Text>
-                  <Text style={[styles.th, { width: 280 }]}>PARTIES</Text>
-                </View>
-                {linkedCases.map((link, idx) => (
-                  <View key={idx} style={styles.tableRow}>
-                    <View style={[styles.td, { width: 140 }]}>
-                      <Text style={styles.tdTextBold}>{link.caseno}</Text>
-                      <Text style={styles.tdTextSub}>{link.cino}</Text>
+            <View style={styles.verticalListContainer}>
+              {linkedCases.map((link, idx) => (
+                <View key={idx} style={styles.verticalCard}>
+                  <View style={styles.verticalCardHeader}>
+                    <View style={{ flex: 1, marginRight: 12 }}>
+                      <Text style={styles.verticalCardTitle}>{link.caseno}</Text>
+                      <Text style={styles.verticalCardSub}>{link.cino}</Text>
                     </View>
-                    <View style={[styles.td, { width: 90 }]}>
-                      <View style={styles.statusPill}>
-                        <Text style={styles.statusPillText}>{link.status?.toUpperCase() || 'UNKNOWN'}</Text>
-                      </View>
+                    <View style={[styles.statusPill, { backgroundColor: getStatusStyles(link.status).bg }]}>
+                      <Text style={[styles.statusPillText, { color: getStatusStyles(link.status).text }]}>{link.status?.toUpperCase() || 'UNKNOWN'}</Text>
                     </View>
-                    <View style={[styles.td, { width: 280 }]}><Text style={styles.tdText}>{`${link.pet_name} VS ${link.res_name}`}</Text></View>
                   </View>
-                ))}
-              </View>
-            </ScrollView>
+                  <View style={styles.verticalCardBody}>
+                    <Text style={[styles.verticalCardValue, { textAlign: 'left', color: '#CCCCCC' }]}>
+                      {`${getPartyName(link.pet_name, link)} VS ${getPartyName(link.res_name, link)}`}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+            </View>
           ) : (
             <View style={styles.emptyDataCard}>
               <View style={styles.emptyDataIconBg}>
@@ -538,29 +566,36 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           </View>
           {orders.length > 0 ? (
             <>
-              <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.horizontalScroll}>
-                <View style={styles.table}>
-                  <View style={styles.tableHeader}>
-                    <Text style={[styles.th, { width: 40 }]}>#</Text>
-                    <Text style={[styles.th, { width: 100 }]}>ORDER DATE</Text>
-                    <Text style={[styles.th, { width: 90 }]}>TYPE</Text>
-                    <Text style={[styles.th, { width: 140 }]}>UPLOADED</Text>
-                    <Text style={[styles.th, { width: 100 }]}>REPORTABLE</Text>
-                    <Text style={[styles.th, { width: 110 }]}>DOCUMENT</Text>
-                  </View>
-                  {orders.map((o, idx, arr) => (
-                    <View key={o.order_no || idx} style={[styles.tableRow, idx === arr.length - 1 && { borderBottomWidth: 0 }]}>
-                      <View style={[styles.td, { width: 40 }]}><View style={styles.orderBadge}><Text style={styles.orderBadgeText}>{o.order_no}</Text></View></View>
-                      <View style={[styles.td, { width: 100 }]}><Text style={styles.tdTextBold}>{formatDate(o.order_dt)}</Text></View>
-                      <View style={[styles.td, { width: 90 }]}>
-                        <View style={styles.statusPill}>
-                          <Text style={styles.statusPillText}>{o.document_type?.docu_name || 'UNKNOWN'}</Text>
-                        </View>
+              <View style={styles.verticalListContainer}>
+                {orders.map((o, idx) => (
+                  <View key={o.order_no || idx} style={styles.verticalCard}>
+                    <View style={styles.verticalCardHeader}>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                        <View style={styles.orderBadge}><Text style={styles.orderBadgeText}>{o.order_no}</Text></View>
+                        <Text style={[styles.verticalCardTitle, { fontSize: 15 }]}>{formatDate(o.order_dt)}</Text>
                       </View>
-                      <View style={[styles.td, { width: 140 }]}><Text style={styles.tdText}>{formatDateTime(o.timestamp)}</Text></View>
-                      <View style={[styles.td, { width: 100 }]}><Text style={styles.tdText}>{o.reportable_judgement === 'Y' ? 'Yes' : 'No'}</Text></View>
-                      <View style={[styles.td, { width: 110 }]}>
-                        {o.uploaded_file_exists ? (
+                      <View>
+                        <Text style={{ fontSize: 11, fontFamily: 'Inter_600SemiBold', color: '#D4AF37', textTransform: 'uppercase', letterSpacing: 0.5 }}>{o.document_type?.docu_name || 'UNKNOWN'}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.verticalCardBody}>
+                      <View style={styles.verticalCardRow}>
+                        <Text style={styles.verticalCardLabel}>UPLOADED</Text>
+                        <Text style={styles.verticalCardValue}>{formatDateTime(o.timestamp)}</Text>
+                      </View>
+                      <View style={styles.verticalCardRow}>
+                        <Text style={styles.verticalCardLabel}>REPORTABLE</Text>
+                        <Text style={styles.verticalCardValue}>{o.reportable_judgement === 'Y' ? 'Yes' : 'No'}</Text>
+                      </View>
+                    </View>
+                    <View style={[styles.verticalCardFooter, { borderTopWidth: 1, borderTopColor: '#222222', paddingTop: 12, marginTop: 12 }]}>
+                      {o.uploaded_file_exists ? (
+                        shouldHideParties ? (
+                          <View style={[styles.pdfBtn, { borderColor: "#EF4444" }]}>
+                            <Feather name="lock" size={12} color="#EF4444" />
+                            <Text style={[styles.pdfBtnText, { color: "#EF4444" }]}>Restricted</Text>
+                          </View>
+                        ) : (
                           <TouchableOpacity 
                             style={styles.pdfBtn}
                             onPress={() => Linking.openURL(`https://ghcservices.assam.gov.in/case-status/order-document/${o.uploaded_file_year}/${o.uploaded_file_name}`)}
@@ -568,14 +603,14 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                             <Feather name="file" size={12} color={colors.accent} />
                             <Text style={styles.pdfBtnText}>View PDF</Text>
                           </TouchableOpacity>
-                        ) : (
-                          <Text style={[styles.tdText, { color: "#777777", fontSize: 11 }]}>Unavailable</Text>
-                        )}
-                      </View>
+                        )
+                      ) : (
+                        <Text style={[styles.verticalCardValue, { color: "#777777", fontSize: 12 }]}>Document Unavailable</Text>
+                      )}
                     </View>
-                  ))}
-                </View>
-              </ScrollView>
+                  </View>
+                ))}
+              </View>
               {ordersPage < ordersTotalPages && (
                 <View style={styles.loadMoreContainer}>
                   <TouchableOpacity 
@@ -636,7 +671,7 @@ const styles = StyleSheet.create({
   detailValueContainer: { flex: 2, flexDirection: "row", alignItems: "center", justifyContent: "flex-end", gap: 8 },
   detailValue: { fontSize: 14, fontFamily: 'Inter_700Bold', color: "#FFFFFF", textAlign: "right" },
   
-  upcomingBadge: { backgroundColor: "#D4AF37", paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4 },
+  upcomingBadge: { backgroundColor: "#D4AF37", paddingHorizontal: 8, paddingVertical: 2, borderRadius: radius.pill },
   upcomingBadgeText: { fontSize: 9, color: "#FFFFFF", fontWeight: "800", textTransform: "uppercase" },
   cardFooter: { backgroundColor: "#111111", padding: spacing.md, flexDirection: "row", alignItems: "flex-start", gap: 6, borderTopWidth: 1, borderTopColor: "#222222" },
   footerText: { fontSize: 12, color: "#AAAAAA", flex: 1, lineHeight: 18 },
@@ -645,8 +680,7 @@ const styles = StyleSheet.create({
   partyStackColumn: { borderBottomWidth: 4, borderBottomColor: "#111111" },
   partyHeaderBg: { paddingVertical: 10, paddingHorizontal: spacing.lg, alignItems: "center" },
   partyHeaderTitle: { fontSize: 12, fontWeight: "800", letterSpacing: 1 },
-  partyStackScroll: { flexGrow: 0 },
-  partyScrollContent: { padding: spacing.lg, gap: spacing.md },
+
   
   partyCard: { backgroundColor: "#111111", borderRadius: radius.lg, padding: spacing.md, borderWidth: 1, borderColor: "#333333", elevation: 0, overflow: "hidden" },
   partyCardHeader: { flexDirection: "row", alignItems: "flex-start", gap: 10, marginBottom: 8 },
@@ -661,22 +695,23 @@ const styles = StyleSheet.create({
   advName: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: "#CCCCCC", flex: 1, lineHeight: 18 },
   partyAddress: { fontSize: 13, color: "#AAAAAA", lineHeight: 18, fontFamily: 'Inter_400Regular' },
 
-  statusPill: { alignSelf: "flex-start", backgroundColor: "#111111", paddingHorizontal: 8, paddingVertical: 4, borderRadius: radius.pill },
-  statusPillText: { fontSize: 10, fontFamily: 'Inter_700Bold', color: "#D4AF37" },
+  statusPill: { alignSelf: "flex-start", paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.pill },
+  statusPillText: { fontSize: 10, fontFamily: 'Inter_700Bold', textTransform: 'uppercase' },
 
-  horizontalScroll: { width: "100%" },
-  table: { minWidth: "100%", paddingBottom: spacing.sm },
-  tableHeader: { flexDirection: "row", backgroundColor: "#111111", paddingVertical: 10, paddingHorizontal: spacing.lg, borderTopWidth: 1, borderTopColor: "#222222", borderBottomWidth: 1, borderBottomColor: "#222222" },
-  th: { fontSize: 10, fontFamily: 'Inter_700Bold', color: "#AAAAAA", letterSpacing: 0.5, marginRight: 16 },
-  tableRow: { flexDirection: "row", paddingVertical: 14, paddingHorizontal: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#222222", alignItems: "center" },
-  td: { marginRight: 16, justifyContent: "center" },
-  tdTextBold: { fontSize: 13, fontFamily: 'Inter_700Bold', color: colors.textPrimary },
-  tdTextSub: { fontSize: 11, color: "#AAAAAA", marginTop: 2, fontFamily: 'Inter_400Regular' },
-  tdText: { fontSize: 13, color: "#CCCCCC", fontFamily: 'Inter_400Regular' },
+  verticalListContainer: { padding: spacing.lg, gap: spacing.md },
+  verticalCard: { backgroundColor: "#161616", borderRadius: radius.lg, padding: spacing.lg, borderWidth: 1, borderColor: "#333333" },
+  verticalCardHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: spacing.md },
+  verticalCardTitle: { fontSize: 14, fontFamily: 'Inter_700Bold', color: colors.textPrimary },
+  verticalCardSub: { fontSize: 12, color: "#AAAAAA", marginTop: 4, fontFamily: 'Inter_400Regular' },
+  verticalCardBody: { gap: 10 },
+  verticalCardRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", gap: 16 },
+  verticalCardLabel: { fontSize: 11, fontFamily: 'Inter_600SemiBold', color: "#777777", letterSpacing: 0.5 },
+  verticalCardValue: { fontSize: 13, color: "#E0E0E0", flex: 1, textAlign: "right" },
+  verticalCardFooter: { alignItems: "stretch" },
   orderBadge: { backgroundColor: "#111111", borderWidth: 1, borderColor: "#0A0A0A", width: 28, height: 28, borderRadius: 6, alignItems: "center", justifyContent: "center" },
   orderBadgeText: { fontSize: 12, fontFamily: 'Inter_700Bold', color: "#D4AF37" },
-  pdfBtn: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: "#111111", borderWidth: 1, borderColor: "#333333", paddingHorizontal: 10, paddingVertical: 6, borderRadius: 6, alignSelf: "flex-start" },
-  pdfBtnText: { fontSize: 11, fontFamily: 'Inter_700Bold', color: "#D4AF37" },
+  pdfBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, backgroundColor: "#111111", borderWidth: 1, borderColor: "#333333", paddingHorizontal: 16, paddingVertical: 14, borderRadius: 10 },
+  pdfBtnText: { fontSize: 14, fontFamily: 'Inter_700Bold', color: "#D4AF37" },
 
   loadMoreContainer: { padding: spacing.md, alignItems: 'center', borderTopWidth: 1, borderTopColor: '#222222' },
   loadMoreBtn: { backgroundColor: '#111111', paddingHorizontal: 20, paddingVertical: 10, borderRadius: radius.pill, borderWidth: 1, borderColor: '#333333' },

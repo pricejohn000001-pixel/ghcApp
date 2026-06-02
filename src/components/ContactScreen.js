@@ -55,7 +55,7 @@ export const ContactScreen = ({ scrollY }) => {
           <View style={styles.emailSection}>
             <View style={styles.subSectionHeader}>
               <Feather name="inbox" size={14} color={colors.accent} />
-              <Text style={styles.subSectionTitle}>General Registry</Text>
+              <Text style={styles.subSectionTitle}>Registry</Text>
             </View>
             <View style={styles.emailRowContainer}>
               <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('hc-asm[at]nic[dot]in')}>
