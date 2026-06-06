@@ -206,7 +206,7 @@ export default function App() {
       return;
     }
     if (id === "virtual_justice_clock_principal") {
-      addToHistory({ type: 'webview', url: "https://ghcservices.assam.gov.in/justice-clock/" });
+      addToHistory({ type: 'webview', url: "https://ghcservices.assam.gov.in/jclock/" });
       return;
     }
     if (id === "statistics") {
@@ -322,7 +322,7 @@ export default function App() {
         onClose={() => setPortfolioOpen(false)}
         judge={judgesData[selectedJudgeIndex]}
       />
-      <CauseListModal visible={causeOpen} onClose={() => setCauseOpen(false)} />
+      <CauseListModal visible={causeOpen} onClose={() => setCauseOpen(false)} holidays={holidaysData} />
 
       <SearchModal
         visible={searchOpen}

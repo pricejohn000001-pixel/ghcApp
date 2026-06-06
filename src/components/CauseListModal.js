@@ -24,13 +24,28 @@ function formatDate(d) {
   return `${dd}-${mm}-${yyyy}`;
 }
 
+async function fetchWithTimeout(resource, options = {}) {
+  const { timeout = 5000 } = options;
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  try {
+    const response = await fetch(resource, {
+      ...options,
+      signal: controller.signal
+    });
+    return response;
+  } finally {
+    clearTimeout(id);
+  }
+}
+
 async function probe(url) {
   try {
-    const r = await fetch(url, { method: "HEAD" });
+    const r = await fetchWithTimeout(url, { method: "HEAD" });
     if (r.ok) return true;
   } catch (_) {}
   try {
-    const r = await fetch(url, {
+    const r = await fetchWithTimeout(url, {
       method: "GET",
       headers: { Accept: "application/pdf", Range: "bytes=0-0" },
     });
@@ -41,67 +56,63 @@ async function probe(url) {
 }
 
 async function probeLinks(prefix, dateStr, labelBase, extraSuffixes = []) {
-  const items = [];
+  const candidates = [];
   // 1. Base
-  const base = `${BASE}/${prefix}-${dateStr}.pdf`;
-  if (await probe(base)) items.push({ url: base, label: labelBase });
+  candidates.push({ url: `${BASE}/${prefix}-${dateStr}.pdf`, label: labelBase });
 
   // 2. Numeric suffixes
-  for (let i = 1; i <= 10; i++) {
-    const url = `${BASE}/${prefix}-${dateStr}-${i}.pdf`;
-    if (await probe(url)) items.push({ url, label: `${labelBase} ${i}` });
+  for (let i = 1; i <= 5; i++) { // Reduced from 10 to 5 to be more efficient, most lists don't go that high
+    candidates.push({ url: `${BASE}/${prefix}-${dateStr}-${i}.pdf`, label: `${labelBase} ${i}` });
   }
 
   // 3. Named suffixes
   for (const suffix of extraSuffixes) {
-    const url = `${BASE}/${prefix}-${dateStr}-${suffix}.pdf`;
-    if (await probe(url)) items.push({ url, label: `${labelBase} (${suffix})` });
+    candidates.push({ url: `${BASE}/${prefix}-${dateStr}-${suffix}.pdf`, label: `${labelBase} (${suffix})` });
   }
 
-  return items;
+  const results = await Promise.all(
+    candidates.map(async (c) => {
+      const ok = await probe(c.url);
+      return ok ? c : null;
+    })
+  );
+
+  return results.filter(Boolean);
 }
 
-async function buildAvailability(dateStr, labels) {
-  const dl = await probeLinks("dl", dateStr, labels.daily, DAILY_SUFFIXES);
-  if (dl.length === 0) {
-    const alt = await findDailyFromPage(dateStr);
-    if (alt) dl.push({ url: alt, label: labels.daily });
-  }
+async function buildAvailability(dateStr, labels, consolidatedHtml = null) {
+  const [dl, sl, lz, no] = await Promise.all([
+    probeLinks("dl", dateStr, labels.daily, DAILY_SUFFIXES),
+    probeLinks("sl", dateStr, labels.supplementary),
+    probeLinks("lz", dateStr, labels.lawazima),
+    probeLinks("no", dateStr, labels.notice),
+  ]);
 
-  const sl = await probeLinks("sl", dateStr, labels.supplementary);
-  const lz = await probeLinks("lz", dateStr, labels.lawazima);
-  const no = await probeLinks("no", dateStr, labels.notice);
+  if (dl.length === 0 && consolidatedHtml) {
+    const re = new RegExp(`https://ghconline\\.gov\\.in/NewCList/dl-${dateStr}[^"']*\\.pdf`, "gi");
+    const m = consolidatedHtml.match(re);
+    if (m && m.length > 0) dl.push({ url: m[0], label: labels.daily });
+  }
 
   return { dl, sl, lz, no };
 }
 
-async function findDailyFromPage(dateStr) {
+async function getConsolidatedHtml() {
   try {
-    const r = await fetch("https://ghconline.gov.in/index.php/consolidated-cause-list/", { method: "GET" });
-    if (!r.ok) return null;
-    const html = await r.text();
-    const re = new RegExp(`https://ghconline\\.gov\\.in/NewCList/dl-${dateStr}[^"']*\\.pdf`, "gi");
-    const m = html.match(re);
-    if (m && m.length > 0) return m[0];
+    const r = await fetchWithTimeout("https://ghconline.gov.in/index.php/consolidated-cause-list/", { method: "GET" });
+    if (r.ok) return await r.text();
   } catch (_) {}
   return null;
 }
 
-export const CauseListModal = ({ visible, onClose }) => {
+export const CauseListModal = ({ visible, onClose, holidays }) => {
   const { t } = useTranslation();
   const [today, setToday] = useState(new Date());
-
-  useEffect(() => {
-    if (visible) {
-      setToday(new Date());
-    }
-  }, [visible]);
-
-  const tomorrow = useMemo(() => {
-    const d = new Date(today);
+  const [tomorrow, setTomorrow] = useState(() => {
+    const d = new Date();
     d.setDate(d.getDate() + 1);
     return d;
-  }, [today]);
+  });
 
   const [activeDateKey, setActiveDateKey] = useState("today");
   const [loading, setLoading] = useState(true);
@@ -114,8 +125,22 @@ export const CauseListModal = ({ visible, onClose }) => {
     no: new Animated.Value(0),
   }).current;
 
-  const todayStr = formatDate(today);
-  const tomorrowStr = formatDate(tomorrow);
+  const todayStr = useMemo(() => formatDate(today), [today]);
+  const tomorrowStr = useMemo(() => formatDate(tomorrow), [tomorrow]);
+
+  const isHoliday = (date) => {
+    const dayOfWeek = date.getDay();
+    if (dayOfWeek === 0) return true; // Sunday
+    
+    if (holidays) {
+      const d = date.getDate();
+      const m = date.getMonth();
+      const y = date.getFullYear();
+      const h = holidays.find(h => h.day === d && h.month === m && h.year === y);
+      if (h) return h.type === 'public';
+    }
+    return false;
+  };
 
   const labels = useMemo(() => ({
     daily: t("cause_list.daily"),
@@ -125,14 +150,63 @@ export const CauseListModal = ({ visible, onClose }) => {
   }), [t]);
 
   useEffect(() => {
+    if (!visible) return;
+
     let mounted = true;
     (async () => {
+      setLoading(true);
       try {
-        const [a, b] = await Promise.all([
-          buildAvailability(todayStr, labels),
-          buildAvailability(tomorrowStr, labels)
-        ]);
-        if (mounted) setData({ today: a, tomorrow: b });
+        const now = new Date();
+        const tStr = formatDate(now);
+        
+        // Fetch consolidated HTML once to reuse
+        const consolidatedHtml = await getConsolidatedHtml();
+        
+        const todayAvail = await buildAvailability(tStr, labels, consolidatedHtml);
+        
+        // Find next available day for "tomorrow"
+        let nextDate = new Date(now);
+        nextDate.setDate(nextDate.getDate() + 1);
+        
+        let foundNextAvail = null;
+        let foundNextDate = null;
+
+        // Search up to 5 days instead of 7 to be faster
+        for (let i = 0; i < 5; i++) {
+          const isH = isHoliday(nextDate);
+          const nextStr = formatDate(nextDate);
+          
+          // We still check one by one to avoid overwhelming server, but buildAvailability is now faster
+          const nextAvail = await buildAvailability(nextStr, labels, consolidatedHtml);
+          const hasList = nextAvail.dl.length > 0 || nextAvail.sl.length > 0 || nextAvail.lz.length > 0 || nextAvail.no.length > 0;
+          
+          if (!isH && hasList) {
+            foundNextAvail = nextAvail;
+            foundNextDate = new Date(nextDate);
+            break;
+          }
+          nextDate.setDate(nextDate.getDate() + 1);
+        }
+
+        // Fallback: if no available list found, use first non-holiday tomorrow
+        if (!foundNextAvail) {
+          let fallbackDate = new Date(now);
+          fallbackDate.setDate(fallbackDate.getDate() + 1);
+          while (isHoliday(fallbackDate)) {
+            fallbackDate.setDate(fallbackDate.getDate() + 1);
+          }
+          foundNextDate = fallbackDate;
+          foundNextAvail = await buildAvailability(formatDate(fallbackDate), labels, consolidatedHtml);
+        }
+
+        if (mounted) {
+          setToday(now);
+          setTomorrow(foundNextDate);
+          setData({ today: todayAvail, tomorrow: foundNextAvail });
+          setActiveDateKey("today");
+        }
+      } catch (error) {
+        console.error("CauseListModal Error:", error);
       } finally {
         if (mounted) setLoading(false);
       }
@@ -140,7 +214,15 @@ export const CauseListModal = ({ visible, onClose }) => {
     return () => {
       mounted = false;
     };
-  }, [todayStr, tomorrowStr, labels]);
+  }, [visible, holidays, labels, t]);
+
+  const isActuallyTomorrow = useMemo(() => {
+    const nextDay = new Date(today);
+    nextDay.setDate(nextDay.getDate() + 1);
+    return nextDay.getDate() === tomorrow.getDate() && 
+           nextDay.getMonth() === tomorrow.getMonth() && 
+           nextDay.getFullYear() === tomorrow.getFullYear();
+  }, [today, tomorrow]);
 
   const active = data[activeDateKey] || { dl: [], sl: [], lz: [], no: [] };
 
@@ -199,7 +281,7 @@ export const CauseListModal = ({ visible, onClose }) => {
               onPress={() => setActiveDateKey("tomorrow")}
               style={{ flex: 1, minWidth: 0, alignItems: "center", paddingVertical: 8, paddingHorizontal: 12, borderRadius: radius.lg, backgroundColor: activeDateKey === "tomorrow" ? "#D4AF37" : "#111111" }}
             >
-              <Text style={{ color: "#FFFFFF", fontFamily: 'Inter_700Bold', textAlign: "center" }}>{t("cause_list.tomorrow")}</Text>
+              <Text style={{ color: "#FFFFFF", fontFamily: 'Inter_700Bold', textAlign: "center" }}>{isActuallyTomorrow ? t("cause_list.tomorrow") : t("cause_list.next_available")}</Text>
               <Text style={{ color: "#FFFFFF", opacity: 0.8, fontSize: 12, textAlign: "center", fontFamily: 'Inter_400Regular' }}>{tomorrowStr}</Text>
             </TouchableOpacity>
           </View>
