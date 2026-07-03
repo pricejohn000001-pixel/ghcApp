@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Animated, StyleSheet, Text, View, TextInput, TouchableOpacity, Modal, FlatList, KeyboardAvoidingView, Platform, ActivityIndicator } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { colors, radius, spacing } from "../theme";
 
@@ -14,7 +14,7 @@ const CaseTypeItem = React.memo(({ item, isSelected, onSelect }) => (
       {item.label}
     </Text>
     {isSelected && (
-      <Feather name="check" size={20} color={colors.accent} />
+      <Ionicons name="checkmark" size={20} color={colors.accent} />
     )}
   </TouchableOpacity>
 ));
@@ -194,7 +194,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
     <LinearGradient colors={["#000000", "#000000"]} style={styles.hero}>
         <View style={styles.heroRow}>
           <View style={styles.heroIcon}>
-            <AntDesign name="filetext1" size={20} color={colors.accent} />
+            <Ionicons name="document-text" size={20} color={colors.accent} />
           </View>
           <Text style={styles.heroTitle}>Case Status Search</Text>
         </View>
@@ -275,7 +275,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             {caseTypesLoading ? (
               <ActivityIndicator size="small" color={colors.textSecondary} />
             ) : (
-              <Feather name="chevron-down" size={20} color={colors.textSecondary} />
+              <Ionicons name="chevron-down" size={20} color={colors.textSecondary} />
             )}
           </TouchableOpacity>
 
@@ -284,7 +284,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             <View style={styles.flex1}>
               <Text style={styles.label}>Registration No.</Text>
               <View style={styles.inputContainer}>
-                <Feather name="hash" size={16} color={colors.textSecondary} style={styles.inputIcon} />
+                <Ionicons name="pricetag" size={16} color={colors.textSecondary} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="e.g. 1234"
@@ -298,7 +298,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             <View style={styles.flex1}>
               <Text style={styles.label}>Year</Text>
               <View style={styles.inputContainer}>
-                <Feather name="calendar" size={16} color={colors.textSecondary} style={styles.inputIcon} />
+                <Ionicons name="calendar" size={16} color={colors.textSecondary} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="YYYY"
@@ -318,7 +318,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             <View style={{ marginBottom: spacing.xl }}>
               <Text style={styles.label}>Enter CNR Number</Text>
               <View style={styles.inputContainer}>
-                <Feather name="hash" size={16} color={colors.textSecondary} style={styles.inputIcon} />
+                <Ionicons name="pricetag" size={16} color={colors.textSecondary} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="e.g. ASGH010000012023"
@@ -347,24 +347,30 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
               ) : (
                 <View style={styles.cameraContainer}>
                   <CameraView
-                    style={styles.camera}
+                    style={{ flex: 1 }}
                     facing="back"
                     barcodeScannerSettings={{
                       barcodeTypes: ["qr"],
                     }}
-                    onBarcodeScanned={scanned ? undefined : ({ data }) => {
+                    onBarcodeScanned={(result) => {
+                      if (scanned || !result.data) return;
                       setScanned(true);
-                      setCnr(data); // Assume QR contains just the CNR
-                      handleSearch(data);
+                      setCnr(result.data); // Assume QR contains just the CNR
+                      handleSearch(result.data);
                     }}
                   />
-                  <View style={styles.scannerOverlay}>
+                  <View 
+                    style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0, alignItems: "center", justifyContent: "center", zIndex: 10 }}
+                    pointerEvents="none"
+                  >
                     <View style={styles.scannerTarget} />
                   </View>
                   {scanned && (
-                    <TouchableOpacity style={styles.rescanBtn} onPress={() => setScanned(false)}>
-                      <Text style={styles.rescanBtnText}>Tap to Scan Again</Text>
-                    </TouchableOpacity>
+                    <View style={{ position: "absolute", bottom: 20, left: 0, right: 0, alignItems: "center", zIndex: 20 }}>
+                      <TouchableOpacity style={styles.rescanBtn} onPress={() => setScanned(false)}>
+                        <Text style={styles.rescanBtnText}>Tap to Scan Again</Text>
+                      </TouchableOpacity>
+                    </View>
                   )}
                 </View>
               )}
@@ -387,7 +393,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                 <ActivityIndicator color={colors.accent} size="small" />
               ) : (
                 <>
-                  <Feather name="search" size={18} color="#FFFFFF" />
+                  <Ionicons name="search" size={18} color="#FFFFFF" />
                   <Text style={styles.searchButtonText}>Search Case</Text>
                 </>
               )}
@@ -403,7 +409,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             {searchError ? (
               <View style={styles.errorStateCard}>
                  <View style={styles.errorStateIconBg}>
-                   <Feather name="alert-circle" size={32} color="#EF4444" />
+                   <Ionicons name="alert-circle" size={32} color="#EF4444" />
                  </View>
                  <Text style={styles.errorStateTitle}>Search Failed</Text>
                  <Text style={styles.errorStateSub}>{searchError}</Text>
@@ -411,7 +417,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             ) : searchResults.length === 0 ? (
               <View style={styles.emptyStateCard}>
                  <View style={styles.emptyStateIconBg}>
-                   <Feather name="search" size={32} color="#777777" />
+                   <Ionicons name="search" size={32} color="#777777" />
                  </View>
                  <Text style={styles.emptyStateTitle}>No Cases Found</Text>
                  <Text style={styles.emptyStateSub}>We couldn't find any cases matching your search criteria. Please check the registration number and year.</Text>
@@ -423,7 +429,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
               const caseNoStr = caseTypeLabel ? `${caseTypeLabel} ${itemRegNo}/${itemYear}` : `${itemRegNo}/${itemYear}`;
               const isDisposed = item.archive === 'Y';
               const statusStr = isDisposed ? 'Disposed' : 'Pending';
-              const isDateNotGiven = item.date_next_list?.startsWith('5000-01-01');
+              const isDateNotGiven = item.date_next_list?.startsWith('5000-01-01') || item.date_next_list?.startsWith('4999-12-31');
               const formatDate = (dateString) => {
                 if (!dateString) return "-";
                 try {
@@ -456,7 +462,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                   </View>
                   <TouchableOpacity style={styles.viewButton} onPress={() => onViewDetails(item)}>
                     <Text style={styles.viewButtonText}>View Details</Text>
-                    <Feather name="arrow-right" size={16} color={colors.accent} />
+                    <Ionicons name="arrow-forward" size={16} color={colors.accent} />
                   </TouchableOpacity>
                 </View>
               );
@@ -486,12 +492,12 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                 setTypeModalVisible(false);
                 setTypeSearchQuery("");
               }}>
-                <AntDesign name="closecircle" size={24} color={colors.textSecondary} />
+                <Ionicons name="close-circle" size={24} color={colors.textSecondary} />
               </TouchableOpacity>
             </View>
 
             <View style={styles.modalSearchContainer}>
-              <Feather name="search" size={18} color={colors.textSecondary} style={styles.modalSearchIcon} />
+              <Ionicons name="search" size={18} color={colors.textSecondary} style={styles.modalSearchIcon} />
               <TextInput
                 style={styles.modalSearchInput}
                 placeholder="Search case type"
@@ -503,7 +509,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
               />
               {typeSearchQuery.length > 0 && (
                 <TouchableOpacity onPress={() => setTypeSearchQuery("")}>
-                  <Feather name="x-circle" size={18} color={colors.textSecondary} />
+                  <Ionicons name="close-circle" size={18} color={colors.textSecondary} />
                 </TouchableOpacity>
               )}
             </View>
@@ -530,7 +536,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
               }}
               ListEmptyComponent={
                 <View style={styles.modalEmptyState}>
-                  <Feather name="search" size={40} color={colors.textSecondary} />
+                  <Ionicons name="search" size={40} color={colors.textSecondary} />
                   <Text style={styles.modalEmptyText}>No matching case types found</Text>
                 </View>
               }
@@ -572,11 +578,9 @@ const styles = StyleSheet.create({
   cameraText: { textAlign: "center", color: "#CCCCCC", marginBottom: spacing.md },
   permissionBtn: { backgroundColor: colors.primary, paddingHorizontal: 20, paddingVertical: 10, borderRadius: radius.md },
   permissionBtnText: { color: "#FFFFFF", fontWeight: "600" },
-  cameraContainer: { height: 300, width: "100%", borderRadius: radius.lg, overflow: "hidden", backgroundColor: "#FFFFFF" },
-  camera: { flex: 1 },
-  scannerOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,0.5)", alignItems: "center", justifyContent: "center" },
-  scannerTarget: { width: 200, height: 200, borderWidth: 2, borderColor: "#D4AF37", backgroundColor: "transparent" },
-  rescanBtn: { position: "absolute", bottom: 20, alignSelf: "center", backgroundColor: "rgba(0,0,0,0.7)", paddingHorizontal: 20, paddingVertical: 10, borderRadius: radius.pill },
+  cameraContainer: { height: 300, width: "100%", borderRadius: radius.lg, overflow: "hidden", backgroundColor: "#000000" },
+  scannerTarget: { width: 200, height: 200, borderWidth: 2, borderColor: "#D4AF37", backgroundColor: "transparent", borderRadius: radius.md },
+  rescanBtn: { backgroundColor: "rgba(0,0,0,0.8)", paddingHorizontal: 24, paddingVertical: 12, borderRadius: radius.pill, borderWidth: 1, borderColor: "#333333" },
   rescanBtnText: { color: "#FFFFFF", fontWeight: "600" },
   dropdownButton: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#222222", borderWidth: 1, borderColor: "#333333", borderRadius: radius.md, paddingHorizontal: 16, paddingVertical: 14, marginBottom: spacing.lg },
   dropdownText: { fontSize: 15, color: colors.textPrimary },

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, FlatList, Modal, ActivityIndicator, Platform, Animated } from "react-native";
-import { Ionicons, Feather } from "@expo/vector-icons";
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, FlatList, Modal, ActivityIndicator, Platform, Animated, StatusBar } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import Voice from "@react-native-voice/voice";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
@@ -182,7 +182,7 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
         <View style={styles.content}>
           <View style={styles.header}>
             <View style={styles.searchBar}>
-              <Feather name="search" size={20} color={colors.accent} />
+              <Ionicons name="search" size={20} color={colors.accent} />
               <TextInput
                 style={[styles.input, { color: colors.accent }]}
                 placeholder={t("search.placeholder", "Search...")} placeholderTextColor="rgba(212,175,55,0.5)"
@@ -192,7 +192,7 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
               />
               {query.length > 0 && (
                 <TouchableOpacity onPress={() => handleSearch("")}>
-                  <Feather name="x" size={20} color={colors.textSecondary} />
+                  <Ionicons name="close" size={20} color={colors.textSecondary} />
                 </TouchableOpacity>
               )}
               <View style={styles.micWrap}>
@@ -240,24 +240,23 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
               >
                 <View style={styles.iconContainer}>
                   {item.type === "judge" && (
-                    <Feather name="user" size={20} color={colors.accent} />
+                    <Ionicons name="person" size={20} color={colors.accent} />
                   )}
                   {item.type === "service" && (
-                    <Feather name="grid" size={20} color={colors.accent} />
+                    <Ionicons name="grid" size={20} color={colors.accent} />
                   )}
                   {item.type === "holiday" && (
-                    <Feather name="calendar" size={20} color={colors.accent} />
+                    <Ionicons name="calendar" size={20} color={colors.accent} />
                   )}
                   {item.type === "link" && (
-                    <Feather name="link" size={20} color={colors.accent} />
+                    <Ionicons name="link" size={20} color={colors.accent} />
                   )}
                 </View>
                 <View style={styles.textContainer}>
                   <Text style={styles.title}>{item.title}</Text>
                   <Text style={styles.subtitle}>{item.subtitle}</Text>
                 </View>
-                <Feather
-                  name="chevron-right"
+                <Ionicons name="chevron-forward"
                   size={20}
                   color={colors.accent}
                 />
@@ -266,7 +265,7 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
             ListEmptyComponent={() =>
               !error && hasAttempted && results.length === 0 && !isListening ? (
                 <View style={styles.emptyContainer}>
-                  <Feather name="search" size={36} color={colors.textSecondary} />
+                  <Ionicons name="search" size={36} color={colors.textSecondary} />
                   <Text style={styles.emptyText}>No result found</Text>
                   <Text style={styles.emptySubtitle}>We can't find any item matching your search</Text>
                 </View>
@@ -285,7 +284,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.7)",
     justifyContent: "flex-start",
   },
-  content: { flex: 1, marginTop: Platform.OS === "ios" ? 40 : 0, backgroundColor: "#000000", overflow: "hidden", borderWidth: 1, borderColor: "rgba(212,175,55,0.25)", borderTopLeftRadius: radius.xl,
+  content: { flex: 1, marginTop: Platform.OS === "android" ? (StatusBar.currentHeight || 40) : 40, backgroundColor: "#000000", overflow: "hidden", borderWidth: 1, borderColor: "rgba(212,175,55,0.25)", borderTopLeftRadius: radius.xl,
     borderTopRightRadius: radius.xl,
   },
   header: {

@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useRef } from "react";
 import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View, Animated } from "react-native";
 import { useTranslation } from "react-i18next";
-import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
 
 const { width } = Dimensions.get("window");
@@ -52,7 +52,7 @@ const JudgeCard = React.memo(({ item, onPortfolio, t }) => {
         <Text style={styles.judgeName}>{item.name?.replace(", Chief Justice", "")}</Text>
         <Text style={styles.judgeRole}>{item.title}</Text>
         <View style={styles.portfolioButton}>
-          <FontAwesome name="briefcase" size={16} color="#D4AF37" />
+          <Ionicons name="briefcase" size={16} color="#D4AF37" />
           <Text style={styles.portfolioLabel}>{t("home.portfolio")}</Text>
         </View>
       </View>

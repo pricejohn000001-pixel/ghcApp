@@ -11,7 +11,7 @@ import {
   Linking,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
 
 export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
@@ -176,7 +176,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
       <View style={[styles.container, { justifyContent: 'center', alignItems: 'center', padding: spacing.xl }]}>
         <View style={styles.errorStateCard}>
           <View style={styles.errorStateIconBg}>
-            <Feather name="alert-circle" size={40} color="#EF4444" />
+            <Ionicons name="alert-circle" size={40} color="#EF4444" />
           </View>
           <Text style={styles.errorStateTitle}>Data Unavailable</Text>
           <Text style={styles.errorStateSub}>{error || 'We could not find the complete profile for this case. It might not be available or there might be an issue with the connection.'}</Text>
@@ -299,7 +299,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
   const listedBefore = data.bench ? `${data.bench.bench_type_name} (${data.bench.bench_abbreviation})` : (data.benchtype || '-');
   const caseAgeFormatted = data.age_of_case_formatted || getCaseAge(data.date_of_filing);
   const isDisposed = currentStatus === 'DISPOSED';
-  const isDateNotGiven = data.date_next_list?.startsWith('5000-01-01');
+  const isDateNotGiven = data.date_next_list?.startsWith('5000-01-01') || data.date_next_list?.startsWith('4999-12-31');
   const nextHearingDisplay = isDateNotGiven ? 'Date not given. Refer the last order for details' : formatDate(data.date_next_list);
 
   return (
@@ -307,7 +307,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
       <LinearGradient colors={["#000000", "#000000"]} style={styles.hero}>
         <View style={styles.heroRow}>
           <View style={styles.heroIcon}>
-            <MaterialCommunityIcons name="gavel" size={20} color={colors.accent} />
+            <Ionicons name="hammer" size={20} color={colors.accent} />
           </View>
           <View style={{ flex: 1 }}>
             <Text style={styles.heroTitle}>{regTypeName} / {data.reg_no || '-'} / {data.reg_year || '-'}</Text>
@@ -340,7 +340,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <View style={styles.headerIconContainer}>
-              <Feather name="file-text" size={18} color={colors.accent} />
+              <Ionicons name="document-text" size={18} color={colors.accent} />
             </View>
             <Text style={styles.cardTitle}>Case Details</Text>
           </View>
@@ -367,7 +367,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             {renderDetailRow("EFILING REF NO", data.efilno)}
           </View>
           <View style={styles.cardFooter}>
-            <Feather name="info" size={12} color="#AAAAAA" />
+            <Ionicons name="information-circle" size={12} color="#AAAAAA" />
             <Text style={styles.footerText}>Hearing dates may change based on court proceedings.</Text>
           </View>
         </View>
@@ -375,8 +375,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         {/* Modern App Vibe: Additional Info Card */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <View style={[styles.headerIconContainer, { backgroundColor: "#0A0A0A" }]}>
-              <Feather name="activity" size={18} color="#D4AF37" />
+            <View style={styles.headerIconContainer}>
+              <Ionicons name="pulse" size={18} color="#D4AF37" />
             </View>
             <Text style={styles.cardTitle}>Additional Information</Text>
           </View>
@@ -404,8 +404,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         {/* Modern App Vibe: Parties Vertical Stack */}
         <View style={styles.card}>
           <View style={[styles.cardHeader, { paddingBottom: spacing.sm }]}>
-            <View style={[styles.headerIconContainer, { backgroundColor: "#111111" }]}>
-              <Feather name="users" size={18} color="#D4AF37" />
+            <View style={styles.headerIconContainer}>
+              <Ionicons name="people" size={18} color="#D4AF37" />
             </View>
             <View>
               <Text style={styles.cardTitle}>Parties</Text>
@@ -461,8 +461,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         {/* Sub-Matters Table */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <View style={[styles.headerIconContainer, { backgroundColor: "#222222" }]}>
-              <Feather name="layers" size={18} color="#D4AF37" />
+            <View style={styles.headerIconContainer}>
+              <Ionicons name="layers" size={18} color="#D4AF37" />
             </View>
             <View>
               <Text style={styles.cardTitle}>Sub-Matters</Text>
@@ -502,7 +502,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           ) : (
             <View style={styles.emptyDataCard}>
               <View style={styles.emptyDataIconBg}>
-                <Feather name="layers" size={24} color="#777777" />
+                <Ionicons name="layers" size={24} color="#777777" />
               </View>
               <Text style={styles.emptyDataTitle}>No Sub-Matters</Text>
               <Text style={styles.emptyDataSub}>There are no sub-matters filed for this case.</Text>
@@ -513,8 +513,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         {/* Linked Cases */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <View style={[styles.headerIconContainer, { backgroundColor: "#111111" }]}>
-              <Feather name="link" size={18} color="#D4AF37" />
+            <View style={styles.headerIconContainer}>
+              <Ionicons name="link" size={18} color="#D4AF37" />
             </View>
             <View>
               <Text style={styles.cardTitle}>Linked Cases</Text>
@@ -545,7 +545,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           ) : (
             <View style={styles.emptyDataCard}>
               <View style={styles.emptyDataIconBg}>
-                <Feather name="link" size={24} color="#777777" />
+                <Ionicons name="link" size={24} color="#777777" />
               </View>
               <Text style={styles.emptyDataTitle}>No Linked Cases</Text>
               <Text style={styles.emptyDataSub}>There are no linked cases associated with this matter.</Text>
@@ -556,8 +556,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         {/* Orders */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <View style={[styles.headerIconContainer, { backgroundColor: "#111111" }]}>
-              <Feather name="file-text" size={18} color="#D4AF37" />
+            <View style={styles.headerIconContainer}>
+              <Ionicons name="document-text" size={18} color="#D4AF37" />
             </View>
             <View style={{ flex: 1 }}>
               <Text style={styles.cardTitle}>Orders</Text>
@@ -592,7 +592,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                       {o.uploaded_file_exists ? (
                         shouldHideParties ? (
                           <View style={[styles.pdfBtn, { borderColor: "#EF4444" }]}>
-                            <Feather name="lock" size={12} color="#EF4444" />
+                            <Ionicons name="lock-closed" size={12} color="#EF4444" />
                             <Text style={[styles.pdfBtnText, { color: "#EF4444" }]}>Restricted</Text>
                           </View>
                         ) : (
@@ -600,7 +600,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                             style={styles.pdfBtn}
                             onPress={() => Linking.openURL(`https://ghcservices.assam.gov.in/case-status/order-document/${o.uploaded_file_year}/${o.uploaded_file_name}`)}
                           >
-                            <Feather name="file" size={12} color={colors.accent} />
+                            <Ionicons name="document" size={12} color={colors.accent} />
                             <Text style={styles.pdfBtnText}>View PDF</Text>
                           </TouchableOpacity>
                         )
@@ -630,7 +630,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           ) : (
             <View style={styles.emptyDataCard}>
               <View style={styles.emptyDataIconBg}>
-                <Feather name="file-text" size={24} color="#777777" />
+                <Ionicons name="document-text" size={24} color="#777777" />
               </View>
               <Text style={styles.emptyDataTitle}>No Orders</Text>
               <Text style={styles.emptyDataSub}>There are no orders or judgements uploaded for this case yet.</Text>
@@ -660,7 +660,7 @@ const styles = StyleSheet.create({
 
   card: { backgroundColor: "#111111", borderRadius: radius.xl, borderWidth: 1, borderColor: "#222222", borderWidth: 1, borderColor: "#222222", overflow: "hidden", elevation: 0, overflow: "hidden" },
   cardHeader: { flexDirection: "row", alignItems: "center", gap: 12, padding: spacing.lg },
-  headerIconContainer: { width: 38, height: 38, borderRadius: radius.md, backgroundColor: "#111111", alignItems: "center", justifyContent: "center" },
+  headerIconContainer: { width: 38, height: 38, borderRadius: radius.md, backgroundColor: "#0A0A0A", alignItems: "center", justifyContent: "center" },
   cardTitle: { fontSize: 17, fontFamily: 'Georgia', color: colors.textPrimary },
   cardSubtitle: { fontSize: 13, color: "#AAAAAA", marginTop: 2, fontFamily: 'Inter_400Regular' },
 

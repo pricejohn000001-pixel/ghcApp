@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Animated, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
 import app from "../api";
@@ -127,7 +127,7 @@ export const CourtLinks = ({ onSelect, scrollY }) => {
         ListEmptyComponent={
           !error ? (
             <View style={styles.emptyWrap}>
-              <View style={styles.emptyIcon}><AntDesign name="youtube" size={40} color={colors.accent} /></View>
+              <View style={styles.emptyIcon}><Ionicons name="logo-youtube" size={40} color={colors.accent} /></View>
               <Text style={styles.emptyTitle}>{t("court_links.no_streams")}</Text>
               <Text style={styles.emptySub}>{t("court_links.check_back")}</Text>
             </View>

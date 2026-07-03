@@ -2,7 +2,7 @@ import { BlurView } from "expo-blur";
 import React, { useMemo, useRef, useState, useEffect } from "react";
 import { Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, Pressable } from "react-native";
 import Modal from "react-native-modal";
-import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -54,13 +54,13 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
 
   const sections = useMemo(
     () => [
-      { key: "judges", title: t("drawer.judges"), items: judgesItems, icon: <AntDesign name="team" size={18} color={colors.accent} /> },
-      { key: "reg_present", title: t("drawer.items.reg_present"), type: "single", icon: <AntDesign name="profile" size={18} color={colors.accent} /> },
-      { key: "benches", title: t("drawer.benches"), items: benchesItems, icon: <AntDesign name="bank" size={18} color={colors.accent} /> },
-      { key: "district_courts", title: t("drawer.district_courts"), type: "single", icon: <AntDesign name="home" size={18} color={colors.accent} /> },
-      { key: "recruitments", title: t("drawer.recruitments"), items: recruitmentItems, icon: <AntDesign name="addusergroup" size={18} color={colors.accent} /> },
-      { key: "ebooks", title: t("drawer.ebooks"), items: ebookItems, icon: <Feather name="book" size={18} color={colors.accent} /> },
-      { key: "links", title: t("drawer.links"), items: importantLinks, icon: <AntDesign name="link" size={18} color={colors.accent} /> },
+      { key: "judges", title: t("drawer.judges"), items: judgesItems, icon: <Ionicons name="people" size={18} color={colors.accent} /> },
+      { key: "reg_present", title: t("drawer.items.reg_present"), type: "single", icon: <Ionicons name="person" size={18} color={colors.accent} /> },
+      { key: "benches", title: t("drawer.benches"), items: benchesItems, icon: <Ionicons name="business" size={18} color={colors.accent} /> },
+      { key: "district_courts", title: t("drawer.district_courts"), type: "single", icon: <Ionicons name="home" size={18} color={colors.accent} /> },
+      { key: "recruitments", title: t("drawer.recruitments"), items: recruitmentItems, icon: <Ionicons name="person-add" size={18} color={colors.accent} /> },
+      { key: "ebooks", title: t("drawer.ebooks"), items: ebookItems, icon: <Ionicons name="book" size={18} color={colors.accent} /> },
+      { key: "links", title: t("drawer.links"), items: importantLinks, icon: <Ionicons name="link" size={18} color={colors.accent} /> },
     ],
     [t]
   );
@@ -128,7 +128,7 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
             <Text style={styles.drawerTitle}>{t("drawer.title")}</Text>
           </View>
           <TouchableOpacity onPress={onClose} activeOpacity={0.8}>
-            <AntDesign name="close" size={18} color={colors.accent} />
+            <Ionicons name="close" size={18} color={colors.accent} />
           </TouchableOpacity>
         </View>
 
@@ -189,7 +189,7 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
                   <View style={{ flex: 1 }}>
                     <Text style={styles.drawerItemLabel}>{section.title}</Text>
                   </View>
-                  <AntDesign name={expanded[section.key] ? "up" : "down"} size={16} color={colors.accent} />
+                  <Ionicons name={expanded[section.key] ? "chevron-up" : "chevron-down"} size={16} color={colors.accent} />
                 </TouchableOpacity>
                 {shown[section.key] ? (
                   <Animated.View style={[styles.submenuWrap, animatedStyle]}>
@@ -204,7 +204,7 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
                             if (onClose) onClose();
                           }}
                         >
-                          <View style={styles.submenuIcon}><AntDesign name="right" size={14} color={colors.accent} /></View>
+                          <View style={styles.submenuIcon}><Ionicons name="chevron-forward" size={14} color={colors.accent} /></View>
                           <Text style={[styles.submenuLabel, activeItemLabel === itemKey && styles.submenuLabelActive]}>
                             {t(`drawer.items.${itemKey}`)}
                           </Text>

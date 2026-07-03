@@ -1,6 +1,6 @@
 import React from "react";
 import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
 import { useTranslation } from "react-i18next";
 
@@ -33,15 +33,15 @@ export const Footer = ({ onAbout, onContact }) => {
       </View>
       <View style={styles.socialRow}>
         <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://t.me/GHCInfoChannel")}>
-          <Entypo name="paper-plane" size={16} color={colors.accent} />
+          <Ionicons name="paper-plane" size={16} color={colors.accent} />
           <Text style={styles.socialText}>Telegram</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://youtube.com/@ecourtsgauhatihighcourt4597?si=AGl6ey2vxW1D3IzA")}>
-          <AntDesign name="youtube" size={16} color={colors.accent} />
+          <Ionicons name="logo-youtube" size={16} color={colors.accent} />
           <Text style={styles.socialText}>YouTube</Text>
         </TouchableOpacity>
         {/* <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://www.facebook.com/GuwahatiHighCourt/")}> 
-          <Feather name="facebook" size={16} color={colors.accent} />
+          <Ionicons name="logo-facebook" size={16} color={colors.accent} />
           <Text style={styles.socialText}>Facebook</Text>
         </TouchableOpacity> */}
       </View>

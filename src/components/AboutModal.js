@@ -2,7 +2,7 @@ import { BlurView } from "expo-blur";
 import React from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Pressable } from "react-native";
 import Modal from "react-native-modal";
-import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
 
@@ -15,7 +15,7 @@ export const AboutModal = ({ visible, onClose, judges = [] }) => {
         <View style={styles.header}>
           <Text style={styles.title}>{t("about.title")}</Text>
           <TouchableOpacity onPress={onClose} activeOpacity={0.8}>
-            <AntDesign name="close" size={18} color={colors.primary} />
+            <Ionicons name="close" size={18} color={colors.primary} />
           </TouchableOpacity>
         </View>
         <ScrollView style={styles.scrollArea} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>

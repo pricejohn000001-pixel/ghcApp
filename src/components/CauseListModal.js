@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ActivityIndicator, Linking, ScrollView, Text, TouchableOpacity, View, Animated, StyleSheet, Pressable } from "react-native";
 import Modal from "react-native-modal";
 import { LinearGradient } from "expo-linear-gradient";
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
 import { useTranslation } from "react-i18next";
 
@@ -11,10 +11,10 @@ const BASE = "https://ghconline.gov.in/NewCList";
 const DAILY_SUFFIXES = ["LokAdalat"];
 
 const typeDefs = [
-  { key: "dl", tKey: "daily", colors: ["#8B6508", "#5C4300"], icon: <AntDesign name="filetext1" size={20} color="#FFFFFF" /> },
-  { key: "sl", tKey: "supplementary", colors: ["#4F4F4F", "#2F2F2F"], icon: <Feather name="plus" size={20} color="#FFFFFF" /> },
-  { key: "lz", tKey: "lawazima", colors: ["#8B4513", "#5C2E00"], icon: <Feather name="anchor" size={20} color="#FFFFFF" /> },
-  { key: "no", tKey: "notices", colors: ["#4C1D95", "#2E1065"], icon: <Feather name="bell" size={20} color="#FFFFFF" /> },
+  { key: "dl", tKey: "daily", colors: ["#8B6508", "#5C4300"], icon: <Ionicons name="document-text" size={20} color="#FFFFFF" /> },
+  { key: "sl", tKey: "supplementary", colors: ["#4F4F4F", "#2F2F2F"], icon: <Ionicons name="add" size={20} color="#FFFFFF" /> },
+  { key: "lz", tKey: "lawazima", colors: ["#8B4513", "#5C2E00"], icon: <Ionicons name="boat" size={20} color="#FFFFFF" /> },
+  { key: "no", tKey: "notices", colors: ["#4C1D95", "#2E1065"], icon: <Ionicons name="notifications" size={20} color="#FFFFFF" /> },
 ];
 
 function formatDate(d) {
@@ -304,10 +304,10 @@ export const CauseListModal = ({ visible, onClose, holidays }) => {
               // Let's stick to expand/collapse for consistency if > 0.
               
               const rightIcon = (() => {
-                if (disabled) return <AntDesign name="close" size={18} color={colors.accent} />;
+                if (disabled) return <Ionicons name="close" size={18} color={colors.accent} />;
                 return (
                   <Animated.View style={{ transform: [{ rotate: anims[tDef.key].interpolate({ inputRange: [0, 1], outputRange: ["0deg", "180deg"] }) }] }}>
-                    <Feather name="chevron-down" size={20} color={colors.accent} />
+                    <Ionicons name="chevron-down" size={20} color={colors.accent} />
                   </Animated.View>
                 );
               })();

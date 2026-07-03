@@ -3,7 +3,7 @@
     "name": "Gauhati High Court",
     "slug": "gauhati_high_court",
     "version": "1.1.0",
-    "sdkVersion": "51.0.0",
+    "sdkVersion": "56.0.0",
     "platforms": [
       "ios",
       "android"

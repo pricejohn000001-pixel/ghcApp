@@ -1,7 +1,7 @@
 import React from "react";
 import { Animated, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
 
@@ -12,7 +12,7 @@ export const AboutScreen = ({ scrollY, judges = [] }) => {
     <View style={styles.container}>
       <LinearGradient colors={["#000000", "#000000"]} style={styles.hero}>
         <View style={styles.heroRow}>
-          <View style={styles.heroIcon}><Feather name="info" size={20} color={colors.accent} /></View>
+          <View style={styles.heroIcon}><Ionicons name="information-circle" size={20} color={colors.accent} /></View>
           <Text style={styles.heroTitle}>{t("about.title")}</Text>
         </View>
         <Text style={styles.heroSub}>{t("about.subtitle")}</Text>
@@ -33,7 +33,7 @@ export const AboutScreen = ({ scrollY, judges = [] }) => {
       >
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <Feather name="book" size={18} color={colors.accent} />
+            <Ionicons name="book" size={18} color={colors.accent} />
             <Text style={styles.cardTitle}>{t("about.constitution_title")}</Text>
           </View>
           <Text style={styles.paragraph}><Text style={styles.bold}>{t("about.article_214_intro")}</Text></Text>
@@ -42,7 +42,7 @@ export const AboutScreen = ({ scrollY, judges = [] }) => {
         </View>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <Feather name="users" size={18} color={colors.accent} />
+            <Ionicons name="people" size={18} color={colors.accent} />
             <Text style={styles.cardTitle}>{t("about.judges_title")}</Text>
           </View>
           <Text style={styles.paragraph}>{t("about.judges_strength", { count: judges.length })}</Text>
@@ -61,7 +61,7 @@ export const AboutScreen = ({ scrollY, judges = [] }) => {
         </View>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <Feather name="briefcase" size={18} color={colors.accent} />
+            <Ionicons name="briefcase" size={18} color={colors.accent} />
             <Text style={styles.cardTitle}>{t("about.jurisdiction_title")}</Text>
           </View>
           <Text style={styles.paragraph}>{t("about.article_226_text")}</Text>

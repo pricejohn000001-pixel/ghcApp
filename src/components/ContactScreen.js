@@ -1,7 +1,7 @@
 import React from "react";
 import { Animated, StyleSheet, Text, View, TouchableOpacity, Linking } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
 
@@ -18,7 +18,7 @@ export const ContactScreen = ({ scrollY }) => {
     <View style={styles.container}>
       <LinearGradient colors={["#000000", "#000000"]} style={styles.hero}>
         <View style={styles.heroRow}>
-          <View style={styles.heroIcon}><Feather name="phone" size={20} color={colors.accent} /></View>
+          <View style={styles.heroIcon}><Ionicons name="call" size={20} color={colors.accent} /></View>
           <Text style={styles.heroTitle}>{t("contact.title")}</Text>
         </View>
         <Text style={styles.heroSub}>{t("contact.subtitle")}</Text>
@@ -38,32 +38,32 @@ export const ContactScreen = ({ scrollY }) => {
         scrollEventThrottle={16}
       >
         <View style={styles.card}>
-          <View style={styles.cardHeader}><Feather name="phone" size={18} color={colors.accent} /><Text style={styles.cardTitle}>{t("contact.epabx")}</Text></View>
+          <View style={styles.cardHeader}><Ionicons name="call" size={18} color={colors.accent} /><Text style={styles.cardTitle}>{t("contact.epabx")}</Text></View>
           <Text style={styles.paragraph}>2600008, 2731245, 2735869, 2731264, 2637179, 2734439, 2734441</Text>
           <Text style={styles.metaSmall}>{t("contact.std_code")}</Text>
         </View>
         <View style={styles.card}>
-          <View style={styles.cardHeader}><AntDesign name="printer" size={18} color={colors.accent} /><Text style={styles.cardTitle}>{t("contact.fax")}</Text></View>
+          <View style={styles.cardHeader}><Ionicons name="print" size={18} color={colors.accent} /><Text style={styles.cardTitle}>{t("contact.fax")}</Text></View>
           <Text style={styles.paragraph}>(0361) 2735863, 2735867,2732541, 2734346, 2733439</Text>
         </View>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
-            <AntDesign name="mail" size={18} color={colors.accent} />
+            <Ionicons name="mail" size={18} color={colors.accent} />
             <Text style={styles.cardTitle}>{t("contact.email")}</Text>
           </View>
           
           <View style={styles.emailSection}>
             <View style={styles.subSectionHeader}>
-              <Feather name="inbox" size={14} color={colors.accent} />
+              <Ionicons name="cube" size={14} color={colors.accent} />
               <Text style={styles.subSectionTitle}>Registry</Text>
             </View>
             <View style={styles.emailRowContainer}>
               <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('hc-asm[at]nic[dot]in')}>
-                <Feather name="at-sign" size={14} color="#777777" />
+                <Ionicons name="at" size={14} color="#777777" />
                 <Text style={styles.emailText}>hc-asm[at]nic[dot]in</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('highcourt[dot]ghc[at]gmail[dot]com')}>
-                <Feather name="at-sign" size={14} color="#777777" />
+                <Ionicons name="at" size={14} color="#777777" />
                 <Text style={styles.emailText}>highcourt[dot]ghc[at]gmail[dot]com</Text>
               </TouchableOpacity>
             </View>
@@ -71,16 +71,16 @@ export const ContactScreen = ({ scrollY }) => {
           
           <View style={styles.subSection}>
             <View style={styles.subSectionHeader}>
-              <Feather name="monitor" size={14} color={colors.accent} />
+              <Ionicons name="desktop" size={14} color={colors.accent} />
               <Text style={styles.subSectionTitle}>eCourts Services</Text>
             </View>
             <View style={styles.emailRowContainer}>
               <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('cpc-asm[at]aji[dot]gov[dot]in')}>
-                <Feather name="at-sign" size={14} color="#777777" />
+                <Ionicons name="at" size={14} color="#777777" />
                 <Text style={styles.emailText}>cpc-asm[at]aji[dot]gov[dot]in</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('ecourts[dot]ghc-as[at]nic[dot]in')}>
-                <Feather name="at-sign" size={14} color="#777777" />
+                <Ionicons name="at" size={14} color="#777777" />
                 <Text style={styles.emailText}>ecourts[dot]ghc-as[at]nic[dot]in</Text>
               </TouchableOpacity>
             </View>
@@ -93,7 +93,7 @@ export const ContactScreen = ({ scrollY }) => {
           onPress={() => Linking.openURL("https://www.google.com/maps/search/?api=1&query=Gauhati+High+Court,+Mahatma+Gandhi+Rd,+Latasil,+Uzan+Bazar,+Guwahati,+Assam+781001")}
         >
           <View style={styles.cardHeader}>
-            <Feather name="map-pin" size={18} color={colors.accent} />
+            <Ionicons name="location" size={18} color={colors.accent} />
             <Text style={styles.cardTitle}>Find Us Here</Text>
           </View>
           <Text style={styles.paragraph}>Gauhati High Court, New Block</Text>
@@ -101,7 +101,7 @@ export const ContactScreen = ({ scrollY }) => {
           
           <View style={styles.locationAction}>
             <Text style={styles.locationActionText}>Get Directions on Google Maps</Text>
-            <Feather name="navigation" size={14} color={colors.accent} />
+            <Ionicons name="navigate" size={14} color={colors.accent} />
           </View>
         </TouchableOpacity>
       </Animated.ScrollView>

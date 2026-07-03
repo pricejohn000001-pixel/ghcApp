@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View, AppState, useWindowDimensions, Animated } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Entypo, Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors, radius, spacing } from "../theme";
 import { useTranslation } from "react-i18next";
@@ -39,7 +39,7 @@ export const Header = ({ onMenu, onSearch, scrollY, isHome }) => {
         </View>
         <View style={{ flexDirection: 'row', gap: 8 }}>
             <TouchableOpacity onPress={onMenu} activeOpacity={0.8} style={styles.menuButton}>
-                <Entypo name="menu" size={22} color={colors.accent} />
+                <Ionicons name="menu" size={22} color={colors.accent} />
             </TouchableOpacity>
         </View>
       </View>
@@ -93,7 +93,7 @@ export const Header = ({ onMenu, onSearch, scrollY, isHome }) => {
           style={styles.searchTrigger}
           activeOpacity={0.85} 
           onPress={onSearch}>
-          <Feather name="search" size={18} color={colors.accent} />
+          <Ionicons name="search" size={18} color={colors.accent} />
           <Text style={styles.searchText}>{t("search.trigger", "Search cases, orders, cause list...")}</Text>
         </TouchableOpacity>
       </Animated.View>
