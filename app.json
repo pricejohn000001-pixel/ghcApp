@@ -13,7 +13,8 @@
     },
     "android": {
       "package": "com.ghc.app",
-      "versionCode": 3
+      "versionCode": 4,
+      "targetSdkVersion": 36
     },
     "plugins": [
       "expo-localization",
@@ -22,7 +23,9 @@
         {
           "windowCompat": true
         }
-      ]
+      ],
+      "expo-font",
+      "expo-sharing"
     ],
     "extra": {
       "eas": {
