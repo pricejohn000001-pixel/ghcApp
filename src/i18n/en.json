@@ -7,6 +7,7 @@
     "title": "Gauhati High Court",
     "judges": "Judges",
     "benches": "Benches",
+    "notice_board": "Notice Board",
     "recruitments": "Recruitments",
     "ebooks": "eBooks",
     "district_courts": "District Courts",
@@ -34,7 +35,13 @@
       "recruitment_other": "Other Organisation's",
       "recruitment_papers": "Previous Years' Question Papers",
       "ebook_history": "History & Heritage (Assamese)",
-      "ebook_platinum": "Platinum Jubilee Souvenir"
+      "ebook_platinum": "Platinum Jubilee Souvenir",
+      "notice_joleave": "Judicial Officers' Leave Order",
+      "notice_general": "General Notice",
+      "notice_promo_transfer": "Promotion / Transfer",
+      "notice_promo_transfer_judicial": "Judicial Officers",
+      "notice_training": "Training Notice",
+      "notice_ict": "Information & Communication Technology"
     }
   },
   "search": {

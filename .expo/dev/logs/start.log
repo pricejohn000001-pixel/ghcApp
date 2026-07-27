@@ -379,3 +379,76 @@
 {"_e":"metro:client_log","_t":1785129764607,"level":"log","data":["Initializing judges data..."]}
 {"_e":"metro:client_log","_t":1785129764656,"level":"log","data":["Using cached judges data"]}
 {"_e":"metro:client_log","_t":1785129764657,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"root:init","_t":1785132024709,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785132024711,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785132024716,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785132025351,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785132025959,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785132032512,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785132069387,"id":"1","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785132069388,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785132069399,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785132069499,"id":"1","progress":0.017313019390581715,"total":190,"current":25}
+{"_e":"metro:bundling:progress","_t":1785132069599,"id":"1","progress":0.12109380241248371,"total":273,"current":95}
+{"_e":"metro:bundling:progress","_t":1785132069699,"id":"1","progress":0.22104032078413902,"total":402,"current":189}
+{"_e":"metro:bundling:progress","_t":1785132069799,"id":"1","progress":0.27808416462149566,"total":567,"current":299}
+{"_e":"metro:bundling:progress","_t":1785132069899,"id":"1","progress":0.4429884439666757,"total":610,"current":406}
+{"_e":"metro:bundling:progress","_t":1785132069999,"id":"1","progress":0.5608095426536265,"total":665,"current":498}
+{"_e":"metro:bundling:progress","_t":1785132070099,"id":"1","progress":0.7582691579346043,"total":712,"current":620}
+{"_e":"metro:bundling:progress","_t":1785132070213,"id":"1","progress":0.799231432956716,"total":783,"current":700}
+{"_e":"metro:bundling:progress","_t":1785132070313,"id":"1","progress":0.8482840283543326,"total":899,"current":828}
+{"_e":"metro:bundling:progress","_t":1785132070413,"id":"1","progress":0.9448091110387571,"total":929,"current":903}
+{"_e":"metro:bundling:progress","_t":1785132070514,"id":"1","progress":0.9957537202943937,"total":941,"current":939}
+{"_e":"metro:bundling:progress","_t":1785132070798,"id":"1","progress":0.997875730817488,"total":941,"current":940}
+{"_e":"metro:bundling:done","_t":1785132070910,"id":"1","total":941,"ms":1522.2491}
+{"_e":"metro:client_log","_t":1785132072663,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785132073003,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785132073003,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785132073003,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785132079148,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785132243175,"level":"warn","data":["Encountered an error loading page","{\"canGoBack\": false, \"canGoForward\": false, \"code\": -8, \"description\": \"net::ERR_CONNECTION_TIMED_OUT\", \"loading\": false, \"target\": 4592, \"title\": \"\", \"url\": \"https://ghconline.gov.in/index.php/general-notice/\"}"]}
+{"_e":"metro:client_log","_t":1785132384093,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785132384103,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785132384104,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785132384310,"level":"error","data":["[Error: Uncaught (in promise, id: 0): \"TypeError: Cannot set property 'onSpeechStart' of null\"]"]}
+{"_e":"metro:client_log","_t":1785132394151,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.UnknownHostException: Unable to resolve host \"ghcservices.assam.gov.in\": No address associated with hostname]"]}
+{"_e":"metro:client_log","_t":1785132513807,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785132513807,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785132513807,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:bundling:started","_t":1785132514476,"id":"c","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785132514476,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785132514477,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785132514538,"id":"c","total":1,"ms":62.1096}
+{"_e":"metro:client_log","_t":1785132516345,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785132516351,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785132516386,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785132516387,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785132522164,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785132526435,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.UnknownHostException: Unable to resolve host \"ghcservices.assam.gov.in\": No address associated with hostname]"]}
+{"_e":"metro:client_log","_t":1785132544867,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785132544876,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785132544877,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785132545126,"level":"error","data":["[Error: Uncaught (in promise, id: 0): \"TypeError: Cannot set property 'onSpeechStart' of null\"]"]}
+{"_e":"metro:client_log","_t":1785132554905,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.UnknownHostException: Unable to resolve host \"ghcservices.assam.gov.in\": No address associated with hostname]"]}
+{"_e":"metro:client_log","_t":1785132584935,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785132584956,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785132584957,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785132585346,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785132585365,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785132585366,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785132585366,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785132585377,"level":"error","data":["[Error: Uncaught (in promise, id: 1): \"TypeError: Cannot set property 'onSpeechStart' of null\"]"]}
+{"_e":"metro:client_log","_t":1785132585526,"level":"error","data":["[Error: Uncaught (in promise, id: 2): \"TypeError: Cannot set property 'onSpeechStart' of null\"]"]}
+{"_e":"metro:client_log","_t":1785132693390,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785132693393,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785132693394,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785132718274,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.ConnectException: Failed to connect to ghcservices.assam.gov.in/103.158.205.197:443]"]}
+{"_e":"metro:bundling:started","_t":1785132957402,"id":"z","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785132957402,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785132957472,"id":"z","total":1,"ms":69.52}
+{"_e":"metro:client_log","_t":1785132959422,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785132959430,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785132959490,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785132959491,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785132985442,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785133093066,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.ConnectException: Failed to connect to ghcservices.assam.gov.in/103.158.205.197:443]"]}

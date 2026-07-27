@@ -47,6 +47,10 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
     () => /ghconline\.gov\.in\/index\.php\/statistics\/?/.test(url || ""),
     [url]
   );
+  const isNoticeBoard = useMemo(
+    () => /ghconline\.gov\.in\/index\.php\/(joleave|general-notice|promotion-transfer-judicial-officers|training-notice|information-communication-technology1)\/?/.test(url || ""),
+    [url]
+  );
 
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -785,8 +789,62 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
         true;
       ` + "\n" + commonScript;
     }
+    if (isNoticeBoard) {
+      const css = `
+        header, footer, nav, #sp-header, #sp-footer, .t3-header, .t3-footer,
+        .breadcrumb, .breadcrumbs, .uk-breadcrumb, .page-breadcrumb,
+        #sp-title, .sp-page-title, .tm-page-title, .banner, .hero, .page-cover,
+        .site-header, .site-footer, .top-bar, .navbar, .navigation, .menu, .masthead,
+        .sidebar, .sidebar-primary, #secondary, .widget-area,
+        .calendar, .widget_calendar, .calendar_wrap, .wp-calendar-nav {
+          display: none !important;
+        }
+        html, body {
+          background: #ffffff !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow-x: hidden !important;
+          height: auto !important;
+          min-height: 100% !important;
+        }
+        #primary, .content-area, #content, #sp-component, .t3-content, .tm-content, main,
+        .container, .container-fluid, .site-wrapper, .wrapper, article, .item-page, .entry-content,
+        .elementor-section, .elementor-container, .elementor-widget-container {
+          background: #ffffff !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          max-width: 820px !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        img, iframe, object, embed { max-width: 100% !important; height: auto !important; }
+        table { width: 100% !important; max-width: 100% !important; }
+      `;
+      return `
+        (function(){
+          function apply(){
+            var style = document.getElementById('rn-ghc-notice-style');
+            if(!style){
+              style = document.createElement('style');
+              style.id = 'rn-ghc-notice-style';
+              style.type = 'text/css';
+              style.appendChild(document.createTextNode(${JSON.stringify(css)}));
+              (document.head || document.documentElement).appendChild(style);
+            }
+            try {
+              document.documentElement.style.overflowX='hidden';
+              document.body.style.overflowX='hidden';
+              document.querySelectorAll('header,footer,nav,.page-cover,.page-breadcrumb,.t3-sidebar,.tm-sidebar,.sidebar,.sidebar-primary,#secondary,.widget-area,.calendar,.widget_calendar,.calendar_wrap,.wp-calendar-nav').forEach(function(el){ el.style.display='none'; });
+            } catch(e){}
+          }
+          apply();
+          setInterval(apply, 1000);
+        })();
+        true;
+      ` + "\n" + commonScript;
+    }
     return commonScript;
-  }, [isYouTube, isRegistry, isDistrictCourts, isRecruitment, isGhcEbook, isJudgmentSearch, isGhcJudgesPages, isRegistrySection, isMactCalculator, isStatistics]);
+  }, [isYouTube, isRegistry, isDistrictCourts, isRecruitment, isGhcEbook, isJudgmentSearch, isGhcJudgesPages, isRegistrySection, isMactCalculator, isStatistics, isNoticeBoard]);
 
   return (
     <View style={styles.container}>

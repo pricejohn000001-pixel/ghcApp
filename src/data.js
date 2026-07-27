@@ -682,4 +682,9 @@ export const menuUrls = {
   "ebook_history": "https://ghconline.gov.in/index.php/gauhati-high-court-history-heritage-assamese-version/",
   "ebook_platinum": "https://ghconline.gov.in/index.php/platinum-jubilee-souvenir-of-the-gauhati-high-court-2023-2/",
   "district_courts": "https://ghconline.gov.in/index.php/district-courts/",
+  "notice_joleave": "https://ghconline.gov.in/index.php/joleave/",
+  "notice_general": "https://ghconline.gov.in/index.php/general-notice/",
+  "notice_promo_transfer_judicial": "https://ghconline.gov.in/index.php/promotion-transfer-judicial-officers/",
+  "notice_training": "https://ghconline.gov.in/index.php/training-notice/",
+  "notice_ict": "https://ghconline.gov.in/index.php/information-communication-technology1/",
 };

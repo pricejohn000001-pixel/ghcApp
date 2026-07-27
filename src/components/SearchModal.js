@@ -1,10 +1,16 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, FlatList, Modal, ActivityIndicator, Platform, Animated, StatusBar } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Voice from "@react-native-voice/voice";
 import { useTranslation } from "react-i18next";
 import { colors, radius, spacing } from "../theme";
 import { serviceCards, holidays, menuUrls } from "../data";
+
+let Voice = null;
+try {
+  Voice = require("@react-native-voice/voice").default;
+} catch (e) {
+  console.warn("Voice module not available:", e.message);
+}
 
 export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
   const { t } = useTranslation();
@@ -13,34 +19,54 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
   const [isListening, setIsListening] = useState(false);
   const [error, setError] = useState(null);
   const [hasAttempted, setHasAttempted] = useState(false);
+  const [voiceAvailable, setVoiceAvailable] = useState(false);
   const pulse = useRef(new Animated.Value(1)).current;
   const pulseLoop = useRef(null);
   const waveAnims = useRef(Array.from({ length: 5 }, () => new Animated.Value(0.6))).current;
   const waveLoops = useRef([]);
 
   useEffect(() => {
-    Voice.onSpeechStart = () => setIsListening(true);
-    Voice.onSpeechEnd = () => setIsListening(false);
-    Voice.onSpeechResults = (e) => {
-      if (e.value && e.value[0]) {
-        setQuery(e.value[0]);
-        setHasAttempted(true);
-        handleSearch(e.value[0]);
-      }
-    };
-    Voice.onSpeechError = (e) => {
-      setIsListening(false);
-      const msg = (e && e.error && e.error.message) ? String(e.error.message) : "";
-      if (/no match/i.test(msg)) {
-        setHasAttempted(true);
-        setError(null);
-        return;
-      }
-      setError(msg);
-    };
+    if (!Voice) {
+      setVoiceAvailable(false);
+      return;
+    }
+
+    try {
+      Voice.onSpeechStart = () => setIsListening(true);
+      Voice.onSpeechEnd = () => setIsListening(false);
+      Voice.onSpeechResults = (e) => {
+        if (e.value && e.value[0]) {
+          setQuery(e.value[0]);
+          setHasAttempted(true);
+          handleSearch(e.value[0]);
+        }
+      };
+      Voice.onSpeechError = (e) => {
+        setIsListening(false);
+        const msg = (e && e.error && e.error.message) ? String(e.error.message) : "";
+        if (/no match/i.test(msg)) {
+          setHasAttempted(true);
+          setError(null);
+          return;
+        }
+        setError(msg);
+      };
+      setVoiceAvailable(true);
+    } catch (err) {
+      console.warn("Failed to setup Voice listeners:", err);
+      setVoiceAvailable(false);
+    }
 
     return () => {
-      Voice.destroy().then(Voice.removeAllListeners);
+      try {
+        if (Voice && Voice.destroy) {
+          Voice.destroy().then(() => {
+            if (Voice.removeAllListeners) Voice.removeAllListeners();
+          }).catch(() => {});
+        }
+      } catch (err) {
+        console.warn("Error cleaning up Voice:", err);
+      }
     };
   }, []);
 
@@ -75,6 +101,10 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
   }, [isListening]);
 
   const startListening = async () => {
+    if (!Voice || !voiceAvailable) {
+      setError("Voice recognition not available on this device");
+      return;
+    }
     setError(null);
     try {
       await Voice.destroy();
@@ -86,6 +116,7 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
   };
 
   const stopListening = async () => {
+    if (!Voice) return;
     try {
       await Voice.stop();
     } catch (e) {
@@ -198,12 +229,13 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
               <View style={styles.micWrap}>
                 <TouchableOpacity
                   onPress={isListening ? stopListening : startListening}
-                  style={styles.voiceButton}
+                  disabled={!voiceAvailable}
+                  style={[styles.voiceButton, !voiceAvailable && styles.voiceButtonDisabled]}
                 >
                   <Ionicons
                     name={isListening ? "mic" : "mic-outline"}
                     size={20}
-                    color={colors.accent}
+                    color={!voiceAvailable ? "#666" : colors.accent}
                   />
                 </TouchableOpacity>
               </View>
@@ -321,6 +353,9 @@ const styles = StyleSheet.create({
     padding: 4,
     alignItems: "center",
     justifyContent: "center",
+  },
+  voiceButtonDisabled: {
+    opacity: 0.5,
   },
   closeButton: {
     padding: spacing.sm,
