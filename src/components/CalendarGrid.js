@@ -2,18 +2,17 @@ import React, { useMemo } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
-import { colors, radius, spacing } from "../theme";
 import { useTranslation } from "react-i18next";
+import { useAppTheme } from "../theme";
 
 export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = [], config }) => {
+  const { colors, radius, spacing, fonts } = useAppTheme();
   const { t } = useTranslation();
+  const styles = useMemo(() => createStyles(colors, radius, spacing, fonts), [colors, radius, spacing, fonts]);
+  const statusColors = useMemo(() => getStatusColors(colors), [colors]);
+  const gradientColors = useMemo(() => [colors.card, colors.cardAlt], [colors.card, colors.cardAlt]);
   const daysInMonth = useMemo(() => new Date(year, month + 1, 0).getDate(), [month, year]);
   const firstWeekday = useMemo(() => new Date(year, month, 1).getDay(), [month, year]);
-  const colorsMap = {
-    public: "#E53935",
-    restricted: "#1E63D6",
-    working: "#10B981",
-  };
   const today = new Date();
   const isCurrentMonth = year === today.getFullYear() && month === today.getMonth();
   const todayDate = isCurrentMonth ? today.getDate() : null;
@@ -47,14 +46,14 @@ export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = []
   }, [daysInMonth, firstWeekday]);
 
   return (
-    <LinearGradient colors={["#FFFFFF", "#ECF1FF"]} style={styles.calendar}>
+    <LinearGradient colors={gradientColors} style={styles.calendar}>
       <View style={styles.monthRow}>
         <TouchableOpacity onPress={onPrev} activeOpacity={0.8} style={styles.navButton}>
-          <Ionicons name="chevron-back" size={16} color="#fff" />
+          <Ionicons name="chevron-back" size={16} color={colors.accent} />
         </TouchableOpacity>
         <Text style={styles.monthText}>{monthLabel}</Text>
         <TouchableOpacity onPress={onNext} activeOpacity={0.8} style={styles.navButton}>
-          <Ionicons name="chevron-forward" size={16} color="#fff" />
+          <Ionicons name="chevron-forward" size={16} color={colors.accent} />
         </TouchableOpacity>
       </View>
       <View style={styles.calendarHeaderRow}>
@@ -81,23 +80,23 @@ export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = []
                 dow = new Date(year, month, day).getDay();
 
                 if (isHighlighted) {
-                  bubbleStyle = [styles.dayBubble, { backgroundColor: "#8B5CF6", borderWidth: 2, borderColor: "#7C3AED" }];
-                  textStyle = [styles.dayText, { color: "#fff", fontWeight: "bold" }];
+                  bubbleStyle = [styles.dayBubble, styles.highlightedDayBubble];
+                  textStyle = [styles.dayText, styles.highlightedDayText];
                 } else if (single) {
-                  const color = colorsMap[single.type];
+                  const color = statusColors[single.type];
                   bubbleStyle = [styles.dayBubble, { backgroundColor: color }];
-                  textStyle = [styles.dayText, { color: "#fff" }];
+                  textStyle = [styles.dayText, styles.statusDayText];
                 } else {
                   if (monthConfig.satPolicy === "2nd_4th_holiday" && dow === 6) {
                     idx = saturdays.indexOf(day) + 1; // 1-based
                     const isHolidaySat = idx === 2 || idx === 4;
-                    const color = isHolidaySat ? colorsMap.public : colorsMap.working;
+                    const color = isHolidaySat ? statusColors.public : statusColors.working;
                     bubbleStyle = [styles.dayBubble, { backgroundColor: color }];
-                    textStyle = [styles.dayText, { color: "#fff" }];
+                    textStyle = [styles.dayText, styles.statusDayText];
                   } else if (dow === 0) {
-                    const color = colorsMap.public;
+                    const color = statusColors.public;
                     bubbleStyle = [styles.dayBubble, { backgroundColor: color }];
-                    textStyle = [styles.dayText, { color: "#fff" }];
+                    textStyle = [styles.dayText, styles.statusDayText];
                   }
                 }
               }
@@ -119,14 +118,7 @@ export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = []
                       {isToday && (
                         <View
                           pointerEvents="none"
-                          style={{
-                            position: 'absolute',
-                            width: 28,
-                            height: 28,
-                            borderRadius: 8,
-                            borderWidth: 2,
-                            borderColor: '#f99e16ff'
-                          }}
+                          style={styles.todayRing}
                         />
                       )}
                     </>
@@ -141,46 +133,71 @@ export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = []
   );
 };
 
-const styles = StyleSheet.create({
-  calendar: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.xl,
-    padding: spacing.md,
-    marginTop: spacing.sm,
-  },
-  monthRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: spacing.lg
-  },
-  navButton: {
-    width: 32,
-    height: 32,
-    borderRadius: radius.pill,
-    backgroundColor: "#0F2347",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  monthText: { color: "#0F2347", fontSize: 16, fontWeight: "700", textAlign: "center", flex: 1 },
-  calendarHeaderRow: { flexDirection: "row" },
-  calendarHeaderText: { color: "#6B7280", fontSize: 12, flex: 1, textAlign: "center" },
-  calendarDays: { marginTop: spacing.xs },
-  calendarRow: { flexDirection: "row" },
-  calendarCell: {
-    flex: 1,
-    height: 42,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  dayBubble: {
-    width: 28,
-    height: 28,
-    borderRadius: 8,
-    overflow: 'hidden',
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  dayText: { color: "#111827", fontSize: 12 },
+const getStatusColors = (colors) => ({
+  public: colors.danger,
+  restricted: colors.info,
+  working: colors.success,
 });
+
+const createStyles = (colors, radius, spacing, fonts) =>
+  StyleSheet.create({
+    calendar: {
+      borderRadius: radius.xl,
+      padding: spacing.md,
+      marginTop: spacing.sm,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    monthRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: spacing.lg,
+    },
+    navButton: {
+      width: 32,
+      height: 32,
+      borderRadius: radius.pill,
+      backgroundColor: colors.cardSubtle,
+      alignItems: "center",
+      justifyContent: "center",
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    monthText: { color: colors.textPrimary, fontSize: 16, fontFamily: fonts.bodyBold, textAlign: "center", flex: 1 },
+    calendarHeaderRow: { flexDirection: "row" },
+    calendarHeaderText: { color: colors.textSecondary, fontSize: 12, flex: 1, textAlign: "center", fontFamily: fonts.bodySemiBold },
+    calendarDays: { marginTop: spacing.xs },
+    calendarRow: { flexDirection: "row" },
+    calendarCell: {
+      flex: 1,
+      height: 42,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    dayBubble: {
+      width: 28,
+      height: 28,
+      borderRadius: 8,
+      overflow: "hidden",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    highlightedDayBubble: {
+      backgroundColor: colors.accent,
+      borderWidth: 2,
+      borderColor: colors.accent,
+    },
+    dayText: { color: colors.textPrimary, fontSize: 12, fontFamily: fonts.body },
+    statusDayText: { color: colors.textInverse, fontFamily: fonts.bodySemiBold },
+    highlightedDayText: { color: colors.textInverse, fontFamily: fonts.bodyBold },
+    todayRing: {
+      position: "absolute",
+      width: 28,
+      height: 28,
+      borderRadius: 8,
+      borderWidth: 2,
+      borderColor: colors.accent,
+    },
+  });
 

@@ -3,10 +3,11 @@ import { ActivityIndicator, StyleSheet, View, Platform, ScrollView, RefreshContr
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import * as IntentLauncher from 'expo-intent-launcher';
-import { colors } from "../theme";
+import { useAppTheme } from "../theme";
 import { WebView } from "react-native-webview";
 
 export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
+  const { colors } = useAppTheme();
   const isYouTube = useMemo(
     () => /youtube\.com|youtu\.be/.test(url || ""),
     [url]
@@ -846,6 +847,8 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
     return commonScript;
   }, [isYouTube, isRegistry, isDistrictCourts, isRecruitment, isGhcEbook, isJudgmentSearch, isGhcJudgesPages, isRegistrySection, isMactCalculator, isStatistics, isNoticeBoard]);
 
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   return (
     <View style={styles.container}>
       {Platform.OS === 'ios' ? (
@@ -1014,16 +1017,17 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.primary },
-  overlay: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.primary,
-  },
-});
+const createStyles = (colors) =>
+  StyleSheet.create({
+    container: { flex: 1, backgroundColor: colors.primary },
+    overlay: {
+      position: "absolute",
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: colors.primary,
+    },
+  });

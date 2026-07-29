@@ -1,109 +1,156 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Animated, StyleSheet, Text, View, TextInput, TouchableOpacity, Modal, FlatList, KeyboardAvoidingView, Platform, ActivityIndicator } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  ActivityIndicator,
+  Animated,
+  FlatList,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { CameraView, useCameraPermissions } from "expo-camera";
-import { colors, radius, spacing } from "../theme";
+import { useAppTheme } from "../theme";
 
-const CaseTypeItem = React.memo(({ item, isSelected, onSelect }) => (
+const ERROR_RED = "#EF4444";
+
+const hexToRgba = (hex, alpha) => {
+  if (!hex || typeof hex !== "string") {
+    return `rgba(212, 175, 55, ${alpha})`;
+  }
+
+  let normalized = hex.replace("#", "");
+
+  if (normalized.length === 3) {
+    normalized = normalized
+      .split("")
+      .map((char) => char + char)
+      .join("");
+  }
+
+  if (normalized.length !== 6) {
+    return `rgba(212, 175, 55, ${alpha})`;
+  }
+
+  const value = Number.parseInt(normalized, 16);
+  const r = (value >> 16) & 255;
+  const g = (value >> 8) & 255;
+  const b = value & 255;
+
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
+const CaseTypeItem = React.memo(({ item, isSelected, onSelect, styles, colors }) => (
   <TouchableOpacity
     style={[styles.modalItem, isSelected && styles.modalItemActive]}
     onPress={() => onSelect(item)}
   >
-    <Text style={[styles.modalItemText, isSelected && styles.modalItemTextActive]}>
-      {item.label}
-    </Text>
-    {isSelected && (
-      <Ionicons name="checkmark" size={20} color={colors.accent} />
-    )}
+    <Text style={[styles.modalItemText, isSelected && styles.modalItemTextActive]}>{item.label}</Text>
+    {isSelected && <Ionicons name="checkmark" size={20} color={colors.accent} />}
   </TouchableOpacity>
 ));
 
 export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
+  const { theme, colors, radius, spacing, fonts } = useAppTheme();
+  const styles = React.useMemo(
+    () => createStyles(theme, colors, radius, spacing, fonts),
+    [theme, colors, radius, spacing, fonts]
+  );
+
   const [category, setCategory] = useState("Civil");
   const [selectedType, setSelectedType] = useState(null);
   const [regNo, setRegNo] = useState("");
   const [year, setYear] = useState(new Date().getFullYear().toString());
-  
-  const [searchMode, setSearchMode] = useState("Case No"); // "Case No", "CNR", "QR Scan"
+  const [searchMode, setSearchMode] = useState("Case No");
   const [cnr, setCnr] = useState("");
   const [scanned, setScanned] = useState(false);
   const [permission, requestPermission] = useCameraPermissions();
-
-  const scrollViewRef = useRef(null);
-  const flatListRef = useRef(null);
-  
   const [typeModalVisible, setTypeModalVisible] = useState(false);
   const [typeSearchQuery, setTypeSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [caseTypes, setCaseTypes] = useState({ Civil: [], Criminal: [] });
   const [caseTypesLoading, setCaseTypesLoading] = useState(true);
-  
   const [searchResults, setSearchResults] = useState([]);
   const [searchError, setSearchError] = useState(null);
 
+  const scrollViewRef = useRef(null);
+  const flatListRef = useRef(null);
   const availableTypes = category === "Civil" ? caseTypes.Civil : caseTypes.Criminal;
 
   useEffect(() => {
     const fetchCaseTypes = async () => {
       try {
         setCaseTypesLoading(true);
-        
-        // Use fetch directly to avoid any potential axios configuration issues
-        const response = await fetch('https://ghcservices.assam.gov.in/cis-api/api/v1/cases/case-type', {
-          method: 'GET',
+
+        const response = await fetch("https://ghcservices.assam.gov.in/cis-api/api/v1/cases/case-type", {
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.EXPO_PUBLIC_API_TOKEN}`
-          }
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_TOKEN}`,
+          },
         });
 
         if (response.ok) {
           const data = await response.json();
           const mapped = { Civil: [], Criminal: [] };
-          const items = Array.isArray(data) ? data : (data.data || []);
-          
-          items.forEach(t => {
+          const items = Array.isArray(data) ? data : data.data || [];
+
+          items.forEach((type) => {
             const item = {
-              label: t.type_name,
-              value: String(t.case_type)
+              label: type.type_name,
+              value: String(type.case_type),
             };
-            
-            if (t.type_flag === "1" || t.type_flag === 1) {
+
+            if (type.type_flag === "1" || type.type_flag === 1) {
               mapped.Civil.push(item);
-            } else if (t.type_flag === "2" || t.type_flag === 2) {
+            } else if (type.type_flag === "2" || type.type_flag === 2) {
               mapped.Criminal.push(item);
             }
           });
-          
+
           mapped.Civil.sort((a, b) => a.label.localeCompare(b.label));
           mapped.Criminal.sort((a, b) => a.label.localeCompare(b.label));
-          
+
           setCaseTypes(mapped);
         } else {
           const errorText = await response.text();
-          console.error('Failed to fetch case types from new API. Status:', response.status, 'Response:', errorText);
+          console.error("Failed to fetch case types from new API. Status:", response.status, "Response:", errorText);
         }
       } catch (err) {
-        console.error('Failed to fetch case types from new API. Network Error:', err);
+        console.error("Failed to fetch case types from new API. Network Error:", err);
       } finally {
         setCaseTypesLoading(false);
       }
     };
+
     fetchCaseTypes();
   }, []);
 
   const filteredTypes = React.useMemo(() => {
     if (!typeSearchQuery) return availableTypes;
-    return availableTypes.filter(type => 
-      type.label.toLowerCase().includes(typeSearchQuery.toLowerCase()) ||
-      type.value.toLowerCase().includes(typeSearchQuery.toLowerCase())
+
+    return availableTypes.filter(
+      (type) =>
+        type.label.toLowerCase().includes(typeSearchQuery.toLowerCase()) ||
+        type.value.toLowerCase().includes(typeSearchQuery.toLowerCase())
     );
   }, [availableTypes, typeSearchQuery]);
 
-  const handleCategorySwitch = (cat) => {
-    setCategory(cat);
+  const selectedTypeIndex = React.useMemo(() => {
+    if (!selectedType || typeSearchQuery) return 0;
+
+    const index = availableTypes.findIndex((type) => type.value === selectedType.value);
+    return index >= 0 ? index : 0;
+  }, [availableTypes, selectedType, typeSearchQuery]);
+
+  const handleCategorySwitch = (nextCategory) => {
+    setCategory(nextCategory);
     setSelectedType(null);
     setTypeSearchQuery("");
   };
@@ -114,44 +161,51 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
     setTypeSearchQuery("");
   }, []);
 
-  const renderTypeItem = React.useCallback(({ item }) => (
-    <CaseTypeItem 
-      item={item} 
-      isSelected={selectedType?.value === item.value} 
-      onSelect={handleTypeSelect} 
-    />
-  ), [selectedType, handleTypeSelect]);
+  const renderTypeItem = React.useCallback(
+    ({ item }) => (
+      <CaseTypeItem
+        item={item}
+        isSelected={selectedType?.value === item.value}
+        onSelect={handleTypeSelect}
+        styles={styles}
+        colors={colors}
+      />
+    ),
+    [colors, handleTypeSelect, selectedType, styles]
+  );
 
   const handleSearch = async (overrideCnr = null) => {
-    const cnrToSearch = typeof overrideCnr === 'string' ? overrideCnr : cnr;
+    const cnrToSearch = typeof overrideCnr === "string" ? overrideCnr : cnr;
 
     if (searchMode === "Case No" && (!selectedType || !regNo || !year)) return;
     if ((searchMode === "CNR" || searchMode === "QR Scan") && !cnrToSearch) return;
-    
+
     setIsSearching(true);
     setSearchError(null);
     setHasSearched(false);
-    
+
     try {
       if (searchMode === "Case No") {
         const url = `https://ghcservices.assam.gov.in/cis-api/api/v1/cases/search/registration?case_type=${selectedType.value}&reg_no=${regNo}&reg_year=${year}`;
-        const res = await fetch(url, {
-          method: 'GET',
+        const response = await fetch(url, {
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.EXPO_PUBLIC_API_TOKEN}`
-          }
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_TOKEN}`,
+          },
         });
-        if (!res.ok) {
-          const errorText = await res.text();
-          throw new Error(`Search failed with status ${res.status}: ${errorText}`);
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Search failed with status ${response.status}: ${errorText}`);
         }
-        const data = await res.json();
-        
+
+        const data = await response.json();
+
         if (data.status && data.data) {
           if (Array.isArray(data.data)) {
             setSearchResults(data.data.length > 0 ? data.data : []);
-          } else if (data.data !== null && typeof data.data === 'object' && Object.keys(data.data).length > 0) {
+          } else if (data.data !== null && typeof data.data === "object" && Object.keys(data.data).length > 0) {
             setSearchResults([data.data]);
           } else {
             setSearchResults([]);
@@ -160,12 +214,15 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
           setSearchResults([]);
         }
       } else {
-        // CNR or QR Scan Search
         const url = `https://ghcservices.assam.gov.in/case-status/proxy/cases/${cnrToSearch}`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('Network response was not ok');
-        const data = await res.json();
-        
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+
         if (data.status && data.data) {
           setSearchResults([data.data]);
         } else {
@@ -173,11 +230,12 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
         }
       }
     } catch (err) {
-      setSearchError('Failed to fetch case. Please check your inputs or ensure you are connected to the court network.');
+      setSearchError("Failed to fetch case. Please check your inputs or ensure you are connected to the court network.");
       setSearchResults([]);
     } finally {
       setIsSearching(false);
       setHasSearched(true);
+
       setTimeout(() => {
         if (scrollViewRef.current) {
           scrollViewRef.current.scrollToEnd({ animated: true });
@@ -187,11 +245,8 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-    <LinearGradient colors={["#000000", "#000000"]} style={styles.hero}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+      <LinearGradient colors={theme.gradients.header} style={styles.hero}>
         <View style={styles.heroRow}>
           <View style={styles.heroIcon}>
             <Ionicons name="document-text" size={20} color={colors.accent} />
@@ -210,16 +265,14 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
         keyboardShouldPersistTaps="handled"
         onScroll={
           scrollY
-            ? Animated.event(
-                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                { useNativeDriver: false }
-              )
+            ? Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+                useNativeDriver: false,
+              })
             : undefined
         }
         scrollEventThrottle={16}
       >
         <View style={styles.card}>
-          {/* Search Mode Tabs */}
           <View style={styles.searchModeContainer}>
             {["Case No", "CNR", "QR Scan"].map((mode) => (
               <TouchableOpacity
@@ -230,6 +283,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                   setHasSearched(false);
                   setSearchResults([]);
                   setScanned(false);
+
                   if (mode === "QR Scan" && (!permission || !permission.granted)) {
                     requestPermission();
                   }
@@ -242,80 +296,77 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
 
           {searchMode === "Case No" && (
             <>
-              {/* Category Selector */}
               <Text style={styles.label}>Case Category</Text>
               <View style={styles.pillContainer}>
-            <TouchableOpacity
-              style={[styles.pill, category === "Civil" && styles.pillActive]}
-              onPress={() => handleCategorySwitch("Civil")}
-              activeOpacity={0.8}
-            >
-              <Text style={[styles.pillText, category === "Civil" && styles.pillTextActive]}>Civil</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.pill, category === "Criminal" && styles.pillActive]}
-              onPress={() => handleCategorySwitch("Criminal")}
-              activeOpacity={0.8}
-            >
-              <Text style={[styles.pillText, category === "Criminal" && styles.pillTextActive]}>Criminal</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Case Type Selector */}
-          <Text style={styles.label}>Case Type</Text>
-          <TouchableOpacity
-            style={styles.dropdownButton}
-            onPress={() => setTypeModalVisible(true)}
-            activeOpacity={0.8}
-            disabled={caseTypesLoading}
-          >
-            <Text style={[styles.dropdownText, !selectedType && styles.placeholderText]}>
-              {caseTypesLoading ? "Loading case types..." : (selectedType ? selectedType.label : "Select Case Type")}
-            </Text>
-            {caseTypesLoading ? (
-              <ActivityIndicator size="small" color={colors.textSecondary} />
-            ) : (
-              <Ionicons name="chevron-down" size={20} color={colors.textSecondary} />
-            )}
-          </TouchableOpacity>
-
-          {/* Reg No and Year Row */}
-          <View style={styles.row}>
-            <View style={styles.flex1}>
-              <Text style={styles.label}>Registration No.</Text>
-              <View style={styles.inputContainer}>
-                <Ionicons name="pricetag" size={16} color={colors.textSecondary} style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder="e.g. 1234"
-                  placeholderTextColor={colors.textSecondary}
-                  keyboardType="numeric"
-                  value={regNo}
-                  onChangeText={setRegNo}
-                />
+                <TouchableOpacity
+                  style={[styles.pill, category === "Civil" && styles.pillActive]}
+                  onPress={() => handleCategorySwitch("Civil")}
+                  activeOpacity={0.8}
+                >
+                  <Text style={[styles.pillText, category === "Civil" && styles.pillTextActive]}>Civil</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.pill, category === "Criminal" && styles.pillActive]}
+                  onPress={() => handleCategorySwitch("Criminal")}
+                  activeOpacity={0.8}
+                >
+                  <Text style={[styles.pillText, category === "Criminal" && styles.pillTextActive]}>Criminal</Text>
+                </TouchableOpacity>
               </View>
-            </View>
-            <View style={styles.flex1}>
-              <Text style={styles.label}>Year</Text>
-              <View style={styles.inputContainer}>
-                <Ionicons name="calendar" size={16} color={colors.textSecondary} style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder="YYYY"
-                  placeholderTextColor={colors.textSecondary}
-                  keyboardType="numeric"
-                  maxLength={4}
-                  value={year}
-                  onChangeText={setYear}
-                />
-              </View>
-            </View>
-          </View>
-        </>
-      )}
 
-      {searchMode === "CNR" && (
-            <View style={{ marginBottom: spacing.xl }}>
+              <Text style={styles.label}>Case Type</Text>
+              <TouchableOpacity
+                style={styles.dropdownButton}
+                onPress={() => setTypeModalVisible(true)}
+                activeOpacity={0.8}
+                disabled={caseTypesLoading}
+              >
+                <Text style={[styles.dropdownText, !selectedType && styles.placeholderText]}>
+                  {caseTypesLoading ? "Loading case types..." : selectedType ? selectedType.label : "Select Case Type"}
+                </Text>
+                {caseTypesLoading ? (
+                  <ActivityIndicator size="small" color={colors.textSecondary} />
+                ) : (
+                  <Ionicons name="chevron-down" size={20} color={colors.textSecondary} />
+                )}
+              </TouchableOpacity>
+
+              <View style={styles.row}>
+                <View style={styles.flex1}>
+                  <Text style={styles.label}>Registration No.</Text>
+                  <View style={styles.inputContainer}>
+                    <Ionicons name="pricetag" size={16} color={colors.textSecondary} style={styles.inputIcon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="e.g. 1234"
+                      placeholderTextColor={colors.textSecondary}
+                      keyboardType="numeric"
+                      value={regNo}
+                      onChangeText={setRegNo}
+                    />
+                  </View>
+                </View>
+                <View style={styles.flex1}>
+                  <Text style={styles.label}>Year</Text>
+                  <View style={styles.inputContainer}>
+                    <Ionicons name="calendar" size={16} color={colors.textSecondary} style={styles.inputIcon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="YYYY"
+                      placeholderTextColor={colors.textSecondary}
+                      keyboardType="numeric"
+                      maxLength={4}
+                      value={year}
+                      onChangeText={setYear}
+                    />
+                  </View>
+                </View>
+              </View>
+            </>
+          )}
+
+          {searchMode === "CNR" && (
+            <View style={styles.singleFieldSection}>
               <Text style={styles.label}>Enter CNR Number</Text>
               <View style={styles.inputContainer}>
                 <Ionicons name="pricetag" size={16} color={colors.textSecondary} style={styles.inputIcon} />
@@ -332,10 +383,10 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
           )}
 
           {searchMode === "QR Scan" && (
-            <View style={{ marginBottom: spacing.xl, alignItems: "center" }}>
+            <View style={styles.qrSection}>
               {!permission ? (
                 <View style={styles.cameraPlaceholder}>
-                  <ActivityIndicator size="small" color={colors.primary} />
+                  <ActivityIndicator size="small" color={colors.accent} />
                 </View>
               ) : !permission.granted ? (
                 <View style={styles.cameraPlaceholder}>
@@ -347,26 +398,21 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
               ) : (
                 <View style={styles.cameraContainer}>
                   <CameraView
-                    style={{ flex: 1 }}
+                    style={styles.cameraView}
                     facing="back"
-                    barcodeScannerSettings={{
-                      barcodeTypes: ["qr"],
-                    }}
+                    barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
                     onBarcodeScanned={(result) => {
                       if (scanned || !result.data) return;
                       setScanned(true);
-                      setCnr(result.data); // Assume QR contains just the CNR
+                      setCnr(result.data);
                       handleSearch(result.data);
                     }}
                   />
-                  <View 
-                    style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0, alignItems: "center", justifyContent: "center", zIndex: 10 }}
-                    pointerEvents="none"
-                  >
+                  <View style={styles.scannerOverlay} pointerEvents="none">
                     <View style={styles.scannerTarget} />
                   </View>
                   {scanned && (
-                    <View style={{ position: "absolute", bottom: 20, left: 0, right: 0, alignItems: "center", zIndex: 20 }}>
+                    <View style={styles.scannedActionWrap}>
                       <TouchableOpacity style={styles.rescanBtn} onPress={() => setScanned(false)}>
                         <Text style={styles.rescanBtnText}>Tap to Scan Again</Text>
                       </TouchableOpacity>
@@ -377,23 +423,22 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             </View>
           )}
 
-          {/* Search Button */}
           {searchMode !== "QR Scan" && (
             <TouchableOpacity
               style={styles.searchButton}
               onPress={() => handleSearch()}
               disabled={
-                isSearching || 
+                isSearching ||
                 (searchMode === "Case No" && (caseTypesLoading || !selectedType || !regNo || !year)) ||
                 (searchMode === "CNR" && !cnr)
               }
               activeOpacity={0.8}
             >
               {isSearching || (searchMode === "Case No" && caseTypesLoading) ? (
-                <ActivityIndicator color={colors.accent} size="small" />
+                <ActivityIndicator color={colors.textInverse} size="small" />
               ) : (
                 <>
-                  <Ionicons name="search" size={18} color="#FFFFFF" />
+                  <Ionicons name="search" size={18} color={colors.textInverse} />
                   <Text style={styles.searchButtonText}>Search Case</Text>
                 </>
               )}
@@ -401,81 +446,99 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
           )}
         </View>
 
-        {/* Search Results Area */}
         {hasSearched && (
           <View style={styles.resultsContainer}>
             <Text style={styles.resultsHeader}>Search Results</Text>
-            
+
             {searchError ? (
               <View style={styles.errorStateCard}>
-                 <View style={styles.errorStateIconBg}>
-                   <Ionicons name="alert-circle" size={32} color="#EF4444" />
-                 </View>
-                 <Text style={styles.errorStateTitle}>Search Failed</Text>
-                 <Text style={styles.errorStateSub}>{searchError}</Text>
+                <View style={styles.errorStateIconBg}>
+                  <Ionicons name="alert-circle" size={32} color={ERROR_RED} />
+                </View>
+                <Text style={styles.errorStateTitle}>Search Failed</Text>
+                <Text style={styles.errorStateSub}>{searchError}</Text>
               </View>
             ) : searchResults.length === 0 ? (
               <View style={styles.emptyStateCard}>
-                 <View style={styles.emptyStateIconBg}>
-                   <Ionicons name="search" size={32} color="#777777" />
-                 </View>
-                 <Text style={styles.emptyStateTitle}>No Cases Found</Text>
-                 <Text style={styles.emptyStateSub}>We couldn't find any cases matching your search criteria. Please check the registration number and year.</Text>
-              </View>
-            ) : searchResults.map((item, index) => {
-              const caseTypeLabel = selectedType?.label || item.filing_case_type?.type_name || '';
-              const itemRegNo = item.reg_no || regNo;
-              const itemYear = item.reg_year || year;
-              const caseNoStr = caseTypeLabel ? `${caseTypeLabel} ${itemRegNo}/${itemYear}` : `${itemRegNo}/${itemYear}`;
-              const isDisposed = item.archive === 'Y';
-              const statusStr = isDisposed ? 'Disposed' : 'Pending';
-              const isDateNotGiven = item.date_next_list?.startsWith('5000-01-01') || item.date_next_list?.startsWith('4999-12-31');
-              const formatDate = (dateString) => {
-                if (!dateString) return "-";
-                try {
-                  const d = new Date(dateString);
-                  if (isNaN(d.getTime())) return dateString;
-                  return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-                } catch {
-                  return dateString;
-                }
-              };
-              const nextHearingDisplay = isDateNotGiven ? 'Date not given. Refer the last order for details' : formatDate(item.date_next_list);
-
-              const shouldHideParties = item.hide_partyname === 'Y' || item.hide_pet_name === 'Y' || item.hide_res_name === 'Y';
-              const getPartyName = (name) => shouldHideParties && name ? 'XXXX' : name;
-
-              return (
-                <View key={item.cino || index} style={styles.resultCard}>
-                  <View style={styles.resultHeader}>
-                    <Text style={styles.resultCaseNo}>{caseNoStr}</Text>
-                    <View style={[styles.statusBadge, isDisposed && styles.statusBadgeDisposed]}>
-                      <Text style={[styles.statusText, isDisposed && styles.statusTextDisposed]}>{statusStr}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.resultBody}>
-                    <Text style={styles.partyText}><Text style={styles.bold}>Petitioner:</Text> {getPartyName(item.pet_name)}</Text>
-                    <Text style={styles.partyText}><Text style={styles.bold}>Respondent:</Text> {getPartyName(item.res_name)}</Text>
-                    {!isDisposed && (
-                      <Text style={styles.partyText}><Text style={styles.bold}>Next Hearing:</Text> {nextHearingDisplay}</Text>
-                    )}
-                  </View>
-                  <TouchableOpacity style={styles.viewButton} onPress={() => onViewDetails(item)}>
-                    <Text style={styles.viewButtonText}>View Details</Text>
-                    <Ionicons name="arrow-forward" size={16} color={colors.accent} />
-                  </TouchableOpacity>
+                <View style={styles.emptyStateIconBg}>
+                  <Ionicons name="search" size={32} color={colors.textQuaternary} />
                 </View>
-              );
-            })}
+                <Text style={styles.emptyStateTitle}>No Cases Found</Text>
+                <Text style={styles.emptyStateSub}>
+                  We couldn't find any cases matching your search criteria. Please check the registration number and
+                  year.
+                </Text>
+              </View>
+            ) : (
+              searchResults.map((item, index) => {
+                const caseTypeLabel = selectedType?.label || item.filing_case_type?.type_name || "";
+                const itemRegNo = item.reg_no || regNo;
+                const itemYear = item.reg_year || year;
+                const caseNoStr = caseTypeLabel ? `${caseTypeLabel} ${itemRegNo}/${itemYear}` : `${itemRegNo}/${itemYear}`;
+                const isDisposed = item.archive === "Y";
+                const statusStr = isDisposed ? "Disposed" : "Pending";
+                const isDateNotGiven =
+                  item.date_next_list?.startsWith("5000-01-01") || item.date_next_list?.startsWith("4999-12-31");
+
+                const formatDate = (dateString) => {
+                  if (!dateString) return "-";
+
+                  try {
+                    const date = new Date(dateString);
+
+                    if (Number.isNaN(date.getTime())) return dateString;
+
+                    return date.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+                  } catch {
+                    return dateString;
+                  }
+                };
+
+                const nextHearingDisplay = isDateNotGiven
+                  ? "Date not given. Refer the last order for details"
+                  : formatDate(item.date_next_list);
+
+                const shouldHideParties =
+                  item.hide_partyname === "Y" || item.hide_pet_name === "Y" || item.hide_res_name === "Y";
+                const getPartyName = (name) => (shouldHideParties && name ? "XXXX" : name);
+
+                return (
+                  <View key={item.cino || index} style={styles.resultCard}>
+                    <View style={styles.resultHeader}>
+                      <Text style={styles.resultCaseNo}>{caseNoStr}</Text>
+                      <View style={[styles.statusBadge, isDisposed && styles.statusBadgeDisposed]}>
+                        <Text style={[styles.statusText, isDisposed && styles.statusTextDisposed]}>{statusStr}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.resultBody}>
+                      <Text style={styles.partyText}>
+                        <Text style={styles.bold}>Petitioner:</Text> {getPartyName(item.pet_name)}
+                      </Text>
+                      <Text style={styles.partyText}>
+                        <Text style={styles.bold}>Respondent:</Text> {getPartyName(item.res_name)}
+                      </Text>
+                      {!isDisposed && (
+                        <Text style={styles.partyText}>
+                          <Text style={styles.bold}>Next Hearing:</Text> {nextHearingDisplay}
+                        </Text>
+                      )}
+                    </View>
+                    <TouchableOpacity style={styles.viewButton} onPress={() => onViewDetails(item)}>
+                      <Text style={styles.viewButtonText}>View Details</Text>
+                      <Ionicons name="arrow-forward" size={16} color={colors.accent} />
+                    </TouchableOpacity>
+                  </View>
+                );
+              })
+            )}
           </View>
         )}
       </Animated.ScrollView>
 
-      {/* Case Type Modal */}
-      <Modal 
-        visible={typeModalVisible} 
-        animationType="slide" 
-        transparent={true}
+      <Modal
+        visible={typeModalVisible}
+        animationType="slide"
+        transparent
         onRequestClose={() => {
           setTypeModalVisible(false);
           setTypeSearchQuery("");
@@ -488,10 +551,12 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                 <Text style={styles.modalTitle}>Select {category} Case Type</Text>
                 <Text style={styles.modalSubtitle}>{filteredTypes.length} types available</Text>
               </View>
-              <TouchableOpacity onPress={() => {
-                setTypeModalVisible(false);
-                setTypeSearchQuery("");
-              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  setTypeModalVisible(false);
+                  setTypeSearchQuery("");
+                }}
+              >
                 <Ionicons name="close-circle" size={24} color={colors.textSecondary} />
               </TouchableOpacity>
             </View>
@@ -517,17 +582,16 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             <FlatList
               ref={flatListRef}
               data={filteredTypes}
-              style={{ flex: 1 }}
+              style={styles.modalList}
               keyExtractor={(item) => item.value}
               renderItem={renderTypeItem}
               initialNumToRender={15}
               maxToRenderPerBatch={10}
               windowSize={5}
-              removeClippedSubviews={Platform.OS === 'android'}
+              removeClippedSubviews={Platform.OS === "android"}
               keyboardShouldPersistTaps="handled"
-              initialScrollIndex={selectedType && !typeSearchQuery ? availableTypes.findIndex(t => t.value === selectedType.value) : 0}
+              initialScrollIndex={selectedTypeIndex}
               onScrollToIndexFailed={(info) => {
-                // Fallback for when scroll index fails
                 setTimeout(() => {
                   if (flatListRef.current) {
                     flatListRef.current.scrollToIndex({ index: info.index, animated: false });
@@ -540,9 +604,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                   <Text style={styles.modalEmptyText}>No matching case types found</Text>
                 </View>
               }
-              getItemLayout={(data, index) => (
-                {length: 53, offset: 53 * index, index} // Estimate of item height + border
-              )}
+              getItemLayout={(_, index) => ({ length: 53, offset: 53 * index, index })}
             />
           </View>
         </View>
@@ -551,86 +613,512 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.primary },
-  hero: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.lg },
-  heroRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
-  heroIcon: { width: 36, height: 36, borderRadius: 12, backgroundColor: "#222222", alignItems: "center", justifyContent: "center" },
-  heroTitle: { color: "#FFFFFF", fontFamily: 'Georgia', fontSize: 18 },
-  heroSub: { color: "#ADB9D8", marginTop: 6, fontFamily: 'Inter_400Regular' },
-  scroll: { flex: 1 },
-  content: { backgroundColor: "#000000", borderWidth: 1, borderColor: colors.accent || "#D4AF37", borderBottomWidth: 0, borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, flexGrow: 1 },
-  card: { backgroundColor: "#111111", borderRadius: radius.xl, borderWidth: 1, borderColor: "#222222", borderWidth: 1, borderColor: "#222222", padding: spacing.lg, elevation: 0, overflow: "hidden" },
-  label: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: colors.textPrimary, marginBottom: 8 },
-  pillContainer: { flexDirection: "row", backgroundColor: "#222222", borderRadius: radius.pill, padding: 4, marginBottom: spacing.lg },
-  pill: { flex: 1, paddingVertical: 10, alignItems: "center", borderRadius: radius.pill },
-  pillActive: { backgroundColor: "#111111", borderWidth: 1, borderColor: colors.accent, elevation: 0, overflow: "hidden" },
-  pillText: { fontSize: 14, fontFamily: 'Inter_400Regular', color: "#AAAAAA" },
-  pillTextActive: { color: colors.accent, fontFamily: 'Inter_600SemiBold' },
+const createStyles = (theme, colors, radius, spacing, fonts) => {
+  const accentTint = hexToRgba(colors.accent, 0.25);
+  const accentSoft = hexToRgba(colors.accent, 0.14);
+  const accentBorder = hexToRgba(colors.accent, 0.3);
+  const dangerTint = hexToRgba(ERROR_RED, theme.isDark ? 0.16 : 0.1);
+  const dangerBorder = hexToRgba(ERROR_RED, theme.isDark ? 0.28 : 0.2);
 
-  searchModeContainer: { flexDirection: "row", marginBottom: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#333333" },
-  modeTab: { flex: 1, paddingVertical: 12, alignItems: "center", borderBottomWidth: 2, borderBottomColor: "transparent" },
-  modeTabActive: { borderBottomColor: colors.accent },
-  modeTabText: { fontSize: 14, fontFamily: 'Inter_400Regular', color: "#AAAAAA" },
-  modeTabTextActive: { color: colors.accent, fontFamily: 'Inter_600SemiBold' },
-
-  cameraPlaceholder: { height: 300, width: "100%", backgroundColor: "#222222", borderRadius: radius.lg, alignItems: "center", justifyContent: "center", padding: spacing.xl },
-  cameraText: { textAlign: "center", color: "#CCCCCC", marginBottom: spacing.md },
-  permissionBtn: { backgroundColor: colors.primary, paddingHorizontal: 20, paddingVertical: 10, borderRadius: radius.md },
-  permissionBtnText: { color: "#FFFFFF", fontWeight: "600" },
-  cameraContainer: { height: 300, width: "100%", borderRadius: radius.lg, overflow: "hidden", backgroundColor: "#000000" },
-  scannerTarget: { width: 200, height: 200, borderWidth: 2, borderColor: "#D4AF37", backgroundColor: "transparent", borderRadius: radius.md },
-  rescanBtn: { backgroundColor: "rgba(0,0,0,0.8)", paddingHorizontal: 24, paddingVertical: 12, borderRadius: radius.pill, borderWidth: 1, borderColor: "#333333" },
-  rescanBtnText: { color: "#FFFFFF", fontWeight: "600" },
-  dropdownButton: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "#222222", borderWidth: 1, borderColor: "#333333", borderRadius: radius.md, paddingHorizontal: 16, paddingVertical: 14, marginBottom: spacing.lg },
-  dropdownText: { fontSize: 15, color: colors.textPrimary },
-  placeholderText: { color: "#777777" },
-  row: { flexDirection: "row", gap: spacing.md, marginBottom: spacing.xl },
-  flex1: { flex: 1 },
-  inputContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#222222", borderWidth: 1, borderColor: "#333333", borderRadius: radius.md, paddingHorizontal: 12 },
-  inputIcon: { marginRight: 8 },
-  input: { flex: 1, height: 48, fontSize: 15, color: colors.textPrimary },
-  searchButton: { backgroundColor: colors.accent, borderRadius: radius.md, height: 52, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8 },
-  searchButtonText: { color: "#FFFFFF", fontSize: 16, fontFamily: 'Inter_700Bold' },
-  
-  // Results UI
-  resultsContainer: { marginTop: spacing.sm },
-  resultsHeader: { fontSize: 18, fontFamily: 'Georgia', color: colors.textPrimary, marginBottom: spacing.md },
-  resultCard: { backgroundColor: "#111111", borderRadius: radius.lg, overflow: "hidden", marginBottom: spacing.md, elevation: 0, borderWidth: 1, borderColor: colors.accent },
-  resultHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: spacing.md, borderBottomWidth: 1, borderBottomColor: "#222222" },
-  resultCaseNo: { fontSize: 16, fontFamily: 'Inter_700Bold', color: colors.textPrimary },
-  statusBadge: { backgroundColor: "rgba(212, 175, 55, 0.25)", paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.pill },
-  statusBadgeDisposed: { backgroundColor: "rgba(212, 175, 55, 0.25)" },
-  statusText: { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: "#D4AF37" },
-  statusTextDisposed: { color: "#D4AF37" },
-  resultBody: { padding: spacing.md, gap: 6 },
-  partyText: { fontSize: 14, color: "#CCCCCC", fontFamily: 'Inter_400Regular' },
-  bold: { fontFamily: 'Inter_600SemiBold', color: colors.textPrimary },
-  viewButton: { backgroundColor: colors.primary, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, paddingVertical: 14 },
-  viewButtonText: { color: "#FFFFFF", fontSize: 15, fontFamily: 'Inter_600SemiBold' },
-
-  emptyStateCard: { backgroundColor: "#111111", borderRadius: radius.xl, padding: spacing.xl, alignItems: "center", justifyContent: "center", elevation: 0, marginTop: spacing.sm, borderWidth: 1, borderColor: "#222222" },
-  emptyStateIconBg: { width: 64, height: 64, borderRadius: 32, backgroundColor: "#222222", alignItems: "center", justifyContent: "center", marginBottom: spacing.md },
-  emptyStateTitle: { fontSize: 18, fontWeight: "700", color: colors.textPrimary, marginBottom: 8 },
-  emptyStateSub: { fontSize: 14, color: "#AAAAAA", textAlign: "center", lineHeight: 20, paddingHorizontal: spacing.lg },
-  errorStateCard: { backgroundColor: "#222222", borderRadius: radius.xl, padding: spacing.xl, alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: "#552222", marginTop: spacing.sm },
-  errorStateIconBg: { width: 64, height: 64, borderRadius: 32, backgroundColor: "#222222", alignItems: "center", justifyContent: "center", marginBottom: spacing.md },
-  errorStateTitle: { fontSize: 18, fontWeight: "700", color: "#FF6666", marginBottom: 8 },
-  errorStateSub: { fontSize: 14, color: "#FF8888", textAlign: "center", lineHeight: 20 },
-
-  // Modal UI
-  modalOverlay: { flex: 1, backgroundColor: "transparent", justifyContent: "flex-end" },
-  modalContent: { backgroundColor: "#000000", overflow: "hidden", borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, height: "85%", borderWidth: 1, borderColor: "rgba(212,175,55,0.25)", borderBottomWidth: 0 },
-  modalHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#222222" },
-  modalTitle: { fontSize: 18, fontFamily: 'Georgia', color: colors.textPrimary },
-  modalSubtitle: { fontSize: 12, color: colors.textSecondary, marginTop: 2, fontFamily: 'Inter_400Regular' },
-  modalSearchContainer: { flexDirection: "row", alignItems: "center", backgroundColor: "#222222", margin: spacing.lg, paddingHorizontal: 12, borderRadius: radius.md, height: 48 },
-  modalSearchIcon: { marginRight: 8 },
-  modalSearchInput: { flex: 1, fontSize: 15, color: colors.textPrimary, fontFamily: 'Inter_400Regular' },
-  modalEmptyState: { padding: 40, alignItems: "center", justifyContent: "center" },
-  modalEmptyText: { marginTop: 12, color: colors.textSecondary, fontSize: 14, textAlign: "center", fontFamily: 'Inter_400Regular' },
-  modalItem: { flexDirection: "row", justifyContent: "space-between", paddingVertical: 16, paddingHorizontal: spacing.lg, borderBottomWidth: 1, borderBottomColor: "#222222" },
-  modalItemActive: { backgroundColor: "#111111" },
-  modalItemText: { fontSize: 16, color: "#CCCCCC", fontFamily: 'Inter_400Regular' },
-  modalItemTextActive: { color: colors.accent, fontFamily: 'Inter_600SemiBold' },
-});
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.primary,
+    },
+    hero: {
+      paddingHorizontal: spacing.lg,
+      paddingTop: spacing.lg,
+      paddingBottom: spacing.lg,
+    },
+    heroRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: spacing.sm,
+    },
+    heroIcon: {
+      width: 36,
+      height: 36,
+      borderRadius: 12,
+      backgroundColor: colors.cardAlt,
+      alignItems: "center",
+      justifyContent: "center",
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    heroTitle: {
+      color: colors.textPrimary,
+      fontFamily: fonts.heading,
+      fontSize: 18,
+    },
+    heroSub: {
+      color: colors.textMuted,
+      marginTop: 6,
+      fontFamily: fonts.body,
+    },
+    scroll: {
+      flex: 1,
+    },
+    content: {
+      backgroundColor: colors.primary,
+      borderWidth: 1,
+      borderColor: colors.accent,
+      borderBottomWidth: 0,
+      borderTopLeftRadius: radius.xl,
+      borderTopRightRadius: radius.xl,
+      padding: spacing.lg,
+      gap: spacing.md,
+      flexGrow: 1,
+    },
+    card: {
+      backgroundColor: colors.card,
+      borderRadius: radius.xl,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+      padding: spacing.lg,
+      overflow: "hidden",
+    },
+    label: {
+      fontSize: 13,
+      fontFamily: fonts.bodySemiBold,
+      color: colors.textPrimary,
+      marginBottom: spacing.sm,
+    },
+    searchModeContainer: {
+      flexDirection: "row",
+      marginBottom: spacing.lg,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.border,
+    },
+    modeTab: {
+      flex: 1,
+      paddingVertical: 12,
+      alignItems: "center",
+      borderBottomWidth: 2,
+      borderBottomColor: "transparent",
+    },
+    modeTabActive: {
+      borderBottomColor: colors.accent,
+    },
+    modeTabText: {
+      fontSize: 14,
+      fontFamily: fonts.body,
+      color: colors.textSecondary,
+    },
+    modeTabTextActive: {
+      color: colors.accent,
+      fontFamily: fonts.bodySemiBold,
+    },
+    pillContainer: {
+      flexDirection: "row",
+      backgroundColor: colors.cardAlt,
+      borderRadius: radius.pill,
+      padding: 4,
+      marginBottom: spacing.lg,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    pill: {
+      flex: 1,
+      paddingVertical: 10,
+      alignItems: "center",
+      borderRadius: radius.pill,
+    },
+    pillActive: {
+      backgroundColor: colors.card,
+      borderWidth: 1,
+      borderColor: colors.accent,
+    },
+    pillText: {
+      fontSize: 14,
+      fontFamily: fonts.body,
+      color: colors.textSecondary,
+    },
+    pillTextActive: {
+      color: colors.accent,
+      fontFamily: fonts.bodySemiBold,
+    },
+    dropdownButton: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      backgroundColor: colors.cardAlt,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: radius.md,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: 14,
+      marginBottom: spacing.lg,
+    },
+    dropdownText: {
+      flex: 1,
+      marginRight: spacing.md,
+      fontSize: 15,
+      color: colors.textPrimary,
+      fontFamily: fonts.body,
+    },
+    placeholderText: {
+      color: colors.textQuaternary,
+    },
+    row: {
+      flexDirection: "row",
+      gap: spacing.md,
+      marginBottom: spacing.xl,
+    },
+    flex1: {
+      flex: 1,
+    },
+    inputContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: colors.cardAlt,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: radius.md,
+      paddingHorizontal: spacing.md,
+    },
+    inputIcon: {
+      marginRight: spacing.sm,
+    },
+    input: {
+      flex: 1,
+      height: 48,
+      fontSize: 15,
+      color: colors.textPrimary,
+      fontFamily: fonts.body,
+    },
+    singleFieldSection: {
+      marginBottom: spacing.xl,
+    },
+    qrSection: {
+      marginBottom: spacing.xl,
+      alignItems: "center",
+    },
+    cameraPlaceholder: {
+      height: 300,
+      width: "100%",
+      backgroundColor: colors.cardAlt,
+      borderRadius: radius.lg,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: spacing.xl,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    cameraText: {
+      textAlign: "center",
+      color: colors.textSecondary,
+      marginBottom: spacing.md,
+      fontFamily: fonts.body,
+    },
+    permissionBtn: {
+      backgroundColor: colors.accent,
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      borderRadius: radius.md,
+    },
+    permissionBtnText: {
+      color: colors.textInverse,
+      fontFamily: fonts.bodySemiBold,
+    },
+    cameraContainer: {
+      height: 300,
+      width: "100%",
+      borderRadius: radius.lg,
+      overflow: "hidden",
+      backgroundColor: colors.primary,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    cameraView: {
+      flex: 1,
+    },
+    scannerOverlay: {
+      position: "absolute",
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 10,
+    },
+    scannerTarget: {
+      width: 200,
+      height: 200,
+      borderWidth: 2,
+      borderColor: colors.accent,
+      backgroundColor: "transparent",
+      borderRadius: radius.md,
+    },
+    scannedActionWrap: {
+      position: "absolute",
+      right: 0,
+      bottom: 20,
+      left: 0,
+      alignItems: "center",
+      zIndex: 20,
+    },
+    rescanBtn: {
+      backgroundColor: colors.overlay,
+      paddingHorizontal: spacing.xl,
+      paddingVertical: 12,
+      borderRadius: radius.pill,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    rescanBtnText: {
+      color: colors.textPrimary,
+      fontFamily: fonts.bodySemiBold,
+    },
+    searchButton: {
+      backgroundColor: colors.accent,
+      borderRadius: radius.md,
+      height: 52,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: spacing.sm,
+    },
+    searchButtonText: {
+      color: colors.textInverse,
+      fontSize: 16,
+      fontFamily: fonts.bodyBold,
+    },
+    resultsContainer: {
+      marginTop: spacing.sm,
+    },
+    resultsHeader: {
+      fontSize: 18,
+      fontFamily: fonts.heading,
+      color: colors.textPrimary,
+      marginBottom: spacing.md,
+    },
+    resultCard: {
+      backgroundColor: colors.card,
+      borderRadius: radius.lg,
+      overflow: "hidden",
+      marginBottom: spacing.md,
+      borderWidth: 1,
+      borderColor: colors.accent,
+    },
+    resultHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: spacing.md,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.borderSoft,
+      gap: spacing.md,
+    },
+    resultCaseNo: {
+      flex: 1,
+      fontSize: 16,
+      fontFamily: fonts.bodyBold,
+      color: colors.textPrimary,
+    },
+    statusBadge: {
+      backgroundColor: accentTint,
+      paddingHorizontal: 10,
+      paddingVertical: 4,
+      borderRadius: radius.pill,
+      borderWidth: 1,
+      borderColor: accentBorder,
+    },
+    statusBadgeDisposed: {
+      backgroundColor: accentTint,
+    },
+    statusText: {
+      fontSize: 12,
+      fontFamily: fonts.bodySemiBold,
+      color: colors.accent,
+    },
+    statusTextDisposed: {
+      color: colors.accent,
+    },
+    resultBody: {
+      padding: spacing.md,
+      gap: 6,
+    },
+    partyText: {
+      fontSize: 14,
+      color: colors.textSecondary,
+      fontFamily: fonts.body,
+    },
+    bold: {
+      fontFamily: fonts.bodySemiBold,
+      color: colors.textPrimary,
+    },
+    viewButton: {
+      backgroundColor: colors.cardSubtle,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: spacing.sm,
+      paddingVertical: 14,
+      borderTopWidth: 1,
+      borderTopColor: colors.borderSoft,
+    },
+    viewButtonText: {
+      color: colors.textPrimary,
+      fontSize: 15,
+      fontFamily: fonts.bodySemiBold,
+    },
+    emptyStateCard: {
+      backgroundColor: colors.card,
+      borderRadius: radius.xl,
+      padding: spacing.xl,
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: spacing.sm,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    emptyStateIconBg: {
+      width: 64,
+      height: 64,
+      borderRadius: 32,
+      backgroundColor: colors.cardAlt,
+      alignItems: "center",
+      justifyContent: "center",
+      marginBottom: spacing.md,
+    },
+    emptyStateTitle: {
+      fontSize: 18,
+      color: colors.textPrimary,
+      marginBottom: spacing.sm,
+      fontFamily: fonts.bodyBold,
+    },
+    emptyStateSub: {
+      fontSize: 14,
+      color: colors.textSecondary,
+      textAlign: "center",
+      lineHeight: 20,
+      paddingHorizontal: spacing.lg,
+      fontFamily: fonts.body,
+    },
+    errorStateCard: {
+      backgroundColor: dangerTint,
+      borderRadius: radius.xl,
+      padding: spacing.xl,
+      alignItems: "center",
+      justifyContent: "center",
+      borderWidth: 1,
+      borderColor: dangerBorder,
+      marginTop: spacing.sm,
+    },
+    errorStateIconBg: {
+      width: 64,
+      height: 64,
+      borderRadius: 32,
+      backgroundColor: colors.cardAlt,
+      alignItems: "center",
+      justifyContent: "center",
+      marginBottom: spacing.md,
+    },
+    errorStateTitle: {
+      fontSize: 18,
+      color: ERROR_RED,
+      marginBottom: spacing.sm,
+      fontFamily: fonts.bodyBold,
+    },
+    errorStateSub: {
+      fontSize: 14,
+      color: colors.textSecondary,
+      textAlign: "center",
+      lineHeight: 20,
+      fontFamily: fonts.body,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: colors.overlay,
+      justifyContent: "flex-end",
+    },
+    modalContent: {
+      backgroundColor: colors.primary,
+      overflow: "hidden",
+      borderTopLeftRadius: radius.xl,
+      borderTopRightRadius: radius.xl,
+      height: "85%",
+      borderWidth: 1,
+      borderColor: accentBorder,
+      borderBottomWidth: 0,
+    },
+    modalHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: spacing.lg,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.borderSoft,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontFamily: fonts.heading,
+      color: colors.textPrimary,
+    },
+    modalSubtitle: {
+      fontSize: 12,
+      color: colors.textSecondary,
+      marginTop: 2,
+      fontFamily: fonts.body,
+    },
+    modalSearchContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: colors.cardAlt,
+      margin: spacing.lg,
+      paddingHorizontal: spacing.md,
+      borderRadius: radius.md,
+      height: 48,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    modalSearchIcon: {
+      marginRight: spacing.sm,
+    },
+    modalSearchInput: {
+      flex: 1,
+      fontSize: 15,
+      color: colors.textPrimary,
+      fontFamily: fonts.body,
+    },
+    modalList: {
+      flex: 1,
+    },
+    modalEmptyState: {
+      padding: 40,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    modalEmptyText: {
+      marginTop: 12,
+      color: colors.textSecondary,
+      fontSize: 14,
+      textAlign: "center",
+      fontFamily: fonts.body,
+    },
+    modalItem: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingVertical: 16,
+      paddingHorizontal: spacing.lg,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.borderSoft,
+    },
+    modalItemActive: {
+      backgroundColor: accentSoft,
+    },
+    modalItemText: {
+      flex: 1,
+      marginRight: spacing.md,
+      fontSize: 16,
+      color: colors.textSecondary,
+      fontFamily: fonts.body,
+    },
+    modalItemTextActive: {
+      color: colors.accent,
+      fontFamily: fonts.bodySemiBold,
+    },
+  });
+};

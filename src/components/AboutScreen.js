@@ -3,14 +3,16 @@ import { Animated, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import { colors, radius, spacing } from "../theme";
+import { useAppTheme } from "../theme";
 
 export const AboutScreen = ({ scrollY, judges = [] }) => {
+  const { theme, colors, radius, spacing, fonts } = useAppTheme();
   const { t } = useTranslation();
+  const styles = React.useMemo(() => createStyles(theme, colors, radius, spacing, fonts), [theme, colors, radius, spacing, fonts]);
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={["#000000", "#000000"]} style={styles.hero}>
+      <LinearGradient colors={theme.gradients.header} style={styles.hero}>
         <View style={styles.heroRow}>
           <View style={styles.heroIcon}><Ionicons name="information-circle" size={20} color={colors.accent} /></View>
           <Text style={styles.heroTitle}>{t("about.title")}</Text>
@@ -73,19 +75,30 @@ export const AboutScreen = ({ scrollY, judges = [] }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.primary },
-  hero: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.lg },
-  heroRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
-  heroIcon: { width: 36, height: 36, borderRadius: 12, backgroundColor: "#222222", alignItems: "center", justifyContent: "center" },
-  heroTitle: { color: "#FFFFFF", fontFamily: 'Georgia', fontSize: 18 },
-  heroSub: { color: "#AAAAAA", marginTop: 6, fontFamily: 'Inter_400Regular' },
-  scroll: { flex: 1 },
-  content: { backgroundColor: "#000000", borderWidth: 1, borderColor: colors.accent || "#D4AF37", borderBottomWidth: 0, borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, flexGrow: 1 },
-  card: { backgroundColor: "#111111", borderRadius: radius.xl, borderWidth: 1, borderColor: "#222222", borderWidth: 1, borderColor: "#222222", padding: spacing.lg, elevation: 0, overflow: "hidden" },
-  cardHeader: { flexDirection: "row", alignItems: "center", gap: spacing.sm, marginBottom: spacing.sm },
-  cardTitle: { color: colors.textPrimary, fontFamily: 'Georgia' },
-  paragraph: { color: "#FFFFFF", fontSize: 14, lineHeight: 22, marginBottom: spacing.sm, fontFamily: 'Inter_400Regular' },
-  subheading: { color: colors.textPrimary, fontFamily: 'Georgia', fontSize: 14, marginTop: spacing.sm, marginBottom: 6 },
-  bold: { fontFamily: 'Inter_700Bold' },
-});
+const createStyles = (theme, colors, radius, spacing, fonts) =>
+  StyleSheet.create({
+    container: { flex: 1, backgroundColor: colors.primary },
+    hero: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.lg },
+    heroRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
+    heroIcon: { width: 36, height: 36, borderRadius: 12, backgroundColor: colors.cardAlt, alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: colors.borderSoft },
+    heroTitle: { color: colors.textPrimary, fontFamily: fonts.heading, fontSize: 18 },
+    heroSub: { color: colors.textSecondary, marginTop: 6, fontFamily: fonts.body },
+    scroll: { flex: 1 },
+    content: {
+      backgroundColor: colors.primary,
+      borderWidth: 1,
+      borderColor: colors.accent,
+      borderBottomWidth: 0,
+      borderTopLeftRadius: radius.xl,
+      borderTopRightRadius: radius.xl,
+      padding: spacing.lg,
+      gap: spacing.md,
+      flexGrow: 1,
+    },
+    card: { backgroundColor: colors.card, borderRadius: radius.xl, borderWidth: 1, borderColor: colors.borderSoft, padding: spacing.lg, elevation: 0, overflow: "hidden" },
+    cardHeader: { flexDirection: "row", alignItems: "center", gap: spacing.sm, marginBottom: spacing.sm },
+    cardTitle: { color: colors.textPrimary, fontFamily: fonts.heading },
+    paragraph: { color: colors.textPrimary, fontSize: 14, lineHeight: 22, marginBottom: spacing.sm, fontFamily: fonts.body },
+    subheading: { color: colors.textPrimary, fontFamily: fonts.heading, fontSize: 14, marginTop: spacing.sm, marginBottom: 6 },
+    bold: { fontFamily: fonts.bodyBold },
+  });

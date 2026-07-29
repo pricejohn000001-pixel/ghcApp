@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo } from "react";
 import { Dimensions, Image, StyleSheet, Text, View, StatusBar } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { colors, spacing } from "../theme";
+import { useAppTheme } from "../theme";
 
 const { width, height } = Dimensions.get("window");
 const logo = require("../assets/logo.png");
 
 export const SplashScreen = ({ ready, onDone }) => {
+  const { theme, colors, spacing } = useAppTheme();
   useEffect(() => {
     if (ready && onDone) {
       const t = setTimeout(() => onDone(), 3000);
@@ -14,11 +15,12 @@ export const SplashScreen = ({ ready, onDone }) => {
     }
   }, [ready, onDone]);
 
-  const bgColors = useMemo(() => ["#0A0A0A", colors.primary], []);
+  const bgColors = useMemo(() => theme.gradients.splash, [theme.gradients.splash]);
+  const styles = useMemo(() => createStyles(colors, spacing), [colors, spacing]);
 
   return (
     <LinearGradient colors={bgColors} style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.primary} translucent={false} />
+      <StatusBar barStyle={theme.statusBarStyle} backgroundColor={colors.primary} translucent={false} />
       <View style={styles.center}> 
         <Image source={logo} style={styles.logo} resizeMode="contain" />
         <Text style={styles.brand}>The Gauhati High Court</Text>
@@ -32,13 +34,14 @@ export const SplashScreen = ({ ready, onDone }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: { flex: 1, width, height, alignItems: "center", justifyContent: "space-between", backgroundColor: colors.primary, paddingVertical: 40 },
-  center: { alignItems: "center", justifyContent: "center", flex: 1 },
-  logo: { width: 180, height: 180, marginBottom: spacing.md },
-  brand: { color: "#FFFFFF", fontSize: 24, fontFamily: 'Georgia-Bold', marginBottom: spacing.sm, textAlign: "center" },
-  subline: { color: "#AAAAAA", fontSize: 14, fontFamily: 'Inter_400Regular' },
-  footerWrap: { alignItems: "center", paddingHorizontal: spacing.xl, paddingBottom: spacing.lg },
-  meta: { color: "#888888", fontSize: 11, fontFamily: 'Inter_400Regular', textAlign: "center", lineHeight: 16 },
-  copyright: { color: "#777777", fontSize: 11, fontFamily: 'Inter_400Regular', textAlign: "center", marginTop: 4 },
-});
+const createStyles = (colors, spacing) =>
+  StyleSheet.create({
+    container: { flex: 1, width, height, alignItems: "center", justifyContent: "space-between", backgroundColor: colors.primary, paddingVertical: 40 },
+    center: { alignItems: "center", justifyContent: "center", flex: 1 },
+    logo: { width: 180, height: 180, marginBottom: spacing.md },
+    brand: { color: colors.textPrimary, fontSize: 24, fontFamily: "Georgia-Bold", marginBottom: spacing.sm, textAlign: "center" },
+    subline: { color: colors.textSecondary, fontSize: 14, fontFamily: "Inter_400Regular" },
+    footerWrap: { alignItems: "center", paddingHorizontal: spacing.xl, paddingBottom: spacing.lg },
+    meta: { color: colors.textQuaternary, fontSize: 11, fontFamily: "Inter_400Regular", textAlign: "center", lineHeight: 16 },
+    copyright: { color: colors.textTertiary, fontSize: 11, fontFamily: "Inter_400Regular", textAlign: "center", marginTop: 4 },
+  });

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Animated, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import { colors, radius, spacing } from "../theme";
+import { useAppTheme } from "../theme";
 import app from "../api";
 
 const normalizeYouTubeLink = (raw) => {
@@ -35,7 +35,9 @@ const normalizeYouTubeLink = (raw) => {
 };
 
 export const CourtLinks = ({ onSelect, scrollY }) => {
+  const { colors, radius, spacing, fonts } = useAppTheme();
   const { t } = useTranslation();
+  const styles = React.useMemo(() => createStyles(colors, radius, spacing, fonts), [colors, radius, spacing, fonts]);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -157,39 +159,42 @@ export const CourtLinks = ({ onSelect, scrollY }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.primary, paddingHorizontal: spacing.lg},
-  listContent: { paddingBottom: spacing.xl, flexGrow: 1 },
-  loadingWrap: { flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.primary, gap: spacing.sm },
-  loadingText: { color: "#FFFFFF", fontSize: 14 },
-  errorText: { color: "#ffb4b4", textAlign: "center", marginBottom: spacing.md },
-  emptyWrap: { flex: 1, alignItems: "center", justifyContent: "center", gap: 6 },
-  emptyIcon: { width: 64, height: 64, borderRadius: 20, backgroundColor: "#111111", alignItems: "center", justifyContent: "center" },
-  emptyTitle: { color: "#FFFFFF", fontSize: 16, fontWeight: "700", marginTop: spacing.sm },
-  emptySub: { color: colors.textSecondary, fontSize: 12 },
-  item: {
-    backgroundColor: "#111111",
-    borderRadius: radius.xl,
-    padding: spacing.md,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.md,
-    shadowColor: "#000000",
-    shadowOpacity: 0.12,
-    shadowOffset: { width: 0, height: 6 },
-    shadowRadius: 10,
-    elevation: 3,
-  },
-  badge: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    backgroundColor: "#222222",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  badgeText: { color: "#FFFFFF", fontSize: 16, fontFamily: 'Inter_700Bold' },
-  itemTextBlock: { flex: 1 },
-  itemTitle: { color: "#FFFFFF", fontFamily: 'Inter_700Bold', fontSize: 16 },
-  itemSub: { color: "#AAAAAA", fontSize: 12, marginTop: 2, fontFamily: 'Inter_400Regular' },
-});
+const createStyles = (colors, radius, spacing, fonts) =>
+  StyleSheet.create({
+    container: { flex: 1, backgroundColor: colors.primary, paddingHorizontal: spacing.lg },
+    listContent: { paddingBottom: spacing.xl, flexGrow: 1 },
+    loadingWrap: { flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colors.primary, gap: spacing.sm },
+    loadingText: { color: colors.textPrimary, fontSize: 14, fontFamily: fonts.body },
+    errorText: { color: colors.danger, textAlign: "center", marginBottom: spacing.md, fontFamily: fonts.body },
+    emptyWrap: { flex: 1, alignItems: "center", justifyContent: "center", gap: 6 },
+    emptyIcon: { width: 64, height: 64, borderRadius: 20, backgroundColor: colors.card, alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: colors.borderSoft },
+    emptyTitle: { color: colors.textPrimary, fontSize: 16, fontFamily: fonts.bodyBold, marginTop: spacing.sm },
+    emptySub: { color: colors.textSecondary, fontSize: 12, fontFamily: fonts.body },
+    item: {
+      backgroundColor: colors.card,
+      borderRadius: radius.xl,
+      padding: spacing.md,
+      flexDirection: "row",
+      alignItems: "center",
+      gap: spacing.md,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+      shadowColor: colors.primaryDark,
+      shadowOpacity: 0.12,
+      shadowOffset: { width: 0, height: 6 },
+      shadowRadius: 10,
+      elevation: 3,
+    },
+    badge: {
+      width: 40,
+      height: 40,
+      borderRadius: 12,
+      backgroundColor: colors.cardAlt,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    badgeText: { color: colors.textPrimary, fontSize: 16, fontFamily: fonts.bodyBold },
+    itemTextBlock: { flex: 1 },
+    itemTitle: { color: colors.textPrimary, fontFamily: fonts.bodyBold, fontSize: 16 },
+    itemSub: { color: colors.textSecondary, fontSize: 12, marginTop: 2, fontFamily: fonts.body },
+  });

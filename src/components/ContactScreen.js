@@ -3,10 +3,12 @@ import { Animated, StyleSheet, Text, View, TouchableOpacity, Linking } from "rea
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import { colors, radius, spacing } from "../theme";
+import { useAppTheme } from "../theme";
 
 export const ContactScreen = ({ scrollY }) => {
+  const { theme, colors, radius, spacing, fonts } = useAppTheme();
   const { t } = useTranslation();
+  const styles = React.useMemo(() => createStyles(theme, colors, radius, spacing, fonts), [theme, colors, radius, spacing, fonts]);
 
   const handleEmailPress = (email) => {
     // Replace [at] and [dot] with actual characters
@@ -16,7 +18,7 @@ export const ContactScreen = ({ scrollY }) => {
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={["#000000", "#000000"]} style={styles.hero}>
+      <LinearGradient colors={theme.gradients.header} style={styles.hero}>
         <View style={styles.heroRow}>
           <View style={styles.heroIcon}><Ionicons name="call" size={20} color={colors.accent} /></View>
           <Text style={styles.heroTitle}>{t("contact.title")}</Text>
@@ -59,11 +61,11 @@ export const ContactScreen = ({ scrollY }) => {
             </View>
             <View style={styles.emailRowContainer}>
               <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('hc-asm[at]nic[dot]in')}>
-                <Ionicons name="at" size={14} color="#777777" />
+                <Ionicons name="at" size={14} color={colors.textTertiary} />
                 <Text style={styles.emailText}>hc-asm[at]nic[dot]in</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('highcourt[dot]ghc[at]gmail[dot]com')}>
-                <Ionicons name="at" size={14} color="#777777" />
+                <Ionicons name="at" size={14} color={colors.textTertiary} />
                 <Text style={styles.emailText}>highcourt[dot]ghc[at]gmail[dot]com</Text>
               </TouchableOpacity>
             </View>
@@ -76,11 +78,11 @@ export const ContactScreen = ({ scrollY }) => {
             </View>
             <View style={styles.emailRowContainer}>
               <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('cpc-asm[at]aji[dot]gov[dot]in')}>
-                <Ionicons name="at" size={14} color="#777777" />
+                <Ionicons name="at" size={14} color={colors.textTertiary} />
                 <Text style={styles.emailText}>cpc-asm[at]aji[dot]gov[dot]in</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('ecourts[dot]ghc-as[at]nic[dot]in')}>
-                <Ionicons name="at" size={14} color="#777777" />
+                <Ionicons name="at" size={14} color={colors.textTertiary} />
                 <Text style={styles.emailText}>ecourts[dot]ghc-as[at]nic[dot]in</Text>
               </TouchableOpacity>
             </View>
@@ -109,42 +111,53 @@ export const ContactScreen = ({ scrollY }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.primary },
-  hero: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.lg },
-  heroRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
-  heroIcon: { width: 36, height: 36, borderRadius: 12, backgroundColor: "#222222", alignItems: "center", justifyContent: "center" },
-  heroTitle: { color: "#FFFFFF", fontFamily: 'Georgia', fontSize: 18 },
-  heroSub: { color: "#AAAAAA", marginTop: 6, fontFamily: 'Inter_400Regular' },
-  scroll: { flex: 1 },
-  content: { backgroundColor: "#000000", borderWidth: 1, borderColor: colors.accent || "#D4AF37", borderBottomWidth: 0, borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl, padding: spacing.lg, gap: spacing.md, flexGrow: 1 },
-  card: { backgroundColor: "#111111", borderRadius: radius.xl, borderWidth: 1, borderColor: "#222222", borderWidth: 1, borderColor: "#222222", padding: spacing.lg, elevation: 0, overflow: "hidden" },
-  cardHeader: { flexDirection: "row", alignItems: "center", gap: spacing.sm, marginBottom: spacing.sm },
-  cardTitle: { color: colors.textPrimary, fontFamily: 'Georgia' },
-  paragraph: { color: "#FFFFFF", fontSize: 14, lineHeight: 22, marginBottom: spacing.xs, fontFamily: 'Inter_400Regular' },
-  metaSmall: { color: "#AAAAAA", fontSize: 12, fontFamily: 'Inter_400Regular' },
-  emailSection: { marginTop: spacing.xs },
-  emailRowContainer: { gap: 8, marginTop: 4 },
-  emailRow: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: "#1A1A1A", padding: 10, borderRadius: radius.md },
-  emailText: { color: "#FFFFFF", fontSize: 14, fontFamily: 'Inter_400Regular' },
-  subSection: { marginTop: spacing.md, paddingTop: spacing.md, borderTopWidth: 1, borderTopColor: "#222222" },
-  subSectionHeader: { flexDirection: "row", alignItems: "center", gap: 6, marginBottom: spacing.xs },
-  subSectionTitle: { color: "#ADB9D8", fontSize: 13, fontFamily: 'Inter_600SemiBold', textTransform: "uppercase", letterSpacing: 0.5 },
-  locationCard: {
-    borderColor: "#333333",
-  },
-  locationAction: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-    marginTop: spacing.md,
-    paddingTop: spacing.md,
-    borderTopWidth: 1,
-    borderTopColor: "#222222",
-  },
-  locationActionText: {
-    color: colors.accent,
-    fontSize: 13,
-    fontFamily: 'Inter_600SemiBold',
-  },
-});
+const createStyles = (theme, colors, radius, spacing, fonts) =>
+  StyleSheet.create({
+    container: { flex: 1, backgroundColor: colors.primary },
+    hero: { paddingHorizontal: spacing.lg, paddingTop: spacing.lg, paddingBottom: spacing.lg },
+    heroRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
+    heroIcon: { width: 36, height: 36, borderRadius: 12, backgroundColor: colors.cardAlt, alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: colors.borderSoft },
+    heroTitle: { color: colors.textPrimary, fontFamily: fonts.heading, fontSize: 18 },
+    heroSub: { color: colors.textSecondary, marginTop: 6, fontFamily: fonts.body },
+    scroll: { flex: 1 },
+    content: {
+      backgroundColor: colors.primary,
+      borderWidth: 1,
+      borderColor: colors.accent,
+      borderBottomWidth: 0,
+      borderTopLeftRadius: radius.xl,
+      borderTopRightRadius: radius.xl,
+      padding: spacing.lg,
+      gap: spacing.md,
+      flexGrow: 1,
+    },
+    card: { backgroundColor: colors.card, borderRadius: radius.xl, borderWidth: 1, borderColor: colors.borderSoft, padding: spacing.lg, elevation: 0, overflow: "hidden" },
+    cardHeader: { flexDirection: "row", alignItems: "center", gap: spacing.sm, marginBottom: spacing.sm },
+    cardTitle: { color: colors.textPrimary, fontFamily: fonts.heading },
+    paragraph: { color: colors.textPrimary, fontSize: 14, lineHeight: 22, marginBottom: spacing.xs, fontFamily: fonts.body },
+    metaSmall: { color: colors.textSecondary, fontSize: 12, fontFamily: fonts.body },
+    emailSection: { marginTop: spacing.xs },
+    emailRowContainer: { gap: 8, marginTop: 4 },
+    emailRow: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: colors.cardAlt, padding: 10, borderRadius: radius.md, borderWidth: 1, borderColor: colors.borderSoft },
+    emailText: { color: colors.textPrimary, fontSize: 14, fontFamily: fonts.body },
+    subSection: { marginTop: spacing.md, paddingTop: spacing.md, borderTopWidth: 1, borderTopColor: colors.borderSoft },
+    subSectionHeader: { flexDirection: "row", alignItems: "center", gap: 6, marginBottom: spacing.xs },
+    subSectionTitle: { color: colors.textMuted, fontSize: 13, fontFamily: fonts.bodySemiBold, textTransform: "uppercase", letterSpacing: 0.5 },
+    locationCard: {
+      borderColor: colors.border,
+    },
+    locationAction: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 6,
+      marginTop: spacing.md,
+      paddingTop: spacing.md,
+      borderTopWidth: 1,
+      borderTopColor: colors.borderSoft,
+    },
+    locationActionText: {
+      color: colors.accent,
+      fontSize: 13,
+      fontFamily: fonts.bodySemiBold,
+    },
+  });

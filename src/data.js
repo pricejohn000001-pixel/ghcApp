@@ -643,18 +643,18 @@ export const judges = [
 ];
  
 export const serviceCards = [
-  { id: "live_streaming", icon: "videocam", color: "#D4AF37" },
-  { id: "cause_list", icon: "calendar", color: "#D4AF37" },
-  { id: "case_status", icon: "search", color: "#D4AF37" },
-  { id: "statistics", icon: "bar-chart", color: "#D4AF37" },
-  { id: "justice_clock", icon: "time", color: "#D4AF37" },
-  { id: "virtual_justice_clock_principal", icon: "desktop", color: "#D4AF37" },
+  { id: "live_streaming", icon: "videocam" },
+  { id: "cause_list", icon: "calendar" },
+  { id: "case_status", icon: "search" },
+  { id: "statistics", icon: "bar-chart" },
+  { id: "justice_clock", icon: "time" },
+  { id: "virtual_justice_clock_principal", icon: "desktop" },
 ];
 
 export const holidayTags = [
-  { label: "All", color: "#0F2349" },
-  { label: "Holiday", color: "#EF4444" },
-  { label: "Working Saturday", color: "#10B981" },
+  { label: "All" },
+  { label: "Holiday" },
+  { label: "Working Saturday" },
 ];
 
 export const holidays = [];

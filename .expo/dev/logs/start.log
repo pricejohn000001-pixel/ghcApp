@@ -491,3 +491,342 @@
 {"_e":"metro:client_log","_t":1785302101103,"level":"log","data":["Initializing judges data..."]}
 {"_e":"metro:client_log","_t":1785302101145,"level":"log","data":["Using cached judges data"]}
 {"_e":"metro:client_log","_t":1785302101145,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:bundling:started","_t":1785303155357,"id":"o","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785303155357,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785303156312,"id":"o","total":1,"ms":955.398}
+{"_e":"metro:client_log","_t":1785303158237,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785303158358,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785303158411,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785303158411,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785303165654,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785303292873,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.ConnectException: Failed to connect to ghcservices.assam.gov.in/103.158.205.197:443]"]}
+{"_e":"metro:client_log","_t":1785303293250,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785303293257,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303293258,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303293259,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303293276,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785303293279,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785303297026,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785303297036,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785303297037,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:bundling:started","_t":1785303346187,"id":"14","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785303346187,"id":"14","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785303346234,"id":"14","total":1,"ms":46.5934}
+{"_e":"metro:client_log","_t":1785303348516,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785303348517,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785303348549,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785303348549,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:bundling:started","_t":1785303351338,"id":"15","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785303351338,"id":"15","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785303351383,"id":"15","total":1,"ms":44.4724}
+{"_e":"metro:client_log","_t":1785303353062,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785303353062,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785303353110,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785303353110,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785303405028,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785303468951,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785303468951,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303468951,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303468951,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303468997,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785303468997,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785303483639,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785303483639,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785303483639,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785303487463,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.ConnectException: Failed to connect to ghcservices.assam.gov.in/103.158.205.197:443]"]}
+{"_e":"metro:client_log","_t":1785303527046,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303527046,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303527046,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303527046,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303536447,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785303536447,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785303536447,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785303544129,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785303544129,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303544129,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303544129,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785303544129,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785303544129,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785303567529,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785303567529,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785303567529,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785303604181,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.ConnectException: Failed to connect to ghcservices.assam.gov.in/103.158.205.197:443]"]}
+{"_e":"metro:client_log","_t":1785303618514,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.ConnectException: Failed to connect to ghcservices.assam.gov.in/103.158.205.197:443]"]}
+{"_e":"metro:bundling:started","_t":1785303661386,"id":"1z","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785303661386,"id":"1z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785303661439,"id":"1z","total":1,"ms":52.9489}
+{"_e":"metro:client_log","_t":1785303663119,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785303663119,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785303663158,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785303663158,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785303667930,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785303796691,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.ConnectException: Failed to connect to ghcservices.assam.gov.in/103.158.205.197:443]"]}
+{"_e":"metro:client_log","_t":1785303999832,"level":"error","data":["[ReferenceError: Property 'spacing' doesn't exist]"]}
+{"_e":"metro:bundling:started","_t":1785304144960,"id":"29","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785304144960,"id":"29","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785304145018,"id":"29","total":1,"ms":57.9438}
+{"_e":"metro:client_log","_t":1785304146947,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785304146947,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785304146993,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785304146993,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785304153304,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:bundling:started","_t":1785304439453,"id":"2i","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785304439453,"id":"2i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785304439502,"id":"2i","total":1,"ms":48.631}
+{"_e":"metro:client_log","_t":1785304441181,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785304441300,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785304441335,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785304441335,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785304508275,"level":"error","data":["API Error Details:","{\"data\": undefined, \"message\": \"Network Error\", \"method\": \"GET\", \"status\": undefined, \"url\": \"/ghc_display/API/get_court_link.php\"}"]}
+{"_e":"metro:client_log","_t":1785304512796,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785304574931,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.ConnectException: Failed to connect to ghcservices.assam.gov.in/103.158.205.197:443]"]}
+{"_e":"metro:bundling:failed","_t":1785304671323,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CourtLinks.js: Unexpected keyword 'const'. (163:0)\n\n  161 |\n  162 | const styles = StyleSheet.create({\n> 163 | const createStyles = (colors, radius, spacing, fonts) =>\n      | ^\n  164 |   StyleSheet.create({\n  165 |     container: { flex: 1, backgroundColor: colors.primary, paddingHorizontal: spacing.lg },\n  166 |     listContent: { paddingBottom: spacing.xl, flexGrow: 1 },","importStack":null,"filename":"src\\components\\CourtLinks.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785304671582,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CourtLinks.js: Unexpected keyword 'const'. (163:0)\n\n  161 |\n  162 | const styles = StyleSheet.create({\n> 163 | const createStyles = (colors, radius, spacing, fonts) =>\n      | ^\n  164 |   StyleSheet.create({\n  165 |     container: { flex: 1, backgroundColor: colors.primary, paddingHorizontal: spacing.lg },\n  166 |     listContent: { paddingBottom: spacing.xl, flexGrow: 1 },","importStack":null,"filename":"src\\components\\CourtLinks.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1785304772391,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785304772391,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785304772391,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:bundling:started","_t":1785304773379,"id":"2t","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785304773379,"id":"2t","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785304773445,"id":"2t","total":1,"ms":66.439}
+{"_e":"metro:client_log","_t":1785304775268,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785304775268,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785304775322,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785304775322,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785304793852,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785304851761,"level":"error","data":["API Error Details:","{\"data\": undefined, \"message\": \"Network Error\", \"method\": \"GET\", \"status\": undefined, \"url\": \"/ghc_display/API/get_court_link.php\"}"]}
+{"_e":"metro:client_log","_t":1785304908756,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.ConnectException: Failed to connect to ghcservices.assam.gov.in/103.158.205.197:443]"]}
+{"_e":"metro:bundling:failed","_t":1785305316516,"id":null,"message":"Unable to resolve \"./src/components/CaseHistoryScreen\" from \"App.js\"\n  17 | import { SplashScreen } from \"./src/components/SplashScreen\";\n  18 | import { SearchModal } from \"./src/components/SearchModal\";\n> 19 | import { CaseHistoryScreen } from \"./src/components/CaseHistoryScreen\";\n     |                                    ^\n  20 | import { CaseDetailsScreen } from \"./src/components/CaseDetailsScreen\";\n  21 | import { ThemeProvider, useAppTheme } from \"./src/theme\";\n  22 | import \"./src/i18n\";","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/components/CaseHistoryScreen\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n","filename":null,"targetModuleName":"./src/components/CaseHistoryScreen","originModulePath":"App.js"}
+{"_e":"metro:bundling:failed","_t":1785305435380,"id":null,"message":"Unable to resolve \"./src/components/CaseDetailsScreen\" from \"App.js\"\n  18 | import { SearchModal } from \"./src/components/SearchModal\";\n  19 | import { CaseHistoryScreen } from \"./src/components/CaseHistoryScreen\";\n> 20 | import { CaseDetailsScreen } from \"./src/components/CaseDetailsScreen\";\n     |                                    ^\n  21 | import { ThemeProvider, useAppTheme } from \"./src/theme\";\n  22 | import \"./src/i18n\";\n  23 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/components/CaseDetailsScreen\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n","filename":null,"targetModuleName":"./src/components/CaseDetailsScreen","originModulePath":"App.js"}
+{"_e":"metro:bundling:started","_t":1785305665219,"id":"35","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785305665219,"id":"35","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785305665390,"id":"35","total":1,"ms":170.9892}
+{"_e":"metro:client_log","_t":1785305667202,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785305667202,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785305667259,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785305667259,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785305667369,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.UnknownHostException: Unable to resolve host \"ghcservices.assam.gov.in\": No address associated with hostname]"]}
+{"_e":"metro:client_log","_t":1785305683443,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785305701191,"level":"error","data":["Failed to fetch case types from new API. Network Error:","[Error: fetch failed: java.net.UnknownHostException: Unable to resolve host \"ghcservices.assam.gov.in\": No address associated with hostname]"]}
+{"_e":"metro:bundling:started","_t":1785305718341,"id":"3f","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785305718342,"id":"3f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785305718392,"id":"3f","total":1,"ms":50.5988}
+{"_e":"metro:server_log","_t":1785305791498,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.exponent","sdk_gphone64_x86_64 - 16 - API 36","60"]}
+{"_e":"root:init","_t":1785306171148,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785306171149,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785306171154,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"root:init","_t":1785306196807,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785306196809,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785306196813,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785306197441,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785306198172,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785306205506,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785306227015,"id":"5","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785306227015,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785306229385,"id":"5","total":1,"ms":2370.2615}
+{"_e":"metro:client_log","_t":1785306231213,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785306231328,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785306231360,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785306231361,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785306242316,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"root:init","_t":1785307186953,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785307186955,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785307186960,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785307187976,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785307188781,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785307195311,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785307260822,"id":"1","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785307260822,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785307260827,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785307260928,"id":"1","progress":0.011787755102040815,"total":175,"current":19}
+{"_e":"metro:bundling:progress","_t":1785307261027,"id":"1","progress":0.09614806802475813,"total":258,"current":80}
+{"_e":"metro:bundling:progress","_t":1785307261127,"id":"1","progress":0.2195732024889669,"total":382,"current":179}
+{"_e":"metro:bundling:progress","_t":1785307261227,"id":"1","progress":0.35958054183578664,"total":572,"current":343}
+{"_e":"metro:bundling:progress","_t":1785307261327,"id":"1","progress":0.6170148979377472,"total":676,"current":531}
+{"_e":"metro:bundling:progress","_t":1785307261430,"id":"1","progress":0.8102304901460913,"total":781,"current":703}
+{"_e":"metro:bundling:progress","_t":1785307261530,"id":"1","progress":0.8886232159766803,"total":907,"current":855}
+{"_e":"metro:bundling:done","_t":1785307261663,"id":"1","total":907,"ms":841.2754}
+{"_e":"metro:client_log","_t":1785307263856,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785307263985,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785307264014,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785307264015,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785307269794,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785307636599,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785307636600,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785307636600,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785307636600,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:bundling:started","_t":1785307655541,"id":"b","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785307655541,"id":"b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785307655609,"id":"b","total":1,"ms":67.3344}
+{"_e":"metro:client_log","_t":1785307657688,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785307657689,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785307657689,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785307657689,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785307663825,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785307672952,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785307672952,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785307672952,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785307688752,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785307688753,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785307688753,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:bundling:failed","_t":1785308176123,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CauseListModal.js: Missing semicolon. (362:19)\n\n  360 |     </Modal>\n  361 |   );\n> 362 |   { key: \"dl\", tKey: \"daily\", gradient: [withAlpha(colors.warning, 0.92), colors.warning], iconName: \"document-text\" },\n      |                    ^\n  363 |   { key: \"sl\", tKey: \"supplementary\", gradient: [withAlpha(colors.badgeAll, 0.92), colors.badgeAll], iconName: \"add\" },\n  364 |   { key: \"lz\", tKey: \"lawazima\", gradient: [withAlpha(colors.accent, 0.92), colors.accent], iconName: \"boat\" },\n  365 |   { key: \"no\", tKey: \"notices\", gradient: [withAlpha(colors.info, 0.92), colors.info], iconName: \"notifications\" },","importStack":null,"filename":"src\\components\\CauseListModal.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785308202686,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CauseListModal.js: Unexpected token, expected \",\" (361:0)\n\n  359 |       </View>\n  360 |     </Modal>\n> 361 | };\\r\n      | ^\n  362 | \\r\n  363 | const getTypeDefs = (colors) => [\\r\n  364 |   { key: \"dl\", tKey: \"daily\", gradient: [withAlpha(colors.warning, 0.92), colors.warning], iconName: \"document-text\" },\\r","importStack":null,"filename":"src\\components\\CauseListModal.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1785308225533,"id":"k","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785308225533,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785308225534,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785308226331,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785308226396,"id":"k","total":1,"ms":862.804}
+{"_e":"metro:client_log","_t":1785308229917,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785308229917,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785308229918,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785308229918,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785308236248,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785308572634,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785308572635,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785308572635,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785308572635,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785308572635,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785308572635,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785308572635,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:bundling:started","_t":1785308610763,"id":"u","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785308610763,"id":"u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785308610800,"id":"u","total":1,"ms":36.7155}
+{"_e":"metro:client_log","_t":1785308613407,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785308613408,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785308613408,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785308613408,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785308618316,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785308691749,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785308691749,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785308691749,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785308701046,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785308701046,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785308701046,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785308717950,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785308717950,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785308717950,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785308717950,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:bundling:started","_t":1785308750013,"id":"14","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785308750013,"id":"14","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785308750048,"id":"14","total":1,"ms":34.8066}
+{"_e":"metro:client_log","_t":1785308752671,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785308752671,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785308752671,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785308752671,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785308757567,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:bundling:started","_t":1785308779576,"id":"1c","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785308779577,"id":"1c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785308779611,"id":"1c","total":1,"ms":34.5954}
+{"_e":"metro:client_log","_t":1785308782277,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785308782277,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785308782277,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785308782277,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785308787928,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785308986700,"level":"error","data":["[ReferenceError: Property 'colors' doesn't exist]"]}
+{"_e":"metro:bundling:started","_t":1785309666751,"id":"1m","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785309666752,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785309666752,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785309669257,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785309669293,"id":"1m","total":1,"ms":2541.631}
+{"_e":"metro:client_log","_t":1785309672258,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785309672258,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785309672258,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785309672258,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785309678990,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:bundling:started","_t":1785313313038,"id":"1u","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785313313038,"id":"1u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785313313039,"id":"1u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785313315810,"id":"1u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785313315849,"id":"1u","total":1,"ms":2810.2413}
+{"_e":"metro:client_log","_t":1785313319121,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785313319121,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785313319121,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785313319121,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785313324428,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:bundling:started","_t":1785314009452,"id":"22","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785314009452,"id":"22","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785314009489,"id":"22","total":1,"ms":37.0629}
+{"_e":"metro:client_log","_t":1785314012474,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785314012474,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785314012474,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785314012474,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785314017912,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:bundling:started","_t":1785314096899,"id":"2a","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785314096899,"id":"2a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785314096934,"id":"2a","total":1,"ms":34.4742}
+{"_e":"metro:client_log","_t":1785314099783,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785314099783,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785314099784,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785314099784,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785314110013,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785314196820,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785314196820,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785314196820,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785314196820,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785314196820,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785314196820,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:bundling:started","_t":1785314215266,"id":"2i","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785314215266,"id":"2i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785314215302,"id":"2i","total":1,"ms":36.034}
+{"_e":"metro:client_log","_t":1785314218244,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785314218244,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785314218245,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785314218245,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785314260127,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785314260127,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785314260127,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785314272424,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785314436521,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785314436521,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785314436521,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785314436521,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785314436521,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785314436521,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:bundling:started","_t":1785314505090,"id":"2q","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785314505090,"id":"2q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785314505125,"id":"2q","total":1,"ms":35.6347}
+{"_e":"metro:client_log","_t":1785314507987,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785314507987,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785314507987,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785314507988,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785314513357,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785314622866,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785314622866,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785314622866,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785314622866,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785314622866,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785314622866,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785314643892,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785314643892,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785314643892,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:bundling:failed","_t":1785314785869,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\DrawerMenu.js: Expected corresponding JSX closing tag for <ScrollView>. (243:12)\n\n  241 |                 );\n  242 |               })}\n> 243 |             </View>\n      |             ^\n  244 |           </View>\n  245 |\n  246 |           <View style={styles.divider} />","importStack":null,"filename":"src\\components\\DrawerMenu.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785314793873,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\DrawerMenu.js: Expected corresponding JSX closing tag for <ScrollView>. (243:12)\n\n  241 |                 );\n  242 |               })}\n> 243 |             </View>\n      |             ^\n  244 |           </View>\n  245 |\n  246 |           <View style={styles.divider} />","importStack":null,"filename":"src\\components\\DrawerMenu.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785314798856,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\DrawerMenu.js: Expected corresponding JSX closing tag for <ScrollView>. (243:12)\n\n  241 |                 );\n  242 |               })}\n> 243 |             </View>\n      |             ^\n  244 |           </View>\n  245 |\n  246 |           <View style={styles.divider} />","importStack":null,"filename":"src\\components\\DrawerMenu.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1785314868941,"id":"35","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785314868941,"id":"35","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785314868981,"id":"35","total":1,"ms":39.8459}
+{"_e":"metro:client_log","_t":1785314872783,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785314872783,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785314872783,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785314872783,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785314877529,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:bundling:started","_t":1785315343043,"id":"3d","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785315343043,"id":"3d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785315343078,"id":"3d","total":1,"ms":35.2386}
+{"_e":"metro:client_log","_t":1785315346328,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785315346328,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785315346328,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785315346328,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785315357839,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:bundling:failed","_t":1785316170355,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\DrawerMenu.js: Expected corresponding JSX closing tag for <Animated.View>. (253:14)\n\n  251 |                   </View>\n  252 |                 </View>\n> 253 |               </View>\n      |               ^\n  254 |             ) : null}\n  255 |           </View>\n  256 |","importStack":null,"filename":"src\\components\\DrawerMenu.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1785316300485,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785316300485,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785316300485,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785316300486,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:bundling:started","_t":1785316388477,"id":"3o","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785316388477,"id":"3o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785316388513,"id":"3o","total":1,"ms":36.1508}
+{"_e":"metro:client_log","_t":1785316391777,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785316391777,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785316391777,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785316391777,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785316397615,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}

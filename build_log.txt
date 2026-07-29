@@ -1,0 +1,26 @@
+﻿env: load .env
+env: export EXPO_PUBLIC_API_TOKEN
+Starting Metro Bundler
+
+Android Bundling failed 981ms node_modules\expo\AppEntry.js (806 modules)
+
+node.exe : SyntaxError: SyntaxError: 
+D:\Projects\ghc_app\src\components\DrawerMenu.js: Expected corresponding JSX 
+closing tag for <ScrollView>. (243:12)
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (SyntaxError: Sy...View>. (243:12) 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[0m [90m 241 |[39m                 )[33m;[39m
+ [90m 242 |[39m               })}
+[31m[1m>[22m[39m[90m 243 |[39m             
+[33m<[39m[33m/[39m[33mView[39m[33m>[39m
+ [90m     |[39m             [31m[1m^[22m[39m
+ [90m 244 |[39m           [33m<[39m[33m/[39m[33mView[39m[33m>[39m
+ [90m 245 |[39m
+ [90m 246 |[39m           [33m<[39m[33mView[39m 
+style[33m=[39m{styles[33m.[39mdivider} [33m/[39m[33m>[39m[0m

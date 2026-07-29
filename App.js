@@ -9,7 +9,6 @@ import { DrawerMenu } from "./src/components/DrawerMenu";
 import { PortfolioModal } from "./src/components/PortfolioModal";
 import { LiveWebView } from "./src/components/LiveWebView";
 import { holidays, holidayTags, judge, judges, serviceCards, menuUrls } from "./src/data";
-import { colors } from "./src/theme";
 import { CauseListModal } from "./src/components/CauseListModal";
 import { AboutScreen } from "./src/components/AboutScreen";
 import { ContactScreen } from "./src/components/ContactScreen";
@@ -19,12 +18,22 @@ import { SplashScreen } from "./src/components/SplashScreen";
 import { SearchModal } from "./src/components/SearchModal";
 import { CaseHistoryScreen } from "./src/components/CaseHistoryScreen";
 import { CaseDetailsScreen } from "./src/components/CaseDetailsScreen";
+import { ThemeProvider, useAppTheme } from "./src/theme";
 import "./src/i18n";
 
 import { initializeJudgesData } from "./src/services/judgesDataService";
 import { fetchHolidaysData } from "./src/services/holidaysService";
 
 export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+
+function AppContent() {
+  const { theme, colors, isThemeReady } = useAppTheme();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [drawerExpandSection, setDrawerExpandSection] = useState(null);
@@ -167,7 +176,7 @@ export default function App() {
   const [splashVisible, setSplashVisible] = useState(true);
   
   // Return null or SplashScreen while fonts are loading to ensure they are available
-  if (!fontsLoaded) {
+  if (!isThemeReady || !fontsLoaded) {
     return null; 
   }
 
@@ -222,8 +231,8 @@ export default function App() {
   };
 
   return (
-    <SafeAreaProvider style={styles.root}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.primary} translucent={false} />
+    <SafeAreaProvider style={[styles.root, { backgroundColor: colors.primary }]}>
+      <StatusBar barStyle={theme.statusBarStyle} backgroundColor={colors.primary} translucent={false} />
       <Header onMenu={() => setDrawerOpen(true)} onSearch={() => setSearchOpen(true)} scrollY={scrollYRef.current} isHome={currentState.type === 'home'} />
       {showWebView && currentUrl ? (
         <LiveWebView
@@ -349,7 +358,7 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.primary },
+  root: { flex: 1 },
   scroll: { flex: 1 },
   scrollContent: { paddingTop: 0 },
 });

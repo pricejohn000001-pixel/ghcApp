@@ -14,6 +14,13 @@
     "links": "Important Links",
     "settings": "Settings",
     "language": "Language",
+    "theme": "Theme",
+    "preferences": "Preferences",
+    "themes": {
+      "default": "Judicial Dark",
+      "midnightBlue": "Midnight Blue",
+      "heritageLight": "Heritage Paper"
+    },
     "items": {
       "judges_sc_sitting": "Hon’ble Sitting Judges of the Supreme Court of India, who served as Chief Justice/ Hon’ble Judge of this High Court",
       "judges_sc_former": "Former Hon’ble Judges of the Supreme Court of India/ Chief Justice of India, who served as Chief Justice/ Hon’ble Judge of this High Court",

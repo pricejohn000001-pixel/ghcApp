@@ -4,18 +4,11 @@ import { ActivityIndicator, Linking, ScrollView, Text, TouchableOpacity, View, A
 import Modal from "react-native-modal";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
-import { colors, radius, spacing } from "../theme";
+import { useAppTheme, withAlpha } from "../theme";
 import { useTranslation } from "react-i18next";
 
 const BASE = "https://ghconline.gov.in/NewCList";
 const DAILY_SUFFIXES = ["LokAdalat"];
-
-const typeDefs = [
-  { key: "dl", tKey: "daily", colors: ["#8B6508", "#5C4300"], icon: <Ionicons name="document-text" size={20} color="#FFFFFF" /> },
-  { key: "sl", tKey: "supplementary", colors: ["#4F4F4F", "#2F2F2F"], icon: <Ionicons name="add" size={20} color="#FFFFFF" /> },
-  { key: "lz", tKey: "lawazima", colors: ["#8B4513", "#5C2E00"], icon: <Ionicons name="boat" size={20} color="#FFFFFF" /> },
-  { key: "no", tKey: "notices", colors: ["#4C1D95", "#2E1065"], icon: <Ionicons name="notifications" size={20} color="#FFFFFF" /> },
-];
 
 function formatDate(d) {
   const dd = String(d.getDate()).padStart(2, "0");
@@ -106,7 +99,10 @@ async function getConsolidatedHtml() {
 }
 
 export const CauseListModal = ({ visible, onClose, holidays }) => {
+  const { theme, colors, radius, spacing, fonts } = useAppTheme();
   const { t } = useTranslation();
+  const styles = useMemo(() => createStyles(colors, radius, spacing, fonts), [colors, radius, spacing, fonts]);
+  const typeDefs = useMemo(() => getTypeDefs(colors), [colors]);
   const [today, setToday] = useState(new Date());
   const [tomorrow, setTomorrow] = useState(() => {
     const d = new Date();
@@ -254,7 +250,7 @@ export const CauseListModal = ({ visible, onClose, holidays }) => {
     <Modal 
       customBackdrop={
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose}>
-          <BlurView style={StyleSheet.absoluteFill} intensity={80} tint="dark"/>
+          <BlurView style={StyleSheet.absoluteFill} intensity={80} tint={theme.blurTint} />
         </Pressable>
       }
       backdropOpacity={1}
@@ -262,33 +258,35 @@ export const CauseListModal = ({ visible, onClose, holidays }) => {
       useNativeDriverForBackdrop={true} 
       isVisible={visible} 
       onBackdropPress={onClose} 
-      style={{ margin: 0, padding: spacing.lg, justifyContent: "center", alignItems: "center" }}
+      style={styles.modal}
     >
-      <View style={{ backgroundColor: "#000000", borderWidth: 1, borderColor: "rgba(212,175,55,0.3)", overflow: "hidden", borderRadius: radius.xl, padding: spacing.lg, width: "100%" }}>
-        <View style={{ marginBottom: spacing.md, alignItems: "center" }}>
-          <Text style={{ fontFamily: 'Georgia', fontSize: 18, color: "#FFFFFF" }}>{t("cause_list.title")}</Text>
-          <View style={{ flexDirection: "row", gap: spacing.sm, marginTop: spacing.sm, flexWrap: "wrap", justifyContent: "center" }}>
+      <View style={styles.card}>
+        <View style={styles.headerBlock}>
+          <Text style={styles.title}>{t("cause_list.title")}</Text>
+          <View style={styles.dateTabs}>
             <TouchableOpacity
               activeOpacity={0.9}
               onPress={() => setActiveDateKey("today")}
-              style={{ flex: 1, minWidth: 0, alignItems: "center", paddingVertical: 8, paddingHorizontal: 12, borderRadius: radius.lg, backgroundColor: activeDateKey === "today" ? "#D4AF37" : "#111111" }}
+              style={[styles.dateTab, activeDateKey === "today" && styles.dateTabActive]}
             >
-              <Text style={{ color: "#FFFFFF", fontFamily: 'Inter_700Bold', textAlign: "center" }}>{t("cause_list.today")}</Text>
-              <Text style={{ color: "#FFFFFF", opacity: 0.8, fontSize: 12, textAlign: "center", fontFamily: 'Inter_400Regular' }}>{todayStr}</Text>
+              <Text style={[styles.dateTabLabel, activeDateKey === "today" && styles.dateTabLabelActive]}>{t("cause_list.today")}</Text>
+              <Text style={[styles.dateTabMeta, activeDateKey === "today" && styles.dateTabMetaActive]}>{todayStr}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.9}
               onPress={() => setActiveDateKey("tomorrow")}
-              style={{ flex: 1, minWidth: 0, alignItems: "center", paddingVertical: 8, paddingHorizontal: 12, borderRadius: radius.lg, backgroundColor: activeDateKey === "tomorrow" ? "#D4AF37" : "#111111" }}
+              style={[styles.dateTab, activeDateKey === "tomorrow" && styles.dateTabActive]}
             >
-              <Text style={{ color: "#FFFFFF", fontFamily: 'Inter_700Bold', textAlign: "center" }}>{isActuallyTomorrow ? t("cause_list.tomorrow") : t("cause_list.next_available")}</Text>
-              <Text style={{ color: "#FFFFFF", opacity: 0.8, fontSize: 12, textAlign: "center", fontFamily: 'Inter_400Regular' }}>{tomorrowStr}</Text>
+              <Text style={[styles.dateTabLabel, activeDateKey === "tomorrow" && styles.dateTabLabelActive]}>
+                {isActuallyTomorrow ? t("cause_list.tomorrow") : t("cause_list.next_available")}
+              </Text>
+              <Text style={[styles.dateTabMeta, activeDateKey === "tomorrow" && styles.dateTabMetaActive]}>{tomorrowStr}</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         {loading ? (
-          <View style={{ alignItems: "center", justifyContent: "center", paddingVertical: spacing.lg }}>
+          <View style={styles.loadingWrap}>
             <ActivityIndicator color={colors.accent} size="large" />
           </View>
         ) : (
@@ -313,21 +311,21 @@ export const CauseListModal = ({ visible, onClose, holidays }) => {
               })();
 
               return (
-                <View key={tDef.key} style={{ marginBottom: spacing.sm, borderRadius: radius.lg, overflow: "hidden", opacity: disabled ? 0.6 : 1 }}>
+                <View key={tDef.key} style={[styles.sectionCard, disabled && styles.sectionCardDisabled]}>
                   <TouchableOpacity
                     activeOpacity={disabled ? 1 : 0.9}
                     onPress={() => !disabled && toggleExpand(tDef.key)}
                   >
-                    <LinearGradient colors={tDef.colors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={{ padding: spacing.lg }}>
-                      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                        <View style={{ flexDirection: "row", alignItems: "center" }}>
-                          {tDef.icon}
-                          <Text style={{ color: "#FFFFFF", fontFamily: 'Inter_700Bold', marginLeft: spacing.sm, marginRight: 14 }}>{t(`cause_list.${tDef.tKey}`)}</Text>
+                    <LinearGradient colors={tDef.gradient} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.sectionHeader}>
+                      <View style={styles.sectionHeaderRow}>
+                        <View style={styles.sectionTitleRow}>
+                          <Ionicons name={tDef.iconName} size={20} color={colors.textInverse} />
+                          <Text style={styles.sectionTitle}>{t(`cause_list.${tDef.tKey}`)}</Text>
                           {!disabled ? (
-                            <Text style={{ color: "#FFFFFF", opacity: 0.9 }}>{`  •  ${count} ${t("cause_list.available")}`}</Text>
+                            <Text style={styles.sectionMeta}>{`  •  ${count} ${t("cause_list.available")}`}</Text>
                           ) : null}
                           {disabled ? (
-                            <Text style={{ color: "#FFFFFF", opacity: 0.8, marginLeft: spacing.sm }}>{t("cause_list.not_available")}</Text>
+                            <Text style={styles.sectionMetaEmpty}>{t("cause_list.not_available")}</Text>
                           ) : null}
                         </View>
                         {rightIcon}
@@ -341,15 +339,33 @@ export const CauseListModal = ({ visible, onClose, holidays }) => {
                       style={{
                         opacity: anims[tDef.key],
                         transform: [{ translateY: anims[tDef.key].interpolate({ inputRange: [0, 1], outputRange: [-8, 0] }) }],
-                        backgroundColor: "#111111",
+                        backgroundColor: colors.card,
                       }}
                     >
-                      <View style={{ padding: spacing.md }}>
-                        {items.map((item, idx) => (
-                          <TouchableOpacity key={idx} activeOpacity={0.85} onPress={() => openUrlSafely(item.url)} style={{ paddingVertical: 10 }}>
-                            <Text style={{ color: "#FFFFFF", fontFamily: 'Inter_400Regular' }}>{item.label}</Text>
-                          </TouchableOpacity>
-                        ))}
+                      <View style={styles.expandedContent}>
+                        {items.map((item, idx) => {
+                          const accentColor = tDef.rowColor || colors.accent;
+
+                          return (
+                            <TouchableOpacity
+                              key={idx}
+                              activeOpacity={0.85}
+                              onPress={() => openUrlSafely(item.url)}
+                              style={[
+                                styles.linkRow,
+                                {
+                                  borderColor: withAlpha(accentColor, 0.22),
+                                  backgroundColor: withAlpha(accentColor, 0.08),
+                                },
+                              ]}
+                            >
+                              <View style={styles.linkRowInner}>
+                                <View style={[styles.linkDot, { backgroundColor: accentColor }]} />
+                                <Text style={styles.linkText}>{item.label}</Text>
+                              </View>
+                            </TouchableOpacity>
+                          );
+                        })}
                       </View>
                     </Animated.View>
                   ) : null}
@@ -360,13 +376,79 @@ export const CauseListModal = ({ visible, onClose, holidays }) => {
         )}
 
 
-        {/* <View style={{ marginTop: spacing.md, alignItems: "center" }}>
-          <TouchableOpacity onPress={onClose} activeOpacity={0.85} style={{ paddingVertical: 10, paddingHorizontal: 16, backgroundColor: "#111111", borderRadius: radius.lg }}>
-            <Text style={{ color: "#FFFFFF", fontWeight: "700" }}>Close</Text>
-          </TouchableOpacity>
-        </View> */}
       </View>
     
     </Modal>
   );
 };
+
+const getTypeDefs = (colors) => [
+  { key: "dl", tKey: "daily", gradient: [withAlpha(colors.causeList.daily, 0.92), colors.causeList.daily], rowColor: colors.causeList.daily, iconName: "document-text" },
+  { key: "sl", tKey: "supplementary", gradient: [withAlpha(colors.causeList.supplementary, 0.92), colors.causeList.supplementary], rowColor: colors.causeList.supplementary, iconName: "add" },
+  { key: "lz", tKey: "lawazima", gradient: [withAlpha(colors.causeList.lawazima, 0.92), colors.causeList.lawazima], rowColor: colors.causeList.lawazima, iconName: "boat" },
+  { key: "no", tKey: "notices", gradient: [withAlpha(colors.causeList.notices, 0.92), colors.causeList.notices], rowColor: colors.causeList.notices, iconName: "notifications" },
+];
+
+const createStyles = (colors, radius, spacing, fonts) =>
+  StyleSheet.create({
+    modal: { margin: 0, padding: spacing.lg, justifyContent: "center", alignItems: "center" },
+    card: {
+      backgroundColor: colors.primary,
+      borderWidth: 1,
+      borderColor: colors.border,
+      overflow: "hidden",
+      borderRadius: radius.xl,
+      padding: spacing.lg,
+      width: "100%",
+    },
+    headerBlock: { marginBottom: spacing.md, alignItems: "center" },
+    title: { fontFamily: fonts.heading, fontSize: 18, color: colors.textPrimary },
+    dateTabs: { flexDirection: "row", gap: spacing.sm, marginTop: spacing.sm, flexWrap: "wrap", justifyContent: "center" },
+    dateTab: {
+      flex: 1,
+      minWidth: 0,
+      alignItems: "center",
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+      borderRadius: radius.lg,
+      backgroundColor: colors.card,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    dateTabActive: {
+      backgroundColor: colors.accent,
+      borderColor: colors.accent,
+    },
+    dateTabLabel: { color: colors.textPrimary, fontFamily: fonts.bodyBold, textAlign: "center" },
+    dateTabLabelActive: { color: colors.textInverse },
+    dateTabMeta: { color: colors.textSecondary, fontSize: 12, textAlign: "center", fontFamily: fonts.body },
+    dateTabMetaActive: { color: withAlpha(colors.textInverse, 0.84) },
+    loadingWrap: { alignItems: "center", justifyContent: "center", paddingVertical: spacing.lg },
+    sectionCard: { marginBottom: spacing.sm, borderRadius: radius.lg, overflow: "hidden" },
+    sectionCardDisabled: { opacity: 0.6 },
+    sectionHeader: { padding: spacing.lg },
+    sectionHeaderRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+    sectionTitleRow: { flexDirection: "row", alignItems: "center", flexShrink: 1 },
+    sectionTitle: { color: colors.textInverse, fontFamily: fonts.bodyBold, marginLeft: spacing.sm, marginRight: 14 },
+    sectionMeta: { color: withAlpha(colors.textInverse, 0.9), fontFamily: fonts.body },
+    sectionMetaEmpty: { color: withAlpha(colors.textInverse, 0.8), marginLeft: spacing.sm, fontFamily: fonts.body },
+    expandedContent: { padding: spacing.md },
+    linkRow: {
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      borderRadius: radius.md,
+      borderWidth: 1,
+      marginBottom: spacing.sm,
+    },
+    linkRowInner: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: spacing.sm,
+    },
+    linkDot: {
+      width: 8,
+      height: 8,
+      borderRadius: 4,
+    },
+    linkText: { color: colors.textPrimary, fontFamily: fonts.body, flexShrink: 1 },
+  });

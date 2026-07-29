@@ -1,7 +1,7 @@
 import React from "react";
 import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { colors, radius, spacing } from "../theme";
+import { useAppTheme } from "../theme";
 import { useTranslation } from "react-i18next";
 
 const SOCIAL_LINKS = {
@@ -36,7 +36,10 @@ const openSocialLink = async ({ appUrl, webUrl }) => {
 };
 
 export const Footer = ({ onAbout, onContact }) => {
+  const { colors, radius, spacing } = useAppTheme();
   const { t } = useTranslation();
+  const styles = React.useMemo(() => createStyles(colors, radius, spacing), [colors, radius, spacing]);
+
   return (
     <View style={styles.footer}>
       <View style={styles.linksRow}>
@@ -84,28 +87,29 @@ export const Footer = ({ onAbout, onContact }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  footer: {
-    padding: spacing.lg,
-    alignItems: "center",
-    gap: spacing.xs,
-    backgroundColor: colors.footer,
-  },
-  linksRow: { flexDirection: "row", gap: spacing.lg, flexWrap: "wrap", justifyContent: "center" },
-  footerLink: { color: "#FFFFFF", fontWeight: "700" },
-  metaContainer: { alignItems: "center", marginTop: 8, paddingHorizontal: spacing.md },
-  footerMeta: { color: "#ADB9D8", textAlign: "center", fontSize: 11, lineHeight: 16 },
-  linkText: { color: colors.accent, textDecorationLine: "underline" },
-  footerCopyright: { color: "#ADB9D8", textAlign: "center", fontSize: 11, marginTop: 4, opacity: 0.8 },
-  socialRow: { flexDirection: "row", gap: spacing.sm, marginTop: spacing.sm, flexWrap: "wrap", justifyContent: "center" },
-  socialButton: {
-    flexDirection: "row",
-    gap: spacing.xs,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    backgroundColor: "#111111",
-    borderRadius: radius.lg,
-    alignItems: "center",
-  },
-  socialText: { color: "#ADB9D8", fontWeight: "700" },
-});
+const createStyles = (colors, radius, spacing) =>
+  StyleSheet.create({
+    footer: {
+      padding: spacing.lg,
+      alignItems: "center",
+      gap: spacing.xs,
+      backgroundColor: colors.footer,
+    },
+    linksRow: { flexDirection: "row", gap: spacing.lg, flexWrap: "wrap", justifyContent: "center" },
+    footerLink: { color: colors.textPrimary, fontWeight: "700" },
+    metaContainer: { alignItems: "center", marginTop: 8, paddingHorizontal: spacing.md },
+    footerMeta: { color: colors.textMuted, textAlign: "center", fontSize: 11, lineHeight: 16 },
+    linkText: { color: colors.accent, textDecorationLine: "underline" },
+    footerCopyright: { color: colors.textMuted, textAlign: "center", fontSize: 11, marginTop: 4, opacity: 0.8 },
+    socialRow: { flexDirection: "row", gap: spacing.sm, marginTop: spacing.sm, flexWrap: "wrap", justifyContent: "center" },
+    socialButton: {
+      flexDirection: "row",
+      gap: spacing.xs,
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.sm,
+      backgroundColor: colors.card,
+      borderRadius: radius.lg,
+      alignItems: "center",
+    },
+    socialText: { color: colors.textMuted, fontWeight: "700" },
+  });

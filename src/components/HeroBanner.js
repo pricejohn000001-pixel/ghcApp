@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Dimensions, StyleSheet, View, Animated, Text, Image, PanResponder } from "react-native";
-import { useTranslation } from "react-i18next";
+import { Dimensions, StyleSheet, View, Animated, PanResponder } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { colors, spacing } from "../theme";
+import { useAppTheme } from "../theme";
 
 const { width } = Dimensions.get("window");
 const slideHeight = 200;
@@ -16,7 +15,8 @@ const slides = [
 ];
 
 export const HeroBanner = () => {
-  const { t } = useTranslation();
+  const { colors, spacing, fonts, isDark } = useAppTheme();
+  const styles = useMemo(() => createStyles(colors, spacing, fonts), [colors, spacing, fonts]);
   const [index, setIndex] = useState(0);
   const panX = useRef(new Animated.Value(0)).current;
   const total = slides.length;
@@ -31,6 +31,12 @@ export const HeroBanner = () => {
   const isLast = index % Math.max(total, 1) === total - 1;
   const titleText = isLast ? "Celebrating Platinum Jubilee of the Gauhati High Court" : "The Gauhati High Court";
   const subtitleText = isLast ? "" : currentSlide.subtitle || "";
+  const overlayColors = useMemo(
+    () => ["transparent", isDark ? "rgba(0,0,0,0.88)" : "rgba(38,26,17,0.72)"],
+    [isDark]
+  );
+  const heroTextColor = isDark ? colors.textPrimary : "#FFFDF8";
+  const heroSubColor = isDark ? colors.textSecondary : "rgba(255,253,248,0.82)";
 
   const goTo = (nextIndex) => {
     Animated.timing(fade, { toValue: 0, duration: 250, useNativeDriver: true }).start(() => {
@@ -109,29 +115,41 @@ export const HeroBanner = () => {
       <Animated.View style={{ transform: [{ translateX: panX }] }}>
         <Animated.Image source={currentSlide.src} style={[styles.hero, { opacity: fade }]} />
         <LinearGradient
-          colors={["transparent", "rgba(0,0,0,0.9)"]}
+          colors={overlayColors}
           style={styles.overlay}
           pointerEvents="none"
         />
         <View style={styles.heroText}>
-          <Animated.Text style={[styles.heroTitle, { opacity: fade }]}>{titleText}</Animated.Text>
-          {!isLast ? <Animated.Text style={[styles.heroSub, { opacity: fade }]}>{subtitleText}</Animated.Text> : null}
+          <Animated.Text style={[styles.heroTitle, styles.heroTitleTone, { color: heroTextColor, opacity: fade }]}>
+            {titleText}
+          </Animated.Text>
+          {!isLast ? (
+            <Animated.Text style={[styles.heroSub, { color: heroSubColor, opacity: fade }]}>
+              {subtitleText}
+            </Animated.Text>
+          ) : null}
         </View>
       </Animated.View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  wrapper: { position: "relative", height: slideHeight },
-  hero: { width, height: slideHeight, resizeMode: "cover" },
-  overlay: { position: "absolute", left: 0, right: 0, bottom: 0, height: 120 },
-  heroText: {
-    position: "absolute",
-    left: spacing.lg,
-    right: spacing.lg,
-    bottom: spacing.lg,
-  },
-  heroTitle: { color: "#FFFFFF", fontFamily: 'Georgia', fontSize: 16, lineHeight: 22 },
-  heroSub: { color: colors.textSecondary, marginTop: 4, fontSize: 12, fontFamily: 'Inter_400Regular' },
-});
+const createStyles = (colors, spacing, fonts) =>
+  StyleSheet.create({
+    wrapper: { position: "relative", height: slideHeight },
+    hero: { width, height: slideHeight, resizeMode: "cover" },
+    overlay: { position: "absolute", left: 0, right: 0, bottom: 0, height: 120 },
+    heroText: {
+      position: "absolute",
+      left: spacing.lg,
+      right: spacing.lg,
+      bottom: spacing.lg,
+    },
+    heroTitle: { fontFamily: fonts.heading, fontSize: 16, lineHeight: 22 },
+    heroTitleTone: {
+      textShadowColor: colors.primaryDark,
+      textShadowOffset: { width: 0, height: 2 },
+      textShadowRadius: 10,
+    },
+    heroSub: { marginTop: 4, fontSize: 12, fontFamily: fonts.body },
+  });

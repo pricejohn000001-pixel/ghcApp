@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Pressable } from 
 import Modal from "react-native-modal";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import { colors, radius, spacing } from "../theme";
+import { useAppTheme } from "../theme";
 import { placeholderBio } from "../data";
 import { decodeHtmlEntities } from "../utils/decodeHtmlEntities";
 
@@ -37,13 +37,15 @@ const getValueKey = (value) => {
 };
 
 export const PortfolioModal = ({ visible, onClose, judge }) => {
+  const { theme, colors, radius, spacing, fonts } = useAppTheme();
   const { t } = useTranslation();
+  const styles = React.useMemo(() => createStyles(colors, radius, spacing, fonts), [colors, radius, spacing, fonts]);
 
   return (
     <Modal 
       customBackdrop={
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose}>
-          <BlurView style={StyleSheet.absoluteFill} intensity={80} tint="dark"/>
+          <BlurView style={StyleSheet.absoluteFill} intensity={80} tint={theme.blurTint} />
         </Pressable>
       }
       backdropOpacity={1}
@@ -81,7 +83,7 @@ export const PortfolioModal = ({ visible, onClose, judge }) => {
             </>
           ) : null}
           <View style={styles.table}>
-            {judge.details.map((row) => {
+            {(judge?.details || []).map((row) => {
               const labelKey = getLabelKey(row.label);
               const valueKey = getValueKey(row.value);
               return (
@@ -98,39 +100,44 @@ export const PortfolioModal = ({ visible, onClose, judge }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  portfolioModal: {
-    margin: 0,
-    padding: spacing.lg,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  portfolioCard: { backgroundColor: "#000000", borderWidth: 1, borderColor: "rgba(212,175,55,0.25)", borderRadius: radius.xl,
-    padding: spacing.lg,
-    width: "100%",
-    maxHeight: "90%",
-  },
-  scrollArea: { maxHeight: "100%" },
-  scrollContent: { paddingBottom: spacing.md },
-  portfolioHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: spacing.sm,
-  },
-  portfolioTitle: { fontFamily: 'Georgia', fontSize: 18, color: colors.textPrimary },
-  portfolioName: { fontFamily: 'Georgia', fontSize: 16, color: colors.textPrimary },
-  portfolioRole: { color: "#AAAAAA", marginTop: 2, marginBottom: spacing.md, fontFamily: 'Inter_400Regular' },
-  bioTitle: { fontFamily: 'Georgia', fontSize: 14, marginBottom: spacing.xs, color: colors.textPrimary },
-  bioText: { color: "#FFFFFF", lineHeight: 20, fontFamily: 'Inter_400Regular' },
-  bioParagraph: { color: "#FFFFFF", lineHeight: 20, marginBottom: spacing.sm, fontFamily: 'Inter_400Regular' },
-  table: { marginTop: spacing.md, borderRadius: radius.lg, overflow: "hidden" },
-  tableRow: {
-    flexDirection: "row",
-    borderBottomColor: "#333333",
-    borderBottomWidth: 1,
-  },
-  tableLabel: { flex: 1, backgroundColor: "#222222", padding: spacing.md, color: "#FFFFFF", fontFamily: 'Inter_600SemiBold' },
-  tableValue: { flex: 1, padding: spacing.md, color: "#FFFFFF", fontFamily: 'Inter_400Regular' },
-});
+const createStyles = (colors, radius, spacing, fonts) =>
+  StyleSheet.create({
+    portfolioModal: {
+      margin: 0,
+      padding: spacing.lg,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    portfolioCard: {
+      backgroundColor: colors.primary,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: radius.xl,
+      padding: spacing.lg,
+      width: "100%",
+      maxHeight: "90%",
+    },
+    scrollArea: { maxHeight: "100%" },
+    scrollContent: { paddingBottom: spacing.md },
+    portfolioHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: spacing.sm,
+    },
+    portfolioTitle: { fontFamily: fonts.heading, fontSize: 18, color: colors.textPrimary },
+    portfolioName: { fontFamily: fonts.heading, fontSize: 16, color: colors.textPrimary },
+    portfolioRole: { color: colors.textSecondary, marginTop: 2, marginBottom: spacing.md, fontFamily: fonts.body },
+    bioTitle: { fontFamily: fonts.heading, fontSize: 14, marginBottom: spacing.xs, color: colors.textPrimary },
+    bioParagraph: { color: colors.textPrimary, lineHeight: 20, marginBottom: spacing.sm, fontFamily: fonts.body },
+    table: { marginTop: spacing.md, borderRadius: radius.lg, overflow: "hidden", borderWidth: 1, borderColor: colors.borderSoft },
+    tableRow: {
+      flexDirection: "row",
+      borderBottomColor: colors.borderSoft,
+      borderBottomWidth: 1,
+      backgroundColor: colors.card,
+    },
+    tableLabel: { flex: 1, backgroundColor: colors.cardAlt, padding: spacing.md, color: colors.textPrimary, fontFamily: fonts.bodySemiBold },
+    tableValue: { flex: 1, padding: spacing.md, color: colors.textPrimary, fontFamily: fonts.body },
+  });
 

@@ -1,13 +1,12 @@
 import React, { useCallback, useMemo, useRef } from "react";
-import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View, Animated } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View, Animated } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
-import { colors, radius, spacing } from "../theme";
+import { useAppTheme } from "../theme";
 
 const { width } = Dimensions.get("window");
-const cardWidth = width - spacing.lg * 2;
 
-const JudgeCard = React.memo(({ item, onPortfolio, t }) => {
+const JudgeCard = React.memo(({ item, onPortfolio, t, colors, styles }) => {
   const [imageLoading, setImageLoading] = React.useState(true);
   const fadeAnim = useRef(new Animated.Value(0.3)).current;
 
@@ -52,7 +51,7 @@ const JudgeCard = React.memo(({ item, onPortfolio, t }) => {
         <Text style={styles.judgeName}>{item.name?.replace(", Chief Justice", "")}</Text>
         <Text style={styles.judgeRole}>{item.title}</Text>
         <View style={styles.portfolioButton}>
-          <Ionicons name="briefcase" size={16} color="#D4AF37" />
+          <Ionicons name="briefcase" size={16} color={colors.accent} />
           <Text style={styles.portfolioLabel}>{t("home.portfolio")}</Text>
         </View>
       </View>
@@ -61,12 +60,18 @@ const JudgeCard = React.memo(({ item, onPortfolio, t }) => {
 });
 
 export const JudgesSection = ({ judges, selectedIndex, onSelect, onPortfolio }) => {
+  const { colors, radius, spacing, fonts } = useAppTheme();
   const { t } = useTranslation();
+  const cardWidth = useMemo(() => width - spacing.lg * 2, [spacing.lg]);
+  const styles = useMemo(
+    () => createStyles(colors, radius, spacing, fonts, cardWidth),
+    [cardWidth, colors, radius, spacing, fonts]
+  );
   const listRef = useRef(null);
   const horizontalPadding = useMemo(() => spacing.lg, []);
   const renderItem = useCallback(
-    ({ item }) => <JudgeCard item={item} onPortfolio={onPortfolio} t={t} />,
-    [onPortfolio, t]
+    ({ item }) => <JudgeCard item={item} onPortfolio={onPortfolio} t={t} colors={colors} styles={styles} />,
+    [colors, onPortfolio, styles, t]
   );
   const total = judges?.length || 0;
   const si = typeof selectedIndex === "number" ? selectedIndex : 0;
@@ -132,64 +137,67 @@ export const JudgesSection = ({ judges, selectedIndex, onSelect, onPortfolio }) 
   );
 };
 
-const styles = StyleSheet.create({
-  section: {
-    paddingTop: spacing.xl,
-    paddingBottom: spacing.lg,
-    gap: spacing.xs,
-  },
-  sectionHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: spacing.lg,
-  },
-  sectionTitle: { color: "#FFFFFF", fontSize: 18, fontFamily: 'Georgia' },
-  sectionSub: { color: colors.textSecondary, fontSize: 12, fontFamily: 'Inter_400Regular' },
-  listContent: { paddingTop: spacing.sm },
-  judgeCard: {
-    backgroundColor: "#111111",
-    borderRadius: radius.xl,
-    padding: spacing.md + 2,
-    flexDirection: "row",
-    gap: spacing.md,
-    position: "relative",
-    borderWidth: 1,
-    borderColor: "#222222",
-    shadowColor: "#000000",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 8 },
-    shadowRadius: 14,
-    elevation: 6,
-    width: cardWidth,
-  },
-  imageContainer: {
-    width: 112,
-    height: 146,
-    borderRadius: radius.lg,
-    backgroundColor: "#222222",
-    overflow: "hidden",
-  },
-  judgeImage: { width: "100%", height: "100%", resizeMode: "cover" },
-  skeletonLoader: {
-    backgroundColor: "#333333",
-  },
-  judgeInfo: { flex: 1 },
-  judgeName: { color: "#FFFFFF", fontSize: 17, lineHeight: 22, fontFamily: 'Georgia' },
-  judgeRole: { color: "#AAAAAA", marginTop: 4, fontSize: 12, fontFamily: 'Inter_400Regular' },
-  portfolioButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 12,
-    backgroundColor: "#222222",
-    paddingHorizontal: 12,
-    paddingVertical: 9,
-    borderRadius: 999,
-    alignSelf: "flex-start",
-    gap: 6,
-  },
-  portfolioLabel: { color: "#D4AF37", fontFamily: 'Inter_700Bold' },
-  sliderWrap: { paddingTop: spacing.sm, alignItems: "center" },
-  sliderTrack: { height: 6, borderRadius: 999, backgroundColor: "#333333", opacity: 0.6, position: "relative" },
-  sliderFill: { position: "absolute", height: 6, borderRadius: 999, backgroundColor: colors.accent },
-});
+const createStyles = (colors, radius, spacing, fonts, cardWidth) =>
+  StyleSheet.create({
+    section: {
+      paddingTop: spacing.xl,
+      paddingBottom: spacing.lg,
+      gap: spacing.xs,
+    },
+    sectionHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: spacing.lg,
+    },
+    sectionTitle: { color: colors.textPrimary, fontSize: 18, fontFamily: fonts.heading },
+    sectionSub: { color: colors.textSecondary, fontSize: 12, fontFamily: fonts.body },
+    listContent: { paddingTop: spacing.sm },
+    judgeCard: {
+      backgroundColor: colors.card,
+      borderRadius: radius.xl,
+      padding: spacing.md + 2,
+      flexDirection: "row",
+      gap: spacing.md,
+      position: "relative",
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+      shadowColor: colors.primaryDark,
+      shadowOpacity: 0.2,
+      shadowOffset: { width: 0, height: 8 },
+      shadowRadius: 14,
+      elevation: 6,
+      width: cardWidth,
+    },
+    imageContainer: {
+      width: 112,
+      height: 146,
+      borderRadius: radius.lg,
+      backgroundColor: colors.cardAlt,
+      overflow: "hidden",
+    },
+    judgeImage: { width: "100%", height: "100%", resizeMode: "cover" },
+    skeletonLoader: {
+      backgroundColor: colors.border,
+    },
+    judgeInfo: { flex: 1 },
+    judgeName: { color: colors.textPrimary, fontSize: 17, lineHeight: 22, fontFamily: fonts.heading },
+    judgeRole: { color: colors.textSecondary, marginTop: 4, fontSize: 12, fontFamily: fonts.body },
+    portfolioButton: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginTop: 12,
+      backgroundColor: colors.cardAlt,
+      paddingHorizontal: 12,
+      paddingVertical: 9,
+      borderRadius: 999,
+      alignSelf: "flex-start",
+      gap: 6,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    portfolioLabel: { color: colors.accent, fontFamily: fonts.bodyBold },
+    sliderWrap: { paddingTop: spacing.sm, alignItems: "center" },
+    sliderTrack: { height: 6, borderRadius: 999, backgroundColor: colors.border, opacity: 0.8, position: "relative" },
+    sliderFill: { position: "absolute", height: 6, borderRadius: 999, backgroundColor: colors.accent },
+  });

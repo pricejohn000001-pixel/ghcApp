@@ -1,6 +1,6 @@
 import React from "react";
 import { Animated, StyleSheet, View } from "react-native";
-import { colors } from "../theme";
+import { useAppTheme } from "../theme";
 import { HeroBanner } from "./HeroBanner";
 import { JudgesSection } from "./JudgesSection";
 import { ServicesGrid } from "./ServicesGrid";
@@ -25,6 +25,7 @@ export const HomeContent = ({
 }) => {
   const scrollRef = React.useRef(null);
   const [holidaysY, setHolidaysY] = React.useState(0);
+  const { colors } = useAppTheme();
 
   return (
     <Animated.FlatList
@@ -54,8 +55,8 @@ export const HomeContent = ({
         </>
       }
       showsVerticalScrollIndicator={false}
-      style={styles.scroll}
-      contentContainerStyle={styles.scrollContent}
+      style={[styles.scroll, { backgroundColor: colors.primary }]}
+      contentContainerStyle={[styles.scrollContent, { backgroundColor: colors.primary }]}
       refreshing={refreshing}
       onRefresh={onRefresh}
       onScroll={

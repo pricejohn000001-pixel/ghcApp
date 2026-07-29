@@ -9,16 +9,16 @@ const getCategoryInfo = (name) => {
       lowerName.includes("1st saturday") || 
       lowerName.includes("3rd saturday") || 
       lowerName.includes("5th saturday")) {
-    return { badge: "Working Saturday", color: "#10B981", type: "working" };
+    return { badge: "Working Saturday", type: "working" };
   }
   
   // Restricted holidays keywords - these will be used for filtering out
   const restrictedKeywords = ["silpi divas", "netaji", "busu dima", "restricted"];
   if (restrictedKeywords.some(k => lowerName.includes(k))) {
-    return { badge: "Restricted", color: "#F59E0B", type: "restricted" };
+    return { badge: "Restricted", type: "restricted" };
   }
 
-  return { badge: "Holiday", color: "#cf2b0eff", type: "public" };
+  return { badge: "Holiday", type: "public" };
 };
 
 /**
@@ -92,7 +92,6 @@ export const fetchHolidaysData = async (year = new Date().getFullYear()) => {
         label: formatHolidayLabel(h),
         name: h.holidayname,
         badge: categoryInfo.badge,
-        badgeColor: categoryInfo.color,
         month: date.getMonth(),
         year: date.getFullYear(),
         day: date.getDate(),

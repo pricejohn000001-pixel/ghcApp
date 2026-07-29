@@ -1,0 +1,27 @@
+﻿env: load .env
+env: export EXPO_PUBLIC_API_TOKEN
+Starting Metro Bundler
+
+Android Bundling failed 977ms node_modules\expo\AppEntry.js (806 modules)
+
+node.exe : SyntaxError: SyntaxError: 
+D:\Projects\ghc_app\src\components\DrawerMenu.js: Expected corresponding JSX 
+closing tag for <Animated.View>. (253:14)
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (SyntaxError: Sy...View>. (253:14) 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[0m [90m 251 |[39m                   
+[33m<[39m[33m/[39m[33mView[39m[33m>[39m
+ [90m 252 |[39m                 
+[33m<[39m[33m/[39m[33mView[39m[33m>[39m
+[31m[1m>[22m[39m[90m 253 |[39m               
+[33m<[39m[33m/[39m[33mView[39m[33m>[39m
+ [90m     |[39m               [31m[1m^[22m[39m
+ [90m 254 |[39m             ) [33m:[39m [36mnull[39m}
+ [90m 255 |[39m           [33m<[39m[33m/[39m[33mView[39m[33m>[39m
+ [90m 256 |[39m[0m

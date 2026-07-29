@@ -1,9 +1,10 @@
 import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useMemo, useRef, useState, useEffect } from "react";
 import { Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, Pressable } from "react-native";
 import Modal from "react-native-modal";
 import { Ionicons } from "@expo/vector-icons";
-import { colors, radius, spacing } from "../theme";
+import { themes, useAppTheme, withAlpha } from "../theme";
 import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -60,7 +61,9 @@ const promotionTransferItems = [
 ];
 
 export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, expandSection }) => {
+  const { theme, colors, radius, spacing, fonts, availableThemes, themeName, setThemeName } = useAppTheme();
   const { t, i18n } = useTranslation();
+  const styles = useMemo(() => createStyles(colors, radius, spacing, fonts), [colors, radius, spacing, fonts]);
 
   const changeLanguage = async (lang) => {
     await AsyncStorage.setItem('language', lang);
@@ -78,11 +81,14 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
       { key: "ebooks", title: t("drawer.ebooks"), items: ebookItems, icon: <Ionicons name="book" size={18} color={colors.accent} /> },
       { key: "links", title: t("drawer.links"), items: importantLinks, icon: <Ionicons name="link" size={18} color={colors.accent} /> },
     ],
-    [t]
+    [colors.accent, t]
   );
 
   const [expanded, setExpanded] = useState({ judges: false, benches: false, links: false, recruitments: false, ebooks: false, notice_board: false });
   const [shown, setShown] = useState({ judges: false, benches: false, links: false, recruitments: false, ebooks: false, notice_board: false });
+  const [prefsExpanded, setPrefsExpanded] = useState(false);
+  const [prefsShown, setPrefsShown] = useState(false);
+  const prefsAnim = useRef(new Animated.Value(0)).current;
   const [nestedExpanded, setNestedExpanded] = useState({});
   const [nestedShown, setNestedShown] = useState({});
   const scrollRef = useRef(null);
@@ -132,14 +138,14 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
   }, [visible, expandSection]);
 
   return (
-    <Modal backdropColor="#000000" backdropOpacity={0.7} hideModalContentWhileAnimating={true} useNativeDriverForBackdrop={true}
+    <Modal backdropColor={colors.primaryDark} backdropOpacity={0.7} hideModalContentWhileAnimating={true} useNativeDriverForBackdrop={true}
       isVisible={visible}
       onBackdropPress={onClose}
       animationIn="slideInRight"
       animationOut="slideOutRight"
       style={styles.drawerModal}
     >
-      <BlurView intensity={70} tint="dark" style={styles.drawer}>
+      <BlurView intensity={70} tint={theme.blurTint} style={styles.drawer}>
         <View style={styles.drawerHeader}>
           <Image source={logo} style={styles.drawerAvatar} />
           <View style={styles.drawerText}>
@@ -151,23 +157,101 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
         </View>
 
         <ScrollView ref={scrollRef} style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          {/* Language Switcher */}
-          <View style={styles.langContainer}>
-            <Text style={styles.langLabel}>{t("drawer.language")}</Text>
-            <View style={styles.langButtons}>
-              <TouchableOpacity
-                style={[styles.langButton, i18n.language === 'en' && styles.langButtonActive]}
-                onPress={() => changeLanguage('en')}
+          <View style={styles.preferencesSection}>
+            <TouchableOpacity
+              style={[styles.drawerItem, styles.preferencesHeader]}
+              activeOpacity={0.85}
+              onPress={() => {
+                if (prefsExpanded) {
+                  Animated.timing(prefsAnim, {
+                    toValue: 0,
+                    duration: 200,
+                    useNativeDriver: true,
+                  }).start(({ finished }) => {
+                    if (finished) setPrefsShown(false);
+                  });
+                  setPrefsExpanded(false);
+                } else {
+                  setPrefsShown(true);
+                  prefsAnim.setValue(0);
+                  Animated.timing(prefsAnim, {
+                    toValue: 1,
+                    duration: 200,
+                    useNativeDriver: true,
+                  }).start();
+                  setPrefsExpanded(true);
+                }
+              }}
+            >
+              <View style={styles.drawerIcon}>
+                <Ionicons name="settings" size={18} color={colors.accent} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.drawerItemLabel}>{t("drawer.preferences", "Preferences")}</Text>
+              </View>
+            </TouchableOpacity>
+
+            {prefsShown ? (
+              <Animated.View
+                style={[
+                  styles.preferencesContent,
+                  {
+                    opacity: prefsAnim,
+                    transform: [
+                      {
+                        translateY: prefsAnim.interpolate({ inputRange: [0, 1], outputRange: [-8, 0] }),
+                      },
+                    ],
+                  },
+                ]}
               >
-                <Text style={[styles.langButtonText, i18n.language === 'en' && styles.langButtonTextActive]}>English</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.langButton, i18n.language === 'as' && styles.langButtonActive]}
-                onPress={() => changeLanguage('as')}
-              >
-                <Text style={[styles.langButtonText, i18n.language === 'as' && styles.langButtonTextActive]}>অসমীয়া</Text>
-              </TouchableOpacity>
-            </View>
+                <View style={styles.langContainer}>
+                  <Text style={styles.langLabel}>{t("drawer.language")}</Text>
+                  <View style={styles.langButtons}>
+                    <TouchableOpacity
+                      style={[styles.langButton, i18n.language === 'en' && styles.langButtonActive]}
+                      onPress={() => changeLanguage('en')}
+                    >
+                      <Text style={[styles.langButtonText, i18n.language === 'en' && styles.langButtonTextActive]}>English</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.langButton, i18n.language === 'as' && styles.langButtonActive]}
+                      onPress={() => changeLanguage('as')}
+                    >
+                      <Text style={[styles.langButtonText, i18n.language === 'as' && styles.langButtonTextActive]}>অসমীয়া</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View style={styles.themeSection}>
+                  <Text style={styles.langLabel}>{t("drawer.theme")}</Text>
+                  <View style={styles.themeGroup}>
+                    {availableThemes.map((themeOpt) => {
+                      const palette = themes[themeOpt.name];
+                      const isActive = themeName === themeOpt.name;
+
+                      return (
+                        <TouchableOpacity
+                          key={themeOpt.name}
+                          activeOpacity={0.9}
+                          style={[styles.themeOption, isActive && styles.themeOptionActive]}
+                          onPress={() => setThemeName(themeOpt.name)}
+                        >
+                          <View style={styles.themeOptionLeft}>
+                            <View style={[styles.themeSwatch, { backgroundColor: palette.colors.accent }]} />
+                            <Text style={styles.themeOptionTitle}>{t(`drawer.themes.${themeOpt.name}`, themeOpt.label)}</Text>
+                          </View>
+
+                          <View style={styles.themeOptionRight}>
+                            {isActive ? <View style={styles.selectedDot} /> : <View style={styles.unselectedDot} />}
+                          </View>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                </View>
+              </Animated.View>
+            ) : null}
           </View>
 
           <View style={styles.divider} />
@@ -330,114 +414,199 @@ export const DrawerMenu = ({ visible, onClose, onItemPress, activeItemLabel, exp
   );
 };
 
-const styles = StyleSheet.create({
-  drawerModal: { margin: 0, justifyContent: "flex-start", alignItems: "flex-end" },
-  drawer: {
-    width: "72%",
-    backgroundColor: "#0A0A0A",
-    height: "100%",
-    padding: spacing.lg,
-    paddingTop: 48,
-  },
-  scroll: { flex: 1 },
-  scrollContent: { paddingBottom: spacing.xl },
-  drawerHeader: { flexDirection: "row", alignItems: "center", marginBottom: spacing.md },
-  drawerAvatar: { width: 44, height: 44, resizeMode: "contain" },
-  drawerText: { flex: 1, marginLeft: spacing.md },
-  drawerTitle: { color: "#FFFFFF", fontFamily: 'Georgia', fontSize: 16 },
-  drawerSubtitle: { color: colors.textSecondary, fontSize: 12, fontFamily: 'Inter_400Regular' },
-  drawerItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.md,
-    paddingVertical: 10,
-  },
-  drawerIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: radius.md,
-    backgroundColor: "#1A1A1A",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  drawerItemLabel: { color: "#FFFFFF", fontFamily: 'Inter_700Bold' },
-  drawerHint: { color: colors.textSecondary, fontSize: 12, fontFamily: 'Inter_400Regular' },
-  submenuWrap: { overflow: "hidden", marginBottom: 0 },
-  submenuList: { paddingLeft: 44, paddingRight: 4, gap: 8, marginBottom: 8 },
-  submenuCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.sm,
-    backgroundColor: "#1A1A1A",
-    borderRadius: radius.lg,
-    paddingVertical: 10,
-    paddingHorizontal: spacing.md,
-  },
-  submenuCardActive: {
-    backgroundColor: "#222222",
-    borderWidth: 1,
-    borderColor: "#333333",
-  },
-  submenuIcon: { width: 24, height: 24, borderRadius: 12, backgroundColor: "#0A0A0A", alignItems: "center", justifyContent: "center" },
-  submenuLabel: { color: colors.textSecondary, fontSize: 13, flex: 1, fontFamily: 'Inter_400Regular' },
-  submenuLabelActive: { color: colors.accent, fontFamily: 'Inter_600SemiBold' },
-  nestedSubmenuWrap: { overflow: "hidden", marginTop: 8, marginBottom: 8, marginLeft: 44 },
-  nestedSubmenuList: { gap: 6, paddingLeft: 12, borderLeftWidth: 2, borderLeftColor: "#333333", paddingVertical: 6 },
-  nestedSubmenuCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.sm,
-    backgroundColor: "#0F0F0F",
-    borderRadius: radius.md,
-    paddingVertical: 8,
-    paddingHorizontal: spacing.md,
-  },
-  nestedSubmenuCardActive: {
-    backgroundColor: "#1A1A1A",
-    borderWidth: 1,
-    borderColor: "#222222",
-  },
-  nestedSubmenuIcon: { width: 16, height: 16, borderRadius: 8, backgroundColor: "#0A0A0A", alignItems: "center", justifyContent: "center" },
-  nestedSubmenuLabel: { color: colors.textSecondary, fontSize: 12, flex: 1, fontFamily: 'Inter_400Regular' },
-  nestedSubmenuLabelActive: { color: colors.accent, fontFamily: 'Inter_600SemiBold' },
-  drawerFooter: { color: colors.textSecondary, fontSize: 12, marginTop: spacing.md, fontFamily: 'Inter_400Regular' },
-  langContainer: {
-    marginBottom: spacing.md,
-    padding: spacing.sm,
-    backgroundColor: "#1A1A1A",
-    borderRadius: radius.md,
-  },
-  langLabel: {
-    color: colors.textSecondary,
-    fontSize: 12,
-    marginBottom: spacing.xs,
-  },
-  langButtons: {
-    flexDirection: "row",
-    gap: spacing.sm,
-  },
-  langButton: {
-    flex: 1,
-    paddingVertical: 6,
-    alignItems: "center",
-    borderRadius: radius.sm,
-    backgroundColor: "#0A0A0A",
-  },
-  langButtonActive: {
-    backgroundColor: colors.primary,
-  },
-  langButtonText: {
-    color: "#666666",
-    fontSize: 12,
-    fontWeight: "600",
-  },
-  langButtonTextActive: {
-    color: colors.accent,
-  },
-  divider: {
-    height: 1,
-    backgroundColor: "#222222",
-    marginBottom: spacing.md,
-    marginTop: spacing.sm,
-  },
-});
+const createStyles = (colors, radius, spacing, fonts) =>
+  StyleSheet.create({
+    drawerModal: { margin: 0, justifyContent: "flex-start", alignItems: "flex-end" },
+    drawer: {
+      width: "84%",
+      maxWidth: 360,
+      backgroundColor: colors.cardSubtle,
+      height: "100%",
+      padding: spacing.md,
+      paddingTop: 40,
+    },
+    scroll: { flex: 1 },
+    scrollContent: { paddingBottom: spacing.xl },
+    drawerHeader: { flexDirection: "row", alignItems: "center", marginBottom: spacing.sm },
+    drawerAvatar: { width: 40, height: 40, resizeMode: "contain" },
+    drawerText: { flex: 1, marginLeft: spacing.sm },
+    drawerTitle: { color: colors.textPrimary, fontFamily: fonts.heading, fontSize: 16 },
+    drawerSubtitle: { color: colors.textSecondary, fontSize: 12, fontFamily: fonts.body },
+    drawerItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: spacing.md,
+      paddingVertical: 10,
+    },
+    drawerIcon: {
+      width: 36,
+      height: 36,
+      borderRadius: radius.md,
+      backgroundColor: colors.cardAlt,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    drawerItemLabel: { color: colors.textPrimary, fontFamily: fonts.bodySemiBold },
+    drawerHint: { color: colors.textSecondary, fontSize: 12, fontFamily: fonts.body },
+    submenuWrap: { overflow: "hidden", marginBottom: 0 },
+    submenuList: { paddingLeft: 44, paddingRight: 4, gap: 8, marginBottom: 8 },
+    submenuCard: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: spacing.sm,
+      backgroundColor: colors.cardAlt,
+      borderRadius: radius.lg,
+      paddingVertical: 10,
+      paddingHorizontal: spacing.md,
+    },
+    submenuCardActive: {
+      backgroundColor: colors.card,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    submenuIcon: { width: 24, height: 24, borderRadius: 12, backgroundColor: colors.cardSubtle, alignItems: "center", justifyContent: "center" },
+    submenuLabel: { color: colors.textSecondary, fontSize: 13, flex: 1, fontFamily: fonts.body },
+    submenuLabelActive: { color: colors.accent, fontFamily: fonts.bodySemiBold },
+    nestedSubmenuWrap: { overflow: "hidden", marginTop: 8, marginBottom: 8, marginLeft: 44 },
+    nestedSubmenuList: { gap: 6, paddingLeft: 12, borderLeftWidth: 2, borderLeftColor: colors.border, paddingVertical: 6 },
+    nestedSubmenuCard: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: spacing.sm,
+      backgroundColor: colors.cardSubtle,
+      borderRadius: radius.md,
+      paddingVertical: 8,
+      paddingHorizontal: spacing.md,
+    },
+    nestedSubmenuCardActive: {
+      backgroundColor: colors.cardAlt,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    nestedSubmenuIcon: { width: 16, height: 16, borderRadius: 8, backgroundColor: colors.cardSubtle, alignItems: "center", justifyContent: "center" },
+    nestedSubmenuLabel: { color: colors.textSecondary, fontSize: 12, flex: 1, fontFamily: fonts.body },
+    nestedSubmenuLabelActive: { color: colors.accent, fontFamily: fonts.bodySemiBold },
+    drawerFooter: { color: colors.textSecondary, fontSize: 12, marginTop: spacing.md, fontFamily: fonts.body },
+    preferencesSection: {
+      marginBottom: spacing.sm,
+      backgroundColor: colors.cardAlt,
+      borderRadius: radius.xl,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+      overflow: "hidden",
+    },
+    preferencesHeader: {
+      height: 56,
+      alignItems: "center",
+      paddingHorizontal: spacing.sm,
+      backgroundColor: colors.card,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.borderSoft,
+    },
+    preferencesContent: {
+      padding: spacing.sm,
+      gap: spacing.sm,
+      backgroundColor: colors.cardAlt,
+    },
+    langContainer: {
+      padding: spacing.sm,
+      backgroundColor: colors.card,
+      borderRadius: radius.md,
+    },
+    themeSection: {
+      marginBottom: spacing.sm,
+      padding: spacing.sm,
+      backgroundColor: colors.cardAlt,
+      borderRadius: radius.xl,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+      overflow: "hidden",
+    },
+    themeGroup: {
+      gap: spacing.xs,
+    },
+    themeOption: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingVertical: spacing.sm,
+      paddingHorizontal: spacing.sm,
+      borderRadius: radius.md,
+      backgroundColor: colors.card,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    themeOptionActive: {
+      borderColor: colors.accent,
+      backgroundColor: withAlpha(colors.accent, 0.1),
+    },
+    themeOptionLeft: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: spacing.sm,
+      flex: 1,
+    },
+    themeSwatch: {
+      width: 12,
+      height: 12,
+      borderRadius: 6,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    themeOptionTitle: {
+      color: colors.textPrimary,
+      fontSize: 12.5,
+      fontFamily: fonts.bodyBold,
+    },
+    themeOptionRight: {
+      marginLeft: spacing.sm,
+    },
+    selectedDot: {
+      width: 12,
+      height: 12,
+      borderRadius: 6,
+      backgroundColor: colors.accent,
+    },
+    unselectedDot: {
+      width: 12,
+      height: 12,
+      borderRadius: 6,
+      borderWidth: 1,
+      borderColor: colors.border,
+      backgroundColor: colors.cardSubtle,
+    },
+    langLabel: {
+      color: colors.textSecondary,
+      fontSize: 12,
+      marginBottom: spacing.xs,
+      fontFamily: fonts.body,
+    },
+    langButtons: {
+      flexDirection: "row",
+      gap: spacing.sm,
+    },
+    langButton: {
+      flex: 1,
+      paddingVertical: 6,
+      alignItems: "center",
+      borderRadius: radius.sm,
+      backgroundColor: colors.cardSubtle,
+    },
+    langButtonActive: {
+      backgroundColor: colors.primary,
+    },
+    langButtonText: {
+      color: colors.textTertiary,
+      fontSize: 12,
+      fontFamily: fonts.bodySemiBold,
+    },
+    langButtonTextActive: {
+      color: colors.accent,
+    },
+    divider: {
+      height: 1,
+      backgroundColor: colors.borderSoft,
+      marginBottom: spacing.md,
+      marginTop: spacing.sm,
+    },
+  });

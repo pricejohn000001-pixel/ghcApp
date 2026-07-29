@@ -3,17 +3,19 @@ import { Image, StyleSheet, Text, TouchableOpacity, View, AppState, useWindowDim
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { colors, radius, spacing } from "../theme";
+import { useAppTheme } from "../theme";
 import { useTranslation } from "react-i18next";
 
 const logo = require("../assets/logo.png");
 const japi = require("../assets/japi.png");
 
 export const Header = ({ onMenu, onSearch, scrollY, isHome }) => {
+  const { theme, colors, radius, spacing, fonts } = useAppTheme();
   const { t } = useTranslation();
   const monthNames = t("months", { returnObjects: true });
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
+  const styles = useEffectStyles(colors, radius, spacing, fonts);
 
   const [now, setNow] = useState(new Date());
   const [welcomeHeight, setWelcomeHeight] = useState(0);
@@ -29,7 +31,7 @@ export const Header = ({ onMenu, onSearch, scrollY, isHome }) => {
 
   const dateText = `${String(now.getDate()).padStart(2, "0")} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
   return (
-    <LinearGradient colors={["#000000", "#000000"]} style={[styles.header, { paddingTop: Math.max(insets.top, 12) + 12 }]}>
+    <LinearGradient colors={theme.gradients.header} style={[styles.header, { paddingTop: Math.max(insets.top, 12) + 12 }]}>
       <View style={styles.headerRow}>
         <View style={styles.brandRow}>
           <Image source={logo} style={styles.logo} resizeMode="contain" />
@@ -101,67 +103,72 @@ export const Header = ({ onMenu, onSearch, scrollY, isHome }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  header: {
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.lg,
-    borderBottomLeftRadius: radius.xl,
-    borderBottomRightRadius: radius.xl, 
-  },
-  headerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  brandRow: { flexDirection: "row", alignItems: "center" },
-  logo: {
-    width: 56,
-    height: 56,
-  },
-  brandTextBlock: { marginLeft: 12 },
-  brand: { color: "#FFFFFF", fontSize: 18, fontFamily: 'Georgia' },
-  subtitle: { color: colors.textSecondary, fontSize: 9, fontFamily: 'Inter_400Regular' },
-  menuButton: {
-    width: 40,
-    height: 40,
-    borderRadius: radius.lg,
-    backgroundColor: "#111111",
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "#333333",
-    borderWidth: 1,
-  },
-  welcomeCard: {
-    marginTop: spacing.md,
-    backgroundColor: "#111111",
-    borderRadius: radius.lg,
-    padding: 14,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  searchTrigger: {
-    backgroundColor: "#111111",
-    borderRadius: radius.lg,
-    paddingVertical: 10,
-    paddingHorizontal: spacing.md,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.sm,
-  },
-  searchText: { color: colors.textSecondary, fontSize: 14, fontFamily: 'Inter_600SemiBold' },
-  welcomeLabel: { color: colors.textSecondary, fontSize: 14, fontFamily: 'Inter_400Regular' },
-  dateText: { color: "#FFFFFF", fontSize: 16, fontFamily: 'Inter_700Bold', marginTop: 2 },
-  japiContainer: {
-    position: 'absolute',
-    right: -40,
-    top: -10,
-    bottom: -10,
-    justifyContent: 'center',
-  },
-  japiIcon: {
-    width: 100,
-    height: 100,
-    opacity: 0.5,
-  },
-});
+const useEffectStyles = (colors, radius, spacing, fonts) =>
+  React.useMemo(
+    () =>
+      StyleSheet.create({
+        header: {
+          paddingHorizontal: spacing.lg,
+          paddingVertical: spacing.lg,
+          borderBottomLeftRadius: radius.xl,
+          borderBottomRightRadius: radius.xl,
+        },
+        headerRow: {
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        },
+        brandRow: { flexDirection: "row", alignItems: "center" },
+        logo: {
+          width: 56,
+          height: 56,
+        },
+        brandTextBlock: { marginLeft: 12 },
+        brand: { color: colors.textPrimary, fontSize: 18, fontFamily: fonts.heading },
+        subtitle: { color: colors.textSecondary, fontSize: 9, fontFamily: fonts.body },
+        menuButton: {
+          width: 40,
+          height: 40,
+          borderRadius: radius.lg,
+          backgroundColor: colors.card,
+          alignItems: "center",
+          justifyContent: "center",
+          borderColor: colors.border,
+          borderWidth: 1,
+        },
+        welcomeCard: {
+          marginTop: spacing.md,
+          backgroundColor: colors.card,
+          borderRadius: radius.lg,
+          padding: 14,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        },
+        searchTrigger: {
+          backgroundColor: colors.card,
+          borderRadius: radius.lg,
+          paddingVertical: 10,
+          paddingHorizontal: spacing.md,
+          flexDirection: "row",
+          alignItems: "center",
+          gap: spacing.sm,
+        },
+        searchText: { color: colors.textSecondary, fontSize: 14, fontFamily: fonts.bodySemiBold },
+        welcomeLabel: { color: colors.textSecondary, fontSize: 14, fontFamily: fonts.body },
+        dateText: { color: colors.textPrimary, fontSize: 16, fontFamily: fonts.bodyBold, marginTop: 2 },
+        japiContainer: {
+          position: "absolute",
+          right: -40,
+          top: -10,
+          bottom: -10,
+          justifyContent: "center",
+        },
+        japiIcon: {
+          width: 100,
+          height: 100,
+          opacity: 0.5,
+        },
+      }),
+    [colors, fonts, radius, spacing]
+  );

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, FlatList, Modal, ActivityIndicator, Platform, Animated, StatusBar } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, FlatList, Modal, Platform, Animated, StatusBar } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import { colors, radius, spacing } from "../theme";
+import { useAppTheme } from "../theme";
 import { serviceCards, holidays, menuUrls } from "../data";
 
 let Voice = null;
@@ -13,7 +13,9 @@ try {
 }
 
 export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
+  const { colors, radius, spacing, fonts } = useAppTheme();
   const { t } = useTranslation();
+  const styles = React.useMemo(() => createStyles(colors, radius, spacing, fonts), [colors, radius, spacing, fonts]);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isListening, setIsListening] = useState(false);
@@ -24,6 +26,7 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
   const pulseLoop = useRef(null);
   const waveAnims = useRef(Array.from({ length: 5 }, () => new Animated.Value(0.6))).current;
   const waveLoops = useRef([]);
+  const overlayColor = colors.overlay;
 
   useEffect(() => {
     if (!Voice) {
@@ -209,14 +212,15 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
       transparent={true}
       onRequestClose={onClose}
     >
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: overlayColor }]}>
         <View style={styles.content}>
           <View style={styles.header}>
             <View style={styles.searchBar}>
               <Ionicons name="search" size={20} color={colors.accent} />
               <TextInput
                 style={[styles.input, { color: colors.accent }]}
-                placeholder={t("search.placeholder", "Search...")} placeholderTextColor="rgba(212,175,55,0.5)"
+                placeholder={t("search.placeholder", "Search...")}
+                placeholderTextColor={colors.textSecondary}
                 value={query}
                 onChangeText={handleSearch}
                 autoFocus
@@ -235,7 +239,7 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
                   <Ionicons
                     name={isListening ? "mic" : "mic-outline"}
                     size={20}
-                    color={!voiceAvailable ? "#666" : colors.accent}
+                    color={!voiceAvailable ? colors.textTertiary : colors.accent}
                   />
                 </TouchableOpacity>
               </View>
@@ -310,132 +314,145 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.7)",
-    justifyContent: "flex-start",
-  },
-  content: { flex: 1, marginTop: Platform.OS === "android" ? (StatusBar.currentHeight || 40) : 40, backgroundColor: "#000000", overflow: "hidden", borderWidth: 1, borderColor: "rgba(212,175,55,0.25)", borderTopLeftRadius: radius.xl,
-    borderTopRightRadius: radius.xl,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: "#333333",
-    gap: spacing.sm,
-  },
-  searchBar: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#222222",
-    borderRadius: radius.lg,
-    paddingHorizontal: spacing.sm,
-    height: 44,
-    gap: spacing.xs,
-  },
-  micWrap: {
-    width: 44,
-    height: 44,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  input: {
-    flex: 1,
-    fontSize: 16,
-    color: "#FFFFFF",
-    paddingVertical: 8,
-  },
-  voiceButton: {
-    padding: 4,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  voiceButtonDisabled: {
-    opacity: 0.5,
-  },
-  closeButton: {
-    padding: spacing.sm,
-  },
-  closeText: {
-    color: colors.textPrimary,
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  resultItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: "#222222",
-  },
-  iconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "#111111",
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: spacing.md,
-  },
-  textContainer: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#FFFFFF",
-    marginBottom: 2,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: "#CCCCCC",
-  },
-  errorText: {
-    color: "red",
-    padding: spacing.md,
-    textAlign: "center",
-  },
-  emptyContainer: {
-    padding: spacing.xl,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: spacing.sm,
-    flex: 1,
-  },
-  emptyText: {
-    color: colors.textSecondary,
-    fontSize: 16,
-  },
-  emptySubtitle: {
-    color: colors.textSecondary,
-    fontSize: 13,
-    textAlign: "center",
-  },
-  listeningOverlay: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: 220,
-    gap: spacing.md,
-  },
-  listeningText: {
-    color: colors.textSecondary,
-    fontSize: 24,
-    fontWeight: "700",
-  },
-  waveWrap: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    gap: 6,
-    height: 40,
-  },
-  waveBar: {
-    width: 6,
-    height: 28,
-    backgroundColor: "#D4AF37",
-    borderRadius: 3,
-  },
-});
+const createStyles = (colors, radius, spacing, fonts) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: "flex-start",
+    },
+    content: {
+      flex: 1,
+      marginTop: Platform.OS === "android" ? (StatusBar.currentHeight || 40) : 40,
+      backgroundColor: colors.primary,
+      overflow: "hidden",
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderTopLeftRadius: radius.xl,
+      borderTopRightRadius: radius.xl,
+    },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: spacing.md,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.borderSoft,
+      gap: spacing.sm,
+    },
+    searchBar: {
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: colors.cardAlt,
+      borderRadius: radius.lg,
+      paddingHorizontal: spacing.sm,
+      height: 44,
+      gap: spacing.xs,
+      borderWidth: 1,
+      borderColor: colors.borderSoft,
+    },
+    micWrap: {
+      width: 44,
+      height: 44,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    input: {
+      flex: 1,
+      fontSize: 16,
+      paddingVertical: 8,
+      fontFamily: fonts.body,
+    },
+    voiceButton: {
+      padding: 4,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    voiceButtonDisabled: {
+      opacity: 0.5,
+    },
+    closeButton: {
+      padding: spacing.sm,
+    },
+    closeText: {
+      color: colors.textPrimary,
+      fontSize: 16,
+      fontFamily: fonts.bodySemiBold,
+    },
+    resultItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: spacing.md,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.borderSoft,
+    },
+    iconContainer: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: colors.card,
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: spacing.md,
+    },
+    textContainer: {
+      flex: 1,
+    },
+    title: {
+      fontSize: 16,
+      color: colors.textPrimary,
+      marginBottom: 2,
+      fontFamily: fonts.bodySemiBold,
+    },
+    subtitle: {
+      fontSize: 14,
+      color: colors.textSecondary,
+      fontFamily: fonts.body,
+    },
+    errorText: {
+      color: colors.danger,
+      padding: spacing.md,
+      textAlign: "center",
+      fontFamily: fonts.body,
+    },
+    emptyContainer: {
+      padding: spacing.xl,
+      alignItems: "center",
+      justifyContent: "center",
+      gap: spacing.sm,
+      flex: 1,
+    },
+    emptyText: {
+      color: colors.textSecondary,
+      fontSize: 16,
+      fontFamily: fonts.bodySemiBold,
+    },
+    emptySubtitle: {
+      color: colors.textSecondary,
+      fontSize: 13,
+      textAlign: "center",
+      fontFamily: fonts.body,
+    },
+    listeningOverlay: {
+      alignItems: "center",
+      justifyContent: "center",
+      height: 220,
+      gap: spacing.md,
+    },
+    listeningText: {
+      color: colors.textSecondary,
+      fontSize: 24,
+      fontFamily: fonts.bodyBold,
+    },
+    waveWrap: {
+      flexDirection: "row",
+      alignItems: "flex-end",
+      gap: 6,
+      height: 40,
+    },
+    waveBar: {
+      width: 6,
+      height: 28,
+      backgroundColor: colors.accent,
+      borderRadius: 3,
+    },
+  });
