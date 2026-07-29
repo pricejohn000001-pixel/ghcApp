@@ -452,3 +452,42 @@
 {"_e":"metro:client_log","_t":1785132959491,"level":"log","data":["Judges data initialized with 24 judges"]}
 {"_e":"metro:client_log","_t":1785132985442,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
 {"_e":"metro:client_log","_t":1785133093066,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.ConnectException: Failed to connect to ghcservices.assam.gov.in/103.158.205.197:443]"]}
+{"_e":"metro:client_log","_t":1785133318376,"level":"warn","data":["Encountered an error loading page","{\"canGoBack\": false, \"canGoForward\": false, \"code\": -8, \"description\": \"net::ERR_CONNECTION_TIMED_OUT\", \"loading\": false, \"target\": 5744, \"title\": \"\", \"url\": \"https://ghconline.gov.in/index.php/joleave/\"}"]}
+{"_e":"metro:client_log","_t":1785133351723,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785133351730,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785133351731,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:bundling:started","_t":1785133352536,"id":"19","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785133352536,"id":"19","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785133352589,"id":"19","total":1,"ms":52.8425}
+{"_e":"metro:client_log","_t":1785133354442,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785133354558,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785133354603,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785133354604,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785133488340,"level":"error","data":["Error in fetchHolidaysData:","[Error: fetch failed: java.net.ConnectException: Failed to connect to ghcservices.assam.gov.in/103.158.205.197:443]"]}
+{"_e":"metro:bundling:started","_t":1785133528370,"id":"1h","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785133528370,"id":"1h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785133528416,"id":"1h","total":1,"ms":45.2332}
+{"_e":"metro:client_log","_t":1785133530159,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785133530166,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785133530205,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785133530206,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"root:init","_t":1785301175267,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785301175269,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785301175275,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785301176696,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785301177858,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785301185177,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785301547510,"id":"8","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785301547512,"id":"8","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785301547579,"id":"8","total":1,"ms":67.1799}
+{"_e":"metro:client_log","_t":1785301549453,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785301549568,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785301549604,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785301549606,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:bundling:started","_t":1785302098983,"id":"g","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785302098984,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785302099038,"id":"g","total":1,"ms":54.0261}
+{"_e":"metro:client_log","_t":1785302101096,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785302101103,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785302101145,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785302101145,"level":"log","data":["Judges data initialized with 24 judges"]}

@@ -4,6 +4,37 @@ import { Ionicons } from "@expo/vector-icons";
 import { colors, radius, spacing } from "../theme";
 import { useTranslation } from "react-i18next";
 
+const SOCIAL_LINKS = {
+  telegram: {
+    appUrl: "tg://resolve?domain=GHCInfoChannel",
+    webUrl: "https://t.me/GHCInfoChannel",
+  },
+  whatsapp: {
+    appUrl: "whatsapp://channel/0029VbBoYt84dTnDJq9Qsp0J",
+    webUrl: "https://www.whatsapp.com/channel/0029VbBoYt84dTnDJq9Qsp0J",
+  },
+  youtube: {
+    appUrl: "youtube://www.youtube.com/@ecourtsgauhatihighcourt4597",
+    webUrl: "https://youtube.com/@ecourtsgauhatihighcourt4597",
+  },
+};
+
+const openSocialLink = async ({ appUrl, webUrl }) => {
+  try {
+    if (appUrl) {
+      const supported = await Linking.canOpenURL(appUrl);
+      if (supported) {
+        await Linking.openURL(appUrl);
+        return;
+      }
+    }
+  } catch (error) {
+    // Fall back to the universal web URL when the app scheme is unavailable.
+  }
+
+  await Linking.openURL(webUrl);
+};
+
 export const Footer = ({ onAbout, onContact }) => {
   const { t } = useTranslation();
   return (
@@ -32,11 +63,15 @@ export const Footer = ({ onAbout, onContact }) => {
         </Text>
       </View>
       <View style={styles.socialRow}>
-        <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://t.me/GHCInfoChannel")}>
+        <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => openSocialLink(SOCIAL_LINKS.telegram)}>
           <Ionicons name="paper-plane" size={16} color={colors.accent} />
           <Text style={styles.socialText}>Telegram</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://youtube.com/@ecourtsgauhatihighcourt4597?si=AGl6ey2vxW1D3IzA")}>
+        <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => openSocialLink(SOCIAL_LINKS.whatsapp)}>
+          <Ionicons name="logo-whatsapp" size={16} color={colors.accent} />
+          <Text style={styles.socialText}>WhatsApp</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => openSocialLink(SOCIAL_LINKS.youtube)}>
           <Ionicons name="logo-youtube" size={16} color={colors.accent} />
           <Text style={styles.socialText}>YouTube</Text>
         </TouchableOpacity>
@@ -56,16 +91,13 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     backgroundColor: colors.footer,
   },
-  linksRow: {
-    flexDirection: "row",
-    gap: spacing.lg,
-  },
+  linksRow: { flexDirection: "row", gap: spacing.lg, flexWrap: "wrap", justifyContent: "center" },
   footerLink: { color: "#FFFFFF", fontWeight: "700" },
   metaContainer: { alignItems: "center", marginTop: 8, paddingHorizontal: spacing.md },
   footerMeta: { color: "#ADB9D8", textAlign: "center", fontSize: 11, lineHeight: 16 },
   linkText: { color: colors.accent, textDecorationLine: "underline" },
   footerCopyright: { color: "#ADB9D8", textAlign: "center", fontSize: 11, marginTop: 4, opacity: 0.8 },
-  socialRow: { flexDirection: "row", gap: spacing.sm, marginTop: spacing.sm },
+  socialRow: { flexDirection: "row", gap: spacing.sm, marginTop: spacing.sm, flexWrap: "wrap", justifyContent: "center" },
   socialButton: {
     flexDirection: "row",
     gap: spacing.xs,
