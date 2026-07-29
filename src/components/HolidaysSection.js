@@ -271,7 +271,12 @@ const getBadgeColor = (holiday, statusColors) => {
 
 const createStyles = (colors, radius, spacing, fonts) =>
   StyleSheet.create({
-    section: { paddingHorizontal: spacing.lg, paddingTop: spacing.xl, gap: spacing.sm },
+    section: {
+      paddingHorizontal: spacing.lg,
+      paddingTop: spacing.xl,
+      paddingBottom: spacing.lg,
+      gap: spacing.sm,
+    },
     sectionHeader: { flexDirection: "row", alignItems: "center", gap: spacing.md },
     sectionTitle: { color: colors.textPrimary, fontSize: 18, fontFamily: fonts.heading },
     sectionSub: { color: colors.textSecondary, fontSize: 12, fontFamily: fonts.body },
@@ -349,6 +354,7 @@ const createStyles = (colors, radius, spacing, fonts) =>
       paddingVertical: 14,
       alignItems: "center",
       marginTop: spacing.md,
+      marginBottom: spacing.lg,
     },
     pdfText: { color: colors.textInverse, fontFamily: fonts.bodyBold },
   });
