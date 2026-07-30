@@ -844,3 +844,244 @@
 {"_e":"metro:client_log","_t":1785320344451,"level":"log","data":["Using cached judges data"]}
 {"_e":"metro:client_log","_t":1785320344452,"level":"log","data":["Judges data initialized with 24 judges"]}
 {"_e":"metro:client_log","_t":1785320369055,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"root:init","_t":1785391263710,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785391263712,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785391263718,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785391265294,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785391266544,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785391282443,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785391336407,"id":"6","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785391336408,"id":"6","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785391345640,"id":"6","total":1,"ms":9232.2896}
+{"_e":"metro:client_log","_t":1785391348265,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785391348405,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785391348457,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785391348457,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785391521891,"level":"error","data":["[TypeError: Cannot read property 'startSpeech' of null]"]}
+{"_e":"metro:bundling:started","_t":1785391631883,"id":"f","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785391631883,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785391631929,"id":"f","total":1,"ms":45.9948}
+{"_e":"metro:client_log","_t":1785391634183,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785391634301,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785391634340,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785391634341,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785391689610,"level":"error","data":["[TypeError: Cannot read property 'startSpeech' of null]"]}
+{"_e":"metro:bundling:started","_t":1785392023362,"id":"n","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785392023362,"id":"n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785392023407,"id":"n","total":1,"ms":45.7079}
+{"_e":"metro:client_log","_t":1785392025762,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785392025769,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785392025816,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785392025817,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:bundling:started","_t":1785392101738,"id":"u","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785392101738,"id":"u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785392101787,"id":"u","total":1,"ms":48.464}
+{"_e":"metro:client_log","_t":1785392104059,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785392104181,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785392104218,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785392104219,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785392111294,"level":"error","data":["[TypeError: Cannot read property 'startSpeech' of null]"]}
+{"_e":"metro:bundling:started","_t":1785392275688,"id":"13","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785392275688,"id":"13","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785392275742,"id":"13","total":1,"ms":54.3494}
+{"_e":"metro:client_log","_t":1785392278277,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785392278407,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785392278444,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785392278445,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785392282868,"level":"warn","data":["Failed to setup Voice listeners:","[TypeError: Cannot read property 'isSpeechAvailable' of null]"]}
+{"_e":"metro:bundling:started","_t":1785392340234,"id":"1b","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785392340234,"id":"1b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785392340289,"id":"1b","total":1,"ms":54.4643}
+{"_e":"metro:client_log","_t":1785392342588,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785392342594,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785392342637,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785392342638,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"root:init","_t":1785393221393,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785393221394,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785393221398,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785393222373,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785393222879,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785393236599,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"root:init","_t":1785393275525,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785393275527,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785393275532,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785393276787,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785393277409,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785393291673,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785393297772,"id":"6","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785393297773,"id":"6","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785393307161,"id":"6","total":1,"ms":9387.5032}
+{"_e":"metro:client_log","_t":1785393309617,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785393309747,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785393309785,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785393309788,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"root:init","_t":1785393848436,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785393848438,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785393848442,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785393849644,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785393850247,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785393865190,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785393900789,"id":"1","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785393900790,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785393900794,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785393901664,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1785393901774,"id":"1","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1785393901794,"id":"1","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1785393901898,"id":"1","progress":0.04000000000000001,"total":39,"current":3}
+{"_e":"metro:bundling:progress","_t":1785393902085,"id":"1","progress":0.04000000000000001,"total":39,"current":4}
+{"_e":"metro:bundling:progress","_t":1785393902112,"id":"1","progress":0.04000000000000001,"total":39,"current":5}
+{"_e":"metro:bundling:progress","_t":1785393902225,"id":"1","progress":0.04000000000000001,"total":41,"current":6}
+{"_e":"metro:bundling:progress","_t":1785393902344,"id":"1","progress":0.04000000000000001,"total":41,"current":7}
+{"_e":"metro:bundling:progress","_t":1785393902358,"id":"1","progress":0.04000000000000001,"total":41,"current":8}
+{"_e":"metro:bundling:progress","_t":1785393902458,"id":"1","progress":0.04000000000000001,"total":157,"current":10}
+{"_e":"metro:bundling:progress","_t":1785393902581,"id":"1","progress":0.04000000000000001,"total":162,"current":13}
+{"_e":"metro:bundling:progress","_t":1785393902733,"id":"1","progress":0.04000000000000001,"total":164,"current":15}
+{"_e":"metro:bundling:progress","_t":1785393902835,"id":"1","progress":0.04000000000000001,"total":164,"current":16}
+{"_e":"metro:bundling:progress","_t":1785393902948,"id":"1","progress":0.04000000000000001,"total":166,"current":16}
+{"_e":"metro:bundling:progress","_t":1785393903020,"id":"1","progress":0.04000000000000001,"total":166,"current":17}
+{"_e":"metro:bundling:progress","_t":1785393903120,"id":"1","progress":0.04000000000000001,"total":174,"current":21}
+{"_e":"metro:bundling:progress","_t":1785393903221,"id":"1","progress":0.04311863597002001,"total":183,"current":38}
+{"_e":"metro:bundling:progress","_t":1785393903326,"id":"1","progress":0.04962748750122537,"total":202,"current":45}
+{"_e":"metro:bundling:progress","_t":1785393903426,"id":"1","progress":0.05626825310978908,"total":215,"current":51}
+{"_e":"metro:bundling:progress","_t":1785393903528,"id":"1","progress":0.06471221914435211,"total":228,"current":58}
+{"_e":"metro:bundling:progress","_t":1785393903634,"id":"1","progress":0.07354208560758403,"total":236,"current":64}
+{"_e":"metro:bundling:progress","_t":1785393903737,"id":"1","progress":0.08232298954939557,"total":237,"current":68}
+{"_e":"metro:bundling:progress","_t":1785393903836,"id":"1","progress":0.09795466464658238,"total":262,"current":82}
+{"_e":"metro:bundling:progress","_t":1785393903937,"id":"1","progress":0.12755102040816327,"total":280,"current":100}
+{"_e":"metro:bundling:progress","_t":1785393904036,"id":"1","progress":0.152546792277432,"total":297,"current":116}
+{"_e":"metro:bundling:progress","_t":1785393904136,"id":"1","progress":0.19071462906585482,"total":316,"current":138}
+{"_e":"metro:bundling:progress","_t":1785393904238,"id":"1","progress":0.19299007651441746,"total":346,"current":152}
+{"_e":"metro:bundling:progress","_t":1785393904337,"id":"1","progress":0.20883917215863104,"total":372,"current":170}
+{"_e":"metro:bundling:progress","_t":1785393904441,"id":"1","progress":0.22605479104487575,"total":387,"current":184}
+{"_e":"metro:bundling:progress","_t":1785393904541,"id":"1","progress":0.2577116305705956,"total":392,"current":199}
+{"_e":"metro:bundling:progress","_t":1785393904643,"id":"1","progress":0.2833840746516176,"total":402,"current":214}
+{"_e":"metro:bundling:progress","_t":1785393904742,"id":"1","progress":0.2891830611251041,"total":437,"current":235}
+{"_e":"metro:bundling:progress","_t":1785393904842,"id":"1","progress":0.31640625,"total":448,"current":252}
+{"_e":"metro:bundling:progress","_t":1785393904946,"id":"1","progress":0.31996735027038054,"total":495,"current":280}
+{"_e":"metro:bundling:progress","_t":1785393905053,"id":"1","progress":0.33765522279035787,"total":518,"current":301}
+{"_e":"metro:bundling:progress","_t":1785393905153,"id":"1","progress":0.39299601124885225,"total":528,"current":331}
+{"_e":"metro:bundling:progress","_t":1785393905253,"id":"1","progress":0.4536641686232132,"total":533,"current":359}
+{"_e":"metro:bundling:progress","_t":1785393905355,"id":"1","progress":0.4536641686232132,"total":569,"current":380}
+{"_e":"metro:bundling:progress","_t":1785393905457,"id":"1","progress":0.4696075652554819,"total":591,"current":405}
+{"_e":"metro:bundling:progress","_t":1785393905563,"id":"1","progress":0.48562759024993957,"total":607,"current":423}
+{"_e":"metro:bundling:progress","_t":1785393905667,"id":"1","progress":0.4996233381786544,"total":614,"current":434}
+{"_e":"metro:bundling:progress","_t":1785393905767,"id":"1","progress":0.5362018730489074,"total":620,"current":454}
+{"_e":"metro:bundling:progress","_t":1785393905867,"id":"1","progress":0.5541446784186834,"total":626,"current":466}
+{"_e":"metro:bundling:progress","_t":1785393905968,"id":"1","progress":0.5754238604050815,"total":642,"current":487}
+{"_e":"metro:bundling:progress","_t":1785393906068,"id":"1","progress":0.6135302744203435,"total":646,"current":506}
+{"_e":"metro:bundling:progress","_t":1785393906168,"id":"1","progress":0.6404878978286734,"total":656,"current":525}
+{"_e":"metro:bundling:progress","_t":1785393906273,"id":"1","progress":0.6588225265064735,"total":685,"current":556}
+{"_e":"metro:bundling:progress","_t":1785393906375,"id":"1","progress":0.7090128124343625,"total":690,"current":581}
+{"_e":"metro:bundling:progress","_t":1785393906474,"id":"1","progress":0.7090128124343625,"total":713,"current":599}
+{"_e":"metro:bundling:progress","_t":1785393906582,"id":"1","progress":0.7445634241603425,"total":722,"current":623}
+{"_e":"metro:bundling:progress","_t":1785393906683,"id":"1","progress":0.7635487297691879,"total":737,"current":644}
+{"_e":"metro:bundling:progress","_t":1785393906783,"id":"1","progress":0.7935880297295138,"total":742,"current":661}
+{"_e":"metro:bundling:progress","_t":1785393906884,"id":"1","progress":0.8203114941738138,"total":753,"current":682}
+{"_e":"metro:bundling:progress","_t":1785393906996,"id":"1","progress":0.8322979770291384,"total":764,"current":697}
+{"_e":"metro:bundling:progress","_t":1785393907094,"id":"1","progress":0.8622448979591837,"total":770,"current":715}
+{"_e":"metro:bundling:progress","_t":1785393907198,"id":"1","progress":0.8749741268219726,"total":774,"current":724}
+{"_e":"metro:bundling:progress","_t":1785393907297,"id":"1","progress":0.8884986073511036,"total":784,"current":739}
+{"_e":"metro:bundling:progress","_t":1785393907397,"id":"1","progress":0.8884986073511036,"total":814,"current":756}
+{"_e":"metro:bundling:progress","_t":1785393907499,"id":"1","progress":0.8933818565932933,"total":821,"current":776}
+{"_e":"metro:bundling:progress","_t":1785393907604,"id":"1","progress":0.8933818565932933,"total":858,"current":802}
+{"_e":"metro:bundling:progress","_t":1785393907704,"id":"1","progress":0.8933818565932933,"total":882,"current":824}
+{"_e":"metro:bundling:progress","_t":1785393907807,"id":"1","progress":0.8972830940657354,"total":891,"current":844}
+{"_e":"metro:bundling:progress","_t":1785393907907,"id":"1","progress":0.905023885973843,"total":904,"current":860}
+{"_e":"metro:bundling:progress","_t":1785393908013,"id":"1","progress":0.9265122552349163,"total":908,"current":874}
+{"_e":"metro:bundling:progress","_t":1785393908108,"id":"1","progress":0.9355012093523246,"total":915,"current":885}
+{"_e":"metro:bundling:progress","_t":1785393908214,"id":"1","progress":0.9570405108925412,"total":921,"current":901}
+{"_e":"metro:bundling:progress","_t":1785393908321,"id":"1","progress":0.9849545401121108,"total":927,"current":920}
+{"_e":"metro:bundling:progress","_t":1785393908430,"id":"1","progress":0.9935449334869204,"total":928,"current":925}
+{"_e":"metro:bundling:progress","_t":1785393909126,"id":"1","progress":0.9956942999405469,"total":928,"current":926}
+{"_e":"metro:bundling:progress","_t":1785393909225,"id":"1","progress":0.9957081594580282,"total":931,"current":929}
+{"_e":"metro:bundling:progress","_t":1785393909349,"id":"1","progress":0.9978529260084384,"total":931,"current":930}
+{"_e":"metro:bundling:progress","_t":1785393909517,"id":"1","progress":0.999,"total":931,"current":931}
+{"_e":"metro:bundling:progress","_t":1785393909628,"id":"1","progress":0.999,"total":941,"current":941}
+{"_e":"metro:bundling:done","_t":1785393909837,"id":"1","total":941,"ms":9047.0462}
+{"_e":"metro:client_log","_t":1785393911986,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785393912098,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785393912129,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785393912130,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785394189691,"level":"error","data":["[ReferenceError: Property 'styles' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1785394189732,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785394189733,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785394189734,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:bundling:started","_t":1785394214778,"id":"a","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785394214778,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785394214839,"id":"a","total":1,"ms":61.1569}
+{"_e":"metro:client_log","_t":1785394216572,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785394216685,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785394216734,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785394216737,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785394221010,"level":"error","data":["[ReferenceError: Property 'styles' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1785394228110,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785394228125,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785394228126,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785394287768,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785394287775,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785394287775,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:bundling:started","_t":1785394288367,"id":"j","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785394288367,"id":"j","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785394288424,"id":"j","total":1,"ms":57.0897}
+{"_e":"metro:client_log","_t":1785394290143,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785394290263,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785394290306,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785394290307,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785394297129,"level":"error","data":["[TypeError: Cannot read property 'startSpeech' of null]"]}
+{"_e":"metro:client_log","_t":1785394299886,"level":"error","data":["[TypeError: Cannot read property 'destroySpeech' of null]"]}
+{"_e":"root:init","_t":1785395071981,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785395071982,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785395071986,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785395072795,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785395073368,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785395088419,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785395096143,"id":"6","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785395096143,"id":"6","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785395106687,"id":"6","total":1,"ms":10543.747}
+{"_e":"metro:client_log","_t":1785395108470,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785395108583,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785395108617,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785395108617,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785395115332,"level":"error","data":["[TypeError: Cannot read property 'startSpeech' of null]"]}
+{"_e":"metro:client_log","_t":1785395116548,"level":"error","data":["[TypeError: Cannot read property 'destroySpeech' of null]"]}
+{"_e":"metro:client_log","_t":1785395116984,"level":"error","data":["[TypeError: Cannot read property 'destroySpeech' of null]"]}
+{"_e":"metro:client_log","_t":1785395117132,"level":"error","data":["[TypeError: Cannot read property 'destroySpeech' of null]"]}
+{"_e":"metro:client_log","_t":1785395117320,"level":"error","data":["[TypeError: Cannot read property 'destroySpeech' of null]"]}
+{"_e":"metro:bundling:started","_t":1785395477995,"id":"g","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785395477995,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785395478049,"id":"g","total":1,"ms":54.3142}
+{"_e":"metro:client_log","_t":1785395479849,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785395479856,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785395479896,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785395479897,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785395488268,"level":"error","data":["[TypeError: Cannot read property 'startSpeech' of null]"]}
+{"_e":"metro:client_log","_t":1785395491546,"level":"error","data":["[TypeError: Cannot read property 'destroySpeech' of null]"]}
+{"_e":"metro:bundling:failed","_t":1785396067510,"id":null,"message":"Unable to resolve \"expo-speech\" from \"src\\components\\SearchModal.js\"\n   5 | import { useAppTheme } from \"../theme\";\n   6 | import { serviceCards, holidays, menuUrls } from \"../data\";\n>  7 | import * as Speech from \"expo-speech\";\n     |                          ^\n   8 |\n   9 | export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {\n  10 |   const { colors, radius, spacing, fonts } = useAppTheme();","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\components\\SearchModal.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"expo-speech\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/components/SearchModal\"\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules\\expo\\AppEntry.js\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"../../App\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./node_modules/\u001b[1mexpo\u001b[22m/AppEntry\"\u001b[39m\u001b[90m\u001b[39m\n","filename":null,"targetModuleName":"expo-speech","originModulePath":"src\\components\\SearchModal.js"}
+{"_e":"metro:bundling:failed","_t":1785396067705,"id":null,"message":"Unable to resolve \"expo-speech\" from \"src\\components\\SearchModal.js\"\n   5 | import { useAppTheme } from \"../theme\";\n   6 | import { serviceCards, holidays, menuUrls } from \"../data\";\n>  7 | import * as Speech from \"expo-speech\";\n     |                          ^\n   8 |\n   9 | export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {\n  10 |   const { colors, radius, spacing, fonts } = useAppTheme();","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\components\\SearchModal.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"expo-speech\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/components/SearchModal\"\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules\\expo\\AppEntry.js\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"../../App\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./node_modules/\u001b[1mexpo\u001b[22m/AppEntry\"\u001b[39m\u001b[90m\u001b[39m\n","filename":null,"targetModuleName":"expo-speech","originModulePath":"src\\components\\SearchModal.js"}
+{"_e":"root:init","_t":1785396309948,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785396309950,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785396309956,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785396310951,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785396311819,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785396325937,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785396385481,"id":"6","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785396385483,"id":"6","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785396386586,"id":"6","total":1,"ms":1103.3098}
+{"_e":"metro:client_log","_t":1785396388559,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785396388565,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785396388610,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785396388611,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785396393005,"level":"error","data":["[ReferenceError: Property 'voiceAvailable' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1785396428389,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785396428421,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785396428421,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785396443089,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785396443094,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785396443095,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:bundling:started","_t":1785396443655,"id":"g","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785396443655,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785396443715,"id":"g","total":1,"ms":60.1542}
+{"_e":"metro:client_log","_t":1785396445661,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785396445669,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785396445715,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785396445716,"level":"log","data":["Judges data initialized with 24 judges"]}

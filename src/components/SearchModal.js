@@ -4,13 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useAppTheme } from "../theme";
 import { serviceCards, holidays, menuUrls } from "../data";
-
-let Voice = null;
-try {
-  Voice = require("@react-native-voice/voice").default;
-} catch (e) {
-  console.warn("Voice module not available:", e.message);
-}
+import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from "expo-speech-recognition";
 
 export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
   const { colors, radius, spacing, fonts } = useAppTheme();
@@ -21,57 +15,40 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
   const [isListening, setIsListening] = useState(false);
   const [error, setError] = useState(null);
   const [hasAttempted, setHasAttempted] = useState(false);
-  const [voiceAvailable, setVoiceAvailable] = useState(false);
   const pulse = useRef(new Animated.Value(1)).current;
   const pulseLoop = useRef(null);
   const waveAnims = useRef(Array.from({ length: 5 }, () => new Animated.Value(0.6))).current;
   const waveLoops = useRef([]);
   const overlayColor = colors.overlay;
 
-  useEffect(() => {
-    if (!Voice) {
-      setVoiceAvailable(false);
+  useSpeechRecognitionEvent("start", () => {
+    setIsListening(true);
+    setError(null);
+  });
+
+  useSpeechRecognitionEvent("end", () => {
+    setIsListening(false);
+  });
+
+  useSpeechRecognitionEvent("result", (event) => {
+    const transcript = event.results?.[0]?.transcript;
+    if (transcript) {
+      setQuery(transcript);
+      setHasAttempted(true);
+      handleSearch(transcript);
+    }
+  });
+
+  useSpeechRecognitionEvent("error", (event) => {
+    setIsListening(false);
+    const msg = event.message || event.error || "";
+    if (/no match|no-speech|nomatch/i.test(msg)) {
+      setHasAttempted(true);
+      setError(null);
       return;
     }
-
-    try {
-      Voice.onSpeechStart = () => setIsListening(true);
-      Voice.onSpeechEnd = () => setIsListening(false);
-      Voice.onSpeechResults = (e) => {
-        if (e.value && e.value[0]) {
-          setQuery(e.value[0]);
-          setHasAttempted(true);
-          handleSearch(e.value[0]);
-        }
-      };
-      Voice.onSpeechError = (e) => {
-        setIsListening(false);
-        const msg = (e && e.error && e.error.message) ? String(e.error.message) : "";
-        if (/no match/i.test(msg)) {
-          setHasAttempted(true);
-          setError(null);
-          return;
-        }
-        setError(msg);
-      };
-      setVoiceAvailable(true);
-    } catch (err) {
-      console.warn("Failed to setup Voice listeners:", err);
-      setVoiceAvailable(false);
-    }
-
-    return () => {
-      try {
-        if (Voice && Voice.destroy) {
-          Voice.destroy().then(() => {
-            if (Voice.removeAllListeners) Voice.removeAllListeners();
-          }).catch(() => {});
-        }
-      } catch (err) {
-        console.warn("Error cleaning up Voice:", err);
-      }
-    };
-  }, []);
+    setError(msg);
+  });
 
   useEffect(() => {
     if (isListening) {
@@ -104,14 +81,23 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
   }, [isListening]);
 
   const startListening = async () => {
-    if (!Voice || !voiceAvailable) {
-      setError("Voice recognition not available on this device");
-      return;
-    }
     setError(null);
     try {
-      await Voice.destroy();
-      await Voice.start("en-US");
+      const result = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+      if (!result.granted) {
+        setError("Microphone permission required");
+        return;
+      }
+
+      ExpoSpeechRecognitionModule.start({
+        lang: "en-US",
+        interimResults: true,
+        continuous: false,
+        maxAlternatives: 1,
+        androidIntentOptions: {
+          EXTRA_LANGUAGE_MODEL: "web_search",
+        },
+      });
     } catch (e) {
       console.error(e);
       setError("Failed to start voice recognition");
@@ -119,9 +105,8 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
   };
 
   const stopListening = async () => {
-    if (!Voice) return;
     try {
-      await Voice.stop();
+      await ExpoSpeechRecognitionModule.stop();
     } catch (e) {
       console.error(e);
     }
@@ -232,14 +217,13 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
               )}
               <View style={styles.micWrap}>
                 <TouchableOpacity
-                  onPress={isListening ? stopListening : startListening}
-                  disabled={!voiceAvailable}
-                  style={[styles.voiceButton, !voiceAvailable && styles.voiceButtonDisabled]}
-                >
+                    onPress={isListening ? stopListening : startListening}
+                    style={styles.voiceButton}
+                  >
                   <Ionicons
                     name={isListening ? "mic" : "mic-outline"}
                     size={20}
-                    color={!voiceAvailable ? colors.textTertiary : colors.accent}
+                    color={colors.accent}
                   />
                 </TouchableOpacity>
               </View>
