@@ -6,9 +6,19 @@ import { useAppTheme } from "../theme";
 
 const { width } = Dimensions.get("window");
 
+const getRoleKey = (title) => {
+  const normalizedTitle = String(title || "").trim();
+  const map = {
+    "Chief Justice": "chief_justice",
+  };
+  return map[normalizedTitle];
+};
+
 const JudgeCard = React.memo(({ item, onPortfolio, t, colors, styles }) => {
   const [imageLoading, setImageLoading] = React.useState(true);
   const fadeAnim = useRef(new Animated.Value(0.3)).current;
+  const roleKey = getRoleKey(item?.title);
+  const roleText = roleKey ? t(`common.${roleKey}`) : item?.title;
 
   React.useEffect(() => {
     if (imageLoading) {
@@ -49,7 +59,7 @@ const JudgeCard = React.memo(({ item, onPortfolio, t, colors, styles }) => {
       </View>
       <View style={styles.judgeInfo}>
         <Text style={styles.judgeName}>{item.name?.replace(", Chief Justice", "")}</Text>
-        <Text style={styles.judgeRole}>{item.title}</Text>
+        {roleText ? <Text style={styles.judgeRole}>{roleText}</Text> : null}
         <View style={styles.portfolioButton}>
           <Ionicons name="briefcase" size={16} color={colors.accent} />
           <Text style={styles.portfolioLabel}>{t("home.portfolio")}</Text>

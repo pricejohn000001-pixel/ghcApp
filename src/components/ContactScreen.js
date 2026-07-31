@@ -57,7 +57,7 @@ export const ContactScreen = ({ scrollY }) => {
           <View style={styles.emailSection}>
             <View style={styles.subSectionHeader}>
               <Ionicons name="cube" size={14} color={colors.accent} />
-              <Text style={styles.subSectionTitle}>Registry</Text>
+              <Text style={styles.subSectionTitle}>{t("contact.registry")}</Text>
             </View>
             <View style={styles.emailRowContainer}>
               <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('hc-asm[at]nic[dot]in')}>
@@ -74,7 +74,7 @@ export const ContactScreen = ({ scrollY }) => {
           <View style={styles.subSection}>
             <View style={styles.subSectionHeader}>
               <Ionicons name="desktop" size={14} color={colors.accent} />
-              <Text style={styles.subSectionTitle}>eCourts Services</Text>
+              <Text style={styles.subSectionTitle}>{t("contact.ecourts_services")}</Text>
             </View>
             <View style={styles.emailRowContainer}>
               <TouchableOpacity style={styles.emailRow} onPress={() => handleEmailPress('cpc-asm[at]aji[dot]gov[dot]in')}>
@@ -96,13 +96,13 @@ export const ContactScreen = ({ scrollY }) => {
         >
           <View style={styles.cardHeader}>
             <Ionicons name="location" size={18} color={colors.accent} />
-            <Text style={styles.cardTitle}>Find Us Here</Text>
+            <Text style={styles.cardTitle}>{t("contact.find_us_here")}</Text>
           </View>
-          <Text style={styles.paragraph}>Gauhati High Court, New Block</Text>
-          <Text style={styles.metaSmall}>Mahatma Gandhi Rd, Latasil, Uzan Bazar, Guwahati, Assam 781001</Text>
+          <Text style={styles.paragraph}>{t("contact.location_name")}</Text>
+          <Text style={styles.metaSmall}>{t("contact.location_address")}</Text>
           
           <View style={styles.locationAction}>
-            <Text style={styles.locationActionText}>Get Directions on Google Maps</Text>
+            <Text style={styles.locationActionText}>{t("contact.get_directions")}</Text>
             <Ionicons name="navigate" size={14} color={colors.accent} />
           </View>
         </TouchableOpacity>

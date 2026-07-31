@@ -9,6 +9,7 @@ import { placeholderBio } from "../data";
 import { decodeHtmlEntities } from "../utils/decodeHtmlEntities";
 
 const getLabelKey = (label) => {
+  const normalizedLabel = String(label || "").replace(/:$/, "").trim();
   const map = {
     "Parent High Court": "parent_high_court",
     "Stream": "stream",
@@ -20,10 +21,11 @@ const getLabelKey = (label) => {
     "Place of Stationing": "place_of_stationing",
     "Telephone": "telephone",
   };
-  return map[label];
+  return map[normalizedLabel];
 };
 
 const getValueKey = (value) => {
+  const normalizedValue = String(value || "").trim();
   const map = {
     "Gauhati": "gauhati",
     "Bar": "bar",
@@ -33,13 +35,23 @@ const getValueKey = (value) => {
     "Aizawl Bench": "aizawl_bench",
     "Kohima Bench": "kohima_bench"
   };
-  return map[value];
+  return map[normalizedValue];
+};
+
+const getRoleKey = (title) => {
+  const normalizedTitle = String(title || "").trim();
+  const map = {
+    "Chief Justice": "chief_justice",
+  };
+  return map[normalizedTitle];
 };
 
 export const PortfolioModal = ({ visible, onClose, judge }) => {
   const { theme, colors, radius, spacing, fonts } = useAppTheme();
   const { t } = useTranslation();
   const styles = React.useMemo(() => createStyles(colors, radius, spacing, fonts), [colors, radius, spacing, fonts]);
+  const roleKey = getRoleKey(judge?.title);
+  const roleText = roleKey ? t(`common.${roleKey}`) : judge?.title;
 
   return (
     <Modal 
@@ -64,7 +76,7 @@ export const PortfolioModal = ({ visible, onClose, judge }) => {
         </View>
         <ScrollView style={styles.scrollArea} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           <Text style={styles.portfolioName}>{judge?.name?.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().replace(/,?\s*chief justice/gi, '').trim()}</Text>
-          <Text style={styles.portfolioRole}>{judge?.title}</Text>
+          {roleText ? <Text style={styles.portfolioRole}>{roleText}</Text> : null}
           {judge?.biography && judge.biography !== placeholderBio ? (
             <>
               <Text style={styles.bioTitle}>{t("portfolio.biography")}</Text>

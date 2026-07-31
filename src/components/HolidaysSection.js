@@ -4,10 +4,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useTranslation } from "react-i18next";
 import { CalendarGrid } from "./CalendarGrid";
 import { useAppTheme, withAlpha } from "../theme";
+import { formatLocalizedNumber, getLocalizedHolidayName, localizeDigitsInText } from "../utils/localization";
 
 export const HolidaysSection = ({ tags, holidays, calendarConfig, parentScrollRef, sectionY = 0 }) => {
   const { colors, radius, spacing, fonts } = useAppTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const styles = useMemo(() => createStyles(colors, radius, spacing, fonts), [colors, radius, spacing, fonts]);
   const statusColors = useMemo(() => getHolidayStatusColors(colors), [colors]);
   const [month, setMonth] = useState(new Date().getMonth());
@@ -23,11 +24,6 @@ export const HolidaysSection = ({ tags, holidays, calendarConfig, parentScrollRe
     translateX.setValue(dir > 0 ? width : -width);
     Animated.timing(translateX, { toValue: 0, duration: 250, useNativeDriver: true }).start();
   };
-
-  const monthLabel = useMemo(() => {
-    const names = t("months", { returnObjects: true });
-    return `${names[month]} ${year}`;
-  }, [month, year, t]);
 
   const goPrev = () => {
     animateTransition(-1);
@@ -77,23 +73,25 @@ export const HolidaysSection = ({ tags, holidays, calendarConfig, parentScrollRe
     const realHolidayDays = new Set(
       byMonth
         .filter(h => h.badge !== "Working Saturday")
-        .map(h => getDayNum(h.label))
+        .map(h => h.day ?? getDayNum(h.label))
         .filter(d => !isNaN(d))
     );
     const deduped = byMonth.filter(h => {
       if (h.badge !== "Working Saturday") return true;
-      const day = getDayNum(h.label);
+      const day = h.day ?? getDayNum(h.label);
       return !realHolidayDays.has(day);
     });
 
     const byTag = activeTag === "All" ? deduped : deduped.filter((h) => h.badge === activeTag);
-    const dayOf = (label) => {
+    const dayOf = (holiday) => {
+      if (holiday.day !== undefined) return holiday.day;
+      const label = holiday.label || "";
       const firstToken = String(label).trim().split(/\s+/)[0] || "";
       const firstPart = firstToken.split(/[–—-]/)[0];
       const n = parseInt(firstPart, 10);
       return Number.isNaN(n) ? 0 : n;
     };
-    return byTag.slice().sort((a, b) => dayOf(a.label) - dayOf(b.label));
+    return byTag.slice().sort((a, b) => dayOf(a) - dayOf(b));
   }, [holidays, activeTag, month, year]);
 
   const renderHolidayItem = (h, index) => {
@@ -110,7 +108,7 @@ export const HolidaysSection = ({ tags, holidays, calendarConfig, parentScrollRe
     }
 
     const rangeParts = dateStr.split(/[-–—]/);
-    const startDayNum = parseInt(rangeParts[0], 10);
+    const startDayNum = h.day ?? parseInt(rangeParts[0], 10);
     let endDayNum = startDayNum;
     if (rangeParts.length > 1) {
       const parsedEnd = parseInt(rangeParts[1].trim(), 10);
@@ -134,9 +132,15 @@ export const HolidaysSection = ({ tags, holidays, calendarConfig, parentScrollRe
       setTimeout(() => setHighlightedDays([]), 3000);
     };
 
-    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    const monthNames = t("months_short", { returnObjects: true });
     const currentMonthName = monthNames[month];
-    const cleanDateStr = dateStr.replace(/(st|nd|rd|th)/g, "");
+    const cleanDateStr = h.day !== undefined
+      ? formatLocalizedNumber(h.day, i18n.language)
+      : localizeDigitsInText(dateStr.replace(/(st|nd|rd|th)/g, ""), i18n.language);
+    const localizedName = getLocalizedHolidayName(h.name || name, i18n.language);
+    const badgeText = h.badge === "Working Saturday"
+      ? t("home.working_saturday_short")
+      : t(`holiday_badges.${h.badge}`, h.badge);
     const badgeColor = getBadgeColor(h, statusColors);
     const activeBorderColor = isCurrentHoliday ? colors.accent : "transparent";
     const badgeGradient = [withAlpha(badgeColor, 0.92), badgeColor];
@@ -163,11 +167,11 @@ export const HolidaysSection = ({ tags, holidays, calendarConfig, parentScrollRe
           </LinearGradient>
 
           <View style={styles.cardContent}>
-            <Text style={styles.holidayLabel}>{name}</Text>
+            <Text style={styles.holidayLabel}>{localizedName}</Text>
           </View>
 
           <View style={[styles.badge, { backgroundColor: badgeColor }]}>
-            <Text style={styles.badgeText}>{h.badge === "Working Saturday" ? "Sat" : h.badge}</Text>
+            <Text style={styles.badgeText}>{badgeText}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -238,8 +242,8 @@ export const HolidaysSection = ({ tags, holidays, calendarConfig, parentScrollRe
         style={styles.pdfButton}
         activeOpacity={0.9}
         onPress={() => {
-          const year = new Date().getFullYear();
-          const url = `https://ghconline.gov.in/Document/2ASJudlCal${year}.pdf`;
+          const currentYear = new Date().getFullYear();
+          const url = `https://ghconline.gov.in/Document/2ASJudlCal${currentYear}.pdf`;
           Linking.openURL(url);
         }}
       >

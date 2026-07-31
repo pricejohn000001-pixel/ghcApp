@@ -4,7 +4,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useAppTheme } from "../theme";
 import { serviceCards, holidays, menuUrls } from "../data";
-import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from "expo-speech-recognition";
+import {
+  ExpoSpeechRecognitionModule,
+  useSpeechRecognitionEvent,
+  speechRecognitionAvailable,
+} from "../utils/speechRecognition";
 
 export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
   const { colors, radius, spacing, fonts } = useAppTheme();
@@ -82,6 +86,11 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
 
   const startListening = async () => {
     setError(null);
+    if (!speechRecognitionAvailable) {
+      setError("Voice search is not available in this environment.");
+      return;
+    }
+
     try {
       const result = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
       if (!result.granted) {
@@ -217,9 +226,13 @@ export const SearchModal = ({ visible, onClose, onNavigate, judges = [] }) => {
               )}
               <View style={styles.micWrap}>
                 <TouchableOpacity
-                    onPress={isListening ? stopListening : startListening}
-                    style={styles.voiceButton}
-                  >
+                  onPress={isListening ? stopListening : startListening}
+                  style={[
+                    styles.voiceButton,
+                    !speechRecognitionAvailable && styles.voiceButtonDisabled,
+                  ]}
+                  disabled={!speechRecognitionAvailable}
+                >
                   <Ionicons
                     name={isListening ? "mic" : "mic-outline"}
                     size={20}

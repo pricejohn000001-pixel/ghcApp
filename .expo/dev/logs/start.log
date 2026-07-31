@@ -1085,3 +1085,245 @@
 {"_e":"metro:client_log","_t":1785396445669,"level":"log","data":["Initializing judges data..."]}
 {"_e":"metro:client_log","_t":1785396445715,"level":"log","data":["Using cached judges data"]}
 {"_e":"metro:client_log","_t":1785396445716,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"root:init","_t":1785471204350,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785471204352,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785471204360,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785471205984,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785471207382,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785471222756,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785471311509,"id":"1","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785471311509,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471311521,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471312715,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1785471312817,"id":"1","progress":0.08163265306122448,"total":14,"current":4}
+{"_e":"metro:bundling:progress","_t":1785471312917,"id":"1","progress":0.19753086419753085,"total":18,"current":8}
+{"_e":"metro:bundling:progress","_t":1785471313019,"id":"1","progress":0.19753086419753085,"total":51,"current":18}
+{"_e":"metro:bundling:progress","_t":1785471313121,"id":"1","progress":0.25,"total":56,"current":28}
+{"_e":"metro:bundling:progress","_t":1785471313221,"id":"1","progress":0.3237217598097503,"total":58,"current":33}
+{"_e":"metro:bundling:progress","_t":1785471313335,"id":"1","progress":0.40695600475624266,"total":58,"current":37}
+{"_e":"metro:bundling:progress","_t":1785471313435,"id":"1","progress":0.5565633660871756,"total":63,"current":47}
+{"_e":"metro:bundling:progress","_t":1785471313536,"id":"1","progress":0.615621301775148,"total":65,"current":51}
+{"_e":"metro:bundling:progress","_t":1785471313635,"id":"1","progress":0.615621301775148,"total":86,"current":55}
+{"_e":"metro:bundling:progress","_t":1785471313744,"id":"1","progress":0.615621301775148,"total":87,"current":56}
+{"_e":"metro:bundling:progress","_t":1785471313765,"id":"1","progress":0.615621301775148,"total":87,"current":57}
+{"_e":"metro:bundling:progress","_t":1785471313870,"id":"1","progress":0.615621301775148,"total":107,"current":62}
+{"_e":"metro:bundling:progress","_t":1785471313970,"id":"1","progress":0.615621301775148,"total":120,"current":70}
+{"_e":"metro:bundling:progress","_t":1785471314075,"id":"1","progress":0.615621301775148,"total":123,"current":76}
+{"_e":"metro:bundling:progress","_t":1785471314231,"id":"1","progress":0.615621301775148,"total":129,"current":83}
+{"_e":"metro:bundling:progress","_t":1785471314335,"id":"1","progress":0.615621301775148,"total":216,"current":91}
+{"_e":"metro:bundling:progress","_t":1785471314440,"id":"1","progress":0.615621301775148,"total":251,"current":104}
+{"_e":"metro:bundling:progress","_t":1785471314557,"id":"1","progress":0.615621301775148,"total":267,"current":124}
+{"_e":"metro:bundling:progress","_t":1785471314663,"id":"1","progress":0.615621301775148,"total":301,"current":140}
+{"_e":"metro:bundling:progress","_t":1785471314769,"id":"1","progress":0.615621301775148,"total":323,"current":151}
+{"_e":"metro:bundling:progress","_t":1785471314869,"id":"1","progress":0.615621301775148,"total":349,"current":179}
+{"_e":"metro:bundling:progress","_t":1785471314970,"id":"1","progress":0.615621301775148,"total":364,"current":207}
+{"_e":"metro:bundling:progress","_t":1785471315074,"id":"1","progress":0.615621301775148,"total":397,"current":219}
+{"_e":"metro:bundling:progress","_t":1785471315186,"id":"1","progress":0.615621301775148,"total":421,"current":227}
+{"_e":"metro:bundling:progress","_t":1785471315287,"id":"1","progress":0.615621301775148,"total":433,"current":255}
+{"_e":"metro:bundling:progress","_t":1785471315392,"id":"1","progress":0.615621301775148,"total":446,"current":280}
+{"_e":"metro:bundling:progress","_t":1785471315492,"id":"1","progress":0.615621301775148,"total":472,"current":317}
+{"_e":"metro:bundling:progress","_t":1785471315592,"id":"1","progress":0.615621301775148,"total":509,"current":354}
+{"_e":"metro:bundling:progress","_t":1785471315694,"id":"1","progress":0.615621301775148,"total":560,"current":388}
+{"_e":"metro:bundling:progress","_t":1785471315795,"id":"1","progress":0.615621301775148,"total":620,"current":415}
+{"_e":"metro:bundling:progress","_t":1785471315897,"id":"1","progress":0.615621301775148,"total":638,"current":432}
+{"_e":"metro:bundling:progress","_t":1785471315997,"id":"1","progress":0.615621301775148,"total":674,"current":456}
+{"_e":"metro:bundling:progress","_t":1785471316097,"id":"1","progress":0.615621301775148,"total":681,"current":466}
+{"_e":"metro:bundling:progress","_t":1785471316198,"id":"1","progress":0.615621301775148,"total":690,"current":499}
+{"_e":"metro:bundling:progress","_t":1785471316298,"id":"1","progress":0.615621301775148,"total":702,"current":550}
+{"_e":"metro:bundling:progress","_t":1785471316413,"id":"1","progress":0.6761524704534289,"total":709,"current":583}
+{"_e":"metro:bundling:progress","_t":1785471316514,"id":"1","progress":0.6902129689655105,"total":721,"current":599}
+{"_e":"metro:bundling:progress","_t":1785471316614,"id":"1","progress":0.7004962192816636,"total":736,"current":616}
+{"_e":"metro:bundling:progress","_t":1785471316734,"id":"1","progress":0.7189065955600348,"total":756,"current":641}
+{"_e":"metro:bundling:progress","_t":1785471316838,"id":"1","progress":0.7272539874771315,"total":788,"current":672}
+{"_e":"metro:bundling:progress","_t":1785471316939,"id":"1","progress":0.7435317624023299,"total":806,"current":695}
+{"_e":"metro:bundling:progress","_t":1785471317043,"id":"1","progress":0.765087625038485,"total":814,"current":712}
+{"_e":"metro:bundling:progress","_t":1785471317150,"id":"1","progress":0.7653592271997804,"total":823,"current":720}
+{"_e":"metro:bundling:progress","_t":1785471317254,"id":"1","progress":0.7970402090288866,"total":830,"current":741}
+{"_e":"metro:bundling:progress","_t":1785471317367,"id":"1","progress":0.7970402090288866,"total":848,"current":754}
+{"_e":"metro:bundling:progress","_t":1785471317468,"id":"1","progress":0.7981548641256551,"total":863,"current":771}
+{"_e":"metro:bundling:progress","_t":1785471317570,"id":"1","progress":0.8168184126309326,"total":873,"current":789}
+{"_e":"metro:bundling:progress","_t":1785471317669,"id":"1","progress":0.8286992002947843,"total":881,"current":802}
+{"_e":"metro:bundling:progress","_t":1785471317770,"id":"1","progress":0.8286992002947843,"total":896,"current":815}
+{"_e":"metro:bundling:progress","_t":1785471317874,"id":"1","progress":0.8429839846503251,"total":904,"current":830}
+{"_e":"metro:bundling:progress","_t":1785471317974,"id":"1","progress":0.8548669712442892,"total":915,"current":846}
+{"_e":"metro:bundling:progress","_t":1785471318075,"id":"1","progress":0.883763842017078,"total":918,"current":863}
+{"_e":"metro:bundling:progress","_t":1785471318193,"id":"1","progress":0.8950343814767103,"total":927,"current":877}
+{"_e":"metro:bundling:progress","_t":1785471318298,"id":"1","progress":0.9386716753522598,"total":931,"current":902}
+{"_e":"metro:bundling:progress","_t":1785471318398,"id":"1","progress":0.974414706478292,"total":932,"current":920}
+{"_e":"metro:bundling:progress","_t":1785471318509,"id":"1","progress":0.9935725929746357,"total":932,"current":929}
+{"_e":"metro:bundling:progress","_t":1785471318802,"id":"1","progress":0.9957127594908728,"total":932,"current":930}
+{"_e":"metro:bundling:progress","_t":1785471318904,"id":"1","progress":0.99786210643713,"total":935,"current":934}
+{"_e":"metro:bundling:progress","_t":1785471319089,"id":"1","progress":0.999,"total":935,"current":935}
+{"_e":"metro:bundling:progress","_t":1785471319189,"id":"1","progress":0.999,"total":945,"current":945}
+{"_e":"metro:bundling:done","_t":1785471319449,"id":"1","total":945,"ms":7939.8703}
+{"_e":"metro:bundling:started","_t":1785471332094,"id":"2","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785471332094,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471332096,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471332204,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471332247,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471332349,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471332449,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471332549,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471332661,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785471332724,"id":"2","total":1,"ms":630.289}
+{"_e":"metro:bundling:started","_t":1785471491394,"id":"3","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785471491394,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471491397,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471491497,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471491543,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471491644,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471491744,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785471491852,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785471491960,"id":"3","total":1,"ms":565.677}
+{"_e":"metro:client_log","_t":1785471493813,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785471493935,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785471493968,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785471493969,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:bundling:failed","_t":1785471887529,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (272:12)\n\n  270 |           {label === t(\"case_details.current_status\") ? (\n  271 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 272 |             </View>\n      |             ^\n  273 |           ) : (\n  274 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  275 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785471887899,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (272:12)\n\n  270 |           {label === t(\"case_details.current_status\") ? (\n  271 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 272 |             </View>\n      |             ^\n  273 |           ) : (\n  274 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  275 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785471887931,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (272:12)\n\n  270 |           {label === t(\"case_details.current_status\") ? (\n  271 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 272 |             </View>\n      |             ^\n  273 |           ) : (\n  274 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  275 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472040984,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (272:12)\n\n  270 |           {label === t(\"case_details.current_status\") ? (\n  271 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 272 |             </View>\n      |             ^\n  273 |           ) : (\n  274 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  275 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472041218,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (272:12)\n\n  270 |           {label === t(\"case_details.current_status\") ? (\n  271 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 272 |             </View>\n      |             ^\n  273 |           ) : (\n  274 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  275 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472084101,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472123602,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472123727,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472215980,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472300831,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472316601,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472393681,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472414415,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472439407,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472529388,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1785472630206,"id":null,"message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1785472666166,"id":"c","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785472666166,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785472666166,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1785472666184,"id":"c","message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1785473675672,"id":"d","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785473675673,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785473675673,"id":"d","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1785473675689,"id":"d","message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CaseDetailsScreen.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (271:12)\n\n  269 |           {label === t(\"case_details.current_status\") ? (\n  270 |               <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>\n> 271 |             </View>\n      |             ^\n  272 |           ) : (\n  273 |             <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || \"-\"}</Text>\n  274 |           )}","importStack":null,"filename":"src\\components\\CaseDetailsScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1785473719999,"id":"e","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785473719999,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785473719999,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785473720111,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785473720219,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785473720285,"id":"e","total":1,"ms":286.6377}
+{"_e":"metro:bundling:started","_t":1785473933848,"id":"f","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785473933848,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785473933899,"id":"f","total":1,"ms":51.004}
+{"_e":"metro:bundling:started","_t":1785474017200,"id":"g","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785474017200,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785474017265,"id":"g","total":1,"ms":65.3827}
+{"_e":"metro:bundling:started","_t":1785474112331,"id":"h","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785474112331,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785474112331,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785474112425,"id":"h","total":1,"ms":94.3952}
+{"_e":"metro:bundling:started","_t":1785474211581,"id":"i","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785474211581,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785474211582,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1785474211606,"id":"i","message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CalendarGrid.js: Expected corresponding JSX closing tag for <View>. (123:20)\n\n  121 |                         />\n  122 |                       )}\n> 123 |                     </>\n      |                     ^\n  124 |                   ) : null}\n  125 |                 </View>\n  126 |               );","importStack":null,"filename":"src\\components\\CalendarGrid.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1785474393179,"id":"j","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785474393179,"id":"j","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785474393180,"id":"j","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1785474393266,"id":"j","message":"SyntaxError: D:\\Projects\\ghc_app\\src\\components\\CalendarGrid.js: Expected corresponding JSX closing tag for <LinearGradient>. (139:20)\n\n  137 |                         />\n  138 |                       )}\n> 139 |                     </>\n      |                     ^\n  140 |                   ) : null}\n  141 |                 </View>\n  142 |               );","importStack":null,"filename":"src\\components\\CalendarGrid.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1785474467136,"id":"k","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785474467136,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785474467137,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785474467239,"id":"k","total":1,"ms":102.4383}
+{"_e":"root:init","_t":1785474475016,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785474475017,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785474475021,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785474475915,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785474476716,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785474491523,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785474494837,"id":"1","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785474494838,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785474494842,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785474494943,"id":"1","progress":0.013763615367809994,"total":179,"current":21}
+{"_e":"metro:bundling:progress","_t":1785474495043,"id":"1","progress":0.15945439084904892,"total":293,"current":117}
+{"_e":"metro:bundling:progress","_t":1785474495143,"id":"1","progress":0.2593888588426176,"total":430,"current":219}
+{"_e":"metro:bundling:progress","_t":1785474495243,"id":"1","progress":0.43079767424588056,"total":614,"current":403}
+{"_e":"metro:bundling:progress","_t":1785474495343,"id":"1","progress":0.7625471136679229,"total":710,"current":620}
+{"_e":"metro:bundling:progress","_t":1785474495443,"id":"1","progress":0.8093391801213204,"total":817,"current":735}
+{"_e":"metro:bundling:progress","_t":1785474495543,"id":"1","progress":0.9573610285374554,"total":928,"current":908}
+{"_e":"metro:bundling:done","_t":1785474495638,"id":"1","total":928,"ms":800.6481}
+{"_e":"metro:bundling:started","_t":1785474502289,"id":"2","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785474502289,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785474502342,"id":"2","total":1,"ms":53.5735}
+{"_e":"root:init","_t":1785475292047,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785475292048,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785475292052,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785475293087,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785475293854,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785475308344,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785475380966,"id":"1","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785475380966,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785475380979,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1785475381079,"id":"1","progress":0.018725761772853188,"total":190,"current":26}
+{"_e":"metro:bundling:progress","_t":1785475381186,"id":"1","progress":0.04606781677572873,"total":205,"current":44}
+{"_e":"metro:bundling:progress","_t":1785475381285,"id":"1","progress":0.10868252626494385,"total":273,"current":90}
+{"_e":"metro:bundling:progress","_t":1785475381385,"id":"1","progress":0.18882535051714372,"total":359,"current":156}
+{"_e":"metro:bundling:progress","_t":1785475381485,"id":"1","progress":0.23190660239121666,"total":434,"current":209}
+{"_e":"metro:bundling:progress","_t":1785475381586,"id":"1","progress":0.25732945483465236,"total":481,"current":244}
+{"_e":"metro:bundling:progress","_t":1785475381686,"id":"1","progress":0.2897821523465598,"total":522,"current":281}
+{"_e":"metro:bundling:progress","_t":1785475381792,"id":"1","progress":0.2980569758948137,"total":555,"current":303}
+{"_e":"metro:bundling:progress","_t":1785475381892,"id":"1","progress":0.35035219778813537,"total":593,"current":351}
+{"_e":"metro:bundling:progress","_t":1785475381994,"id":"1","progress":0.41780914560249316,"total":608,"current":393}
+{"_e":"metro:bundling:progress","_t":1785475382096,"id":"1","progress":0.47360406720813436,"total":635,"current":437}
+{"_e":"metro:bundling:progress","_t":1785475382197,"id":"1","progress":0.5681447212978744,"total":666,"current":502}
+{"_e":"metro:bundling:progress","_t":1785475382297,"id":"1","progress":0.6609043447328979,"total":679,"current":552}
+{"_e":"metro:bundling:progress","_t":1785475382398,"id":"1","progress":0.7154240580655358,"total":707,"current":598}
+{"_e":"metro:bundling:progress","_t":1785475382497,"id":"1","progress":0.8183593314970042,"total":734,"current":664}
+{"_e":"metro:bundling:progress","_t":1785475382597,"id":"1","progress":0.8183593314970042,"total":784,"current":699}
+{"_e":"metro:bundling:progress","_t":1785475382702,"id":"1","progress":0.8183593314970042,"total":786,"current":702}
+{"_e":"metro:bundling:progress","_t":1785475382811,"id":"1","progress":0.8183593314970042,"total":837,"current":739}
+{"_e":"metro:bundling:progress","_t":1785475382911,"id":"1","progress":0.8355593344433816,"total":873,"current":798}
+{"_e":"metro:bundling:progress","_t":1785475383022,"id":"1","progress":0.8731864197530863,"total":900,"current":841}
+{"_e":"metro:bundling:progress","_t":1785475383126,"id":"1","progress":0.897616154151606,"total":913,"current":865}
+{"_e":"metro:bundling:progress","_t":1785475383226,"id":"1","progress":0.9808413165946981,"total":935,"current":926}
+{"_e":"metro:bundling:progress","_t":1785475383332,"id":"1","progress":0.9936541672651535,"total":944,"current":941}
+{"_e":"metro:bundling:progress","_t":1785475383562,"id":"1","progress":0.9957672005170928,"total":944,"current":942}
+{"_e":"metro:bundling:progress","_t":1785475383663,"id":"1","progress":0.999,"total":946,"current":946}
+{"_e":"metro:bundling:done","_t":1785475383822,"id":"1","total":946,"ms":2855.9737}
+{"_e":"metro:client_log","_t":1785475386312,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785475386313,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785475386313,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785475386313,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785477642875,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785477642897,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785477642897,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785477670553,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785477670560,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785477670561,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785478272993,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785478320452,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785478320468,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785478320468,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785478325028,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785478325035,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785478325036,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785479044365,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785479044417,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785479044418,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785479044419,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:bundling:started","_t":1785479073439,"id":"b","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785479073439,"id":"b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785479073538,"id":"b","total":1,"ms":99.2589}
+{"_e":"metro:client_log","_t":1785479075540,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785479075676,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785479075709,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785479075710,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785479082238,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"metro:client_log","_t":1785479094339,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785479094397,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785479094400,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1785479094402,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:bundling:started","_t":1785479098029,"id":"l","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785479098030,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785479098107,"id":"l","total":1,"ms":77.7158}
+{"_e":"metro:client_log","_t":1785479100162,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785479100170,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785479100215,"level":"log","data":["Using cached judges data"]}
+{"_e":"metro:client_log","_t":1785479100216,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1785479105973,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}

@@ -5,13 +5,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAppTheme } from "../theme";
 import { useTranslation } from "react-i18next";
+import { formatLocalizedNumber } from "../utils/localization";
 
 const logo = require("../assets/logo.png");
 const japi = require("../assets/japi.png");
 
 export const Header = ({ onMenu, onSearch, scrollY, isHome }) => {
   const { theme, colors, radius, spacing, fonts } = useAppTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const monthNames = t("months", { returnObjects: true });
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -29,7 +30,7 @@ export const Header = ({ onMenu, onSearch, scrollY, isHome }) => {
     return () => subscription.remove();
   }, []);
 
-  const dateText = `${String(now.getDate()).padStart(2, "0")} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+  const dateText = `${formatLocalizedNumber(String(now.getDate()).padStart(2, "0"), i18n.language)} ${monthNames[now.getMonth()]} ${formatLocalizedNumber(now.getFullYear(), i18n.language)}`;
   return (
     <LinearGradient colors={theme.gradients.header} style={[styles.header, { paddingTop: Math.max(insets.top, 12) + 12 }]}>
       <View style={styles.headerRow}>

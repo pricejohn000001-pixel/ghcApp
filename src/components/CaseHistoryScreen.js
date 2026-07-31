@@ -15,7 +15,9 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { CameraView, useCameraPermissions } from "expo-camera";
+import { useTranslation } from "react-i18next";
 import { useAppTheme } from "../theme";
+import { formatLocalizedNumber, localizeDigitsInText } from "../utils/localization";
 
 const ERROR_RED = "#EF4444";
 
@@ -57,6 +59,7 @@ const CaseTypeItem = React.memo(({ item, isSelected, onSelect, styles, colors })
 
 export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
   const { theme, colors, radius, spacing, fonts } = useAppTheme();
+  const { t, i18n } = useTranslation();
   const styles = React.useMemo(
     () => createStyles(theme, colors, radius, spacing, fonts),
     [theme, colors, radius, spacing, fonts]
@@ -66,7 +69,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
   const [selectedType, setSelectedType] = useState(null);
   const [regNo, setRegNo] = useState("");
   const [year, setYear] = useState(new Date().getFullYear().toString());
-  const [searchMode, setSearchMode] = useState("Case No");
+  const [searchMode, setSearchMode] = useState("case_no");
   const [cnr, setCnr] = useState("");
   const [scanned, setScanned] = useState(false);
   const [permission, requestPermission] = useCameraPermissions();
@@ -82,6 +85,15 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
   const scrollViewRef = useRef(null);
   const flatListRef = useRef(null);
   const availableTypes = category === "Civil" ? caseTypes.Civil : caseTypes.Criminal;
+  const monthNames = t("months_short", { returnObjects: true });
+  const searchModes = React.useMemo(
+    () => [
+      { key: "case_no", label: t("case_status_screen.search_modes.case_no") },
+      { key: "cnr", label: t("case_status_screen.search_modes.cnr") },
+      { key: "qr_scan", label: t("case_status_screen.search_modes.qr_scan") },
+    ],
+    [t]
+  );
 
   useEffect(() => {
     const fetchCaseTypes = async () => {
@@ -177,15 +189,15 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
   const handleSearch = async (overrideCnr = null) => {
     const cnrToSearch = typeof overrideCnr === "string" ? overrideCnr : cnr;
 
-    if (searchMode === "Case No" && (!selectedType || !regNo || !year)) return;
-    if ((searchMode === "CNR" || searchMode === "QR Scan") && !cnrToSearch) return;
+    if (searchMode === "case_no" && (!selectedType || !regNo || !year)) return;
+    if ((searchMode === "cnr" || searchMode === "qr_scan") && !cnrToSearch) return;
 
     setIsSearching(true);
     setSearchError(null);
     setHasSearched(false);
 
     try {
-      if (searchMode === "Case No") {
+      if (searchMode === "case_no") {
         const url = `https://ghcservices.assam.gov.in/cis-api/api/v1/cases/search/registration?case_type=${selectedType.value}&reg_no=${regNo}&reg_year=${year}`;
         const response = await fetch(url, {
           method: "GET",
@@ -230,7 +242,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
         }
       }
     } catch (err) {
-      setSearchError("Failed to fetch case. Please check your inputs or ensure you are connected to the court network.");
+      setSearchError(t("case_status_screen.search_error"));
       setSearchResults([]);
     } finally {
       setIsSearching(false);
@@ -244,6 +256,22 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
     }
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "-";
+
+    try {
+      const date = new Date(dateString);
+      if (Number.isNaN(date.getTime())) return localizeDigitsInText(dateString, i18n.language);
+
+      const day = formatLocalizedNumber(String(date.getDate()).padStart(2, "0"), i18n.language);
+      const month = monthNames[date.getMonth()];
+      const displayYear = formatLocalizedNumber(date.getFullYear(), i18n.language);
+      return `${day} ${month} ${displayYear}`;
+    } catch {
+      return localizeDigitsInText(dateString, i18n.language);
+    }
+  };
+
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
       <LinearGradient colors={theme.gradients.header} style={styles.hero}>
@@ -251,9 +279,9 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
           <View style={styles.heroIcon}>
             <Ionicons name="document-text" size={20} color={colors.accent} />
           </View>
-          <Text style={styles.heroTitle}>Case Status Search</Text>
+          <Text style={styles.heroTitle}>{t("case_status_screen.title")}</Text>
         </View>
-        <Text style={styles.heroSub}>Find case details, status, and history</Text>
+        <Text style={styles.heroSub}>{t("case_status_screen.subtitle")}</Text>
       </LinearGradient>
 
       <Animated.ScrollView
@@ -274,47 +302,51 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
       >
         <View style={styles.card}>
           <View style={styles.searchModeContainer}>
-            {["Case No", "CNR", "QR Scan"].map((mode) => (
+            {searchModes.map((mode) => (
               <TouchableOpacity
-                key={mode}
-                style={[styles.modeTab, searchMode === mode && styles.modeTabActive]}
+                key={mode.key}
+                style={[styles.modeTab, searchMode === mode.key && styles.modeTabActive]}
                 onPress={() => {
-                  setSearchMode(mode);
+                  setSearchMode(mode.key);
                   setHasSearched(false);
                   setSearchResults([]);
                   setScanned(false);
 
-                  if (mode === "QR Scan" && (!permission || !permission.granted)) {
+                  if (mode.key === "qr_scan" && (!permission || !permission.granted)) {
                     requestPermission();
                   }
                 }}
               >
-                <Text style={[styles.modeTabText, searchMode === mode && styles.modeTabTextActive]}>{mode}</Text>
+                <Text style={[styles.modeTabText, searchMode === mode.key && styles.modeTabTextActive]}>{mode.label}</Text>
               </TouchableOpacity>
             ))}
           </View>
 
-          {searchMode === "Case No" && (
+          {searchMode === "case_no" && (
             <>
-              <Text style={styles.label}>Case Category</Text>
+              <Text style={styles.label}>{t("case_status_screen.case_category")}</Text>
               <View style={styles.pillContainer}>
                 <TouchableOpacity
                   style={[styles.pill, category === "Civil" && styles.pillActive]}
                   onPress={() => handleCategorySwitch("Civil")}
                   activeOpacity={0.8}
                 >
-                  <Text style={[styles.pillText, category === "Civil" && styles.pillTextActive]}>Civil</Text>
+                  <Text style={[styles.pillText, category === "Civil" && styles.pillTextActive]}>
+                    {t("case_status_screen.civil")}
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.pill, category === "Criminal" && styles.pillActive]}
                   onPress={() => handleCategorySwitch("Criminal")}
                   activeOpacity={0.8}
                 >
-                  <Text style={[styles.pillText, category === "Criminal" && styles.pillTextActive]}>Criminal</Text>
+                  <Text style={[styles.pillText, category === "Criminal" && styles.pillTextActive]}>
+                    {t("case_status_screen.criminal")}
+                  </Text>
                 </TouchableOpacity>
               </View>
 
-              <Text style={styles.label}>Case Type</Text>
+              <Text style={styles.label}>{t("case_status_screen.case_type")}</Text>
               <TouchableOpacity
                 style={styles.dropdownButton}
                 onPress={() => setTypeModalVisible(true)}
@@ -322,7 +354,11 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                 disabled={caseTypesLoading}
               >
                 <Text style={[styles.dropdownText, !selectedType && styles.placeholderText]}>
-                  {caseTypesLoading ? "Loading case types..." : selectedType ? selectedType.label : "Select Case Type"}
+                  {caseTypesLoading
+                    ? t("case_status_screen.loading_case_types")
+                    : selectedType
+                      ? selectedType.label
+                      : t("case_status_screen.select_case_type")}
                 </Text>
                 {caseTypesLoading ? (
                   <ActivityIndicator size="small" color={colors.textSecondary} />
@@ -333,7 +369,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
 
               <View style={styles.row}>
                 <View style={styles.flex1}>
-                  <Text style={styles.label}>Registration No.</Text>
+                  <Text style={styles.label}>{t("case_status_screen.registration_no")}</Text>
                   <View style={styles.inputContainer}>
                     <Ionicons name="pricetag" size={16} color={colors.textSecondary} style={styles.inputIcon} />
                     <TextInput
@@ -347,7 +383,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                   </View>
                 </View>
                 <View style={styles.flex1}>
-                  <Text style={styles.label}>Year</Text>
+                  <Text style={styles.label}>{t("case_status_screen.year")}</Text>
                   <View style={styles.inputContainer}>
                     <Ionicons name="calendar" size={16} color={colors.textSecondary} style={styles.inputIcon} />
                     <TextInput
@@ -365,9 +401,9 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             </>
           )}
 
-          {searchMode === "CNR" && (
+          {searchMode === "cnr" && (
             <View style={styles.singleFieldSection}>
-              <Text style={styles.label}>Enter CNR Number</Text>
+              <Text style={styles.label}>{t("case_status_screen.enter_cnr_number")}</Text>
               <View style={styles.inputContainer}>
                 <Ionicons name="pricetag" size={16} color={colors.textSecondary} style={styles.inputIcon} />
                 <TextInput
@@ -382,7 +418,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             </View>
           )}
 
-          {searchMode === "QR Scan" && (
+          {searchMode === "qr_scan" && (
             <View style={styles.qrSection}>
               {!permission ? (
                 <View style={styles.cameraPlaceholder}>
@@ -390,9 +426,9 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                 </View>
               ) : !permission.granted ? (
                 <View style={styles.cameraPlaceholder}>
-                  <Text style={styles.cameraText}>We need your permission to show the camera</Text>
+                  <Text style={styles.cameraText}>{t("case_status_screen.camera_permission")}</Text>
                   <TouchableOpacity style={styles.permissionBtn} onPress={requestPermission}>
-                    <Text style={styles.permissionBtnText}>Grant Permission</Text>
+                    <Text style={styles.permissionBtnText}>{t("case_status_screen.grant_permission")}</Text>
                   </TouchableOpacity>
                 </View>
               ) : (
@@ -414,7 +450,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                   {scanned && (
                     <View style={styles.scannedActionWrap}>
                       <TouchableOpacity style={styles.rescanBtn} onPress={() => setScanned(false)}>
-                        <Text style={styles.rescanBtnText}>Tap to Scan Again</Text>
+                        <Text style={styles.rescanBtnText}>{t("case_status_screen.tap_to_scan_again")}</Text>
                       </TouchableOpacity>
                     </View>
                   )}
@@ -423,23 +459,23 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
             </View>
           )}
 
-          {searchMode !== "QR Scan" && (
+          {searchMode !== "qr_scan" && (
             <TouchableOpacity
               style={styles.searchButton}
               onPress={() => handleSearch()}
               disabled={
                 isSearching ||
-                (searchMode === "Case No" && (caseTypesLoading || !selectedType || !regNo || !year)) ||
-                (searchMode === "CNR" && !cnr)
+                (searchMode === "case_no" && (caseTypesLoading || !selectedType || !regNo || !year)) ||
+                (searchMode === "cnr" && !cnr)
               }
               activeOpacity={0.8}
             >
-              {isSearching || (searchMode === "Case No" && caseTypesLoading) ? (
+              {isSearching || (searchMode === "case_no" && caseTypesLoading) ? (
                 <ActivityIndicator color={colors.textInverse} size="small" />
               ) : (
                 <>
                   <Ionicons name="search" size={18} color={colors.textInverse} />
-                  <Text style={styles.searchButtonText}>Search Case</Text>
+                  <Text style={styles.searchButtonText}>{t("case_status_screen.search_case")}</Text>
                 </>
               )}
             </TouchableOpacity>
@@ -448,14 +484,14 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
 
         {hasSearched && (
           <View style={styles.resultsContainer}>
-            <Text style={styles.resultsHeader}>Search Results</Text>
+            <Text style={styles.resultsHeader}>{t("case_status_screen.search_results")}</Text>
 
             {searchError ? (
               <View style={styles.errorStateCard}>
                 <View style={styles.errorStateIconBg}>
                   <Ionicons name="alert-circle" size={32} color={ERROR_RED} />
                 </View>
-                <Text style={styles.errorStateTitle}>Search Failed</Text>
+                <Text style={styles.errorStateTitle}>{t("case_status_screen.search_failed")}</Text>
                 <Text style={styles.errorStateSub}>{searchError}</Text>
               </View>
             ) : searchResults.length === 0 ? (
@@ -463,39 +499,24 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                 <View style={styles.emptyStateIconBg}>
                   <Ionicons name="search" size={32} color={colors.textQuaternary} />
                 </View>
-                <Text style={styles.emptyStateTitle}>No Cases Found</Text>
-                <Text style={styles.emptyStateSub}>
-                  We couldn't find any cases matching your search criteria. Please check the registration number and
-                  year.
-                </Text>
+                <Text style={styles.emptyStateTitle}>{t("case_status_screen.no_cases_found")}</Text>
+                <Text style={styles.emptyStateSub}>{t("case_status_screen.no_cases_found_subtitle")}</Text>
               </View>
             ) : (
               searchResults.map((item, index) => {
                 const caseTypeLabel = selectedType?.label || item.filing_case_type?.type_name || "";
                 const itemRegNo = item.reg_no || regNo;
                 const itemYear = item.reg_year || year;
-                const caseNoStr = caseTypeLabel ? `${caseTypeLabel} ${itemRegNo}/${itemYear}` : `${itemRegNo}/${itemYear}`;
+                const caseNoStr = caseTypeLabel
+                  ? `${caseTypeLabel} ${localizeDigitsInText(`${itemRegNo}/${itemYear}`, i18n.language)}`
+                  : localizeDigitsInText(`${itemRegNo}/${itemYear}`, i18n.language);
                 const isDisposed = item.archive === "Y";
-                const statusStr = isDisposed ? "Disposed" : "Pending";
+                const statusStr = isDisposed ? t("case_common.disposed") : t("case_common.pending");
                 const isDateNotGiven =
                   item.date_next_list?.startsWith("5000-01-01") || item.date_next_list?.startsWith("4999-12-31");
 
-                const formatDate = (dateString) => {
-                  if (!dateString) return "-";
-
-                  try {
-                    const date = new Date(dateString);
-
-                    if (Number.isNaN(date.getTime())) return dateString;
-
-                    return date.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-                  } catch {
-                    return dateString;
-                  }
-                };
-
                 const nextHearingDisplay = isDateNotGiven
-                  ? "Date not given. Refer the last order for details"
+                  ? t("case_common.date_not_given")
                   : formatDate(item.date_next_list);
 
                 const shouldHideParties =
@@ -512,19 +533,19 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
                     </View>
                     <View style={styles.resultBody}>
                       <Text style={styles.partyText}>
-                        <Text style={styles.bold}>Petitioner:</Text> {getPartyName(item.pet_name)}
+                        <Text style={styles.bold}>{t("case_common.petitioner")}:</Text> {getPartyName(item.pet_name)}
                       </Text>
                       <Text style={styles.partyText}>
-                        <Text style={styles.bold}>Respondent:</Text> {getPartyName(item.res_name)}
+                        <Text style={styles.bold}>{t("case_common.respondent")}:</Text> {getPartyName(item.res_name)}
                       </Text>
                       {!isDisposed && (
                         <Text style={styles.partyText}>
-                          <Text style={styles.bold}>Next Hearing:</Text> {nextHearingDisplay}
+                          <Text style={styles.bold}>{t("case_common.next_hearing")}:</Text> {nextHearingDisplay}
                         </Text>
                       )}
                     </View>
                     <TouchableOpacity style={styles.viewButton} onPress={() => onViewDetails(item)}>
-                      <Text style={styles.viewButtonText}>View Details</Text>
+                      <Text style={styles.viewButtonText}>{t("case_common.view_details")}</Text>
                       <Ionicons name="arrow-forward" size={16} color={colors.accent} />
                     </TouchableOpacity>
                   </View>
@@ -548,8 +569,16 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
               <View>
-                <Text style={styles.modalTitle}>Select {category} Case Type</Text>
-                <Text style={styles.modalSubtitle}>{filteredTypes.length} types available</Text>
+                <Text style={styles.modalTitle}>
+                  {t("case_status_screen.select_case_type_title", {
+                    category: t(`case_status_screen.${category.toLowerCase()}`),
+                  })}
+                </Text>
+                <Text style={styles.modalSubtitle}>
+                  {t("case_status_screen.types_available", {
+                    count: formatLocalizedNumber(filteredTypes.length, i18n.language),
+                  })}
+                </Text>
               </View>
               <TouchableOpacity
                 onPress={() => {
@@ -565,7 +594,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
               <Ionicons name="search" size={18} color={colors.textSecondary} style={styles.modalSearchIcon} />
               <TextInput
                 style={styles.modalSearchInput}
-                placeholder="Search case type"
+                placeholder={t("case_status_screen.search_case_type")}
                 placeholderTextColor={colors.textSecondary}
                 value={typeSearchQuery}
                 onChangeText={setTypeSearchQuery}
@@ -601,7 +630,7 @@ export const CaseHistoryScreen = ({ scrollY, onViewDetails }) => {
               ListEmptyComponent={
                 <View style={styles.modalEmptyState}>
                   <Ionicons name="search" size={40} color={colors.textSecondary} />
-                  <Text style={styles.modalEmptyText}>No matching case types found</Text>
+                  <Text style={styles.modalEmptyText}>{t("case_status_screen.no_matching_case_types")}</Text>
                 </View>
               }
               getItemLayout={(_, index) => ({ length: 53, offset: 53 * index, index })}

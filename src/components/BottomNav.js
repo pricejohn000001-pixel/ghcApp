@@ -18,11 +18,11 @@ export const BottomNav = ({ onHome, onMactCal, onCaseDisplay, onBack, onForward,
       </TouchableOpacity>
       <TouchableOpacity style={styles.navItem} activeOpacity={0.8} onPress={onMactCal}>
         <Ionicons name="calculator" size={20} color={activeTab === 'mactCal' ? colors.accent : inactiveColor} />
-        <Text style={[styles.navText, activeTab === 'mactCal' && styles.activeText]}>MACT Cal</Text>
+        <Text style={[styles.navText, activeTab === 'mactCal' && styles.activeText]}>{t("nav.mact_cal")}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.navItem} activeOpacity={0.8} onPress={onCaseDisplay}>
         <Ionicons name="server" size={20} color={inactiveColor} />
-        <Text style={styles.navText}>Case Display</Text>
+        <Text style={styles.navText}>{t("nav.case_display")}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity

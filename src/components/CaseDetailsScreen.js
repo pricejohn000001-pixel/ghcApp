@@ -10,7 +10,9 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { useAppTheme } from "../theme";
+import { formatLocalizedNumber, localizeDigitsInText } from "../utils/localization";
 
 const ERROR_RED = "#EF4444";
 
@@ -60,10 +62,12 @@ const getStatusStyles = (status, colors) => {
 
 export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
   const { theme, colors, radius, spacing, fonts } = useAppTheme();
+  const { t, i18n } = useTranslation();
   const styles = React.useMemo(
     () => createStyles(theme, colors, radius, spacing, fonts),
     [theme, colors, radius, spacing, fonts]
   );
+  const monthNames = t("months_short", { returnObjects: true });
 
   const [data, setData] = useState(caseItem);
   const [subMatters, setSubMatters] = useState([]);
@@ -79,7 +83,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
 
   useEffect(() => {
     if (!cinoToFetch) {
-      setError("No case selected. Please search for a case first.");
+      setError(t("case_details_screen.no_case_selected"));
       setLoading(false);
       return;
     }
@@ -130,7 +134,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
     };
 
     fetchAllData();
-  }, [cinoToFetch]);
+  }, [cinoToFetch, t]);
 
   const loadMoreOrders = async () => {
     if (ordersPage >= ordersTotalPages || loadingMoreOrders) return;
@@ -159,16 +163,28 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
     }
   };
 
+  const localizeStatus = (status) => {
+    const normalized = status?.toUpperCase();
+    if (!normalized) return t("case_common.unknown");
+    if (normalized === "PENDING") return t("case_common.pending");
+    if (normalized === "DISPOSED") return t("case_common.disposed");
+    if (normalized === "UNKNOWN") return t("case_common.unknown");
+    return localizeDigitsInText(status, i18n.language);
+  };
+
   const formatDate = (dateString) => {
     if (!dateString) return "-";
 
     try {
       const date = new Date(dateString);
-      if (Number.isNaN(date.getTime())) return dateString;
+      if (Number.isNaN(date.getTime())) return localizeDigitsInText(dateString, i18n.language);
 
-      return date.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+      const day = formatLocalizedNumber(String(date.getDate()).padStart(2, "0"), i18n.language);
+      const month = monthNames[date.getMonth()];
+      const year = formatLocalizedNumber(date.getFullYear(), i18n.language);
+      return `${day} ${month} ${year}`;
     } catch {
-      return dateString;
+      return localizeDigitsInText(dateString, i18n.language);
     }
   };
 
@@ -177,7 +193,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
 
     try {
       const date = new Date(dateString);
-      if (Number.isNaN(date.getTime())) return dateString;
+      if (Number.isNaN(date.getTime())) return localizeDigitsInText(dateString, i18n.language);
 
       const day = date.getDate().toString().padStart(2, "0");
       const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -185,9 +201,9 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
       const hours = date.getHours().toString().padStart(2, "0");
       const minutes = date.getMinutes().toString().padStart(2, "0");
 
-      return `${day}-${month}-${year} ${hours}:${minutes}`;
+      return localizeDigitsInText(`${day}-${month}-${year} ${hours}:${minutes}`, i18n.language);
     } catch {
-      return dateString;
+      return localizeDigitsInText(dateString, i18n.language);
     }
   };
 
@@ -202,10 +218,10 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
     if (diffDays > 365) {
-      return `${Math.floor(diffDays / 365)} yrs, ${diffDays % 365} days`;
+      return `${formatLocalizedNumber(Math.floor(diffDays / 365), i18n.language)} ${t("case_common.years_short")}, ${formatLocalizedNumber(diffDays % 365, i18n.language)} ${t("case_common.days")}`;
     }
 
-    return `${diffDays} days`;
+    return `${formatLocalizedNumber(diffDays, i18n.language)} ${t("case_common.days")}`;
   };
 
   const getCaseTypeName = () => "";
@@ -214,7 +230,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={colors.accent} />
-        <Text style={styles.loadingText}>Fetching Complete Case Profile...</Text>
+        <Text style={styles.loadingText}>{t("case_details_screen.loading")}</Text>
       </View>
     );
   }
@@ -226,10 +242,9 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           <View style={styles.errorStateIconBg}>
             <Ionicons name="alert-circle" size={40} color={ERROR_RED} />
           </View>
-          <Text style={styles.errorStateTitle}>Data Unavailable</Text>
+          <Text style={styles.errorStateTitle}>{t("case_details_screen.data_unavailable")}</Text>
           <Text style={styles.errorStateSub}>
-            {error ||
-              "We could not find the complete profile for this case. It might not be available or there might be an issue with the connection."}
+            {error || t("case_details_screen.data_unavailable_subtitle")}
           </Text>
         </View>
       </View>
@@ -249,11 +264,12 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
 
   const caseTypeName = data.filing_case_type?.type_name || getCaseTypeName(data.filcase_type);
   const regTypeName = data.registered_case_type?.type_name || getCaseTypeName(data.regcase_type);
-  const caseNo = `${caseTypeName} ${data.fil_no || ""}/${data.fil_year || ""}`;
-  const regNo = `${regTypeName} ${data.reg_no || ""}/${data.reg_year || ""}`;
+  const caseNo = `${caseTypeName} ${localizeDigitsInText(`${data.fil_no || ""}/${data.fil_year || ""}`, i18n.language)}`;
+  const regNo = `${regTypeName} ${localizeDigitsInText(`${data.reg_no || ""}/${data.reg_year || ""}`, i18n.language)}`;
 
-  const renderDetailRow = (label, value, isHighlight = false) => {
-    const statusStyle = label === "CURRENT STATUS" ? getStatusStyles(value, colors) : null;
+  const renderDetailRow = (label, value, isHighlight = false, isStatus = false) => {
+    const statusStyle = isStatus ? getStatusStyles(value, colors) : null;
+    const displayValue = isStatus ? localizeStatus(value) : value;
 
     return (
       <View style={styles.detailRow}>
@@ -261,15 +277,15 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         <View style={styles.detailValueContainer}>
           {isHighlight && (
             <View style={styles.upcomingBadge}>
-              <Text style={styles.upcomingBadgeText}>Upcoming</Text>
+              <Text style={styles.upcomingBadgeText}>{t("case_common.upcoming")}</Text>
             </View>
           )}
-          {label === "CURRENT STATUS" ? (
+          {isStatus ? (
             <View style={[styles.statusPill, { backgroundColor: statusStyle.bg, borderColor: statusStyle.border }]}>
-              <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{value}</Text>
+              <Text style={[styles.statusPillText, { color: statusStyle.text }]}>{displayValue}</Text>
             </View>
           ) : (
-            <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{value || "-"}</Text>
+            <Text style={[styles.detailValue, isHighlight && styles.detailValueHighlight]}>{displayValue || "-"}</Text>
           )}
         </View>
       </View>
@@ -292,7 +308,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
     return (
       <View style={styles.advocateRow}>
         <View style={styles.advBadge}>
-          <Text style={styles.advBadgeText}>ADV</Text>
+          <Text style={styles.advBadgeText}>{t("case_common.advocate_short")}</Text>
         </View>
         <Text style={styles.advName}>{advocates.join(", ")}</Text>
       </View>
@@ -355,9 +371,10 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
 
   const listedFor = data.next_purpose?.purpose_name || data.purpose_next || "-";
   const daysSinceListed = data.days_since_last_listed
-    ? `${Math.floor(data.days_since_last_listed)} days`
+    ? `${formatLocalizedNumber(Math.floor(data.days_since_last_listed), i18n.language)} ${t("case_common.days")}`
     : getCaseAge(data.date_last_list);
   const currentStatus = data.case_state ? data.case_state.toUpperCase() : data.last_status === "D" ? "DISPOSED" : "PENDING";
+  const currentStatusDisplay = localizeStatus(currentStatus);
   const listedBefore = data.bench
     ? `${data.bench.bench_type_name} (${data.bench.bench_abbreviation})`
     : data.benchtype || "-";
@@ -366,7 +383,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
   const isDateNotGiven =
     data.date_next_list?.startsWith("5000-01-01") || data.date_next_list?.startsWith("4999-12-31");
   const nextHearingDisplay = isDateNotGiven
-    ? "Date not given. Refer the last order for details"
+    ? t("case_common.date_not_given")
     : formatDate(data.date_next_list);
   const heroStatusStyle = getStatusStyles(currentStatus, colors);
 
@@ -379,12 +396,12 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           </View>
           <View style={styles.heroContent}>
             <Text style={styles.heroTitle}>
-              {regTypeName} / {data.reg_no || "-"} / {data.reg_year || "-"}
+              {regTypeName} / {localizeDigitsInText(data.reg_no || "-", i18n.language)} / {localizeDigitsInText(data.reg_year || "-", i18n.language)}
             </Text>
-            <Text style={styles.heroSub}>CINO: {data.cino || "-"}</Text>
+            <Text style={styles.heroSub}>CINO: {localizeDigitsInText(data.cino || "-", i18n.language)}</Text>
             <View style={styles.heroPillRow}>
               <View style={styles.heroPill}>
-                <Text style={styles.heroPillText}>{caseTypeName || "Case"}</Text>
+                <Text style={styles.heroPillText}>{caseTypeName || t("case_details_screen.case_fallback")}</Text>
               </View>
               <View
                 style={[
@@ -393,7 +410,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                   { backgroundColor: heroStatusStyle.bg, borderColor: heroStatusStyle.border },
                 ]}
               >
-                <Text style={[styles.heroPillText, { color: heroStatusStyle.text }]}>{currentStatus}</Text>
+                <Text style={[styles.heroPillText, { color: heroStatusStyle.text }]}>{currentStatusDisplay}</Text>
               </View>
             </View>
           </View>
@@ -418,34 +435,34 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             <View style={styles.headerIconContainer}>
               <Ionicons name="document-text" size={18} color={colors.accent} />
             </View>
-            <Text style={styles.cardTitle}>Case Details</Text>
+            <Text style={styles.cardTitle}>{t("case_details_screen.case_details")}</Text>
           </View>
 
           <View style={styles.detailsContainer}>
-            {renderDetailRow("FILING NO.", caseNo)}
+            {renderDetailRow(t("case_details_screen.labels.filing_no"), caseNo)}
             <View style={styles.detailDivider} />
-            {renderDetailRow("FILING DATE", formatDate(data.date_of_filing))}
+            {renderDetailRow(t("case_details_screen.labels.filing_date"), formatDate(data.date_of_filing))}
             <View style={styles.detailDivider} />
-            {renderDetailRow("REGISTRATION NO.", regNo)}
+            {renderDetailRow(t("case_details_screen.labels.registration_no"), regNo)}
             <View style={styles.detailDivider} />
-            {renderDetailRow("REGISTRATION DATE", formatDate(data.dt_regis))}
+            {renderDetailRow(t("case_details_screen.labels.registration_date"), formatDate(data.dt_regis))}
             {!isDisposed && (
               <>
                 <View style={styles.detailDivider} />
-                {renderDetailRow("NEXT HEARING", nextHearingDisplay, !isDateNotGiven)}
+                {renderDetailRow(t("case_details_screen.labels.next_hearing"), nextHearingDisplay, !isDateNotGiven)}
               </>
             )}
             <View style={styles.detailDivider} />
-            {renderDetailRow("LISTED FOR", listedFor)}
+            {renderDetailRow(t("case_details_screen.labels.listed_for"), listedFor)}
             <View style={styles.detailDivider} />
-            {renderDetailRow("LAST LISTING", formatDate(data.date_last_list))}
+            {renderDetailRow(t("case_details_screen.labels.last_listing"), formatDate(data.date_last_list))}
             <View style={styles.detailDivider} />
-            {renderDetailRow("EFILING REF NO", data.efilno)}
+            {renderDetailRow(t("case_details_screen.labels.efiling_ref_no"), localizeDigitsInText(data.efilno, i18n.language))}
           </View>
 
           <View style={styles.cardFooter}>
             <Ionicons name="information-circle" size={12} color={colors.textSecondary} />
-            <Text style={styles.footerText}>Hearing dates may change based on court proceedings.</Text>
+            <Text style={styles.footerText}>{t("case_details_screen.hearing_dates_note")}</Text>
           </View>
         </View>
 
@@ -454,28 +471,28 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             <View style={styles.headerIconContainer}>
               <Ionicons name="pulse" size={18} color={colors.accent} />
             </View>
-            <Text style={styles.cardTitle}>Additional Information</Text>
+            <Text style={styles.cardTitle}>{t("case_details_screen.additional_information")}</Text>
           </View>
 
           <View style={styles.detailsContainer}>
-            {renderDetailRow("CURRENT STATUS", currentStatus)}
+            {renderDetailRow(t("case_details_screen.labels.current_status"), currentStatus, false, true)}
             <View style={styles.detailDivider} />
-            {renderDetailRow("LISTED BEFORE", listedBefore)}
+            {renderDetailRow(t("case_details_screen.labels.listed_before"), listedBefore)}
             <View style={styles.detailDivider} />
-            {renderDetailRow("CASE AGE", caseAgeFormatted)}
+            {renderDetailRow(t("case_details_screen.labels.case_age"), localizeDigitsInText(caseAgeFormatted, i18n.language))}
             {!isDisposed && (
               <>
                 <View style={styles.detailDivider} />
-                {renderDetailRow("DAYS SINCE LAST LISTED", daysSinceListed)}
+                {renderDetailRow(t("case_details_screen.labels.days_since_last_listed"), daysSinceListed)}
               </>
             )}
             <View style={styles.detailDivider} />
-            {renderDetailRow("CASE CATEGORY", data.subject?.subject_name || "-")}
+            {renderDetailRow(t("case_details_screen.labels.case_category"), data.subject?.subject_name || "-")}
           </View>
 
           <View style={styles.cardFooter}>
             <Text style={styles.footerText}>
-              {data.filing_case_type?.full_form || "Writ Petition under Article 226 and 227 of the Constitution"}
+              {data.filing_case_type?.full_form || t("case_details_screen.fallback_case_type_full_form")}
             </Text>
           </View>
         </View>
@@ -486,9 +503,12 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
               <Ionicons name="people" size={18} color={colors.accent} />
             </View>
             <View>
-              <Text style={styles.cardTitle}>Parties</Text>
+              <Text style={styles.cardTitle}>{t("case_details_screen.parties")}</Text>
               <Text style={styles.cardSubtitle}>
-                {allPetitioners.length} Petitioners • {allRespondents.length} Respondents
+                {t("case_details_screen.petitioners_respondents", {
+                  petitioners: formatLocalizedNumber(allPetitioners.length, i18n.language),
+                  respondents: formatLocalizedNumber(allRespondents.length, i18n.language),
+                })}
               </Text>
             </View>
           </View>
@@ -496,17 +516,17 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           <View style={styles.partiesStackLayout}>
             <View style={styles.partyStackColumn}>
               <View style={styles.partyHeaderBg}>
-                <Text style={styles.partyHeaderTitle}>PETITIONERS</Text>
+                <Text style={styles.partyHeaderTitle}>{t("case_details_screen.petitioners_header")}</Text>
               </View>
               <View style={styles.verticalListContainer}>
                 {allPetitioners.map((petitioner, index) => (
                   <View key={index} style={styles.partyCard}>
                     <View style={styles.partyCardHeader}>
                       <View style={styles.partyAvatar}>
-                        <Text style={styles.partyAvatarText}>{petitioner.party_no}</Text>
+                        <Text style={styles.partyAvatarText}>{formatLocalizedNumber(petitioner.party_no, i18n.language)}</Text>
                       </View>
                       <Text style={styles.partyCardName}>
-                        {petitioner.name} <Text style={styles.partyAge}>{petitioner.age ? `${petitioner.age}y` : ""}</Text>
+                        {petitioner.name} <Text style={styles.partyAge}>{petitioner.age ? `${formatLocalizedNumber(petitioner.age, i18n.language)}${t("case_common.age_suffix")}` : ""}</Text>
                       </Text>
                     </View>
                     {renderAdvocates(petitioner.adv_name, petitioner.adv_reg, petitioner.extra_advs)}
@@ -518,17 +538,17 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
 
             <View style={styles.partyStackColumn}>
               <View style={styles.partyHeaderBg}>
-                <Text style={styles.partyHeaderTitle}>RESPONDENTS</Text>
+                <Text style={styles.partyHeaderTitle}>{t("case_details_screen.respondents_header")}</Text>
               </View>
               <View style={styles.verticalListContainer}>
                 {allRespondents.map((respondent, index) => (
                   <View key={index} style={styles.partyCard}>
                     <View style={styles.partyCardHeader}>
                       <View style={styles.partyAvatar}>
-                        <Text style={styles.partyAvatarText}>{respondent.party_no}</Text>
+                        <Text style={styles.partyAvatarText}>{formatLocalizedNumber(respondent.party_no, i18n.language)}</Text>
                       </View>
                       <Text style={styles.partyCardName}>
-                        {respondent.name} <Text style={styles.partyAge}>{respondent.age ? `${respondent.age}y` : ""}</Text>
+                        {respondent.name} <Text style={styles.partyAge}>{respondent.age ? `${formatLocalizedNumber(respondent.age, i18n.language)}${t("case_common.age_suffix")}` : ""}</Text>
                       </Text>
                     </View>
                     {renderAdvocates(respondent.adv_name, respondent.adv_reg, respondent.extra_advs)}
@@ -546,8 +566,12 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
               <Ionicons name="layers" size={18} color={colors.accent} />
             </View>
             <View>
-              <Text style={styles.cardTitle}>Sub-Matters</Text>
-              <Text style={styles.cardSubtitle}>{subMatters.length} application(s) filed</Text>
+              <Text style={styles.cardTitle}>{t("case_details_screen.sub_matters")}</Text>
+              <Text style={styles.cardSubtitle}>
+                {t("case_details_screen.applications_filed", {
+                  count: formatLocalizedNumber(subMatters.length, i18n.language),
+                })}
+              </Text>
             </View>
           </View>
 
@@ -561,9 +585,9 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                     <View style={styles.verticalCardHeader}>
                       <View style={styles.verticalCardHeaderContent}>
                         <Text style={styles.verticalCardTitle}>
-                          {`${subMatter.filing_case_type?.type_name || ""} ${subMatter.reg_no || ""}/${subMatter.reg_year || ""}`}
+                          {`${subMatter.filing_case_type?.type_name || ""} ${localizeDigitsInText(`${subMatter.reg_no || ""}/${subMatter.reg_year || ""}`, i18n.language)}`}
                         </Text>
-                        <Text style={styles.verticalCardSub}>{subMatter.cino}</Text>
+                        <Text style={styles.verticalCardSub}>{localizeDigitsInText(subMatter.cino, i18n.language)}</Text>
                       </View>
                       <View
                         style={[
@@ -572,21 +596,21 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                         ]}
                       >
                         <Text style={[styles.statusPillText, { color: statusStyle.text }]}>
-                          {subMatter.case_state?.toUpperCase() || "UNKNOWN"}
+                          {localizeStatus(subMatter.case_state?.toUpperCase() || "UNKNOWN")}
                         </Text>
                       </View>
                     </View>
                     <View style={styles.verticalCardBody}>
                       <View style={styles.verticalCardRow}>
-                        <Text style={styles.verticalCardLabel}>PETITIONER</Text>
+                        <Text style={styles.verticalCardLabel}>{t("case_details_screen.labels.petitioner")}</Text>
                         <Text style={styles.verticalCardValue}>{getPartyName(subMatter.pet_name, subMatter)}</Text>
                       </View>
                       <View style={styles.verticalCardRow}>
-                        <Text style={styles.verticalCardLabel}>RESPONDENT</Text>
+                        <Text style={styles.verticalCardLabel}>{t("case_details_screen.labels.respondent")}</Text>
                         <Text style={styles.verticalCardValue}>{getPartyName(subMatter.res_name, subMatter)}</Text>
                       </View>
                       <View style={styles.verticalCardRow}>
-                        <Text style={styles.verticalCardLabel}>FILED ON</Text>
+                        <Text style={styles.verticalCardLabel}>{t("case_details_screen.labels.filed_on")}</Text>
                         <Text style={styles.verticalCardValue}>{formatDate(subMatter.date_of_filing)}</Text>
                       </View>
                     </View>
@@ -599,8 +623,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
               <View style={styles.emptyDataIconBg}>
                 <Ionicons name="layers" size={24} color={colors.textQuaternary} />
               </View>
-              <Text style={styles.emptyDataTitle}>No Sub-Matters</Text>
-              <Text style={styles.emptyDataSub}>There are no sub-matters filed for this case.</Text>
+              <Text style={styles.emptyDataTitle}>{t("case_details_screen.no_sub_matters")}</Text>
+              <Text style={styles.emptyDataSub}>{t("case_details_screen.no_sub_matters_subtitle")}</Text>
             </View>
           )}
         </View>
@@ -611,8 +635,12 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
               <Ionicons name="link" size={18} color={colors.accent} />
             </View>
             <View>
-              <Text style={styles.cardTitle}>Linked Cases</Text>
-              <Text style={styles.cardSubtitle}>{linkedCases.length} case(s) found</Text>
+              <Text style={styles.cardTitle}>{t("case_details_screen.linked_cases")}</Text>
+              <Text style={styles.cardSubtitle}>
+                {t("case_details_screen.linked_cases_found", {
+                  count: formatLocalizedNumber(linkedCases.length, i18n.language),
+                })}
+              </Text>
             </View>
           </View>
 
@@ -625,8 +653,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                   <View key={index} style={styles.verticalCard}>
                     <View style={styles.verticalCardHeader}>
                       <View style={styles.verticalCardHeaderContent}>
-                        <Text style={styles.verticalCardTitle}>{linkedCase.caseno}</Text>
-                        <Text style={styles.verticalCardSub}>{linkedCase.cino}</Text>
+                        <Text style={styles.verticalCardTitle}>{localizeDigitsInText(linkedCase.caseno, i18n.language)}</Text>
+                        <Text style={styles.verticalCardSub}>{localizeDigitsInText(linkedCase.cino, i18n.language)}</Text>
                       </View>
                       <View
                         style={[
@@ -635,7 +663,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                         ]}
                       >
                         <Text style={[styles.statusPillText, { color: statusStyle.text }]}>
-                          {linkedCase.status?.toUpperCase() || "UNKNOWN"}
+                          {localizeStatus(linkedCase.status?.toUpperCase() || "UNKNOWN")}
                         </Text>
                       </View>
                     </View>
@@ -653,8 +681,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
               <View style={styles.emptyDataIconBg}>
                 <Ionicons name="link" size={24} color={colors.textQuaternary} />
               </View>
-              <Text style={styles.emptyDataTitle}>No Linked Cases</Text>
-              <Text style={styles.emptyDataSub}>There are no linked cases associated with this matter.</Text>
+              <Text style={styles.emptyDataTitle}>{t("case_details_screen.no_linked_cases")}</Text>
+              <Text style={styles.emptyDataSub}>{t("case_details_screen.no_linked_cases_subtitle")}</Text>
             </View>
           )}
         </View>
@@ -665,8 +693,12 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
               <Ionicons name="document-text" size={18} color={colors.accent} />
             </View>
             <View style={styles.flex1}>
-              <Text style={styles.cardTitle}>Orders</Text>
-              <Text style={styles.cardSubtitle}>{orders.length} order(s) loaded</Text>
+              <Text style={styles.cardTitle}>{t("case_details_screen.orders")}</Text>
+              <Text style={styles.cardSubtitle}>
+                {t("case_details_screen.orders_loaded", {
+                  count: formatLocalizedNumber(orders.length, i18n.language),
+                })}
+              </Text>
             </View>
           </View>
 
@@ -678,22 +710,22 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                     <View style={styles.verticalCardHeader}>
                       <View style={styles.orderHeader}>
                         <View style={styles.orderBadge}>
-                          <Text style={styles.orderBadgeText}>{order.order_no}</Text>
+                          <Text style={styles.orderBadgeText}>{localizeDigitsInText(order.order_no, i18n.language)}</Text>
                         </View>
                         <Text style={styles.orderDate}>{formatDate(order.order_dt)}</Text>
                       </View>
                       <View>
-                        <Text style={styles.orderTypeText}>{order.document_type?.docu_name || "UNKNOWN"}</Text>
+                        <Text style={styles.orderTypeText}>{order.document_type?.docu_name || t("case_common.unknown")}</Text>
                       </View>
                     </View>
                     <View style={styles.verticalCardBody}>
                       <View style={styles.verticalCardRow}>
-                        <Text style={styles.verticalCardLabel}>UPLOADED</Text>
+                        <Text style={styles.verticalCardLabel}>{t("case_details_screen.uploaded")}</Text>
                         <Text style={styles.verticalCardValue}>{formatDateTime(order.timestamp)}</Text>
                       </View>
                       <View style={styles.verticalCardRow}>
-                        <Text style={styles.verticalCardLabel}>REPORTABLE</Text>
-                        <Text style={styles.verticalCardValue}>{order.reportable_judgement === "Y" ? "Yes" : "No"}</Text>
+                        <Text style={styles.verticalCardLabel}>{t("case_details_screen.reportable")}</Text>
+                        <Text style={styles.verticalCardValue}>{order.reportable_judgement === "Y" ? t("case_common.yes") : t("case_common.no")}</Text>
                       </View>
                     </View>
                     <View style={styles.verticalCardFooter}>
@@ -701,7 +733,7 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                         shouldHideParties ? (
                           <View style={[styles.pdfBtn, styles.pdfBtnRestricted]}>
                             <Ionicons name="lock-closed" size={12} color={ERROR_RED} />
-                            <Text style={styles.pdfBtnRestrictedText}>Restricted</Text>
+                            <Text style={styles.pdfBtnRestrictedText}>{t("case_common.restricted")}</Text>
                           </View>
                         ) : (
                           <TouchableOpacity
@@ -713,11 +745,11 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                             }
                           >
                             <Ionicons name="document" size={12} color={colors.accent} />
-                            <Text style={styles.pdfBtnText}>View PDF</Text>
+                            <Text style={styles.pdfBtnText}>{t("case_common.view_pdf")}</Text>
                           </TouchableOpacity>
                         )
                       ) : (
-                        <Text style={styles.documentUnavailableText}>Document Unavailable</Text>
+                        <Text style={styles.documentUnavailableText}>{t("case_common.document_unavailable")}</Text>
                       )}
                     </View>
                   </View>
@@ -730,7 +762,11 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
                     {loadingMoreOrders ? (
                       <ActivityIndicator size="small" color={colors.accent} />
                     ) : (
-                      <Text style={styles.loadMoreText}>Load More Orders ({ordersTotalPages - ordersPage} pages left)</Text>
+                      <Text style={styles.loadMoreText}>
+                        {t("case_details_screen.load_more_orders", {
+                          count: formatLocalizedNumber(ordersTotalPages - ordersPage, i18n.language),
+                        })}
+                      </Text>
                     )}
                   </TouchableOpacity>
                 </View>
@@ -741,8 +777,8 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
               <View style={styles.emptyDataIconBg}>
                 <Ionicons name="document-text" size={24} color={colors.textQuaternary} />
               </View>
-              <Text style={styles.emptyDataTitle}>No Orders</Text>
-              <Text style={styles.emptyDataSub}>There are no orders or judgements uploaded for this case yet.</Text>
+              <Text style={styles.emptyDataTitle}>{t("case_details_screen.no_orders")}</Text>
+              <Text style={styles.emptyDataSub}>{t("case_details_screen.no_orders_subtitle")}</Text>
             </View>
           )}
         </View>

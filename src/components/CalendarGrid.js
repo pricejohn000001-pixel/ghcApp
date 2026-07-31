@@ -4,15 +4,17 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useAppTheme } from "../theme";
+import { formatLocalizedNumber } from "../utils/localization";
 
 export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = [], config }) => {
   const { colors, radius, spacing, fonts } = useAppTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const styles = useMemo(() => createStyles(colors, radius, spacing, fonts), [colors, radius, spacing, fonts]);
   const statusColors = useMemo(() => getStatusColors(colors), [colors]);
   const gradientColors = useMemo(() => [colors.card, colors.cardAlt], [colors.card, colors.cardAlt]);
   const daysInMonth = useMemo(() => new Date(year, month + 1, 0).getDate(), [month, year]);
   const firstWeekday = useMemo(() => new Date(year, month, 1).getDay(), [month, year]);
+  const dayLabels = useMemo(() => t("days_short", { returnObjects: true }), [t]);
   const today = new Date();
   const isCurrentMonth = year === today.getFullYear() && month === today.getMonth();
   const todayDate = isCurrentMonth ? today.getDate() : null;
@@ -27,8 +29,8 @@ export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = []
 
   const monthLabel = useMemo(() => {
     const names = t("months", { returnObjects: true });
-    return `${names[month]} ${year}`;
-  }, [month, year, t]);
+    return `${names[month]} ${formatLocalizedNumber(year, i18n.language)}`;
+  }, [i18n.language, month, year, t]);
 
   const monthConfig = useMemo(() => {
     if (config) return config;
@@ -57,7 +59,7 @@ export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = []
         </TouchableOpacity>
       </View>
       <View style={styles.calendarHeaderRow}>
-        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
+        {dayLabels.map((d) => (
           <Text key={d} style={styles.calendarHeaderText}>
             {d}
           </Text>
@@ -107,11 +109,11 @@ export const CalendarGrid = ({ month, year, onPrev, onNext, highlightedDays = []
                     <>
                       {isHighlighted ? (
                         <View style={[bubbleStyle, { transform: [{ scale: 1.1 }] }]}>
-                          <Text style={textStyle}>{day}</Text>
+                          <Text style={textStyle}>{formatLocalizedNumber(day, i18n.language)}</Text>
                         </View>
                       ) : (
                         <View style={bubbleStyle}>
-                          <Text style={textStyle}>{day}</Text>
+                          <Text style={textStyle}>{formatLocalizedNumber(day, i18n.language)}</Text>
                         </View>
                       )}
 
