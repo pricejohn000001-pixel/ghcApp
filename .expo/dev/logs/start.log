@@ -1327,3 +1327,19 @@
 {"_e":"metro:client_log","_t":1785479100215,"level":"log","data":["Using cached judges data"]}
 {"_e":"metro:client_log","_t":1785479100216,"level":"log","data":["Judges data initialized with 24 judges"]}
 {"_e":"metro:client_log","_t":1785479105973,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}
+{"_e":"root:init","_t":1785734235325,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1785734235329,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1785734235336,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1785734236948,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1785734238206,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1785734257766,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1785734769869,"id":"8","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1785734769870,"id":"8","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1785734770396,"id":"8","total":1,"ms":525.6193}
+{"_e":"metro:client_log","_t":1785734772631,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1785734772754,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1785734772784,"level":"log","data":["Fetching fresh judges data from website..."]}
+{"_e":"metro:client_log","_t":1785734782850,"level":"error","data":["Error fetching judges from website:","[Error: fetch failed: java.net.UnknownHostException: Unable to resolve host \"ghconline.gov.in\": No address associated with hostname]"]}
+{"_e":"metro:client_log","_t":1785734782871,"level":"error","data":["Error getting judges data:","[Error: fetch failed: java.net.UnknownHostException: Unable to resolve host \"ghconline.gov.in\": No address associated with hostname]"]}
+{"_e":"metro:client_log","_t":1785734782895,"level":"log","data":["Using cached judges data as fallback"]}
+{"_e":"metro:client_log","_t":1785734782896,"level":"log","data":["Judges data initialized with 24 judges"]}

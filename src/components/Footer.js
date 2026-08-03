@@ -52,7 +52,7 @@ export const Footer = ({ onAbout, onContact }) => {
       </View>
       <View style={styles.metaContainer}>
         <Text style={styles.footerMeta}>
-          Designed and Developed by{" "}
+          Designed and Developed by IT Team | Powered by{" "}
           <Text 
             style={styles.linkText} 
             onPress={() => Linking.openURL("https://ecourtsghc.assam.gov.in/")}
@@ -62,7 +62,7 @@ export const Footer = ({ onAbout, onContact }) => {
           , Gauhati High Court, Guwahati.
         </Text>
         <Text style={styles.footerCopyright}>
-          © Gauhati High Court, Guwahati. All rights reserved.
+          All rights reserved.
         </Text>
       </View>
       <View style={styles.socialRow}>
