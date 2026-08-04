@@ -52,31 +52,29 @@ export const Footer = ({ onAbout, onContact }) => {
       </View>
       <View style={styles.metaContainer}>
         <Text style={styles.footerMeta}>
-          Designed and Developed by IT Team | Powered by{" "}
-          <Text 
-            style={styles.linkText} 
+          {t("footer.meta_pre")}
+          <Text
+            style={styles.linkText}
             onPress={() => Linking.openURL("https://ecourtsghc.assam.gov.in/")}
           >
-            e-Courts Services
+            {t("footer.meta_link")}
           </Text>
-          , Gauhati High Court, Guwahati.
+          {t("footer.meta_post")}
         </Text>
-        <Text style={styles.footerCopyright}>
-          All rights reserved.
-        </Text>
+        <Text style={styles.footerCopyright}>{t("footer.copyright")}</Text>
       </View>
       <View style={styles.socialRow}>
         <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => openSocialLink(SOCIAL_LINKS.telegram)}>
           <Ionicons name="paper-plane" size={16} color={colors.accent} />
-          <Text style={styles.socialText}>Telegram</Text>
+          <Text style={styles.socialText}>{t("footer.telegram")}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => openSocialLink(SOCIAL_LINKS.whatsapp)}>
           <Ionicons name="logo-whatsapp" size={16} color={colors.accent} />
-          <Text style={styles.socialText}>WhatsApp</Text>
+          <Text style={styles.socialText}>{t("footer.whatsapp")}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => openSocialLink(SOCIAL_LINKS.youtube)}>
           <Ionicons name="logo-youtube" size={16} color={colors.accent} />
-          <Text style={styles.socialText}>YouTube</Text>
+          <Text style={styles.socialText}>{t("footer.youtube")}</Text>
         </TouchableOpacity>
         {/* <TouchableOpacity style={styles.socialButton} activeOpacity={0.85} onPress={() => Linking.openURL("https://www.facebook.com/GuwahatiHighCourt/")}> 
           <Ionicons name="logo-facebook" size={16} color={colors.accent} />

@@ -55,6 +55,12 @@
     "placeholder": "Search...",
     "trigger": "Search"
   },
+  "splash": {
+    "title": "The Gauhati High Court",
+    "subtitle": "Official Mobile Application",
+    "meta": "Designed and Developed by IT Team | Powered by e-Courts Services, Gauhati High Court, Guwahati.",
+    "copyright": "© Gauhati High Court, Guwahati. All rights reserved."
+  },
   "home": {
     "hero_title": "Access court services and updates in one place.",
     "hero_subtitle": "Official mobile app of Gauhati High Court",
@@ -72,7 +78,14 @@
   "footer": {
     "about": "About Us",
     "contact": "Contact Us",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "meta_pre": "Designed and Developed by IT Team | Powered by ",
+    "meta_link": "e-Courts Services",
+    "meta_post": ", Gauhati High Court, Guwahati.",
+    "copyright": "All rights reserved.",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "youtube": "YouTube"
   },
   "months": [
     "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
@@ -88,6 +101,8 @@
     "cause_list": { "title": "Cause List", "subtitle": "View daily case listings" },
     "display_board": { "title": "Display Board", "subtitle": "Current court proceedings" },
     "case_status": { "title": "Case Status", "subtitle": "Search and view case status" },
+    "law_report": { "title": "Law Report", "subtitle": "Browse digital law reports" },
+    "adv_cause_list": { "title": "Advocate Cause List", "subtitle": "Search cause lists by advocate" },
     "judgment_search": { "title": "Judgement Search Portal", "subtitle": "Search judgments quickly" },
     "justice_clock": { "title": "Virtual Justice Clock", "subtitle": "District Judiciary of Assam" },
     "virtual_justice_clock_principal": { "title": "Virtual Justice Clock", "subtitle": "Principal Seat" },

@@ -646,6 +646,8 @@ export const serviceCards = [
   { id: "live_streaming", icon: "videocam" },
   { id: "cause_list", icon: "calendar" },
   { id: "case_status", icon: "search" },
+  { id: "law_report", icon: "book" },
+  { id: "adv_cause_list", icon: "list" },
   { id: "statistics", icon: "bar-chart" },
   { id: "justice_clock", icon: "time" },
   { id: "virtual_justice_clock_principal", icon: "desktop" },

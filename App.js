@@ -197,6 +197,14 @@ function AppContent() {
       addToHistory({ type: 'case_history' });
       return;
     }
+    if (id === "law_report") {
+      addToHistory({ type: 'webview', url: "https://ghcservices.assam.gov.in/lawreport/" });
+      return;
+    }
+    if (id === "adv_cause_list") {
+      addToHistory({ type: 'webview', url: "https://ghcservices.assam.gov.in/case-status/cause-list/search" });
+      return;
+    }
     if (id === "registry") {
       addToHistory({ type: 'webview', url: registryUrl });
       return;

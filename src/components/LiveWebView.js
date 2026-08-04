@@ -48,6 +48,14 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
     () => /ghconline\.gov\.in\/index\.php\/statistics\/?/.test(url || ""),
     [url]
   );
+  const isLawReport = useMemo(
+    () => /ghcservices\.assam\.gov\.in\/lawreport\/?/.test(url || ""),
+    [url]
+  );
+  const isAdvCauseList = useMemo(
+    () => /ghcservices\.assam\.gov\.in\/case-status\/cause-list\/search\/?/.test(url || ""),
+    [url]
+  );
   const isNoticeBoard = useMemo(
     () => /ghconline\.gov\.in\/index\.php\/(joleave|general-notice|promotion-transfer-judicial-officers|training-notice|information-communication-technology1)\/?/.test(url || ""),
     [url]
@@ -790,6 +798,133 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
         true;
       ` + "\n" + commonScript;
     }
+    if (isLawReport) {
+      const css = `
+        header, footer, nav,
+        #site-footer, .site-footer, .footer, .footer-main, .footer-bottom, .footer--row,
+        [id^="cb-row--footer"], [class*="builder-item--footer-"], [data-section^="sidebar-widgets-footer"],
+        [data-item-id^="footer-"], .widget-area, .top-bar, .court-header, .main-footer, .page-footer,
+        .cookie-banner, .cookie-consent, .cookie-settings, #cookieConsent, #cookie-banner,
+        .copyright, .copyright-area, .cookie-modal-footer, .filter-row.bottom-row,
+        body > footer, footer.text-white.text-center.py-3 {
+          display: none !important;
+        }
+        html, body {
+          background: #ffffff !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow-x: hidden !important;
+        }
+        body {
+          padding-top: 0 !important;
+          padding-bottom: 0 !important;
+          margin-top: 0 !important;
+          margin-bottom: 0 !important;
+        }
+        main, #app, .app, .container, .container-fluid, .content, .page-content {
+          margin-top: 0 !important;
+          padding-top: 0 !important;
+        }
+      `;
+      return `
+        (function(){
+          function hideSectionFromText(text){
+            var match = Array.from(document.querySelectorAll('h1,h2,h3,h4,h5,strong,p,a,span,div')).find(function(el){
+              return (el.textContent || '').trim().toLowerCase() === text;
+            });
+            if (!match) return;
+            var current = match;
+            for (var i = 0; i < 8 && current && current.tagName !== 'BODY' && current.tagName !== 'HTML'; i += 1) {
+              var textLength = ((current.textContent || '').trim()).length;
+              if (textLength > 20 && textLength < 5000) {
+                current.style.display = 'none';
+                break;
+              }
+              current = current.parentElement;
+            }
+          }
+
+          function apply(){
+            var style = document.getElementById('rn-ghc-lawreport-style');
+            if(!style){
+              style = document.createElement('style');
+              style.id = 'rn-ghc-lawreport-style';
+              style.type = 'text/css';
+              style.appendChild(document.createTextNode(${JSON.stringify(css)}));
+              (document.head || document.documentElement).appendChild(style);
+            }
+            try {
+              document.documentElement.style.overflowX = 'hidden';
+              document.body.style.overflowX = 'hidden';
+              document.body.style.paddingTop = '0';
+              document.body.style.paddingBottom = '0';
+              document.body.style.marginTop = '0';
+              document.body.style.marginBottom = '0';
+              document.querySelectorAll('header,footer,nav,#site-footer,.site-footer,.footer,.footer-main,.footer-bottom,.footer--row,[id^="cb-row--footer"],[class*="builder-item--footer-"],[data-section^="sidebar-widgets-footer"],[data-item-id^="footer-"],.widget-area,.top-bar,.court-header,.main-footer,.page-footer,.cookie-banner,.cookie-consent,.cookie-settings,#cookieConsent,#cookie-banner,.copyright,.copyright-area,.cookie-modal-footer,.filter-row.bottom-row,body > footer,footer.text-white.text-center.py-3,#contact,.contact').forEach(function(el){
+                el.style.display = 'none';
+              });
+              hideSectionFromText('contact us');
+              hideSectionFromText('our services');
+            } catch(e){}
+          }
+          apply();
+          setInterval(apply, 1000);
+        })();
+        true;
+      ` + "\n" + commonScript;
+    }
+    if (isAdvCauseList) {
+      const css = `
+        header, footer, nav,
+        .top-bar, .court-header, .footer, .site-footer, .main-footer, .page-footer,
+        .cookie-banner, .cookie-consent, .cookie-settings, #cookieConsent, #cookie-banner,
+        .copyright, .copyright-area, .cookie-modal-footer, .filter-row.bottom-row,
+        body > footer, footer.text-white.text-center.py-3 {
+          display: none !important;
+        }
+        html, body {
+          background: #ffffff !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow-x: hidden !important;
+        }
+        body {
+          padding-top: 0 !important;
+          margin-top: 0 !important;
+        }
+        main, #app, .app, .container, .container-fluid, .content, .page-content {
+          margin-top: 0 !important;
+          padding-top: 0 !important;
+        }
+      `;
+      return `
+        (function(){
+          function apply(){
+            var style = document.getElementById('rn-ghcservices-embed-style');
+            if(!style){
+              style = document.createElement('style');
+              style.id = 'rn-ghcservices-embed-style';
+              style.type = 'text/css';
+              style.appendChild(document.createTextNode(${JSON.stringify(css)}));
+              (document.head || document.documentElement).appendChild(style);
+            }
+            try {
+              document.documentElement.style.overflowX = 'hidden';
+              document.body.style.overflowX = 'hidden';
+              document.body.style.paddingTop = '0';
+              document.body.style.paddingBottom = '0';
+              document.body.style.marginTop = '0';
+              document.querySelectorAll('header,footer,nav,.top-bar,.court-header,.footer,.site-footer,.main-footer,.page-footer,.cookie-banner,.cookie-consent,.cookie-settings,#cookieConsent,#cookie-banner,.copyright,.copyright-area,.cookie-modal-footer,.filter-row.bottom-row,body > footer,footer.text-white.text-center.py-3').forEach(function(el){
+                el.style.display = 'none';
+              });
+            } catch(e){}
+          }
+          apply();
+          setInterval(apply, 1000);
+        })();
+        true;
+      ` + "\n" + commonScript;
+    }
     if (isNoticeBoard) {
       const css = `
         header, footer, nav, #sp-header, #sp-footer, .t3-header, .t3-footer,
@@ -845,7 +980,7 @@ export const LiveWebView = ({ url, webViewRef, onNavStateChange, scrollY }) => {
       ` + "\n" + commonScript;
     }
     return commonScript;
-  }, [isYouTube, isRegistry, isDistrictCourts, isRecruitment, isGhcEbook, isJudgmentSearch, isGhcJudgesPages, isRegistrySection, isMactCalculator, isStatistics, isNoticeBoard]);
+  }, [isYouTube, isRegistry, isDistrictCourts, isRecruitment, isGhcEbook, isJudgmentSearch, isGhcJudgesPages, isRegistrySection, isMactCalculator, isStatistics, isLawReport, isAdvCauseList, isNoticeBoard]);
 
   const styles = useMemo(() => createStyles(colors), [colors]);
 
