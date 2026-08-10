@@ -15,7 +15,7 @@ import { useAppTheme } from "../theme";
 import { formatLocalizedNumber, localizeDigitsInText } from "../utils/localization";
 
 const ERROR_RED = "#EF4444";
-const CASE_STATUS_BEARER_TOKEN = "2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d";
+const CASE_STATUS_BEARER_TOKEN = process.env.EXPO_PUBLIC_API_TOKEN;
 
 const hexToRgba = (hex, alpha) => {
   if (!hex || typeof hex !== "string") {
