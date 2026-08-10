@@ -15,6 +15,7 @@ import { useAppTheme } from "../theme";
 import { formatLocalizedNumber, localizeDigitsInText } from "../utils/localization";
 
 const ERROR_RED = "#EF4444";
+const CASE_STATUS_BEARER_TOKEN = "2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d";
 
 const hexToRgba = (hex, alpha) => {
   if (!hex || typeof hex !== "string") {
@@ -92,11 +93,15 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
       try {
         setLoading(true);
 
+        const headers = {
+          Authorization: `Bearer ${CASE_STATUS_BEARER_TOKEN}`,
+        };
+
         const [mainRes, subRes, linkRes, ordersRes] = await Promise.allSettled([
-          fetch(`https://ghcservices.assam.gov.in/case-status/proxy/cases/${cinoToFetch}`),
-          fetch(`https://ghcservices.assam.gov.in/case-status/case-sub/${cinoToFetch}`),
-          fetch(`https://ghcservices.assam.gov.in/case-status/case.link/${cinoToFetch}`),
-          fetch(`https://ghcservices.assam.gov.in/case-status/case-orders/${cinoToFetch}?page=1&per_page=15`),
+          fetch(`https://ghcservices.assam.gov.in/cis-api/api/v1/cases-by-cino/${cinoToFetch}`, { headers }),
+          fetch(`https://ghcservices.assam.gov.in/cis-api/api/v1/cases-sub-case/${cinoToFetch}`, { headers }),
+          fetch(`https://ghcservices.assam.gov.in/cis-api/api/v1/cases-link/${cinoToFetch}`, { headers }),
+          fetch(`https://ghcservices.assam.gov.in/cis-api/api/v1/cases-orders/${cinoToFetch}?page=1&per_page=15`, { headers }),
         ]);
 
         if (mainRes.status === "fulfilled" && mainRes.value.ok) {
@@ -144,7 +149,12 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
     try {
       const nextPage = ordersPage + 1;
       const response = await fetch(
-        `https://ghcservices.assam.gov.in/case-status/case-orders/${cinoToFetch}?page=${nextPage}&per_page=15`
+        `https://ghcservices.assam.gov.in/cis-api/api/v1/cases-orders/${cinoToFetch}?page=${nextPage}&per_page=15`,
+        {
+          headers: {
+            Authorization: `Bearer ${CASE_STATUS_BEARER_TOKEN}`,
+          },
+        }
       );
 
       if (response.ok) {
