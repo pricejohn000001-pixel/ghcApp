@@ -1460,3 +1460,19 @@
 {"_e":"metro:client_log","_t":1785837870701,"level":"log","data":["Initializing judges data..."]}
 {"_e":"metro:client_log","_t":1785837870746,"level":"log","data":["Using cached judges data"]}
 {"_e":"metro:client_log","_t":1785837870749,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"root:init","_t":1787630859346,"format":"v0-jsonl","version":"56.1.21"}
+{"_e":"env:mode","_t":1787630859370,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1787630859414,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_API_TOKEN":"2|C71krgxhzmkJ6brEve92dmCmClIgRmtIU9JHqg0F39f29f6d"}}
+{"_e":"devserver:start","_t":1787630868585,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1787630877724,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:instantiate","_t":1787630902063,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1787631209174,"id":"8","platform":"android","environment":null,"entry":"node_modules\\expo\\AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1787631209176,"id":"8","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1787631209314,"id":"8","total":1,"ms":138.7714}
+{"_e":"metro:client_log","_t":1787631212047,"level":"info","data":["🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙"]}
+{"_e":"metro:client_log","_t":1787631212197,"level":"log","data":["Initializing judges data..."]}
+{"_e":"metro:client_log","_t":1787631212236,"level":"log","data":["Fetching fresh judges data from website..."]}
+{"_e":"metro:client_log","_t":1787631213246,"level":"log","data":["Parsed 24 judges from HTML"]}
+{"_e":"metro:client_log","_t":1787631213279,"level":"log","data":["Judges data saved successfully"]}
+{"_e":"metro:client_log","_t":1787631213280,"level":"log","data":["Judges data initialized with 24 judges"]}
+{"_e":"metro:client_log","_t":1787631310872,"level":"warn","data":["InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead."]}

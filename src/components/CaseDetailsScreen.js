@@ -77,6 +77,11 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
   const [ordersPage, setOrdersPage] = useState(1);
   const [ordersTotalPages, setOrdersTotalPages] = useState(1);
   const [loadingMoreOrders, setLoadingMoreOrders] = useState(false);
+  const [documents, setDocuments] = useState([]);
+  const [documentsPage, setDocumentsPage] = useState(1);
+  const [documentsTotalPages, setDocumentsTotalPages] = useState(1);
+  const [documentsTotal, setDocumentsTotal] = useState(0);
+  const [loadingMoreDocuments, setLoadingMoreDocuments] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -97,11 +102,12 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
           Authorization: `Bearer ${CASE_STATUS_BEARER_TOKEN}`,
         };
 
-        const [mainRes, subRes, linkRes, ordersRes] = await Promise.allSettled([
+        const [mainRes, subRes, linkRes, ordersRes, docsRes] = await Promise.allSettled([
           fetch(`https://ghcservices.assam.gov.in/cis-api/api/v1/cases-by-cino/${cinoToFetch}`, { headers }),
           fetch(`https://ghcservices.assam.gov.in/cis-api/api/v1/cases-sub-case/${cinoToFetch}`, { headers }),
           fetch(`https://ghcservices.assam.gov.in/cis-api/api/v1/cases-link/${cinoToFetch}`, { headers }),
           fetch(`https://ghcservices.assam.gov.in/cis-api/api/v1/cases-orders/${cinoToFetch}?page=1&per_page=15`, { headers }),
+          fetch(`https://ghcservices.assam.gov.in/cis-api/api/v1/cases/${cinoToFetch}/documents?page=1&per_page=15`, { headers }),
         ]);
 
         if (mainRes.status === "fulfilled" && mainRes.value.ok) {
@@ -129,6 +135,17 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
             setOrders(ordersData.data.data);
             setOrdersPage(ordersData.data.current_page || 1);
             setOrdersTotalPages(ordersData.data.last_page || 1);
+          }
+        }
+
+        if (docsRes.status === "fulfilled" && docsRes.value.ok) {
+          const docsData = await docsRes.value.json();
+
+          if (docsData.status && docsData.data?.data) {
+            setDocuments(docsData.data.data);
+            setDocumentsPage(docsData.data.current_page || 1);
+            setDocumentsTotalPages(docsData.data.last_page || 1);
+            setDocumentsTotal(docsData.data.total || docsData.data.data.length || 0);
           }
         }
       } catch (err) {
@@ -170,6 +187,39 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
       console.log("Failed to load more orders:", err);
     } finally {
       setLoadingMoreOrders(false);
+    }
+  };
+
+  const loadMoreDocuments = async () => {
+    if (documentsPage >= documentsTotalPages || loadingMoreDocuments) return;
+
+    setLoadingMoreDocuments(true);
+
+    try {
+      const nextPage = documentsPage + 1;
+      const response = await fetch(
+        `https://ghcservices.assam.gov.in/cis-api/api/v1/cases/${cinoToFetch}/documents?page=${nextPage}&per_page=15`,
+        {
+          headers: {
+            Authorization: `Bearer ${CASE_STATUS_BEARER_TOKEN}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const json = await response.json();
+
+        if (json.status && json.data?.data) {
+          setDocuments((prev) => [...prev, ...json.data.data]);
+          setDocumentsPage(json.data.current_page);
+          setDocumentsTotalPages(json.data.last_page);
+          setDocumentsTotal(json.data.total || documentsTotal);
+        }
+      }
+    } catch (err) {
+      console.log("Failed to load more documents:", err);
+    } finally {
+      setLoadingMoreDocuments(false);
     }
   };
 
@@ -700,6 +750,90 @@ export const CaseDetailsScreen = ({ caseItem, scrollY }) => {
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <View style={styles.headerIconContainer}>
+              <Ionicons name="folder-open" size={18} color={colors.accent} />
+            </View>
+            <View style={styles.flex1}>
+              <Text style={styles.cardTitle}>{t("case_details_screen.documents")}</Text>
+              <Text style={styles.cardSubtitle}>
+                {t("case_details_screen.documents_loaded", {
+                  count: formatLocalizedNumber(documentsTotal, i18n.language),
+                })}
+              </Text>
+            </View>
+          </View>
+
+          {documents.length > 0 ? (
+            <>
+              <View style={styles.verticalListContainer}>
+                {documents.map((doc, index) => {
+                  const slNo = index + 1;
+                  const docTitle = `${doc.doc_no || ""}/${doc.doc_year || ""}`;
+                  return (
+                    <View key={`doc-${doc.id || index}`} style={styles.verticalCard}>
+                      <View style={styles.verticalCardHeader}>
+                        <View style={styles.orderHeader}>
+                          <View style={styles.orderBadge}>
+                            <Text style={styles.orderBadgeText}>{formatLocalizedNumber(slNo, i18n.language)}</Text>
+                          </View>
+                          <View style={styles.flex1}>
+                            <Text style={styles.orderDate}>{docTitle !== "/" ? localizeDigitsInText(docTitle, i18n.language) : t("case_common.unknown")}</Text>
+                            {doc.description ? <Text style={styles.documentDescription}>{doc.description}</Text> : null}
+                          </View>
+                        </View>
+                      </View>
+                      <View style={styles.verticalCardBody}>
+                        <View style={styles.verticalCardRow}>
+                          <Text style={styles.verticalCardLabel}>{t("case_details_screen.labels.paper_date")}</Text>
+                          <Text style={styles.verticalCardValue}>{formatDate(doc.paperdate)}</Text>
+                        </View>
+                        <View style={styles.verticalCardRow}>
+                          <Text style={styles.verticalCardLabel}>{t("case_details_screen.labels.filed_by")}</Text>
+                          <Text style={styles.verticalCardValue}>
+                            {doc.name || doc.adv_name || doc.type || "-"}
+                          </Text>
+                        </View>
+                        <View style={styles.verticalCardRow}>
+                          <Text style={styles.verticalCardLabel}>{t("case_details_screen.labels.pages")}</Text>
+                          <Text style={styles.verticalCardValue}>
+                            {localizeDigitsInText(doc.first_page || "-", i18n.language)} - {localizeDigitsInText(doc.last_page || "-", i18n.language)}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  );
+                })}
+              </View>
+
+              {documentsPage < documentsTotalPages && (
+                <View style={styles.loadMoreContainer}>
+                  <TouchableOpacity style={styles.loadMoreBtn} onPress={loadMoreDocuments} disabled={loadingMoreDocuments}>
+                    {loadingMoreDocuments ? (
+                      <ActivityIndicator size="small" color={colors.accent} />
+                    ) : (
+                      <Text style={styles.loadMoreText}>
+                        {t("case_details_screen.load_more_documents", {
+                          count: formatLocalizedNumber(documentsTotalPages - documentsPage, i18n.language),
+                        })}
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                </View>
+              )}
+            </>
+          ) : (
+            <View style={styles.emptyDataCard}>
+              <View style={styles.emptyDataIconBg}>
+                <Ionicons name="folder-open" size={24} color={colors.textQuaternary} />
+              </View>
+              <Text style={styles.emptyDataTitle}>{t("case_details_screen.no_documents")}</Text>
+              <Text style={styles.emptyDataSub}>{t("case_details_screen.no_documents_subtitle")}</Text>
+            </View>
+          )}
+        </View>
+
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <View style={styles.headerIconContainer}>
               <Ionicons name="document-text" size={18} color={colors.accent} />
             </View>
             <View style={styles.flex1}>
@@ -1213,6 +1347,12 @@ const createStyles = (theme, colors, radius, spacing, fonts) => {
       color: colors.accent,
       textTransform: "uppercase",
       letterSpacing: 0.5,
+    },
+    documentDescription: {
+      fontSize: 12,
+      color: colors.textSecondary,
+      fontFamily: fonts.body,
+      marginTop: 2,
     },
     pdfBtn: {
       flexDirection: "row",

@@ -206,6 +206,12 @@
     "load_more_orders": "অধিক আদেশ লোড কৰক ({{count}}টা পৃষ্ঠা বাকী)",
     "no_orders": "কোনো আদেশ নাই",
     "no_orders_subtitle": "এই গোচৰৰ বাবে এতিয়ালৈকে কোনো আদেশ বা ৰায়দান আপলোড কৰা হোৱা নাই।",
+    "documents": "নথিপত্ৰ",
+    "documents_loaded": "{{count}}খন নথিপত্ৰ উপলব্ধ",
+    "showing_documents": "{{total}}খনৰ ভিতৰত {{start}}-{{end}}খন নথিপত্ৰ দেখুওৱা হৈছে",
+    "load_more_documents": "অধিক নথিপত্ৰ লোড কৰক ({{count}}খন পৃষ্ঠা বাকী)",
+    "no_documents": "কোনো নথিপত্ৰ নাই",
+    "no_documents_subtitle": "এই গোচৰৰ বাবে এতিয়ালৈকে কোনো নথিপত্ৰ আপলোড কৰা হোৱা নাই।",
     "hearing_dates_note": "আদালতৰ কাৰ্যবিধিৰ ওপৰত নিৰ্ভৰ কৰি শুনানিৰ তাৰিখ সলনি হ’ব পাৰে।",
     "fallback_case_type_full_form": "সংবিধানৰ ২২৬ আৰু ২২৭ নং অনুচ্ছেদৰ অধীনত ৰিট আবেদন",
     "labels": {
@@ -224,7 +230,10 @@
       "case_category": "গোচৰৰ শ্ৰেণী",
       "petitioner": "আবেদনকাৰী",
       "respondent": "প্ৰতিবাদী",
-      "filed_on": "দাখিলৰ তাৰিখ"
+      "filed_on": "দাখিলৰ তাৰিখ",
+      "paper_date": "নথিপত্ৰৰ তাৰিখ",
+      "filed_by": "দাখিলকাৰী",
+      "pages": "পৃষ্ঠাসমূহ"
     }
   },
   "portfolio": {

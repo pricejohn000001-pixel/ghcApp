@@ -208,6 +208,12 @@
     "load_more_orders": "Load More Orders ({{count}} pages left)",
     "no_orders": "No Orders",
     "no_orders_subtitle": "There are no orders or judgements uploaded for this case yet.",
+    "documents": "Documents",
+    "documents_loaded": "{{count}} documents on record",
+    "showing_documents": "Showing {{start}}-{{end}} of {{total}} documents",
+    "load_more_documents": "Load More Documents ({{count}} pages left)",
+    "no_documents": "No Documents",
+    "no_documents_subtitle": "There are no documents uploaded for this case yet.",
     "hearing_dates_note": "Hearing dates may change based on court proceedings.",
     "fallback_case_type_full_form": "Writ Petition under Article 226 and 227 of the Constitution",
     "labels": {
@@ -226,7 +232,10 @@
       "case_category": "Case Category",
       "petitioner": "Petitioner",
       "respondent": "Respondent",
-      "filed_on": "Filed On"
+      "filed_on": "Filed On",
+      "paper_date": "Paper Date",
+      "filed_by": "Filed By",
+      "pages": "Pages"
     }
   },
   "portfolio": {
